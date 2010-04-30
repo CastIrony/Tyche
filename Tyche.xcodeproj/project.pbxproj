@@ -589,6 +589,7 @@
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+				C5B19171118AB0E700523867 /* ShellScript */,
 			);
 			buildRules = (
 				C54DEF92109563F4004A60D9 /* PBXBuildRule */,
@@ -653,6 +654,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C5B19171118AB0E700523867 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "bundleVersion=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" Tyche-Info.plist)\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print DDBuildNumber\" Tyche-Info.plist)\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :DDBuildNumber $buildNumber\" Tyche-Info.plist\ngit add\ngit commit -m \"Version $bundleVersion.$buildNumber\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1D60588E0D05DD3D006BFB54 /* Sources */ = {

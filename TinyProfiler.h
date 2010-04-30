@@ -1,4 +1,7 @@
-#define TINY_PROFILER_SHOULD_RUN
+#ifndef TINY_PROFILER
+#define TINY_PROFILER 1
+
+#define TINY_PROFILER_SHOULD_RUN 1
 
 #define TINY_PROFILER_LOG_INTERVAL  300
 #define TINY_PROFILER_COUNT         32
@@ -57,3 +60,5 @@ static inline void TinyProfilerLog()
     
     #endif
 }
+
+#endif
