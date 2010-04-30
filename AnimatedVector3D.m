@@ -114,20 +114,9 @@
     
     GLfloat proportion = delta;
     
-    if(self.curve == AnimationEaseIn)
-    {
-        proportion = (3 * delta - delta3) / 2; 
-    }
-    
-    if(self.curve == AnimationEaseOut)
-    {
-        proportion = (3 * delta2 - delta3) / 2;
-    }
-    
-    if(self.curve == AnimationEaseInOut)
-    {
-        proportion = 3 * delta2 - 2 * delta3;
-    }
+    if(self.curve == AnimationEaseIn)    { proportion = (3 * delta - delta3) / 2; }
+    if(self.curve == AnimationEaseOut)   { proportion = (3 * delta2 - delta3) / 2; }
+    if(self.curve == AnimationEaseInOut) { proportion = (3 * delta2 - 2 * delta3); }
     
     return Vector3DInterpolate(self.startValue, self.endValue, proportion);
 }

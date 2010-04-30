@@ -108,20 +108,9 @@
     
     GLfloat proportion = delta;
     
-    if(self.curve == AnimationEaseIn)
-    {
-        proportion = (3 * delta - delta * delta * delta) / 2; 
-    }
-    
-    if(self.curve == AnimationEaseOut)
-    {
-        proportion = (3 * delta * delta - delta * delta * delta) / 2;
-    }
-    
-    if(self.curve == AnimationEaseInOut)
-    {
-        proportion = 3 * delta * delta - 2 * delta * delta * delta;
-    }
+    if(self.curve == AnimationEaseIn)    { proportion = (3 * delta - delta * delta * delta) / 2; }
+    if(self.curve == AnimationEaseOut)   { proportion = (3 * delta * delta - delta * delta * delta) / 2; }
+    if(self.curve == AnimationEaseInOut) { proportion = (3 * delta * delta - 2 * delta * delta * delta); }
      
     return (1.0 - proportion) * self.startValue + (proportion) * self.endValue;
 }

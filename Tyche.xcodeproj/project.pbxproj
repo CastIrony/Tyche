@@ -667,7 +667,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "bundleVersion=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" Tyche-Info.plist)\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print DDBuildNumber\" Tyche-Info.plist)\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :DDBuildNumber $buildNumber\" Tyche-Info.plist\ngit add\ngit commit -m \"Version $bundleVersion.$buildNumber\"";
+			shellScript = "bundleVersion=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" Tyche-Info.plist)\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print DDBuildNumber\" Tyche-Info.plist)\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :DDBuildNumber $buildNumber\" Tyche-Info.plist\n/usr/local/git/bin/git add .\n/usr/local/git/bin/git commit -m \"Version $bundleVersion.$buildNumber\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
