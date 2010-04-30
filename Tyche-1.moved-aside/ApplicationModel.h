@@ -1,0 +1,6 @@
+@interface ApplicationModel : NSObject 
+{
+
+}
+
+@end
