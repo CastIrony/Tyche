@@ -40,7 +40,6 @@
 		C541526C108415E000D4E1A9 /* GLLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5415263108415E000D4E1A9 /* GLLabel.m */; };
 		C54152811084165100D4E1A9 /* AnimatedFloat.m in Sources */ = {isa = PBXBuildFile; fileRef = C54152741084165100D4E1A9 /* AnimatedFloat.m */; };
 		C54152821084165100D4E1A9 /* AnimatedVector3D.m in Sources */ = {isa = PBXBuildFile; fileRef = C54152761084165100D4E1A9 /* AnimatedVector3D.m */; };
-		C54152831084165100D4E1A9 /* Texture2D.m in Sources */ = {isa = PBXBuildFile; fileRef = C541527C1084165100D4E1A9 /* Texture2D.m */; };
 		C54152841084165100D4E1A9 /* NSString+Documents.m in Sources */ = {isa = PBXBuildFile; fileRef = C541527E1084165100D4E1A9 /* NSString+Documents.m */; };
 		C54152851084165100D4E1A9 /* NSMutableArray+Deck.m in Sources */ = {isa = PBXBuildFile; fileRef = C54152801084165100D4E1A9 /* NSMutableArray+Deck.m */; };
 		C541528F1084166500D4E1A9 /* GameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C54152891084166500D4E1A9 /* GameModel.m */; };
@@ -163,8 +162,6 @@
 		C54152781084165100D4E1A9 /* Touchable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Touchable.h; sourceTree = "<group>"; };
 		C54152791084165100D4E1A9 /* GameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameController.h; path = ../GameController.h; sourceTree = "<group>"; };
 		C541527A1084165100D4E1A9 /* Projection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Projection.h; sourceTree = "<group>"; };
-		C541527B1084165100D4E1A9 /* Texture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Texture2D.h; sourceTree = "<group>"; };
-		C541527C1084165100D4E1A9 /* Texture2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Texture2D.m; sourceTree = "<group>"; };
 		C541527D1084165100D4E1A9 /* NSString+Documents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Documents.h"; sourceTree = "<group>"; };
 		C541527E1084165100D4E1A9 /* NSString+Documents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Documents.m"; sourceTree = "<group>"; };
 		C541527F1084165100D4E1A9 /* NSMutableArray+Deck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Deck.h"; sourceTree = "<group>"; };
@@ -467,8 +464,6 @@
 				C54152741084165100D4E1A9 /* AnimatedFloat.m */,
 				C54152751084165100D4E1A9 /* AnimatedVector3D.h */,
 				C54152761084165100D4E1A9 /* AnimatedVector3D.m */,
-				C541527B1084165100D4E1A9 /* Texture2D.h */,
-				C541527C1084165100D4E1A9 /* Texture2D.m */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -693,7 +688,6 @@
 				C541526C108415E000D4E1A9 /* GLLabel.m in Sources */,
 				C54152811084165100D4E1A9 /* AnimatedFloat.m in Sources */,
 				C54152821084165100D4E1A9 /* AnimatedVector3D.m in Sources */,
-				C54152831084165100D4E1A9 /* Texture2D.m in Sources */,
 				C54152841084165100D4E1A9 /* NSString+Documents.m in Sources */,
 				C54152851084165100D4E1A9 /* NSMutableArray+Deck.m in Sources */,
 				C541528F1084166500D4E1A9 /* GameModel.m in Sources */,
