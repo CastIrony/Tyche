@@ -10,10 +10,10 @@
     GLfloat          _initialAngle;
     int              _initialIndex;
     int              _finalIndex;
-    Texture2D*       _textureHearts;
-    Texture2D*       _textureDiamonds;
-    Texture2D*       _textureClubs;
-    Texture2D*       _textureSpades;
+    GLTexture*       _textureHearts;
+    GLTexture*       _textureDiamonds;
+    GLTexture*       _textureClubs;
+    GLTexture*       _textureSpades;
 }
 
 
@@ -23,10 +23,10 @@
 @property (nonatomic, assign) GLfloat         initialAngle;
 @property (nonatomic, assign) int             initialIndex;
 @property (nonatomic, assign) int             finalIndex;
-@property (nonatomic, retain) Texture2D*      textureHearts;
-@property (nonatomic, retain) Texture2D*      textureDiamonds;
-@property (nonatomic, retain) Texture2D*      textureClubs;
-@property (nonatomic, retain) Texture2D*      textureSpades;
+@property (nonatomic, retain) GLTexture*      textureHearts;
+@property (nonatomic, retain) GLTexture*      textureDiamonds;
+@property (nonatomic, retain) GLTexture*      textureClubs;
+@property (nonatomic, retain) GLTexture*      textureSpades;
 
 -(void)drawFronts;
 -(void)drawBacks;

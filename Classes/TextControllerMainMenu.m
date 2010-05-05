@@ -2,7 +2,7 @@
 
 #import "GameRenderer.h"
 #import "MenuLayerController.h"
-#import "Texture2D.h"
+#import "GLTexture.h"
 
 #import "TextControllerMainMenu.h"
 
@@ -42,7 +42,7 @@
     { 
         NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease];
         
-        [label setObject:[[[Texture2D alloc] initWithImageFile:@"logo.png"] autorelease]           forKey:@"textureText"]; 
+        [label setObject:[[[GLTexture alloc] initWithImageFile:@"logo.png"] autorelease]           forKey:@"textureText"]; 
         [label setObject:@"Join Game"        forKey:@"textString"];          
         [label setObject:[NSValue valueWithCGSize:CGSizeMake(181, 109)]                            forKey:@"textSize"]; 
         [label setObject:[NSValue valueWithCGSize:CGSizeMake(3.75, 1.4)]                            forKey:@"labelSize"];
@@ -89,7 +89,11 @@
 {
     if([key isEqualToString:@"join_multiplayer"]) 
     {
-        [self.renderer.menuLayerController setCurrentKey:[self.renderer.menuLayerController.menuLayerKeys objectAfter:self.renderer.menuLayerController.currentKey]];
+        NSArray* keys = self.renderer.menuLayerController.menuLayerKeys;
+        
+        NSString* nextKey = [keys objectAfter:self.renderer.menuLayerController.currentKey];
+        
+        [self.renderer.menuLayerController setKey:nextKey];
     }
     
     //[self.renderer.appController labelTouchedWithKey:key];

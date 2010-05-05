@@ -12,7 +12,7 @@
 @class AnimatedFloat;
 @class AnimatedVector3D;
 @class GLTable;
-@class Texture2D;
+@class GLTexture;
 @class AppController;
 @class SoundController;
 @class GameView;

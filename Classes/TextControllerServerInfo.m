@@ -2,6 +2,7 @@
 #import "MenuController.h"
 #import "MenuLayerController.h"
 #import "TextControllerServerInfo.h"
+#import "NSArray+Circle.h"
 
 @implementation TextControllerServerInfo
 
@@ -82,16 +83,20 @@
     
     if([key isEqualToString:@"collapse"]) 
     {
-//        int newIndex = self.renderer.menuLayerController.currentIndex + 1;
-//        
-//        [self.renderer.menuLayerController setCurrentIndex:newIndex];
+        NSArray* keys = self.renderer.menuLayerController.menuLayerKeys;
+        
+        NSString* nextKey = [keys objectAfter:self.renderer.menuLayerController.currentKey];
+        
+        [self.renderer.menuLayerController setKey:nextKey];
     }
     
     if([key isEqualToString:@"title2"]) 
     {
-//        int newIndex = self.renderer.menuLayerController.currentIndex - 1;
-//        
-//        [self.renderer.menuLayerController setCurrentIndex:newIndex];
+        NSArray* keys = self.renderer.menuLayerController.menuLayerKeys;
+        
+        NSString* prevKey = [keys objectBefore:self.renderer.menuLayerController.currentKey];
+        
+        [self.renderer.menuLayerController setKey:prevKey];
     }
 }
 

@@ -35,12 +35,15 @@
         self.allMenuKeys = [[[NSMutableArray alloc] init] autorelease];
         self.menus = [[[NSMutableDictionary alloc] init] autorelease];
         self.offset = [AnimatedFloat withValue:0];
+        
         self.hidden = [AnimatedFloat withValue:0];
         self.collapsed = [AnimatedFloat withValue:0];
     }
     
     return self;
 }
+
+
 
 -(void)addMenu:(GLMenu*)menu forKey:(NSString*)key
 {
@@ -73,7 +76,7 @@
 
 -(void)layoutMenus
 {
-    BOOL collapsed = self.collapsed.endValue > 0.5;
+    BOOL collapsed = _collapsed.endValue > 0.5;
     
     if(self.liveMenuKeys.count == 0) { return; }
     
@@ -116,7 +119,7 @@
         }
     }
     
-    int newIndex = NSNotFound;
+    //int newIndex = NSNotFound;
     
     if([self.liveMenuKeys containsObject:self.currentKey])
     {
@@ -142,50 +145,13 @@
     }
 }
 
-//-(void)setCollapsed:(BOOL)collapsed
-//{
-//    if(self.renderer.animated)
-//    {
-//        self.collapsed = [AnimatedFloat withStartValue:self.collapsed.value endValue:collapsed forTime:1.0];
-//        self.collapsed.curve = AnimationEaseInOut;
-//    }
-//    else 
-//    {
-//        self.collapsed = [AnimatedFloat withValue:collapsed];
-//    }
-//   
-//    [self layoutMenus];
-//}
-//
-//-(void)setHidden:(BOOL)hidden
-//{
-//    if(self.renderer.animated)
-//    {
-//        if(hidden)
-//        {
-//            self.offset = [AnimatedFloat withStartValue:self.offset.value endValue:-3 speed:2.0];
-//        }
-//        else 
-//        {
-//            self.offset = [AnimatedFloat withStartValue:self.offset.value endValue:self.currentIndex speed:2.0];
-//        }
-//
-//        self.offset.curve = AnimationEaseInOut;
-//        
-//    }
-//    else 
-//    {
-//        self.offset = [AnimatedFloat withValue:hidden ? -3 : self.currentIndex];
-//    }
-//}
-
 -(void)draw
-{
-//    if(self.hidden.value > 0.75 ) { return; }
-    
+{    
     TRANSACTION_BEGIN
-    {    
-        glTranslatef(self.offset.value * 4 /*- self.hidden.value * 10*/, 0, 0);
+    {   
+        GLfloat offset = (1 - self.hidden.value) * (self.offset.value * 4) + (self.hidden.value * -15);
+        
+        glTranslatef(offset, 0, 0);
                 
         for(NSString* key in self.allMenuKeys)
         {
@@ -195,7 +161,7 @@
                 
                 menu.angleSin = 7.5 * sin(2 * self.offset.value + 2 * menu.angleJitter);
                 
-                menu.lightness = self.collapsed.value * 0.5;
+                menu.lightness = 1 - self.collapsed.value * 0.5;
                 
                 [menu reset];
                 [menu draw];
@@ -206,7 +172,7 @@
         
         menu.angleSin = 7.5 * sin(2 * self.offset.value + 2 * menu.angleJitter);
 
-        menu.lightness = self.collapsed.value * 0.5;
+        menu.lightness = 1 - self.collapsed.value * 0.5;
         
         [menu reset];
         [menu draw];
@@ -223,7 +189,7 @@
 {
     TRANSACTION_BEGIN
     {
-        glTranslatef(self.offset.value * 4 - self.hidden.value * 30, 0, 0);
+        glTranslatef(self.offset.value * 4, 0, 0);
         
         for(NSString* key in self.allMenuKeys)
         {
@@ -242,7 +208,7 @@
 
 -(void)handleTouchMoved:(UITouch*)touch fromPoint:(CGPoint)pointFrom toPoint:(CGPoint)pointTo
 {    
-    if(self.collapsed.value < 1.0 / 256.0)
+    if(within(self.collapsed.value, 0, 0.001))
     {
         self.offset.value = self.initialOffset + (pointTo.x - pointFrom.x) / -320.0;
     }
@@ -250,7 +216,7 @@
 
 -(void)handleTouchDown:(UITouch*)touch fromPoint:(CGPoint)point
 {    
-    if(self.collapsed.value < 1.0 / 256.0)
+    if(within(self.collapsed.value, 0, 0.001))
     {
         self.initialOffset = self.offset.value;
     }
@@ -258,7 +224,7 @@
 
 -(void)handleTouchUp:(UITouch*)touch fromPoint:(CGPoint)pointFrom toPoint:(CGPoint)pointTo
 {
-    if(self.collapsed.value < 1.0 / 256.0)
+    if(within(self.collapsed.value, 0, 0.001))
     {
         int newIndex = self.currentIndex;
         

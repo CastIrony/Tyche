@@ -25,7 +25,7 @@
 #import "GameController.h"
 #import "GameControllerSP.h"
 #import "GameControllerMP.h"
-#import "Texture2D.h"
+#import "GLTexture.h"
 #import "CameraController.h"
 #import "TextControllerMainMenu.h"
 #import "TextControllerCredits.h"
@@ -146,23 +146,25 @@
     
     self.menuLayerController = [[[MenuLayerController alloc] init] autorelease];
     
-    [TextureController setTexture:[[[Texture2D alloc] initWithImageFile:@"lightmap.png" ] autorelease] forKey:@"lightmap"];
-    [TextureController setTexture:[[[Texture2D alloc] initWithImageFile:@"chips3.png"   ] autorelease] forKey:@"chips"];
-    [TextureController setTexture:[[[Texture2D alloc] initWithImageFile:@"cards3.png"   ] autorelease] forKey:@"cards"];
-    [TextureController setTexture:[[[Texture2D alloc] initWithImageFile:@"cards4.png"   ] autorelease] forKey:@"cardsNoShadow"];
-    [TextureController setTexture:[[[Texture2D alloc] initWithPVRTCFile:@"felt3.pvr4"   ] autorelease] forKey:@"table"];
-    [TextureController setTexture:[[[Texture2D alloc] initWithImageFile:@"Default.png"  ] autorelease] forKey:@"splash"];
-    [TextureController setTexture:[[[Texture2D alloc] initWithPVRTCFile:@"heartsflat.pvr4"  ] autorelease] forKey:@"suit0"];
-    [TextureController setTexture:[[[Texture2D alloc] initWithPVRTCFile:@"diamondsflat.pvr4"] autorelease] forKey:@"suit1"];
-    [TextureController setTexture:[[[Texture2D alloc] initWithPVRTCFile:@"clubsflat.pvr4"   ] autorelease] forKey:@"suit2"];
-    [TextureController setTexture:[[[Texture2D alloc] initWithPVRTCFile:@"spadesflat.pvr4"  ] autorelease] forKey:@"suit3"];
+    self.menuLayerController.renderer = self;
+    
+    [TextureController setTexture:[[[GLTexture alloc] initWithImageFile:@"lightmap.png" ] autorelease] forKey:@"lightmap"];
+    [TextureController setTexture:[[[GLTexture alloc] initWithImageFile:@"chips3.png"   ] autorelease] forKey:@"chips"];
+    [TextureController setTexture:[[[GLTexture alloc] initWithImageFile:@"cards3.png"   ] autorelease] forKey:@"cards"];
+    [TextureController setTexture:[[[GLTexture alloc] initWithImageFile:@"cards4.png"   ] autorelease] forKey:@"cardsNoShadow"];
+    [TextureController setTexture:[[[GLTexture alloc] initWithPVRTCFile:@"felt3.pvr4"   ] autorelease] forKey:@"table"];
+    [TextureController setTexture:[[[GLTexture alloc] initWithImageFile:@"Default.png"  ] autorelease] forKey:@"splash"];
+    [TextureController setTexture:[[[GLTexture alloc] initWithPVRTCFile:@"heartsflat.pvr4"  ] autorelease] forKey:@"suit0"];
+    [TextureController setTexture:[[[GLTexture alloc] initWithPVRTCFile:@"diamondsflat.pvr4"] autorelease] forKey:@"suit1"];
+    [TextureController setTexture:[[[GLTexture alloc] initWithPVRTCFile:@"clubsflat.pvr4"   ] autorelease] forKey:@"suit2"];
+    [TextureController setTexture:[[[GLTexture alloc] initWithPVRTCFile:@"spadesflat.pvr4"  ] autorelease] forKey:@"suit3"];
     
     UIFont* font = [UIFont fontWithName:@"Helvetica-Bold" size:30.0];
     
-    [TextureController setTexture:[[[Texture2D alloc] initWithString:@"HOLD" dimensions:[@"HOLD" sizeWithFont:font] alignment:UITextAlignmentCenter font:font] autorelease] forKey:@"hold"];
-    [TextureController setTexture:[[[Texture2D alloc] initWithString:@"DRAW" dimensions:[@"DRAW" sizeWithFont:font] alignment:UITextAlignmentCenter font:font] autorelease] forKey:@"draw"];
-    [TextureController setTexture:[[[Texture2D alloc] initWithButtonOpacity:0.25] autorelease] forKey:@"borderNormal"];
-    [TextureController setTexture:[[[Texture2D alloc] initWithButtonOpacity:0.70] autorelease] forKey:@"borderTouched"];
+    [TextureController setTexture:[[[GLTexture alloc] initWithString:@"HOLD" dimensions:[@"HOLD" sizeWithFont:font] alignment:UITextAlignmentCenter font:font] autorelease] forKey:@"hold"];
+    [TextureController setTexture:[[[GLTexture alloc] initWithString:@"DRAW" dimensions:[@"DRAW" sizeWithFont:font] alignment:UITextAlignmentCenter font:font] autorelease] forKey:@"draw"];
+    [TextureController setTexture:[[[GLTexture alloc] initWithButtonOpacity:0.25] autorelease] forKey:@"borderNormal"];
+    [TextureController setTexture:[[[GLTexture alloc] initWithButtonOpacity:0.70] autorelease] forKey:@"borderTouched"];
     
     self.cardGroup.renderer = self;
     self.splash.renderer = self;
@@ -208,17 +210,17 @@
         [self.menuLayerController addMenuLayer:layer forKey:@"0"];
     }
     
-//    for(int i = 0; i < 1; i++)
-//    {        
-//        MenuControllerJoinGame* layer = [[[MenuControllerJoinGame alloc] initWithRenderer:self] autorelease];
-//        
-//        for(NSString* server in servers)
-//        { 
-//            [layer addServerWithPeerId:server name:server];
-//        }
-//        
-//        [self.menuLayerController addMenuLayer:layer forKey:[NSString stringWithFormat:@"%d", i + 1]];
-//    }
+    for(int i = 0; i < 2; i++)
+    {        
+        MenuControllerJoinGame* layer = [[[MenuControllerJoinGame alloc] initWithRenderer:self] autorelease];
+        
+        for(NSString* server in servers)
+        { 
+            [layer addServerWithPeerId:server name:server];
+        }
+        
+        [self.menuLayerController addMenuLayer:layer forKey:[NSString stringWithFormat:@"%d", i + 1]];
+    }
     
     [self.menuLayerController setKey:@"0"];
     
@@ -361,9 +363,9 @@
     }
     TRANSACTION_END;
     
-    TinyProfilerStart(14); [self.splash draw]; TinyProfilerStop(14);
+    TinyProfilerStart(15); [self.splash draw]; TinyProfilerStop(15);
     
-    TinyProfilerStart(15); [_context presentRenderbuffer:GL_RENDERBUFFER_OES]; TinyProfilerStop(15); 
+    [_context presentRenderbuffer:GL_RENDERBUFFER_OES];
     
     TinyProfilerLog();
     

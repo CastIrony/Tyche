@@ -5,7 +5,7 @@
 
 @class AnimatedFloat;
 @class AnimatedVector3D;
-@class Texture2D;
+@class GLTexture;
 @class TextController;
 @class GameRenderer;
 
@@ -24,9 +24,9 @@ LabelStatus;
     
     TextController*   _textController;
     
-    Texture2D*        _textureText;
-    Texture2D*        _textureBulletLeft;
-    Texture2D*        _textureBulletRight;
+    GLTexture*        _textureText;
+    GLTexture*        _textureBulletLeft;
+    GLTexture*        _textureBulletRight;
     
     NSString*         _key;
     
@@ -73,9 +73,9 @@ LabelStatus;
 @property (nonatomic, assign)   TextController*   textController;
 @property (nonatomic, assign)   LabelStatus   labelStatus;
 
-@property (nonatomic, retain)   Texture2D*        textureText;
-@property (nonatomic, retain)   Texture2D*        textureBulletLeft;
-@property (nonatomic, retain)   Texture2D*        textureBulletRight;
+@property (nonatomic, retain)   GLTexture*        textureText;
+@property (nonatomic, retain)   GLTexture*        textureBulletLeft;
+@property (nonatomic, retain)   GLTexture*        textureBulletRight;
 
 @property (nonatomic, copy)     NSString*         key;
 

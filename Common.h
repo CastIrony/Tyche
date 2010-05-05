@@ -17,6 +17,11 @@ static inline void runLater(block work)
     [[[work copy] autorelease] performSelector:@selector(my_callBlock) withObject:nil afterDelay:0];
 }
 
+static inline BOOL within(GLfloat float1, GLfloat float2, GLfloat epsilon)
+{
+    return float1 < float2 ? (float2 - float1 < epsilon) : (float1 - float2 < epsilon);
+}
+
 static inline GLfloat absf(GLfloat float1, GLfloat float2)
 {
     return float1 < float2 ? float2 - float1 : float1 - float2;

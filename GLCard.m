@@ -1,7 +1,7 @@
-#import "Constants.h"
+#import "Common.h"
 #import "Geometry.h"
 #import "Bezier.h"
-#import "Texture2D.h"
+#import "GLTexture.h"
 #import "Projection.h"
 #import "GLCardGroup.h"
 #import "AnimatedFloat.h"
@@ -35,15 +35,15 @@
 @synthesize angleFan   = _angleFan;
 @synthesize location   = _location;
 
--(Texture2D*) textureHearts   { return _textureSuits[0]; }
--(Texture2D*) textureDiamonds { return _textureSuits[1]; }
--(Texture2D*) textureClubs    { return _textureSuits[2]; }
--(Texture2D*) textureSpades   { return _textureSuits[3]; }
+-(GLTexture*) textureHearts   { return _textureSuits[0]; }
+-(GLTexture*) textureDiamonds { return _textureSuits[1]; }
+-(GLTexture*) textureClubs    { return _textureSuits[2]; }
+-(GLTexture*) textureSpades   { return _textureSuits[3]; }
 
--(void)setTextureHearts:  (Texture2D*)newValue { if(_textureSuits[0] != newValue) { [_textureSuits[0] release]; _textureSuits[0] = [newValue retain]; } }
--(void)setTextureDiamonds:(Texture2D*)newValue { if(_textureSuits[1] != newValue) { [_textureSuits[1] release]; _textureSuits[1] = [newValue retain]; } }
--(void)setTextureClubs:   (Texture2D*)newValue { if(_textureSuits[2] != newValue) { [_textureSuits[2] release]; _textureSuits[2] = [newValue retain]; } }
--(void)setTextureSpades:  (Texture2D*)newValue { if(_textureSuits[3] != newValue) { [_textureSuits[3] release]; _textureSuits[3] = [newValue retain]; } }
+-(void)setTextureHearts:  (GLTexture*)newValue { if(_textureSuits[0] != newValue) { [_textureSuits[0] release]; _textureSuits[0] = [newValue retain]; } }
+-(void)setTextureDiamonds:(GLTexture*)newValue { if(_textureSuits[1] != newValue) { [_textureSuits[1] release]; _textureSuits[1] = [newValue retain]; } }
+-(void)setTextureClubs:   (GLTexture*)newValue { if(_textureSuits[2] != newValue) { [_textureSuits[2] release]; _textureSuits[2] = [newValue retain]; } }
+-(void)setTextureSpades:  (GLTexture*)newValue { if(_textureSuits[3] != newValue) { [_textureSuits[3] release]; _textureSuits[3] = [newValue retain]; } }
 
 -(void)dealloc
 {
@@ -178,14 +178,16 @@
     
     glColor4f(lightness, lightness, lightness, held);
     
-    GenerateBezierVertices(arrayVertex,  cardTesselationWidth, cardTesselationHeight, _controlPointsBack);
-    GenerateBezierNormals (arrayNormal,  cardTesselationWidth, cardTesselationHeight, _controlPointsBack);
-    GenerateBezierMesh    (arrayMesh,    cardTesselationWidth, cardTesselationHeight);
-    GenerateBezierTextures(arrayTexture0, cardTesselationWidth, cardTesselationHeight, Vector2DMake(1, 1), Vector2DMake(0, 0));
-    GenerateBezierTextures(arrayTexture1, cardTesselationWidth, cardTesselationHeight, textureSizeCard, textureOffsetCard[14]);
+    TinyProfilerStart(20); GenerateBezierVertices(arrayVertex,  cardTesselationWidth, cardTesselationHeight, _controlPointsBack);                      TinyProfilerStop(20);         
+    TinyProfilerStart(21); GenerateBezierNormals (arrayNormal,  cardTesselationWidth, cardTesselationHeight, _controlPointsBack);                      TinyProfilerStop(21);
+    TinyProfilerStart(22); GenerateBezierMesh    (arrayMesh,    cardTesselationWidth, cardTesselationHeight);                                          TinyProfilerStop(22);
+    TinyProfilerStart(23); GenerateBezierTextures(arrayTexture0, cardTesselationWidth, cardTesselationHeight, Vector2DMake(1, 1), Vector2DMake(0, 0)); TinyProfilerStop(23);
+    TinyProfilerStart(24); GenerateBezierTextures(arrayTexture1, cardTesselationWidth, cardTesselationHeight, textureSizeCard, textureOffsetCard[14]); TinyProfilerStop(24);
     
-    glVertexPointer  (3, GL_FLOAT, 0, arrayVertex);
-    glNormalPointer  (   GL_FLOAT, 0, arrayNormal);
+    glVertexPointer  (3, GL_FLOAT, 0, arrayVertex);                                                                             
+    glNormalPointer  (   GL_FLOAT, 0, arrayNormal);                                                                             
+    
+    TinyProfilerStart(25); 
     
     glClientActiveTexture(GL_TEXTURE0); 
     glActiveTexture(GL_TEXTURE0); 
@@ -194,6 +196,9 @@
     glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"cards"]);
     glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture0);      
     
+    TinyProfilerStop(25); 
+    TinyProfilerStart(26); 
+    
     glClientActiveTexture(GL_TEXTURE1); 
     glActiveTexture(GL_TEXTURE1); 
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -201,8 +206,13 @@
     glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"suit0"]);
     glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture1);      
     
+    TinyProfilerStop(26); 
+    TinyProfilerStart(27); 
+    
     glDrawElements(GL_TRIANGLES, (cardTesselationWidth - 1) * (cardTesselationHeight - 1) * 6, GL_UNSIGNED_SHORT, arrayMesh);
 
+    TinyProfilerStop(27); 
+    
     glClientActiveTexture(GL_TEXTURE1); 
     glActiveTexture(GL_TEXTURE1); 
     glBindTexture(GL_TEXTURE_2D, 0);

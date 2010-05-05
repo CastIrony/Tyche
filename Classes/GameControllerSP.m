@@ -243,11 +243,15 @@
     }
     else if(self.player.status == PlayerStatusShouldDealCards)
     {
+        //deal 5 cards
         
+        self.player.status = PlayerStatusDealingCards;
     }
     else if(self.player.status == PlayerStatusDealingCards)
     {
-        
+        //if animation is done, set
+
+        self.player.status = PlayerStatusDealingCards;
     }
     else if(self.player.status == PlayerStatusDealtCards)
     {

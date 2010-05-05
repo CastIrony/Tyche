@@ -1,4 +1,4 @@
-#import "Texture2D.h"
+#import "GLTexture.h"
 #import "Geometry.h"
 #import "GLCard.h"
 #import "AnimatedFloat.h"

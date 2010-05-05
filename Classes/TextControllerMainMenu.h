@@ -1,15 +1,15 @@
 #import "TextController.h"
 
 @class AppController;
-@class Texture2D;
+@class GLTexture;
 
 @interface TextControllerMainMenu : TextController 
 {
     AppController* _appController;
-    Texture2D*     _textureLogo;
+    GLTexture*     _textureLogo;
 }
 
 @property (nonatomic, assign) AppController* appController;
-@property (nonatomic, retain) Texture2D*     textureLogo;
+@property (nonatomic, retain) GLTexture*     textureLogo;
 
 @end

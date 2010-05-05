@@ -6,7 +6,7 @@
 @class TextController;
 @class TextControllerPageMarker;
 @class MenuController;
-@class Texture2D;
+@class GLTexture;
 
 @interface GLMenu : NSObject
 {
@@ -15,7 +15,7 @@
     Vector2D   _textureOffset;
     Vector2D   _textureSize;
     
-    Texture2D* _texture;
+    GLTexture* _texture;
     TextController* _textController;
     TextControllerPageMarker* _dots;
     
@@ -33,7 +33,7 @@
     id _owner;
 }
 
-@property (nonatomic, retain) Texture2D* texture;
+@property (nonatomic, retain) GLTexture* texture;
 @property (nonatomic, retain) TextController* textController;
 @property (nonatomic, retain) TextControllerPageMarker* dots;
 @property (nonatomic, assign) GLfloat  angleJitter;

@@ -1,4 +1,4 @@
-#import "Texture2D.h"
+#import "GLTexture.h"
 #import "TextControllerPageMarker.h"
 
 @implementation TextControllerPageMarker
@@ -38,7 +38,7 @@
     { 
         NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
                 
-        Texture2D* texture = [[[Texture2D alloc] initWithDots:self.total current:self.page] autorelease];
+        GLTexture* texture = [[[GLTexture alloc] initWithDots:self.total current:self.page] autorelease];
         
         [label setObject:texture forKey:@"textureText"]; 
         [label setObject:[NSValue valueWithCGSize:texture.contentSize] forKey:@"textSize"]; 

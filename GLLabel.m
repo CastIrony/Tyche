@@ -1,7 +1,7 @@
 #import "Constants.h"
 #import "Geometry.h"
 #import "Bezier.h"
-#import "Texture2D.h"
+#import "GLTexture.h"
 #import "Projection.h"
 #import "AnimatedFloat.h"
 #import "AnimatedVector3D.h"
@@ -113,21 +113,21 @@
     { 
         self.textSize = [self.textString sizeWithFont:self.font];
         
-        self.textureText = [[[Texture2D alloc] initWithString:self.textString dimensions:self.textSize alignment:UITextAlignmentCenter font:self.font] autorelease];
+        self.textureText = [[[GLTexture alloc] initWithString:self.textString dimensions:self.textSize alignment:UITextAlignmentCenter font:self.font] autorelease];
     }
     
     if(self.bulletLeftString) 
     { 
         self.bulletLeftSize = [self.bulletLeftString  sizeWithFont:self.font];
         
-        self.textureBulletLeft = [[[Texture2D alloc] initWithString:self.bulletLeftString dimensions:self.bulletLeftSize alignment:UITextAlignmentCenter font:self.font] autorelease];
+        self.textureBulletLeft = [[[GLTexture alloc] initWithString:self.bulletLeftString dimensions:self.bulletLeftSize alignment:UITextAlignmentCenter font:self.font] autorelease];
     }
     
     if(self.bulletRightString) 
     { 
         self.bulletRightSize = [self.bulletRightString sizeWithFont:self.font];
         
-        self.textureBulletRight = [[[Texture2D alloc] initWithString:self.bulletRightString dimensions:self.bulletRightSize alignment:UITextAlignmentCenter font:self.font] autorelease];
+        self.textureBulletRight = [[[GLTexture alloc] initWithString:self.bulletRightString dimensions:self.bulletRightSize alignment:UITextAlignmentCenter font:self.font] autorelease];
     }
 }
 
@@ -378,8 +378,8 @@
         
         GLfloat labelRight  = -(self.labelSize.width  / 2.0) + bulletRightWidth;
         GLfloat labelLeft   =  (self.labelSize.width  / 2.0) - bulletLeftWidth;
-        GLfloat labelTop    = -(self.labelSize.height / 2.0);
-        GLfloat labelBottom =  (self.labelSize.height / 2.0);
+        //GLfloat labelTop    = -(self.labelSize.height / 2.0);
+        //GLfloat labelBottom =  (self.labelSize.height / 2.0);
         
         GLfloat labelWidth  = labelLeft - labelRight;
         GLfloat labelHeight = self.labelSize.height;

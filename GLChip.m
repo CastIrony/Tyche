@@ -1,7 +1,7 @@
 #import "Constants.h"
 #import "Geometry.h"
 #import "Bezier.h"
-#import "Texture2D.h"
+#import "GLTexture.h"
 #import "Projection.h"
 #import "AnimatedFloat.h"
 #import "AnimatedVector3D.h"

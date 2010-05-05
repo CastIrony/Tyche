@@ -3,11 +3,11 @@
 
 #define TINY_PROFILER_SHOULD_RUN 1
 
-#define TINY_PROFILER_LOG_INTERVAL  300
-#define TINY_PROFILER_COUNT         32
-#define TINY_PROFILER_TIMER         CFAbsoluteTimeGetCurrent()
-#define TINY_PROFILER_TIME_TYPE     NSTimeInterval
-#define TINY_PROFILER_LOG(...)      printf("%d, %d, %f5\n", __VA_ARGS__)
+#define TINY_PROFILER_LOG_INTERVAL 300
+#define TINY_PROFILER_COUNT        32
+#define TINY_PROFILER_TIMER        CFAbsoluteTimeGetCurrent()
+#define TINY_PROFILER_TIME_TYPE    NSTimeInterval
+#define TINY_PROFILER_LOG(...)     printf("%d, %d, %f5\n", __VA_ARGS__)
 
 typedef struct 
 {
@@ -17,8 +17,7 @@ typedef struct
 } 
 TinyProfiler;
 
-static TinyProfiler tinyProfilers[TINY_PROFILER_COUNT];
-static int tinyProfilerLogCounter = 0;
+TinyProfiler tinyProfilers[TINY_PROFILER_COUNT];
 
 static inline void TinyProfilerStart(int profileIndex)
 {
@@ -43,6 +42,8 @@ static inline void TinyProfilerLog()
 {
     #ifdef TINY_PROFILER_SHOULD_RUN
 
+    static int tinyProfilerLogCounter = 0;
+    
     if(++tinyProfilerLogCounter != TINY_PROFILER_LOG_INTERVAL) { return; }
     
     for(int profileIndex = 0; profileIndex < TINY_PROFILER_COUNT; profileIndex++)

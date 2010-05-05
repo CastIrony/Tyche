@@ -13,7 +13,13 @@
 @synthesize menuLayers = _menuLayers;
 @synthesize currentKey = _currentKey;
 @synthesize hidden = _hidden;
+
 @dynamic currentLayer;
+
+-(MenuController*)currentLayer
+{
+    return [self.menuLayers objectForKey:self.currentKey];
+}
 
 -(id)init
 {
@@ -62,16 +68,10 @@
             hidden    = NO;
         }
         
-        if(self.renderer.animated)
-        {
-            layer.collapsed = [AnimatedFloat withStartValue:layer.collapsed.value endValue:collapsed speed:1];
-            layer.hidden    = [AnimatedFloat withStartValue:layer.hidden.value    endValue:hidden    speed:1];
-        }
-        else 
-        {
-            layer.collapsed = [AnimatedFloat withValue:collapsed];
-            layer.hidden    = [AnimatedFloat withValue:hidden];
-        }
+        layer.collapsed = self.renderer.animated ? [AnimatedFloat withStartValue:layer.collapsed.value endValue:collapsed forTime:1] : [AnimatedFloat withValue:collapsed];
+        layer.hidden = self.renderer.animated ? [AnimatedFloat withStartValue:layer.hidden.value endValue:hidden forTime:1] : [AnimatedFloat withValue:hidden];
+    
+        [layer layoutMenus];
     }
 }   
 
@@ -124,7 +124,7 @@
         {
             MenuController* layer = [self.menuLayers objectForKey:key];
             
-            if(layer && layer.hidden.value < 0.001 && layer.collapsed.value < 0.001)
+            if(layer && within(layer.hidden.value, 0, 0.001) && within(layer.collapsed.value, 0, 0.001))
             {
                 object = [layer testTouch:touch withPreviousObject:object];
             }

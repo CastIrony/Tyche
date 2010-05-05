@@ -8,7 +8,7 @@
 
 #import "Constants.h"
 #import "Bezier.h"
-#import "Texture2D.h"
+#import "GLTexture.h"
 #import "Geometry.h"
 #import "AnimatedFloat.h"
 #import "TextureController.h"

@@ -1,6 +1,6 @@
 #import "Constants.h"
 #import "Geometry.h"
-#import "Texture2D.h"
+#import "GLTexture.h"
 #import "Bezier.h"
 #import "Projection.h"
 #import "GLLabel.h"
@@ -87,7 +87,7 @@
 
 -(void)draw
 {    
-    if(self.opacity.value < 1.0 / 256.0) { return; }
+    if(self.opacity.value < (0.001)) { return; }
     
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -103,7 +103,7 @@
         glNormalPointer  (   GL_FLOAT, 0, _arrayNormal);
         glTexCoordPointer(2, GL_FLOAT, 0, _arrayTexture);            
         
-        glColor4f(1 - self.lightness, 1 - self.lightness, 1 - self.lightness, self.opacity.value);
+        glColor4f(self.opacity.value * self.lightness, self.opacity.value * self.lightness, self.opacity.value * self.lightness, self.opacity.value);
         
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, _arrayMesh);
         
