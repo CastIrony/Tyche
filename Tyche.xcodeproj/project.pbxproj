@@ -30,6 +30,7 @@
 		C507A34510856D500049B556 /* spades.pvr4 in Resources */ = {isa = PBXBuildFile; fileRef = C507A33B10856D500049B556 /* spades.pvr4 */; };
 		C50F906A10E0946C00F179EB /* SoundController.m in Sources */ = {isa = PBXBuildFile; fileRef = C50F906910E0946C00F179EB /* SoundController.m */; };
 		C50F907C10E1C58700F179EB /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C50F907B10E1C58700F179EB /* AudioToolbox.framework */; };
+		C52529361191425700160B7F /* GLTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = C52529351191425700160B7F /* GLTexture.m */; };
 		C53A517C11741B2100DE975B /* logo2.png in Resources */ = {isa = PBXBuildFile; fileRef = C53A517B11741B2100DE975B /* logo2.png */; };
 		C5415266108415E000D4E1A9 /* GLChip.m in Sources */ = {isa = PBXBuildFile; fileRef = C5415257108415E000D4E1A9 /* GLChip.m */; };
 		C5415267108415E000D4E1A9 /* GLCardGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = C5415259108415E000D4E1A9 /* GLCardGroup.m */; };
@@ -136,6 +137,8 @@
 		C50F906810E0946C00F179EB /* SoundController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundController.h; sourceTree = "<group>"; };
 		C50F906910E0946C00F179EB /* SoundController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundController.m; sourceTree = "<group>"; };
 		C50F907B10E1C58700F179EB /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		C52529341191425700160B7F /* GLTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLTexture.h; sourceTree = "<group>"; };
+		C52529351191425700160B7F /* GLTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLTexture.m; sourceTree = "<group>"; };
 		C53A517B11741B2100DE975B /* logo2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo2.png; sourceTree = "<group>"; };
 		C5415256108415E000D4E1A9 /* GLChip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLChip.h; sourceTree = "<group>"; };
 		C5415257108415E000D4E1A9 /* GLChip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLChip.m; sourceTree = "<group>"; };
@@ -409,6 +412,8 @@
 		C54152531084157C00D4E1A9 /* OpenGL Objects */ = {
 			isa = PBXGroup;
 			children = (
+				C52529341191425700160B7F /* GLTexture.h */,
+				C52529351191425700160B7F /* GLTexture.m */,
 				C5415258108415E000D4E1A9 /* GLCardGroup.h */,
 				C5415259108415E000D4E1A9 /* GLCardGroup.m */,
 				C566160B110C0B9F00D6D5FE /* GLChipGroup.h */,
@@ -728,6 +733,7 @@
 				C55AA3EB11684A000013BF3D /* MenuLayerController.m in Sources */,
 				C5EF7F68116C1FA500801ECA /* TextControllerSettings.m in Sources */,
 				C5EF7FA1116C5A6C00801ECA /* TextControllerClientList.m in Sources */,
+				C52529361191425700160B7F /* GLTexture.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
