@@ -1,12 +1,12 @@
 #import "Common.h"
 
-#import "Texture2D.h"
+#import "GLTexture.h"
 
 #define kMaxTextureSize	1024
 
-static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Default;
+static GLTexturePixelFormat defaultAlphaPixelFormat = kGLTexturePixelFormat_Default;
 
-@implementation Texture2D
+@implementation GLTexture
 
 @synthesize contentSize           = _size;
 @synthesize pixelFormat           = _format; 
@@ -17,7 +17,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 @synthesize maxT                  = _maxT;
 @synthesize hasPremultipliedAlpha = _hasPremultipliedAlpha;
 
--(id)initWithData:(const void*)data pixelFormat:(Texture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size
+-(id)initWithData:(const void*)data pixelFormat:(GLTexturePixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size
 {
 	GLint saveName;
 	
@@ -38,8 +38,8 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 		
 		// Specify OpenGL texture image
 		
-        if(pixelFormat == kTexture2DPixelFormat_RGBA8888) { glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,  width, height, 0, GL_RGBA,  GL_UNSIGNED_BYTE, data); } 
-        if(pixelFormat == kTexture2DPixelFormat_A8)       { glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, width, height, 0, GL_ALPHA, GL_UNSIGNED_BYTE, data); } 
+        if(pixelFormat == kGLTexturePixelFormat_RGBA8888) { glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,  width, height, 0, GL_RGBA,  GL_UNSIGNED_BYTE, data); } 
+        if(pixelFormat == kGLTexturePixelFormat_A8)       { glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, width, height, 0, GL_ALPHA, GL_UNSIGNED_BYTE, data); } 
         		
 		glBindTexture(GL_TEXTURE_2D, saveName);
 
@@ -56,8 +56,8 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 		
 		// Specify OpenGL texture image
 		
-        if(pixelFormat == kTexture2DPixelFormat_RGBA8888) { glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,  width, height, 0, GL_RGBA,  GL_UNSIGNED_BYTE, data); } 
-        if(pixelFormat == kTexture2DPixelFormat_A8)       { glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, width, height, 0, GL_ALPHA, GL_UNSIGNED_BYTE, data); } 
+        if(pixelFormat == kGLTexturePixelFormat_RGBA8888) { glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,  width, height, 0, GL_RGBA,  GL_UNSIGNED_BYTE, data); } 
+        if(pixelFormat == kGLTexturePixelFormat_A8)       { glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, width, height, 0, GL_ALPHA, GL_UNSIGNED_BYTE, data); } 
         
 		glBindTexture(GL_TEXTURE_2D, saveName);
         
@@ -90,7 +90,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 
 @end
 
-@implementation Texture2D (Image)
+@implementation GLTexture (Image)
 
 -(id)initWithImageFile:(NSString*)path
 {
@@ -115,7 +115,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 	CGImageAlphaInfo		info;
 	CGAffineTransform		transform;
 	CGSize					imageSize;
-	Texture2DPixelFormat    pixelFormat;
+	GLTexturePixelFormat    pixelFormat;
 	CGImageRef				image;
 	BOOL					sizeToFit = NO;
 		
@@ -142,12 +142,12 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
         }
 		else
         {
-			pixelFormat = kTexture2DPixelFormat_RGB565;
+			pixelFormat = kGLTexturePixelFormat_RGB565;
         }
 	} 
     else  //NOTE: No colorspace means a mask image
 	{
-        pixelFormat = kTexture2DPixelFormat_A8;
+        pixelFormat = kGLTexturePixelFormat_A8;
 	}
     
 	imageSize = CGSizeMake(CGImageGetWidth(image), CGImageGetHeight(image));
@@ -156,7 +156,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 	width  = roundPowerTwo(imageSize.width);
 	height = roundPowerTwo(imageSize.height);
 
-    if(pixelFormat == kTexture2DPixelFormat_RGBA8888)
+    if(pixelFormat == kGLTexturePixelFormat_RGBA8888)
     {
         colorSpace = CGColorSpaceCreateDeviceRGB();
         data = malloc(height * width * 4);
@@ -164,7 +164,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
         CGColorSpaceRelease(colorSpace);
     }
     
-    if(pixelFormat == kTexture2DPixelFormat_A8)
+    if(pixelFormat == kGLTexturePixelFormat_A8)
     {
         data = malloc(height * width);
         context = CGBitmapContextCreate(data, width, height, 8, width, NULL, kCGImageAlphaOnly);
@@ -189,7 +189,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 
 @end
 
-@implementation Texture2D (Text)
+@implementation GLTexture (Text)
 
 -(id)initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment font:(UIFont*)font
 {
@@ -220,7 +220,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 	
     UIGraphicsPopContext();
 	
-	self = [self initWithData:data pixelFormat:kTexture2DPixelFormat_A8 pixelsWide:width pixelsHigh:height contentSize:dimensions];
+	self = [self initWithData:data pixelFormat:kGLTexturePixelFormat_A8 pixelsWide:width pixelsHigh:height contentSize:dimensions];
 	
 	CGContextRelease(context);
 	free(data);
@@ -230,7 +230,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 
 @end
 
-@implementation Texture2D (Button)
+@implementation GLTexture (Button)
 
 - (id)initWithButtonOpacity:(GLfloat)opacity
 {
@@ -262,7 +262,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
         
     UIGraphicsPopContext();
 	
-	self = [self initWithData:data pixelFormat:kTexture2DPixelFormat_A8 pixelsWide:width pixelsHigh:height contentSize:CGSizeMake(width/2, height/2)];
+	self = [self initWithData:data pixelFormat:kGLTexturePixelFormat_A8 pixelsWide:width pixelsHigh:height contentSize:CGSizeMake(width/2, height/2)];
 	
 	CGContextRelease(context);
 	free(data);
@@ -272,7 +272,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 
 @end
 
-@implementation Texture2D (Dots)
+@implementation GLTexture (Dots)
 
 -(id)initWithDots:(int)dots current:(int)current
 {    
@@ -312,7 +312,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
     }
     UIGraphicsPopContext();
 	
-	self = [self initWithData:data pixelFormat:kTexture2DPixelFormat_A8 pixelsWide:textureWidth pixelsHigh:textureHeight contentSize:CGSizeMake(textureWidth, textureHeight)];
+	self = [self initWithData:data pixelFormat:kGLTexturePixelFormat_A8 pixelsWide:textureWidth pixelsHigh:textureHeight contentSize:CGSizeMake(textureWidth, textureHeight)];
 	
 	CGContextRelease(context);
 	free(data);
@@ -322,7 +322,7 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 
 @end
 
-@implementation Texture2D (PVRTC)
+@implementation GLTexture (PVRTC)
 
 -(id)initWithPVRTCFile:(NSString*)file
 {
@@ -370,14 +370,14 @@ static Texture2DPixelFormat defaultAlphaPixelFormat = kTexture2DPixelFormat_Defa
 
 @end
 
-@implementation Texture2D (PixelFormat)
+@implementation GLTexture (PixelFormat)
 
-+(void)setDefaultAlphaPixelFormat:(Texture2DPixelFormat)format
++(void)setDefaultAlphaPixelFormat:(GLTexturePixelFormat)format
 {
 	defaultAlphaPixelFormat = format;
 }
 
-+(Texture2DPixelFormat) defaultAlphaPixelFormat
++(GLTexturePixelFormat) defaultAlphaPixelFormat
 {
 	return defaultAlphaPixelFormat;
 }

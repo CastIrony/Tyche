@@ -1,31 +1,31 @@
 typedef enum 
 {
-	kTexture2DPixelFormat_Automatic = 0,
-	kTexture2DPixelFormat_RGBA8888,
-	kTexture2DPixelFormat_RGB565,
-	kTexture2DPixelFormat_A8,
-	kTexture2DPixelFormat_L8,
-	kTexture2DPixelFormat_RGBA4444,
-	kTexture2DPixelFormat_RGB5A1,
-} Texture2DPixelFormat;
+	kGLTexturePixelFormat_Automatic = 0,
+	kGLTexturePixelFormat_RGBA8888,
+	kGLTexturePixelFormat_RGB565,
+	kGLTexturePixelFormat_A8,
+	kGLTexturePixelFormat_L8,
+	kGLTexturePixelFormat_RGBA4444,
+	kGLTexturePixelFormat_RGB5A1,
+} GLTexturePixelFormat;
 
-#define kTexture2DPixelFormat_Default kTexture2DPixelFormat_RGBA8888
+#define kGLTexturePixelFormat_Default kGLTexturePixelFormat_RGBA8888
 
-@interface Texture2D : NSObject
+@interface GLTexture : NSObject
 {
 	GLuint						_name;
 	CGSize						_size;
 	NSUInteger					_width,
 								_height;
-	Texture2DPixelFormat		_format;
+	GLTexturePixelFormat		_format;
 	GLfloat						_maxS,
 								_maxT;
 	BOOL						_hasPremultipliedAlpha;
 }
 
-- (id) initWithData:(const void*)data pixelFormat:(Texture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size;
+- (id) initWithData:(const void*)data pixelFormat:(GLTexturePixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size;
 
-@property(assign, nonatomic) Texture2DPixelFormat pixelFormat;
+@property(assign, nonatomic) GLTexturePixelFormat pixelFormat;
 @property(assign, nonatomic) NSUInteger pixelsWide;
 @property(assign, nonatomic) NSUInteger pixelsHigh;
 @property(assign, nonatomic) GLuint name;
@@ -36,39 +36,39 @@ typedef enum
 
 @end
 
-@interface Texture2D (Drawing)
+@interface GLTexture (Drawing)
 
 - (void) drawAtPoint:(CGPoint)point;
 - (void) drawInRect:(CGRect)rect;
 
 @end
 
-@interface Texture2D (Image)
+@interface GLTexture (Image)
 
 - (id) initWithImageFile:(NSString*)path;
 - (id) initWithImage:(UIImage *)uiImage;
 
 @end
 
-@interface Texture2D (Text)
+@interface GLTexture (Text)
 
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment font:(UIFont*)font;
 
 @end
 
-@interface Texture2D (Button)
+@interface GLTexture (Button)
 
 - (id)initWithButtonOpacity:(GLfloat)opacity;
 
 @end
 
-@interface Texture2D (Dots)
+@interface GLTexture (Dots)
 
 -(id)initWithDots:(int)dots current:(int)current;
 
 @end
 
-@interface Texture2D (PVRTC)
+@interface GLTexture (PVRTC)
 
 -(id) initWithPVRTCFile: (NSString*) file;
 
@@ -82,7 +82,7 @@ typedef struct _ccTexParams
 	GLuint	wrapT;
 } ccTexParams;
 
-@interface Texture2D (GLFilter)
+@interface GLTexture (GLFilter)
 
 -(void) setTexParameters: (ccTexParams*) texParams;
 
@@ -92,10 +92,10 @@ typedef struct _ccTexParams
 
 @end
 
-@interface Texture2D (PixelFormat)
+@interface GLTexture (PixelFormat)
 
-+(void) setDefaultAlphaPixelFormat:(Texture2DPixelFormat)format;
++(void) setDefaultAlphaPixelFormat:(GLTexturePixelFormat)format;
 
-+(Texture2DPixelFormat) defaultAlphaPixelFormat;
++(GLTexturePixelFormat) defaultAlphaPixelFormat;
 
 @end

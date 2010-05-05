@@ -1,4 +1,4 @@
-#import "Texture2D.h"
+#import "GLTexture.h"
 
 #import "TextureController.h"
 
@@ -11,7 +11,7 @@ static NSMutableDictionary* textures;
     if(!textures) { textures = [[NSMutableDictionary alloc] init]; }
 }
 
-+(void)setTexture:(Texture2D*)texture forKey:(NSString*)key
++(void)setTexture:(GLTexture*)texture forKey:(NSString*)key
 {
     [textures setObject:texture forKey:key];
 }
@@ -23,7 +23,7 @@ static NSMutableDictionary* textures;
 
 +(int)nameForKey:(NSString*)key
 {
-    Texture2D* texture = [textures objectForKey:key];
+    GLTexture* texture = [textures objectForKey:key];
     
     return texture.name;
 }
@@ -60,12 +60,12 @@ static NSMutableDictionary* textures;
 //    }
 }
 
-//[TextureController setTexture:[[[Texture2D alloc] initWithImageFile:@"chips3.png"   ] autorelease] forKey:@"chips"];
-//[TextureController setTexture:[[[Texture2D alloc] initWithPVRTCFile:@"felt3.pvr4"   ] autorelease] forKey:@"table"];
-//[TextureController setTexture:[[[Texture2D alloc] initWithImageFile:@"Default.png"  ] autorelease] forKey:@"splash"];
-//[TextureController setTexture:[[[Texture2D alloc] initWithPVRTCFile:@"hearts.pvr4"  ] autorelease] forKey:@"suit0"];
-//[TextureController setTexture:[[[Texture2D alloc] initWithPVRTCFile:@"diamonds.pvr4"] autorelease] forKey:@"suit1"];
-//[TextureController setTexture:[[[Texture2D alloc] initWithPVRTCFile:@"clubs.pvr4"   ] autorelease] forKey:@"suit2"];
-//[TextureController setTexture:[[[Texture2D alloc] initWithPVRTCFile:@"spades.pvr4"  ] autorelease] forKey:@"suit3"];
+//[TextureController setTexture:[[[GLTexture alloc] initWithImageFile:@"chips3.png"   ] autorelease] forKey:@"chips"];
+//[TextureController setTexture:[[[GLTexture alloc] initWithPVRTCFile:@"felt3.pvr4"   ] autorelease] forKey:@"table"];
+//[TextureController setTexture:[[[GLTexture alloc] initWithImageFile:@"Default.png"  ] autorelease] forKey:@"splash"];
+//[TextureController setTexture:[[[GLTexture alloc] initWithPVRTCFile:@"hearts.pvr4"  ] autorelease] forKey:@"suit0"];
+//[TextureController setTexture:[[[GLTexture alloc] initWithPVRTCFile:@"diamonds.pvr4"] autorelease] forKey:@"suit1"];
+//[TextureController setTexture:[[[GLTexture alloc] initWithPVRTCFile:@"clubs.pvr4"   ] autorelease] forKey:@"suit2"];
+//[TextureController setTexture:[[[GLTexture alloc] initWithPVRTCFile:@"spades.pvr4"  ] autorelease] forKey:@"suit3"];
 
 @end
