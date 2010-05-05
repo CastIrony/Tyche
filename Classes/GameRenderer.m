@@ -310,8 +310,10 @@
 
 -(void)render
 {
+    [_context presentRenderbuffer:GL_RENDERBUFFER_OES];
+    
     static BOOL hasRendered = NO;
-        
+
     TRANSACTION_BEGIN
     {
         GLfloat cameraPitch = self.camera.pitchAngle.value * self.camera.pitchFactor.value;
@@ -364,9 +366,7 @@
     TRANSACTION_END;
     
     TinyProfilerStart(15); [self.splash draw]; TinyProfilerStop(15);
-    
-    [_context presentRenderbuffer:GL_RENDERBUFFER_OES];
-    
+   
     TinyProfilerLog();
     
     hasRendered = YES;
