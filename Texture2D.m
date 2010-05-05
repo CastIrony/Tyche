@@ -136,14 +136,8 @@ static GLTexturePixelFormat defaultAlphaPixelFormat = kGLTexturePixelFormat_Defa
     
 	if(CGImageGetColorSpace(image)) 
     {
-		if(hasAlpha || bpp >= 8)
-        {
-			pixelFormat = defaultAlphaPixelFormat;
-        }
-		else
-        {
-			pixelFormat = kGLTexturePixelFormat_RGB565;
-        }
+        pixelFormat = defaultAlphaPixelFormat;
+
 	} 
     else  //NOTE: No colorspace means a mask image
 	{
