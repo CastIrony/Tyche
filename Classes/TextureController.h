@@ -1,7 +1,7 @@
 @interface TextureController : NSObject { }
 
 +(void)setTexture:(GLTexture*)texture forKey:(NSString*)key;
-+(BOOL)textureExsistsForKey:(NSString*)key;
++(BOOL)textureExistsForKey:(NSString*)key;
 +(int)nameForKey:(NSString*)key;
 
 @end
