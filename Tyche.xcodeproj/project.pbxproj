@@ -755,7 +755,11 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
-				OTHER_CFLAGS = "-v";
+				OTHER_CFLAGS = (
+					"-Xclang",
+					"-fobjc-nonfragileabi",
+					"-v",
+				);
 				PRODUCT_NAME = Tyche;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "82AFA77F-1119-47E9-8A8D-D29A7C9EEA65";
 				RUN_CLANG_STATIC_ANALYZER = YES;
@@ -782,7 +786,11 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
-				OTHER_CFLAGS = "-v";
+				OTHER_CFLAGS = (
+					"-Xclang",
+					"-fobjc-nonfragileabi",
+					"-v",
+				);
 				PRODUCT_NAME = Tyche;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "82AFA77F-1119-47E9-8A8D-D29A7C9EEA65";
 				RUN_CLANG_STATIC_ANALYZER = YES;
@@ -883,7 +891,11 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
-				OTHER_CFLAGS = "-v";
+				OTHER_CFLAGS = (
+					"-Xclang",
+					"-fobjc-nonfragileabi",
+					"-v",
+				);
 				PRODUCT_NAME = Tyche;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "82AFA77F-1119-47E9-8A8D-D29A7C9EEA65";
 				RUN_CLANG_STATIC_ANALYZER = YES;
