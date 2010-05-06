@@ -35,7 +35,7 @@
         
         eaglLayer.opaque = TRUE;
         eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:FALSE], kEAGLDrawablePropertyRetainedBacking, 
-                                                                                  kEAGLColorFormatRGBA8,           kEAGLDrawablePropertyColorFormat, 
+                                                                                  /*kEAGLColorFormatRGBA8*/kEAGLColorFormatRGB565,           kEAGLDrawablePropertyColorFormat, 
                                                                                   nil];
 		
         renderer = [[GameRenderer alloc] init];
