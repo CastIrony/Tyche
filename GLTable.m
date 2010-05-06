@@ -161,24 +161,21 @@
     glVertexPointer  (3, GL_FLOAT, 0, topVertexArray);
     //glColorPointer   (4, GL_FLOAT, 0, topColorArray);
     
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    
     glClientActiveTexture(GL_TEXTURE0); 
     glActiveTexture(GL_TEXTURE0); 
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"table"]);
     glTexCoordPointer(2, GL_FLOAT, 0, topTextureArray0);      
     
     glClientActiveTexture(GL_TEXTURE1); 
     glActiveTexture(GL_TEXTURE1); 
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"lightmap"]);
     glTexCoordPointer(2, GL_FLOAT, 0, topTextureArray1);      
     
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, topMeshArray);
     
-    glClientActiveTexture(GL_TEXTURE1); 
-    glActiveTexture(GL_TEXTURE1); 
     glBindTexture(GL_TEXTURE_2D, 0);
     glClientActiveTexture(GL_TEXTURE0); 
     glActiveTexture(GL_TEXTURE0); 
