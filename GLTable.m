@@ -106,10 +106,10 @@
 
     Vector3D topVertexArray[] = 
     {
-        Vector3DMake(-20.0, 0.0, -16.75),       
-        Vector3DMake( 20.0, 0.0, -16.75),        
-        Vector3DMake(-20.0, 0.0,   3.25),        
-        Vector3DMake( 20.0, 0.0,   3.25),
+        Vector3DMake(-15.0, 0.0, -11.75),       
+        Vector3DMake( 15.0, 0.0, -11.75),        
+        Vector3DMake(-15.0, 0.0,   3.25),        
+        Vector3DMake( 15.0, 0.0,   3.25),
     };
     
     GLushort topMeshArray[] =
