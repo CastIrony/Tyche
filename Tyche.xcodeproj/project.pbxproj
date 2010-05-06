@@ -65,6 +65,7 @@
 		C55AA3EB11684A000013BF3D /* MenuLayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = C55AA3EA11684A000013BF3D /* MenuLayerController.m */; };
 		C55F717A115852AD0096E96C /* MenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = C55F7179115852AD0096E96C /* MenuController.m */; };
 		C566160D110C0B9F00D6D5FE /* GLChipGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = C566160C110C0B9F00D6D5FE /* GLChipGroup.m */; };
+		C572C6EB1192A57A005FABE1 /* cards2.png in Resources */ = {isa = PBXBuildFile; fileRef = C572C6EA1192A57A005FABE1 /* cards2.png */; };
 		C5795ABB115B236900430A1F /* TextControllerPageMarker.m in Sources */ = {isa = PBXBuildFile; fileRef = C5795ABA115B236900430A1F /* TextControllerPageMarker.m */; };
 		C593EAEB115322F000A33322 /* SessionController.m in Sources */ = {isa = PBXBuildFile; fileRef = C593EAEA115322F000A33322 /* SessionController.m */; };
 		C5A70222114DF9F5001F67F2 /* SessionControllerClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A70221114DF9F5001F67F2 /* SessionControllerClient.m */; };
@@ -211,6 +212,7 @@
 		C55F7179115852AD0096E96C /* MenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuController.m; sourceTree = "<group>"; };
 		C566160B110C0B9F00D6D5FE /* GLChipGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLChipGroup.h; sourceTree = "<group>"; };
 		C566160C110C0B9F00D6D5FE /* GLChipGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLChipGroup.m; sourceTree = "<group>"; };
+		C572C6EA1192A57A005FABE1 /* cards2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cards2.png; sourceTree = "<group>"; };
 		C5795AB9115B236900430A1F /* TextControllerPageMarker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextControllerPageMarker.h; sourceTree = "<group>"; };
 		C5795ABA115B236900430A1F /* TextControllerPageMarker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextControllerPageMarker.m; sourceTree = "<group>"; };
 		C593EAE9115322F000A33322 /* SessionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionController.h; sourceTree = "<group>"; };
@@ -366,6 +368,7 @@
 		C507A33510856D500049B556 /* Textures */ = {
 			isa = PBXGroup;
 			children = (
+				C572C6EA1192A57A005FABE1 /* cards2.png */,
 				C5B1913A118A8EC800523867 /* cards4.png */,
 				C543A2F41187D18B005372E1 /* lightmap.png */,
 				C5F5EEFA11873BCB0072AED1 /* cards3.png */,
@@ -650,6 +653,7 @@
 				C543A2F51187D18B005372E1 /* lightmap.png in Resources */,
 				C543A3A31187E295005372E1 /* heartsflat.pvr4 in Resources */,
 				C5B1913B118A8EC800523867 /* cards4.png in Resources */,
+				C572C6EB1192A57A005FABE1 /* cards2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
