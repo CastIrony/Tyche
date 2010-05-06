@@ -173,7 +173,7 @@
     
     GLushort meshArray[30];  
     
-    int vertexWidth  = 4;
+    int vertexWidth  = 6;
     int vertexHeight = 2;            
     
     GenerateBezierMesh(meshArray, vertexWidth, vertexHeight);
