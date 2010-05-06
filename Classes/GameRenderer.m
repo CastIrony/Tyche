@@ -310,6 +310,8 @@
 
 -(void)render
 {
+    TinyProfilerStart(14);
+    
     static BOOL hasRendered = NO;
 
     if(hasRendered)
@@ -369,10 +371,12 @@
     TRANSACTION_END;
     
     TinyProfilerStart(15); [self.splash draw]; TinyProfilerStop(15);
-   
-    TinyProfilerLog();
-    
+       
     hasRendered = YES;
+    
+    TinyProfilerStop(14);
+
+    TinyProfilerLog();
 }
 
 -(void)showMenus
