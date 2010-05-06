@@ -347,15 +347,15 @@
         glVertexPointer  (3, GL_FLOAT, 0, arrayBorderVertex);
         glTexCoordPointer(2, GL_FLOAT, 0, arrayBorderTexture);            
         
-        glColor4f(colorShadowOpaque.red, colorShadowOpaque.green, colorShadowOpaque.blue, colorShadowOpaque.alpha);
-        
-        TRANSACTION_BEGIN
-        {        
-            glTranslatef(self.layoutLocation.value.x, self.layoutLocation.value.y, self.layoutLocation.value.z + 0.06);
-            
-            glDrawElements(GL_TRIANGLES, 54, GL_UNSIGNED_SHORT, arrayBorderMesh);    
-        }
-        TRANSACTION_END
+//        glColor4f(colorShadowOpaque.red, colorShadowOpaque.green, colorShadowOpaque.blue, colorShadowOpaque.alpha);
+//        
+//        TRANSACTION_BEGIN
+//        {        
+//            glTranslatef(self.layoutLocation.value.x, self.layoutLocation.value.y, self.layoutLocation.value.z + 0.06);
+//            
+//            glDrawElements(GL_TRIANGLES, 54, GL_UNSIGNED_SHORT, arrayBorderMesh);    
+//        }
+//        TRANSACTION_END
         
         glColor4f(colorLabelOpaque.red, colorLabelOpaque.green, colorLabelOpaque.blue, colorLabelOpaque.alpha);
         
@@ -418,30 +418,30 @@
                 
         glBindTexture(GL_TEXTURE_2D, self.textureText.name);
         
-        if(self.hasShadow)
-        {
-            arrayTextColor[0] = colorShadowTransparent;
-            arrayTextColor[1] = colorShadowOpaque;
-            arrayTextColor[2] = colorShadowOpaque;
-            arrayTextColor[3] = colorShadowTransparent;
-            
-            arrayTextColor[4] = colorShadowTransparent;
-            arrayTextColor[5] = colorShadowOpaque;
-            arrayTextColor[6] = colorShadowOpaque;
-            arrayTextColor[7] = colorShadowTransparent;
-                        
-            glVertexPointer  (3, GL_FLOAT, 0, arrayTextVertex);
-            glTexCoordPointer(2, GL_FLOAT, 0, arrayTextTexture);            
-            glColorPointer   (4, GL_FLOAT, 0, arrayTextColor);
-            
-            TRANSACTION_BEGIN
-            {        
-                glTranslatef(self.layoutLocation.value.x, self.layoutLocation.value.y, self.layoutLocation.value.z + 0.04);
-                
-                glDrawElements(GL_TRIANGLES, 18, GL_UNSIGNED_SHORT, arrayTextMesh);    
-            }
-            TRANSACTION_END
-        }
+//        if(self.hasShadow)
+//        {
+//            arrayTextColor[0] = colorShadowTransparent;
+//            arrayTextColor[1] = colorShadowOpaque;
+//            arrayTextColor[2] = colorShadowOpaque;
+//            arrayTextColor[3] = colorShadowTransparent;
+//            
+//            arrayTextColor[4] = colorShadowTransparent;
+//            arrayTextColor[5] = colorShadowOpaque;
+//            arrayTextColor[6] = colorShadowOpaque;
+//            arrayTextColor[7] = colorShadowTransparent;
+//                        
+//            glVertexPointer  (3, GL_FLOAT, 0, arrayTextVertex);
+//            glTexCoordPointer(2, GL_FLOAT, 0, arrayTextTexture);            
+//            glColorPointer   (4, GL_FLOAT, 0, arrayTextColor);
+//            
+//            TRANSACTION_BEGIN
+//            {        
+//                glTranslatef(self.layoutLocation.value.x, self.layoutLocation.value.y, self.layoutLocation.value.z + 0.04);
+//                
+//                glDrawElements(GL_TRIANGLES, 18, GL_UNSIGNED_SHORT, arrayTextMesh);    
+//            }
+//            TRANSACTION_END
+//        }
         
         arrayTextColor[0] = colorLabelTransparent;
         arrayTextColor[1] = colorLabelOpaque;
