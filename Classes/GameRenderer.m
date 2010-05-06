@@ -264,7 +264,7 @@
                 
         textController.renderer = self;
         
-        textController.location = Vector3DMake(0, 0, -6.6); //-6.4
+        textController.location = Vector3DMake(0, 0, -7); //-6.4
         
         [self.textControllers setObject:textController forKey:@"status1"];
     }
