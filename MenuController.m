@@ -155,7 +155,7 @@
                 
         for(NSString* key in self.allMenuKeys)
         {
-            if(key != self.currentKey)
+            if(key == [self.allMenuKeys objectBefore:self.currentKey] || key == [self.allMenuKeys objectAfter:self.currentKey])
             {
                 GLMenu* menu = [self.menus objectForKey:key];
                 
