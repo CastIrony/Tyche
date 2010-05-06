@@ -91,7 +91,7 @@
     
     // TOP
     
-    glEnableClientState(GL_COLOR_ARRAY);
+    //glEnableClientState(GL_COLOR_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
     
     glNormal3f(0.0, -1.0, 0.0);
@@ -147,17 +147,19 @@
 
     GLfloat lightness = self.renderer.lightness.value;
     
-    Color3D topColorArray[] =
-    {
-        Color3DMake(lightness, lightness, lightness, self.drawStatus == GLTableDrawStatusDiffuse ? 0.45 : 0.45),        
-        Color3DMake(lightness, lightness, lightness, self.drawStatus == GLTableDrawStatusDiffuse ? 0.45 : 0.45),        
-        Color3DMake(lightness, lightness, lightness, self.drawStatus == GLTableDrawStatusDiffuse ? 0.45 : 0.45),        
-        Color3DMake(lightness, lightness, lightness, self.drawStatus == GLTableDrawStatusDiffuse ? 0.45 : 0.45),        
-    };
+    glColor4f(lightness, lightness, lightness, 0.45);
+    
+//    Color3D topColorArray[] =
+//    {
+//        Color3DMake(lightness, lightness, lightness, self.drawStatus == GLTableDrawStatusDiffuse ? 0.45 : 0.45),        
+//        Color3DMake(lightness, lightness, lightness, self.drawStatus == GLTableDrawStatusDiffuse ? 0.45 : 0.45),        
+//        Color3DMake(lightness, lightness, lightness, self.drawStatus == GLTableDrawStatusDiffuse ? 0.45 : 0.45),        
+//        Color3DMake(lightness, lightness, lightness, self.drawStatus == GLTableDrawStatusDiffuse ? 0.45 : 0.45),        
+//    };
     
     //glTexCoordPointer(2, GL_FLOAT, 0, topTextureArray);            
     glVertexPointer  (3, GL_FLOAT, 0, topVertexArray);
-    glColorPointer   (4, GL_FLOAT, 0, topColorArray);
+    //glColorPointer   (4, GL_FLOAT, 0, topColorArray);
     
     glClientActiveTexture(GL_TEXTURE0); 
     glActiveTexture(GL_TEXTURE0); 
@@ -191,12 +193,12 @@
     
     //glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, topMeshArray);
     
-    glDisableClientState(GL_COLOR_ARRAY);
+    //glDisableClientState(GL_COLOR_ARRAY);
     glEnableClientState(GL_NORMAL_ARRAY);
     
     // FRONT
     
-    glColor4f(lightness, lightness, lightness, self.drawStatus == GLTableDrawStatusDiffuse ? 0.45 : 0.45);
+    //glColor4f(lightness, lightness, lightness, self.drawStatus == GLTableDrawStatusDiffuse ? 0.45 : 0.45);
     
     Vector3D frontVertexArray [12];
     Vector3D frontNormalArray [12];
