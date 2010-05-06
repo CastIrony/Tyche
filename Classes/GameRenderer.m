@@ -310,10 +310,13 @@
 
 -(void)render
 {
-    [_context presentRenderbuffer:GL_RENDERBUFFER_OES];
-    
     static BOOL hasRendered = NO;
 
+    if(hasRendered)
+    {
+        [_context presentRenderbuffer:GL_RENDERBUFFER_OES];
+    }
+        
     TRANSACTION_BEGIN
     {
         GLfloat cameraPitch = self.camera.pitchAngle.value * self.camera.pitchFactor.value;
