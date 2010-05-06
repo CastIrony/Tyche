@@ -34,7 +34,7 @@
     { 
         NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
         
-        [label setObject:self.text forKey:@"textString"];          
+        [label setObject:/*self.text*/@"Lorem ipsum dolor sit amet" forKey:@"textString"];          
         
         [label setObject:@"text" forKey:@"key"]; 
         
