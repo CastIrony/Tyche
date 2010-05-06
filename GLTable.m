@@ -137,29 +137,11 @@
     topTextureArray1[2] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(0, 1) : Vector2DMake(0.225, 1);        
     topTextureArray1[3] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(1, 1) : Vector2DMake(0.777, 1);
         
-//    Color3D topColorArray[] =
-//    {
-//        Color3DMake( 0.0, 0.0, 0.0, opacity),        
-//        Color3DMake( 0.0, 0.0, 0.0, opacity),        
-//        Color3DMake( 0.5, 0.5, 0.5, opacity),        
-//        Color3DMake( 0.5, 0.5, 0.5, opacity),        
-//    };
-
     GLfloat lightness = self.renderer.lightness.value;
     
     glColor4f(lightness, lightness, lightness, 0.45);
     
-//    Color3D topColorArray[] =
-//    {
-//        Color3DMake(lightness, lightness, lightness, self.drawStatus == GLTableDrawStatusDiffuse ? 0.45 : 0.45),        
-//        Color3DMake(lightness, lightness, lightness, self.drawStatus == GLTableDrawStatusDiffuse ? 0.45 : 0.45),        
-//        Color3DMake(lightness, lightness, lightness, self.drawStatus == GLTableDrawStatusDiffuse ? 0.45 : 0.45),        
-//        Color3DMake(lightness, lightness, lightness, self.drawStatus == GLTableDrawStatusDiffuse ? 0.45 : 0.45),        
-//    };
-    
-    //glTexCoordPointer(2, GL_FLOAT, 0, topTextureArray);            
     glVertexPointer  (3, GL_FLOAT, 0, topVertexArray);
-    //glColorPointer   (4, GL_FLOAT, 0, topColorArray);
     
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
@@ -180,22 +162,9 @@
     glClientActiveTexture(GL_TEXTURE0); 
     glActiveTexture(GL_TEXTURE0); 
     
-    
-    
-    
-    
-    
-    
-    
-    
-    //glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, topMeshArray);
-    
-    //glDisableClientState(GL_COLOR_ARRAY);
     glEnableClientState(GL_NORMAL_ARRAY);
     
     // FRONT
-    
-    //glColor4f(lightness, lightness, lightness, self.drawStatus == GLTableDrawStatusDiffuse ? 0.45 : 0.45);
     
     Vector3D frontVertexArray [12];
     Vector3D frontNormalArray [12];
@@ -204,10 +173,8 @@
     
     GLushort meshArray[30];  
     
-    int vertexWidth  = 6;
+    int vertexWidth  = 4;
     int vertexHeight = 2;            
-    
-    
     
     GenerateBezierMesh(meshArray, vertexWidth, vertexHeight);
     
