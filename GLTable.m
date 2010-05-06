@@ -47,25 +47,25 @@
 //    GenerateBezierControlPoints(frontControlPoints, frontCorners);
 
     
-    frontControlPoints[ 0] = Vector3DMake(-15.0, 1.0, 3.25);
-    frontControlPoints[ 1] = Vector3DMake( -5.0, 1.0, 3.25);
-    frontControlPoints[ 2] = Vector3DMake(  5.0, 1.0, 3.25);
-    frontControlPoints[ 3] = Vector3DMake( 15.0, 1.0, 3.25);
+    frontControlPoints[ 0] = Vector3DMake(-20.0, 1.0, 3.25);
+    frontControlPoints[ 1] = Vector3DMake( -6.7, 1.0, 3.25);
+    frontControlPoints[ 2] = Vector3DMake(  6.7, 1.0, 3.25);
+    frontControlPoints[ 3] = Vector3DMake( 20.0, 1.0, 3.25);
     
-    frontControlPoints[ 4] = Vector3DMake(-15.0, 1.0, 4.25);
-    frontControlPoints[ 5] = Vector3DMake( -5.0, 1.0, 4.25);
-    frontControlPoints[ 6] = Vector3DMake(  5.0, 1.0, 4.25);
-    frontControlPoints[ 7] = Vector3DMake( 15.0, 1.0, 4.25);
+    frontControlPoints[ 4] = Vector3DMake(-20.0, 1.0, 4.25);
+    frontControlPoints[ 5] = Vector3DMake( -6.7, 1.0, 4.25);
+    frontControlPoints[ 6] = Vector3DMake(  6.7, 1.0, 4.25);
+    frontControlPoints[ 7] = Vector3DMake( 20.0, 1.0, 4.25);
     
-    frontControlPoints[ 8] = Vector3DMake(-15.0, 0.0, 4.25);
-    frontControlPoints[ 9] = Vector3DMake( -5.0, 0.0, 4.25);
-    frontControlPoints[10] = Vector3DMake(  5.0, 0.0, 4.25);
-    frontControlPoints[11] = Vector3DMake( 15.0, 0.0, 4.25);
+    frontControlPoints[ 8] = Vector3DMake(-20.0, 0.0, 4.25);
+    frontControlPoints[ 9] = Vector3DMake( -6.7, 0.0, 4.25);
+    frontControlPoints[10] = Vector3DMake(  6.7, 0.0, 4.25);
+    frontControlPoints[11] = Vector3DMake( 20.0, 0.0, 4.25);
     
-    frontControlPoints[12] = Vector3DMake(-15.0, 0.0, 3.25);
-    frontControlPoints[13] = Vector3DMake( -5.0, 0.0, 3.25);
-    frontControlPoints[14] = Vector3DMake(  5.0, 0.0, 3.25);
-    frontControlPoints[15] = Vector3DMake( 15.0, 0.0, 3.25);
+    frontControlPoints[12] = Vector3DMake(-20.0, 0.0, 3.25);
+    frontControlPoints[13] = Vector3DMake( -6.7, 0.0, 3.25);
+    frontControlPoints[14] = Vector3DMake(  6.7, 0.0, 3.25);
+    frontControlPoints[15] = Vector3DMake( 20.0, 0.0, 3.25);
 }
 
 -(id<Touchable>)testTouch:(UITouch*)touch withPreviousObject:(id<Touchable>)object
@@ -106,10 +106,10 @@
 
     Vector3D topVertexArray[] = 
     {
-        Vector3DMake(-15.0, 0.0, -11.75),       
-        Vector3DMake( 15.0, 0.0, -11.75),        
-        Vector3DMake(-15.0, 0.0,   3.25),        
-        Vector3DMake( 15.0, 0.0,   3.25),
+        Vector3DMake(-20.0, 0.0, -16.75),       
+        Vector3DMake( 20.0, 0.0, -16.75),        
+        Vector3DMake(-20.0, 0.0,   3.25),        
+        Vector3DMake( 20.0, 0.0,   3.25),
     };
     
     GLushort topMeshArray[] =
