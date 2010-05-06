@@ -96,6 +96,8 @@
 
 -(void)draw
 {
+    if(within(self.hidden.value, 1, 0.001)) { return; }
+    
     TRANSACTION_BEGIN
     {    
         glTranslatef(self.hidden.value * -15 , 0, 0);
