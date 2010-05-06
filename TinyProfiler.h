@@ -3,7 +3,7 @@
 
 #define TINY_PROFILER_SHOULD_RUN 1
 
-#define TINY_PROFILER_LOG_INTERVAL 30
+#define TINY_PROFILER_LOG_INTERVAL 300
 #define TINY_PROFILER_COUNT        32
 #define TINY_PROFILER_TIMER        CFAbsoluteTimeGetCurrent()
 #define TINY_PROFILER_TIME_TYPE    NSTimeInterval
