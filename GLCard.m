@@ -106,7 +106,7 @@
 
 -(void)drawFront
 {    
-    int cardTesselationWidth  = 9;
+    int cardTesselationWidth  = 5;
     int cardTesselationHeight = 3;
     
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -178,9 +178,9 @@
     
     glColor4f(lightness, lightness, lightness, held);
     
-    TinyProfilerStart(20); GenerateBezierVertices(arrayVertex,  cardTesselationWidth, cardTesselationHeight, _controlPointsBack);                      TinyProfilerStop(20);         
-    TinyProfilerStart(21); GenerateBezierNormals (arrayNormal,  cardTesselationWidth, cardTesselationHeight, _controlPointsBack);                      TinyProfilerStop(21);
-    TinyProfilerStart(22); GenerateBezierMesh    (arrayMesh,    cardTesselationWidth, cardTesselationHeight);                                          TinyProfilerStop(22);
+    TinyProfilerStart(20); GenerateBezierVertices(arrayVertex,   cardTesselationWidth, cardTesselationHeight, _controlPointsBack);                      TinyProfilerStop(20);         
+    TinyProfilerStart(21); GenerateBezierNormals (arrayNormal,   cardTesselationWidth, cardTesselationHeight, _controlPointsBack);                      TinyProfilerStop(21);
+    TinyProfilerStart(22); GenerateBezierMesh    (arrayMesh,     cardTesselationWidth, cardTesselationHeight);                                          TinyProfilerStop(22);
     TinyProfilerStart(23); GenerateBezierTextures(arrayTexture0, cardTesselationWidth, cardTesselationHeight, Vector2DMake(1, 1), Vector2DMake(0, 0)); TinyProfilerStop(23);
     TinyProfilerStart(24); GenerateBezierTextures(arrayTexture1, cardTesselationWidth, cardTesselationHeight, textureSizeCard, textureOffsetCard[14]); TinyProfilerStop(24);
     
