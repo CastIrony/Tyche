@@ -7,9 +7,7 @@ typedef enum
     BezierLookup_5_3,
     BezierLookup_6_2,
     BezierLookup_2_2,
-    BezierLookup_9_3,
-    BezierLookup_5_3,
-    BezierLookup_5_3,
+    BezierLookup_9_3
 } 
 BezierLookup;
 
