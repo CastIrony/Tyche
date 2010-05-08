@@ -32,7 +32,7 @@
 
 -(BOOL)isAutomatic
 {
-    if(!_isAutomatic) { _isAutomatic = [[NSUserDefaults standardUserDefaults] objectForKey:@"automatic_camera"]; }
+    //if(!_isAutomatic) { _isAutomatic = 1;[[NSUserDefaults standardUserDefaults] objectForKey:@"automatic_camera"]; }
     if(!_isAutomatic) { _isAutomatic = [NSNumber numberWithBool:YES]; }
     
     return [_isAutomatic boolValue];
