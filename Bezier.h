@@ -2,6 +2,17 @@
 #import "Common.h"
 #import "Geometry.h"
 
+typedef enum 
+{
+    BezierLookup_5_3,
+    BezierLookup_6_2,
+    BezierLookup_2_2,
+    BezierLookup_9_3,
+    BezierLookup_5_3,
+    BezierLookup_5_3,
+} 
+BezierLookup;
+
 static void GenerateBezierControlPoints(Vector3D* arrayControl, Vector3D* arrayCorner)
 {
     for(int controlRow = 0; controlRow < 4; controlRow++)

@@ -325,7 +325,7 @@
         
         glRotatef(cameraPitch + 90, 1.0f, 0.0f, 0.0f);            
         
-        [self.cardGroup resetCardsWithBendFactor:cameraPitch / 90.0];
+        TinyProfilerStart(17);[self.cardGroup resetCardsWithBendFactor:cameraPitch / 90.0];TinyProfilerStop(17);
                 
         glTranslatef(0, 0, 3.0 * cameraPitch / 90.0);
         
