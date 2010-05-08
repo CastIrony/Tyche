@@ -318,8 +318,6 @@
             
     Color3D arrayTextColor[8];
     
-    Color3D colorShadowOpaque      = Color3DMake(0, 0, 0, self.layoutOpacity.value * self.textController.opacity * 0.3);
-    Color3D colorShadowTransparent = Color3DMake(0, 0, 0, 0);
     Color3D colorLabelOpaque;
     Color3D colorLabelTransparent;
     
