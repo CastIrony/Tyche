@@ -7,7 +7,7 @@
 #define TINY_PROFILER_COUNT        32
 #define TINY_PROFILER_TIMER        CFAbsoluteTimeGetCurrent()
 #define TINY_PROFILER_TIME_TYPE    NSTimeInterval
-#define TINY_PROFILER_LOG(...)     printf("%d, %d, %f5\n", __VA_ARGS__)
+#define TINY_PROFILER_LOG(...)     printf("%d, %d, %f5, %f5\n", __VA_ARGS__)
 
 typedef struct 
 {
@@ -50,7 +50,7 @@ static inline void TinyProfilerLog()
     {
         if(!tinyProfilers[profileIndex].runCount) { continue; }
         
-        TINY_PROFILER_LOG(profileIndex, tinyProfilers[profileIndex].runCount, tinyProfilers[profileIndex].totalTime);
+        TINY_PROFILER_LOG(profileIndex, tinyProfilers[profileIndex].runCount, tinyProfilers[profileIndex].totalTime, tinyProfilers[profileIndex].totalTime / tinyProfilers[profileIndex].runCount);
         
         tinyProfilers[profileIndex].startTime = 0;
         tinyProfilers[profileIndex].totalTime = 0;
