@@ -106,7 +106,7 @@
 
 -(void)drawFront
 {    
-    int cardTesselationWidth  = 7;
+    int cardTesselationWidth  = 8;
     int cardTesselationHeight = 3;
     
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
