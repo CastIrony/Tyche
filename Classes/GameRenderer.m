@@ -437,7 +437,7 @@
     }
 }
 
--(void)flipCardsAndThen:(block)work
+-(void)flipCardsAndThen:(simpleBlock)work
 {
     int cardCount = self.cardGroup.cards.count;
 
@@ -457,7 +457,7 @@
     }
 }
 
--(void)unflipCardsAndThen:(block)work
+-(void)unflipCardsAndThen:(simpleBlock)work
 {
     int cardCount = self.cardGroup.cards.count;
 

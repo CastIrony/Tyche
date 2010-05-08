@@ -114,7 +114,7 @@
 	return self;
 }
 
--(void)newDeckAndThen:(block)work
+-(void)newDeckAndThen:(simpleBlock)work
 {
     self.game.deck = [[NSMutableArray alloc] init];
     
@@ -135,12 +135,12 @@
     [self.game.deck shuffle];
 }
 
--(void)newGameAndThen:(block)work
+-(void)newGameAndThen:(simpleBlock)work
 {
 
 }
 
--(void)newHandAndThen:(block)work
+-(void)newHandAndThen:(simpleBlock)work
 {
     //TODO: refactor this into updateRendererAnimated
     [self.renderer.cardGroup clearCards];
@@ -156,14 +156,14 @@
     [self dealCards:[self.game getCards:5] andThen:work];
 }
 
--(void)endGameAndThen:(block)work
+-(void)endGameAndThen:(simpleBlock)work
 {
     self.game = nil;
     
     [self updateRenderer];
 }
 
--(void)endHandAndThen:(block)work
+-(void)endHandAndThen:(simpleBlock)work
 {
     //TODO: refactor this into updateRendererAnimated
     [self.renderer unflipCardsAndThen:^{ [self discardCards:self.player.cards andThen:^{ [self updateRenderer]; }]; }];
@@ -183,7 +183,7 @@
 
 
 //TODO: make dealCards deal all cards at once, with delayed animation
--(void)dealCards:(NSMutableArray*)cards andThen:(block)work
+-(void)dealCards:(NSMutableArray*)cards andThen:(simpleBlock)work
 {
     [SoundController playSoundEffectForKey:@"carddeal"];
     
@@ -211,7 +211,7 @@
 }
 
 //TODO: make discardCards discard all cards at once, with delayed animation
--(void)discardCards:(NSMutableArray*)cards andThen:(block)work
+-(void)discardCards:(NSMutableArray*)cards andThen:(simpleBlock)work
 {
     if(cards.count > 0)
     {
@@ -234,7 +234,7 @@
     }
 }
 
--(void)drawCardsAndThen:(block)work
+-(void)drawCardsAndThen:(simpleBlock)work
 {
     NSMutableArray* playerCards = self.player.cards;
     

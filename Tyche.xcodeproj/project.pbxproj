@@ -742,6 +742,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Joel Bernstein (6452FFH9DB)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -763,6 +764,7 @@
 				PRODUCT_NAME = Tyche;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "82AFA77F-1119-47E9-8A8D-D29A7C9EEA65";
 				RUN_CLANG_STATIC_ANALYZER = YES;
+				VALID_ARCHS = "armv6 armv7";
 			};
 			name = Debug;
 		};
@@ -770,6 +772,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Joel Bernstein (6452FFH9DB)";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -790,6 +793,7 @@
 				PRODUCT_NAME = Tyche;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "82AFA77F-1119-47E9-8A8D-D29A7C9EEA65";
 				RUN_CLANG_STATIC_ANALYZER = YES;
+				VALID_ARCHS = "armv6 armv7";
 			};
 			name = Release;
 		};
@@ -870,6 +874,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Joel Bernstein (6452FFH9DB)";
 				COPY_PHASE_STRIP = YES;
@@ -891,6 +896,7 @@
 				PRODUCT_NAME = Tyche;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "82AFA77F-1119-47E9-8A8D-D29A7C9EEA65";
 				RUN_CLANG_STATIC_ANALYZER = YES;
+				VALID_ARCHS = "armv6 armv7";
 			};
 			name = "Ad Hoc";
 		};

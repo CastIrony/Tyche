@@ -93,7 +93,7 @@
 -(void)lighten;
 -(void)darken;
 
--(void)flipCardsAndThen:(block)work;
--(void)unflipCardsAndThen:(block)work;
+-(void)flipCardsAndThen:(simpleBlock)work;
+-(void)unflipCardsAndThen:(simpleBlock)work;
 
 @end

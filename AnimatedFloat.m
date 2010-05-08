@@ -23,7 +23,7 @@
 
 @dynamic value;
 
--(id)initWithStartValue:(GLfloat)startValue endValue:(GLfloat)endValue startTime:(NSTimeInterval)startTime endTime:(NSTimeInterval)endTime onStart:(block)onStart onEnd:(block)onEnd
+-(id)initWithStartValue:(GLfloat)startValue endValue:(GLfloat)endValue startTime:(NSTimeInterval)startTime endTime:(NSTimeInterval)endTime onStart:(simpleBlock)onStart onEnd:(simpleBlock)onEnd
 {
     self = [super init];
     

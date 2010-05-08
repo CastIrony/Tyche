@@ -5,14 +5,14 @@
 #define TRANSACTION_BEGIN glPushMatrix(); @try
 #define TRANSACTION_END @catch(NSException* exception) { NSLog(@"Error in transaction: %@", exception ); } @finally { glPopMatrix(); }
 
-typedef void(^block)(void);
+typedef void(^simpleBlock)(void);
 
-static inline void runAfterDelay(NSTimeInterval delay, block work)
+static inline void runAfterDelay(NSTimeInterval delay, simpleBlock work)
 {
     [[[work copy] autorelease] performSelector:@selector(my_callBlock) withObject:nil afterDelay:delay];
 }
 
-static inline void runLater(block work)
+static inline void runLater(simpleBlock work)
 {
     [[[work copy] autorelease] performSelector:@selector(my_callBlock) withObject:nil afterDelay:0];
 }

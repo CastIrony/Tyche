@@ -74,7 +74,7 @@
 	return self;
 }
 
--(void)newGameAndThen:(block)work
+-(void)newGameAndThen:(simpleBlock)work
 {
     [super newGameAndThen:nil];
     

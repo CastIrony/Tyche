@@ -6,12 +6,12 @@
 {
     GLfloat        _startValue;
     NSTimeInterval _startTime;
-    block          _onStart;      
+    simpleBlock          _onStart;      
     BOOL           _hasStarted;
      
     GLfloat        _endValue;
     NSTimeInterval _endTime;
-    block          _onEnd;    
+    simpleBlock          _onEnd;    
     BOOL           _hasEnded;
 
     AnimationCurve _curve;
@@ -19,12 +19,12 @@
 
 @property (nonatomic, assign)   GLfloat        startValue;
 @property (nonatomic, assign)   NSTimeInterval startTime;
-@property (nonatomic, copy)     block          onStart;      
+@property (nonatomic, copy)     simpleBlock          onStart;      
 @property (nonatomic, readonly) BOOL           hasStarted;
 
 @property (nonatomic, assign)   GLfloat        endValue;
 @property (nonatomic, assign)   NSTimeInterval endTime;
-@property (nonatomic, copy)     block          onEnd;    
+@property (nonatomic, copy)     simpleBlock          onEnd;    
 @property (nonatomic, readonly) BOOL           hasEnded;
 
 @property (nonatomic, assign)   AnimationCurve curve;

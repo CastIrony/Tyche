@@ -22,7 +22,7 @@
 
 @dynamic value;
 
--(id)initWithStartValue:(Vector3D)startValue endValue:(Vector3D)endValue startTime:(NSTimeInterval)startTime endTime:(NSTimeInterval)endTime onStart:(block)onStart onEnd:(block)onEnd
+-(id)initWithStartValue:(Vector3D)startValue endValue:(Vector3D)endValue startTime:(NSTimeInterval)startTime endTime:(NSTimeInterval)endTime onStart:(simpleBlock)onStart onEnd:(simpleBlock)onEnd
 {
     self = [super init];
     
