@@ -24,11 +24,6 @@
 @synthesize numeral     = _numeral;
 @synthesize position    = _position;
 
-@dynamic textureHearts;
-@dynamic textureDiamonds;
-@dynamic textureClubs;
-@dynamic textureSpades;
-
 @synthesize isHeld     = _isHeld;
 @synthesize isSelected = _isSelected;
 @synthesize angleFlip  = _angleFlip;
