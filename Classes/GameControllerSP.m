@@ -237,7 +237,7 @@
         {
             for(GLCard* card in self.player.cards)
             {    
-                [self.renderer discardCardWithSuit:card.suit numeral:card.numeral];
+                [self.renderer.cardGroup discardCardWithSuit:card.suit numeral:card.numeral];
             }
             
             [self.player.cards removeAllObjects];
