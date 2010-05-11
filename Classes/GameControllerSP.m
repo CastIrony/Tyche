@@ -243,15 +243,22 @@
     }
     else if(self.player.status == PlayerStatusShouldDealCards)
     {
-        //deal 5 cards
-        
         self.player.status = PlayerStatusDealingCards;
+        
+        simpleBlock work = 
+        ^{
+            self.player.status = PlayerStatusDealingCards;
+        
+            [self updateRenderer];
+        };
+        
+        //deal 5 cards and then
+
+        runLater(work);
     }
     else if(self.player.status == PlayerStatusDealingCards)
     {
-        //if animation is done, set
-
-        self.player.status = PlayerStatusDealingCards;
+        //don't do anything
     }
     else if(self.player.status == PlayerStatusDealtCards)
     {
