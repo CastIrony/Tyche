@@ -168,7 +168,7 @@
     //TODO: refactor this into updateRendererAnimated
     [self.renderer unflipCardsAndThen:^{ [self discardCards:self.player.cards andThen:^{ [self updateRenderer]; }]; }];
     
-    self.player.status = PlayerStatusNoCards;
+    self.player.status = PlayerStatusShouldReturnCards;
     
     //TODO: refactor this into updateRendererAnimated
     self.renderer.camera.status = CameraStatusNormal;
