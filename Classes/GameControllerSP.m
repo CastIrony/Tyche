@@ -231,6 +231,8 @@
     
     if(self.player.status == PlayerStatusNoCards)
     {
+        NSLog(@"PlayerStatusNoCards");
+        
         //TODO: get rid of cards just in case
         
         NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
@@ -245,6 +247,8 @@
     }
     else if(self.player.status == PlayerStatusShouldDealCards)
     {
+        NSLog(@"PlayerStatusShouldDealCards");
+
         //TODO: deal 5 cards
         
         self.player.status = PlayerStatusDealingCards;
@@ -260,10 +264,14 @@
     }
     else if(self.player.status == PlayerStatusDealingCards)
     {
+        NSLog(@"PlayerStatusDealingCards");
+        
         //don't do anything
     }
     else if(self.player.status == PlayerStatusDealtCards)
     {
+        NSLog(@"PlayerStatusDealtCards");
+
         NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
         
         if(self.player.cardsMarked)
@@ -293,14 +301,16 @@
     }
     else if(self.player.status == PlayerStatusShouldDrawCards)
     {
-        
+        NSLog(@"PlayerStatusShouldDrawCards");
     }
     else if(self.player.status == PlayerStatusDrawingCards)
     {
-        
+        NSLog(@"PlayerStatusDrawingCards");
     }
     else if(self.player.status == PlayerStatusDrawnCards)
     {
+        NSLog(@"PlayerStatusDrawnCards");
+
         NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
         
         [label setObject:@"call" forKey:@"key"]; 
@@ -310,25 +320,29 @@
     }
     else if(self.player.status == PlayerStatusShouldShowCards)
     {
-        
+        NSLog(@"PlayerStatusShouldShowCards");
     }
     else if(self.player.status == PlayerStatusShowingCards)
     {
-        
+        NSLog(@"PlayerStatusShowingCards");
     }
     else if(self.player.status == PlayerStatusShownCards)
     {
-        
+        NSLog(@"PlayerStatusShownCards");
     }
     else if(self.player.status == PlayerStatusShouldReturnCards)
     {
-        
+        NSLog(@"PlayerStatusShouldReturnCards");
     }
     else if(self.player.status == PlayerStatusReturningCards)
     {
-        
+        NSLog(@"PlayerStatusReturningCards");
     }
-    
+    else 
+    {
+        NSLog(@"%d", self.player.status);
+    }
+
     [textBox fillWithDictionaries:labels];
     
     [super updateRenderer];
