@@ -464,7 +464,7 @@
 
 -(void)flattenShadow
 {
-    Vector3D light = Vector3DMake(0, -12, 0);
+    Vector3D light = Vector3DMake(0, -15, 0);
     
     for(int i = 0; i < 16; i++)
     {
