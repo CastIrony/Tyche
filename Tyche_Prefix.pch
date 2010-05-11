@@ -19,5 +19,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import <GameKit/GKSession.h>
 #import <AudioToolbox/AudioServices.h>
+#import "TargetConditionals.h"
 
 #endif
