@@ -19,10 +19,6 @@
 @property (nonatomic, assign) GLfloat         initialAngle;
 @property (nonatomic, assign) int             initialIndex;
 @property (nonatomic, assign) int             finalIndex;
-@property (nonatomic, retain) GLTexture*      textureHearts;
-@property (nonatomic, retain) GLTexture*      textureDiamonds;
-@property (nonatomic, retain) GLTexture*      textureClubs;
-@property (nonatomic, retain) GLTexture*      textureSpades;
 
 -(void)drawFronts;
 -(void)drawBacks;
