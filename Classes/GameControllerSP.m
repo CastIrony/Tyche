@@ -255,7 +255,7 @@
         
         simpleBlock work = 
         ^{
-            self.player.status = PlayerStatusDealingCards;
+            self.player.status = PlayerStatusDealtCards;
         
             [self updateRenderer];
         };
