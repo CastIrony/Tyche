@@ -33,7 +33,7 @@
         
         gameController.game = [GameModel withDictionary:[archive JSONValue]];
         
-        //[self dealCards:self.player.cards andThen:nil];
+        [gameController dealCards:gameController.player.cards andThen:nil];
 
         //TODO: refactor this into updateRendererAnimated
         [gameController.renderer hideMenus];
