@@ -213,9 +213,18 @@
 //TODO: make discardCards discard all cards at once, with delayed animation
 -(void)discardCards:(NSMutableArray*)cards andThen:(simpleBlock)work
 {
+    GLCard* lastCard = [cards lastObject];
+    
     for(GLCard* card in cards)
     {
+        if(card = lastCard)
+        {
+            
+        }
+        else 
+        {
         
+        }
     }
     
     if(cards.count > 0)
