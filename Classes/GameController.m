@@ -217,7 +217,7 @@
     
     for(GLCard* card in cards)
     {
-        if(card = lastCard)
+        if(card == lastCard)
         {
             
         }
