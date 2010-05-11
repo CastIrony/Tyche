@@ -197,7 +197,7 @@
         
         [self.player.cards insertObject:card atIndex:0];
         
-        [self.renderer.cardGroup dealCardWithSuit:card.suit numeral:card.numeral];
+        [self.renderer.cardGroup dealCardWithSuit:card.suit numeral:card.numeral held:NO afterDelay:0.2];
         
         runAfterDelay(TIMESCALE * 0.2, ^{ [self dealCards:cards andThen:work]; });
     }
