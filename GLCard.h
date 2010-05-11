@@ -54,10 +54,6 @@
 
 @property (nonatomic, assign)   GameRenderer*       renderer;
 @property (nonatomic, assign)   GLCardGroup*        cardGroup;
-@property (nonatomic, retain)   GLTexture*          textureHearts;
-@property (nonatomic, retain)   GLTexture*          textureDiamonds;
-@property (nonatomic, retain)   GLTexture*          textureClubs;
-@property (nonatomic, retain)   GLTexture*          textureSpades;
 @property (nonatomic, retain)   GLTexture*          textureHold;
 @property (nonatomic, retain)   GLTexture*          textureDraw;
 @property (nonatomic, assign)   int                 suit;
