@@ -260,7 +260,7 @@
             [self updateRenderer];
         };
 
-        runLater(work);
+        work();
     }
     else if(self.player.status == PlayerStatusDealingCards)
     {
