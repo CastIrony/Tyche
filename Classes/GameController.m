@@ -190,10 +190,10 @@
     
     int counter = 0;
     
-    [self.player.cards addObjectsFromArray:cards];
-    
     for(GLCard* card in cards)
     {
+        [self.player.cards addObject:card];
+
         [self.renderer.cardGroup dealCardWithSuit:card.suit numeral:card.numeral held:YES afterDelay:0.2 * counter andThen:(card == lastCard ? work : nil)];
         
         counter++;
@@ -206,10 +206,10 @@
     
     int counter = 0;
     
-    [self.player.cards removeObjectsInArray:cards];
-    
     for(GLCard* card in cards)
     {
+        [self.player.cards removeObject:card];
+
         [self.renderer.cardGroup discardCardWithSuit:card.suit numeral:card.numeral afterDelay:0.2 * counter andThen:(card == lastCard ? work : nil)];
         
         counter++;
