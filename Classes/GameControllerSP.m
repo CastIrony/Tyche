@@ -223,8 +223,9 @@
         {
             NSTimeInterval delay = 0;
             
+            [self discardCards:self.player.cards andThen:nil];
+            
             [self.player.cards removeAllObjects];
-            [self.renderer.cardGroup clearCards];
         }
         
         //{ TextControllerStatusBar* textController = [self.renderer.textControllers objectForKey:@"status1"]; textController.text = @" "; [textController update]; }
@@ -339,7 +340,14 @@
 
         self.player.status = PlayerStatusReturningCards;
         
-        [self.renderer unflipCardsAndThen:^{ [self discardCards:self.player.cards andThen:^{self.player.status = PlayerStatusNoCards; [self update]; }]; }];
+        [self.renderer unflipCardsAndThen:
+        ^{ 
+            [self discardCards:self.player.cards andThen:
+            ^{
+                self.player.status = PlayerStatusNoCards; 
+                [self update]; 
+            }]; 
+        }];
     }
     else if(self.player.status == PlayerStatusReturningCards)
     {
