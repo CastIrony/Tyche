@@ -235,7 +235,7 @@
         
         if(self.player.cards.count)
         {
-            foreach(GLCard in self.player.cards)
+            for(GLCard* in self.player.cards)
             {    
                 [self.renderer discardCardWithSuit:card.suit numeral:card.numeral];
             }
