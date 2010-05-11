@@ -253,13 +253,15 @@
         
         self.player.status = PlayerStatusDealingCards;
         
-        ^{
+        simpleBlock work = ^{
             self.player.status = PlayerStatusDealtCards;
         
             NSLog(@"Block!");
             
             [self updateRenderer];
-        }();
+        };
+        
+        NSLog(@"%X", work);
     }
     else if(self.player.status == PlayerStatusDealingCards)
     {
