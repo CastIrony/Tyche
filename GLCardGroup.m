@@ -122,7 +122,7 @@
     });
 }
 
--(void)dealCardWithSuit:(int)suit numeral:(int)numeral afterDelay:(NSTimeInterval)delay
+-(void)dealCardWithSuit:(int)suit numeral:(int)numeral held:(BOOL)isHeld afterDelay:(NSTimeInterval)delay
 {
     runAfterDelay(delay, 
     ^{
@@ -138,7 +138,7 @@
         card.textureSpades   = self.textureSpades;  
         card.position        = self.cards.count;
         card.angleJitter     = randomFloat(-3.0, 3.0);
-        card.isHeld          = [AnimatedFloat withValue:1.0];
+        card.isHeld          = [AnimatedFloat withValue:isHeld];
         card.location        = self.renderer.animated ? [AnimatedVector3D withStartValue:Vector3DMake(0, 0, -30) endValue:Vector3DMake(0, 0, 0) speed:30] : [AnimatedVector3D withValue:Vector3DMake(0, 0, 0)];
         card.location.curve = AnimationEaseInOut;
 
