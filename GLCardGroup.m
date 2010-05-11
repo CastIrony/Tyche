@@ -103,7 +103,7 @@
     for(GLCard* card in self.cards)     { [card drawLabel]; }
 }
 
--(void)discardCardWithSuit:(int)suit numeral:(int)numeral afterDelay:(NSTimeInterval)delay
+-(void)discardCardWithSuit:(int)suit numeral:(int)numeral afterDelay:(NSTimeInterval)delay andThen:(simpleBlock)work
 {
     runAfterDelay(delay, 
     ^{
@@ -122,7 +122,7 @@
     });
 }
 
--(void)dealCardWithSuit:(int)suit numeral:(int)numeral held:(BOOL)isHeld afterDelay:(NSTimeInterval)delay
+-(void)dealCardWithSuit:(int)suit numeral:(int)numeral held:(BOOL)isHeld afterDelay:(NSTimeInterval)delay andThen:(simpleBlock)work
 {
     runAfterDelay(delay, 
     ^{

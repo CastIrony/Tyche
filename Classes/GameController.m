@@ -227,25 +227,25 @@
         }
     }
     
-    if(cards.count > 0)
-    {
-        CardModel* card = [[[cards objectAtIndex:0] retain] autorelease];
-        
-        [cards removeObjectAtIndex:0];
-        
-        [self.game.discard addObject:card];
-        [self.player.cards removeObject:card];
-        
-        [self.renderer.cardGroup discardCardWithSuit:card.suit numeral:card.numeral after];
-        
-        runAfterDelay(TIMESCALE * 0.2, ^{ [self discardCards:cards andThen:work]; });
-    }
-    else 
-    {
-        [self saveData];
-        
-        if(work) { runLater(work); }
-    }
+//    if(cards.count > 0)
+//    {
+//        CardModel* card = [[[cards objectAtIndex:0] retain] autorelease];
+//        
+//        [cards removeObjectAtIndex:0];
+//        
+//        [self.game.discard addObject:card];
+//        [self.player.cards removeObject:card];
+//        
+//        [self.renderer.cardGroup discardCardWithSuit:card.suit numeral:card.numeral after];
+//        
+//        runAfterDelay(TIMESCALE * 0.2, ^{ [self discardCards:cards andThen:work]; });
+//    }
+//    else 
+//    {
+//        [self saveData];
+//        
+//        if(work) { runLater(work); }
+//    }
 }
 
 -(void)drawCardsAndThen:(simpleBlock)work
