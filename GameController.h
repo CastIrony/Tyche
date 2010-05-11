@@ -37,15 +37,13 @@
 -(NSString*)scoreHandLow;
 
 -(void)givePrize;
--(void)updateRenderer;
+-(void)update;
 
 -(void)moveCardIndex:(int)initialIndex toIndex:(int)finalIndex;
 
 -(void)labelTouchedWithKey:(NSString*)key;
-
 -(void)chipTouchedUpWithKey:(NSString*)key;
 -(void)chipTouchedDownWithKey:(NSString*)key;
-
 -(void)cardFrontTouched:(int)card;
 -(void)cardBackTouched:(int)card;
 

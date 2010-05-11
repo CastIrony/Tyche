@@ -151,7 +151,7 @@
     
     self.player.chipTotal -= 1;
 
-    [self updateRenderer]; 
+    [self update]; 
     
     [self dealCards:[self.game getCards:5] andThen:work];
 }
@@ -160,13 +160,13 @@
 {
     self.game = nil;
     
-    [self updateRenderer];
+    [self update];
 }
 
 -(void)endHandAndThen:(simpleBlock)work
 {
     //TODO: refactor this into updateRendererAnimated
-    [self.renderer unflipCardsAndThen:^{ [self discardCards:self.player.cards andThen:^{ [self updateRenderer]; }]; }];
+    [self.renderer unflipCardsAndThen:^{ [self discardCards:self.player.cards andThen:^{ [self update]; }]; }];
     
     self.player.status = PlayerStatusShouldReturnCards;
     
@@ -281,7 +281,7 @@
     
 }
 
--(void)updateRenderer
+-(void)update
 {
     TextControllerCredits* textController = [self.renderer.textControllers objectForKey:@"credits"];
     
@@ -541,7 +541,7 @@
     
     [self saveData];
     
-    [self updateRenderer];
+    [self update];
     
     //TODO: refactor this into updateRendererAnimated
     chip.count = [AnimatedFloat withStartValue:chip.count.value endValue:chipModel.displayCount speed:3];
@@ -556,7 +556,7 @@
     
     [self saveData];
     
-    [self updateRenderer];
+    [self update];
     
     //TODO: refactor this into updateRendererAnimated
     chip.count = [AnimatedFloat withStartValue:chip.count.value endValue:chipModel.displayCount speed:3];

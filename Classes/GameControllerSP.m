@@ -39,7 +39,7 @@
             [gameController.renderer.cardGroup dealCardWithSuit:card.suit numeral:card.numeral held:card.isHeld afterDelay:0 andThen:nil];
         }
         
-        [gameController updateRenderer];
+        [gameController update];
         
         //TODO: refactor this into updateRendererAnimated
         [gameController.renderer hideMenus];
@@ -92,22 +92,8 @@
     
     self.player.status = PlayerStatusNoCards;
     
-    [self updateRenderer];
+    [self update];
 }
-
-//TODO:REPLACE THIS WHOLE DAMN FUNCTION
-//-(void)showHandAndThen:(block)work
-//{
-//    [super showHandAndThen:nil];
-//    
-//    [self.renderer flipCardsAndThen:nil];
-//    
-//    [[self.renderer.textControllers objectForKey:@"actions"] empty];
-//    
-//    self.player.status = PlayerStatusCardsShown;
-//    
-//    [self givePrize];
-//}
 
 -(void)chipTouchedUpWithKey:(NSString*)key
 {
@@ -133,7 +119,7 @@
     { 
         self.player.status = PlayerStatusShouldShowCards;
         
-        [self updateRenderer];
+        [self update];
     }
     
     if([key isEqual:@"draw"]) 
@@ -142,13 +128,13 @@
         {
             self.player.status = PlayerStatusShouldDrawCards;
             
-            [self updateRenderer];
+            [self update];
         }
         else
         {
             self.player.status = PlayerStatusShouldDealCards;
 
-            [self updateRenderer];
+            [self update];
         }
     }
     
@@ -181,7 +167,7 @@
 
         [self saveData];
 
-        [self updateRenderer];
+        [self update];
     }   
 }
 
@@ -220,10 +206,10 @@
     
     self.player.chipTotal = self.player.chipTotal - self.player.betTotal + prize;
     
-    [self updateRenderer];
+    [self update];
 }
 
--(void)updateRenderer
+-(void)update
 {
     TextController* textBox = [self.renderer.textControllers objectForKey:@"actions"];
     
@@ -237,22 +223,18 @@
         {
             NSTimeInterval delay = 0;
             
-            for(GLCard* card in self.player.cards)
-            {    
-                [self.renderer.cardGroup discardCardWithSuit:card.suit numeral:card.numeral afterDelay:delay += 0.2 andThen:nil];
-            }
-            
             [self.player.cards removeAllObjects];
+            [self.renderer.cardGroup clearCards];
         }
+        
+        //{ TextControllerStatusBar* textController = [self.renderer.textControllers objectForKey:@"status1"]; textController.text = @" "; [textController update]; }
+        //{ TextControllerStatusBar* textController = [self.renderer.textControllers objectForKey:@"status2"]; textController.text = @" "; [textController update]; }
         
         NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
         
         [label setObject:@"draw" forKey:@"key"]; 
         [label setObject:@"DEAL" forKey:@"textString"]; 
-        
-        { TextControllerStatusBar* textController = [self.renderer.textControllers objectForKey:@"status1"]; textController.text = @" "; [textController update]; }
-        { TextControllerStatusBar* textController = [self.renderer.textControllers objectForKey:@"status2"]; textController.text = @" "; [textController update]; }
-        
+                
         [labels addObject:label];
     }
     else if(self.player.status == PlayerStatusShouldDealCards)
@@ -267,7 +249,7 @@
         ^{
             self.player.status = PlayerStatusDealtCards;
                     
-            [self updateRenderer];
+            [self update];
         };
         
         runAfterDelay(1, work);
@@ -321,7 +303,7 @@
         ^{
             self.player.status = PlayerStatusDrawnCards;
             
-            [self updateRenderer];
+            [self update];
         };
         
         runAfterDelay(1, work);
@@ -347,7 +329,7 @@
         
         self.player.status = PlayerStatusShowingCards;
         
-        [self.renderer flipCardsAndThen:^{ self.player.status = PlayerStatusShownCards; [self updateRenderer]; }];
+        [self.renderer flipCardsAndThen:^{ self.player.status = PlayerStatusShownCards; [self update]; }];
     }
     else if(self.player.status == PlayerStatusShowingCards)
     {
@@ -372,21 +354,21 @@
 
     [textBox fillWithDictionaries:labels];
     
-    [super updateRenderer];
+    [super update];
 }
 
 -(void)cardFrontTouched:(int)card
 { 
     [super cardFrontTouched:card];
     
-    [self updateRenderer];
+    [self update];
 }
 
 -(void)cardBackTouched:(int)card 
 {
     if(self.renderer.camera.status == CameraStatusCardsFlipped)
     {
-        [self endHandAndThen:^{ [self updateRenderer]; }];
+        [self endHandAndThen:^{ [self update]; }];
     }
     else 
     {
