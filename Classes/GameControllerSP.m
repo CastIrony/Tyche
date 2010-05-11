@@ -255,15 +255,14 @@
         
         self.player.status = PlayerStatusDealingCards;
         
-        simpleBlock work = ^{
+        simpleBlock work = 
+        ^{
             self.player.status = PlayerStatusDealtCards;
-        
-            NSLog(@"Block!");
-            
+                    
             [self updateRenderer];
         };
         
-        runAfterDelay(2, work);
+        runAfterDelay(1, work);
     }
     else if(self.player.status == PlayerStatusDealingCards)
     {
@@ -305,6 +304,19 @@
     else if(self.player.status == PlayerStatusShouldDrawCards)
     {
         NSLog(@"PlayerStatusShouldDrawCards");
+                
+        //TODO: draw cards
+        
+        self.player.status = PlayerStatusDrawingCards;
+        
+        simpleBlock work = 
+        ^{
+            self.player.status = PlayerStatusDrawnCards;
+            
+            [self updateRenderer];
+        };
+        
+        runAfterDelay(1, work);
     }
     else if(self.player.status == PlayerStatusDrawingCards)
     {
