@@ -256,6 +256,8 @@
         ^{
             self.player.status = PlayerStatusDealtCards;
         
+            NSLog(@"Block!");
+            
             [self updateRenderer];
         }();
     }
