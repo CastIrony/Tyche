@@ -3,7 +3,7 @@
 //  Particles
 //
 
-#define TIMESCALE                          5
+#define TIMESCALE                          1
 
 #define kRenderingFrequency             60.0
 #define kInactiveRenderingFrequency     10.0
