@@ -253,14 +253,11 @@
         
         self.player.status = PlayerStatusDealingCards;
         
-        simpleBlock work = 
         ^{
             self.player.status = PlayerStatusDealtCards;
         
             [self updateRenderer];
-        };
-
-        work();
+        }();
     }
     else if(self.player.status == PlayerStatusDealingCards)
     {
