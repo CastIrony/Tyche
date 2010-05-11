@@ -263,7 +263,7 @@
             [self updateRenderer];
         };
         
-        NSLog(@"%X", work);
+        runLater(work);
     }
     else if(self.player.status == PlayerStatusDealingCards)
     {
