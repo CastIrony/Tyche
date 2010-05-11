@@ -90,9 +90,6 @@
 -(void)showMenus;
 -(void)hideMenus;
 
--(void)lighten;
--(void)darken;
-
 -(void)flipCardsAndThen:(simpleBlock)work;
 -(void)unflipCardsAndThen:(simpleBlock)work;
 
