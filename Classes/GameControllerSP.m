@@ -36,7 +36,7 @@
         //TODO: refactor this into updateRendererAnimated
         for(CardModel* card in gameController.player.cards.reverseObjectEnumerator) 
         {
-            [gameController.renderer.cardGroup addCardWithSuit:card.suit numeral:card.numeral held:card.isHeld];
+            [gameController.renderer.cardGroup dealCardWithSuit:card.suit numeral:card.numeral held:card.isHeld afterDelay:1];
         }
         
         [gameController updateRenderer];

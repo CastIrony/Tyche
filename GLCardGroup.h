@@ -37,7 +37,7 @@
 -(void)resetCardsWithBendFactor:(GLfloat)bendFactor;
 
 -(void)discardCardWithSuit:(int)suit numeral:(int)numeral afterDelay:(NSTimeInterval)delay;
--(void)dealCardWithSuit:(int)suit numeral:(int)numeral afterDelay:(NSTimeInterval)delay;
+-(void)dealCardWithSuit:(int)suit numeral:(int)numeral held:(BOOL)isHeld afterDelay:(NSTimeInterval)delay;
 
 -(void)clearCards;
 
