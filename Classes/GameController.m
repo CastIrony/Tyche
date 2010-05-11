@@ -188,13 +188,13 @@
 {
     GLCard* lastCard = [cards lastObject];
     
-    for(int i = 0; i < cards.count; i++)
+    for(uint i = 0; i < cards.count; i++)
     {
         GLCard* card = [cards objectAtIndex:i];
         
         [self.player.cards addObject:card];
 
-        [self.renderer.cardGroup dealCardWithSuit:card.suit numeral:card.numeral held:YES afterDelay:0.2 * counter andThen:(card == lastCard ? work : nil)];
+        [self.renderer.cardGroup dealCardWithSuit:card.suit numeral:card.numeral held:YES afterDelay:0.2 * i andThen:(card == lastCard ? work : nil)];
     }
 }
 
@@ -202,13 +202,13 @@
 {
     GLCard* lastCard = [cards lastObject];
     
-    for(int i = 0; i < cards.count; i++)
+    for(uint i = 0; i < cards.count; i++)
     {
         GLCard* card = [cards objectAtIndex:i];
         
         [self.player.cards removeObject:card];
 
-        [self.renderer.cardGroup discardCardWithSuit:card.suit numeral:card.numeral afterDelay:0.2 * counter andThen:(card == lastCard ? work : nil)];
+        [self.renderer.cardGroup discardCardWithSuit:card.suit numeral:card.numeral afterDelay:0.2 * i andThen:(card == lastCard ? work : nil)];
     }
 }
 
