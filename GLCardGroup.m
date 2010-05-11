@@ -64,7 +64,7 @@
 
 -(void)resetCardsWithBendFactor:(GLfloat)bendFactor
 {
-    for(GLCard* card in self.cards)     { [card generateWithBendFactor:bendFactor]; }
+    for(GLCard* card in self.cards) { [card generateWithBendFactor:bendFactor]; }
 }
 
 -(void)clearDeadCard:(GLCard*)item
@@ -74,22 +74,22 @@
 
 -(void)drawFronts
 {
-    for(GLCard* card in self.cards)     { [card drawFront]; }
+    for(GLCard* card in self.cards) { [card drawFront]; }
 }
 
 -(void)drawBacks
 {
-    for(GLCard* card in self.cards.reverseObjectEnumerator)     { [card drawBack]; }
+    for(GLCard* card in self.cards.reverseObjectEnumerator) { [card drawBack]; }
 }
 
 -(void)drawShadows
 {
-    for(GLCard* card in self.cards)     { [card drawShadow]; }
+    for(GLCard* card in self.cards) { [card drawShadow]; }
 }
 
 -(void)drawLabels
 {
-    for(GLCard* card in self.cards)     { [card drawLabel]; }
+    for(GLCard* card in self.cards) { [card drawLabel]; }
 }
 
 -(void)discardCardWithSuit:(int)suit numeral:(int)numeral afterDelay:(NSTimeInterval)delay andThen:(simpleBlock)work
@@ -102,7 +102,7 @@
             {
                 card.isDead = YES;
                 card.location = [AnimatedVector3D withStartValue:card.location.value endValue:Vector3DMake(0, 0, -30) speed:30];
-                card.location.onEnd = ^{ [self performSelector:@selector(clearDeadCard:) withObject:card afterDelay:TIMESCALE * 0.00]; };
+                card.location.onEnd = ^{ [self performSelector:@selector(clearDeadCard:) withObject:card afterDelay:TIMESCALE * 0.00]; runLater(work); };
                 card.location.curve = AnimationEaseInOut;
             }
         }
@@ -119,12 +119,13 @@
         
         [self.cards insertObject:card atIndex:0];
         
-        card.renderer        = self.renderer;
-        card.cardGroup       = self;
-        card.position        = self.cards.count;
-        card.angleJitter     = randomFloat(-3.0, 3.0);
-        card.isHeld          = [AnimatedFloat withValue:isHeld];
-        card.location        = self.renderer.animated ? [AnimatedVector3D withStartValue:Vector3DMake(0, 0, -30) endValue:Vector3DMake(0, 0, 0) speed:30] : [AnimatedVector3D withValue:Vector3DMake(0, 0, 0)];
+        card.renderer       = self.renderer;
+        card.cardGroup      = self;
+        card.position       = self.cards.count;
+        card.angleJitter    = randomFloat(-3.0, 3.0);
+        card.isHeld         = [AnimatedFloat withValue:isHeld];
+        card.location       = self.renderer.animated ? [AnimatedVector3D withStartValue:Vector3DMake(0, 0, -30) endValue:Vector3DMake(0, 0, 0) speed:30] : [AnimatedVector3D withValue:Vector3DMake(0, 0, 0)];
+        card.location.onEnd = work; 
         card.location.curve = AnimationEaseInOut;
 
         [self layoutCards];
