@@ -413,30 +413,6 @@
     }    
 }
 
--(void)lighten
-{
-    if(self.animated)
-    {
-        //self.table.shadingOpacity = [AnimatedFloat withStartValue:self.table.shadingOpacity.value endValue:0.0 forTime:1.0];
-    }
-    else 
-    {
-        //self.table.shadingOpacity = [AnimatedFloat withValue:0.0];
-    }
-}
-
--(void)darken
-{
-    if(self.animated)
-    {
-        //self.table.shadingOpacity = [AnimatedFloat withStartValue:self.table.shadingOpacity.value endValue:0.6 forTime:1.0];
-    }
-    else 
-    {
-        //self.table.shadingOpacity = [AnimatedFloat withValue:0.6];
-    }
-}
-
 -(void)flipCardsAndThen:(simpleBlock)work
 {
     int cardCount = self.cardGroup.cards.count;

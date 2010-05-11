@@ -190,7 +190,7 @@
     
     for(GLCard* card in cards)
     {
-        [self.renderer.cardGroup dealCardWithSuit:card.suit numeral:card.numeral held:NO afterDelay:0.2 * counter andThen:(card == lastCard ? work : nil)];
+        [self.renderer.cardGroup dealCardWithSuit:card.suit numeral:card.numeral held:YES afterDelay:0.2 * counter andThen:(card == lastCard ? work : nil)];
         
         counter++;
     }
