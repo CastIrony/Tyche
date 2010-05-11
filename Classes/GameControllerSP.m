@@ -233,9 +233,15 @@
     {
         NSLog(@"PlayerStatusNoCards");
         
-        //TODO: get rid of cards just in case
-        
-        [self.player.cards removeAllObjects];
+        if(self.player.cards.count)
+        {
+            for(GLCard in self.player.cards)
+            {    
+                [self.renderer discardCardWithSuit:card.suit numeral:card.numeral];
+            }
+            
+            [self.player.cards removeAllObjects];
+        }
         
         NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
         
