@@ -235,7 +235,7 @@
         
         //TODO: get rid of cards just in case
         
-        [self.player.cards empty];
+        [self.player.cards removeAllObjects];
         
         NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
         
