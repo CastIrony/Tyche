@@ -29,10 +29,6 @@
     Vector2D   textureSizeCard;
     Vector2D   textureSizeLabel;
     
-    GLTexture* _textureSuits[4];
-    GLTexture* _textureHold;
-    GLTexture* _textureDraw;
-    
     Vector3D*  arrayVertex;
     Vector3D*  arrayNormal;
     Vector2D*  arrayTexture0;
@@ -54,8 +50,6 @@
 
 @property (nonatomic, assign)   GameRenderer*       renderer;
 @property (nonatomic, assign)   GLCardGroup*        cardGroup;
-@property (nonatomic, retain)   GLTexture*          textureHold;
-@property (nonatomic, retain)   GLTexture*          textureDraw;
 @property (nonatomic, assign)   int                 suit;
 @property (nonatomic, assign)   int                 numeral;
 @property (nonatomic, assign)   int                 position;

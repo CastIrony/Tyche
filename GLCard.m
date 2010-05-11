@@ -17,7 +17,6 @@
 @synthesize renderer    = _renderer;
 @synthesize cardGroup   = _cardGroup;
 @synthesize textureHold = _textureHold;
-@synthesize textureDraw = _textureDraw;
 @synthesize angleJitter = _angleJitter;
 @synthesize isDead      = _isDead;
 @synthesize suit        = _suit;
