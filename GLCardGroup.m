@@ -103,62 +103,47 @@
     for(GLCard* card in self.cards)     { [card drawLabel]; }
 }
 
--(void)discardCardWithSuit:(int)suit numeral:(int)numeral
+-(void)discardCardWithSuit:(int)suit numeral:(int)numeral afterDelay:(NSTimeInterval)delay
 {
-    for(GLCard* card in self.cards)
-    {
-        if(card.suit == suit && card.numeral == numeral)
+    runAfterDelay(delay, 
+    ^{
+        for(GLCard* card in self.cards)
         {
-            card.isDead = YES;
-            card.location = [AnimatedVector3D withStartValue:card.location.value endValue:Vector3DMake(0, 0, -30) speed:30];
-            card.location.onEnd = ^{ [self performSelector:@selector(clearDeadCard:) withObject:card afterDelay:TIMESCALE * 0.00]; };
-            card.location.curve = AnimationEaseInOut;
+            if(card.suit == suit && card.numeral == numeral)
+            {
+                card.isDead = YES;
+                card.location = [AnimatedVector3D withStartValue:card.location.value endValue:Vector3DMake(0, 0, -30) speed:30];
+                card.location.onEnd = ^{ [self performSelector:@selector(clearDeadCard:) withObject:card afterDelay:TIMESCALE * 0.00]; };
+                card.location.curve = AnimationEaseInOut;
+            }
         }
-    }
-    
-    [self layoutCards];
+
+        [self layoutCards];
+    });
 }
 
--(void)dealCardWithSuit:(int)suit numeral:(int)numeral
+-(void)dealCardWithSuit:(int)suit numeral:(int)numeral afterDelay:(NSTimeInterval)delay
 {
-    GLCard* card = [[[GLCard alloc] initWithSuit:suit numeral:numeral] autorelease];
-    
-    [self.cards insertObject:card atIndex:0];
-    
-    card.renderer        = self.renderer;
-    card.cardGroup       = self;
-    card.textureHearts   = self.textureHearts;
-    card.textureDiamonds = self.textureDiamonds;
-    card.textureClubs    = self.textureClubs;   
-    card.textureSpades   = self.textureSpades;  
-    card.position        = self.cards.count;
-    card.angleJitter     = randomFloat(-3.0, 3.0);
-    card.isHeld          = [AnimatedFloat withValue:1.0];
-    card.location        = [AnimatedVector3D withStartValue:Vector3DMake(0, 0, -30) endValue:Vector3DMake(0, 0, 0) speed:30];
-    card.location.curve = AnimationEaseInOut;
+    runAfterDelay(delay, 
+    ^{
+        GLCard* card = [[[GLCard alloc] initWithSuit:suit numeral:numeral] autorelease];
+        
+        [self.cards insertObject:card atIndex:0];
+        
+        card.renderer        = self.renderer;
+        card.cardGroup       = self;
+        card.textureHearts   = self.textureHearts;
+        card.textureDiamonds = self.textureDiamonds;
+        card.textureClubs    = self.textureClubs;   
+        card.textureSpades   = self.textureSpades;  
+        card.position        = self.cards.count;
+        card.angleJitter     = randomFloat(-3.0, 3.0);
+        card.isHeld          = [AnimatedFloat withValue:1.0];
+        card.location        = self.renderer.animated ? [AnimatedVector3D withStartValue:Vector3DMake(0, 0, -30) endValue:Vector3DMake(0, 0, 0) speed:30] : [AnimatedVector3D withValue:Vector3DMake(0, 0, 0)];
+        card.location.curve = AnimationEaseInOut;
 
-    [self layoutCards];
-}
-
--(void)addCardWithSuit:(int)suit numeral:(int)numeral held:(BOOL)held
-{
-    GLCard* card = [[[GLCard alloc] initWithSuit:suit numeral:numeral] autorelease];
-    
-    [self.cards insertObject:card atIndex:0];
-    
-    card.renderer        = self.renderer;
-    card.cardGroup       = self;
-    card.textureHearts   = self.textureHearts;
-    card.textureDiamonds = self.textureDiamonds;
-    card.textureClubs    = self.textureClubs;   
-    card.textureSpades   = self.textureSpades;  
-    card.position        = self.cards.count;
-    card.angleJitter     = randomFloat(-3.0, 3.0);
-    card.isHeld          = [AnimatedFloat withValue:1.0];
-    card.location        = [AnimatedVector3D withValue:Vector3DMake(0, 0, 0)];
-    card.location.curve = AnimationEaseInOut;
-
-    [self layoutCards];
+        [self layoutCards];
+    });
 }
 
 -(void)clearCards

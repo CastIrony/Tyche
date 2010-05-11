@@ -35,9 +35,10 @@
 
 -(void)layoutCards;
 -(void)resetCardsWithBendFactor:(GLfloat)bendFactor;
--(void)discardCardWithSuit:(int)suit numeral:(int)numeral;
--(void)addCardWithSuit:(int)suit numeral:(int)numeral held:(BOOL)held;
--(void)dealCardWithSuit:(int)suit numeral:(int)numeral;
+
+-(void)discardCardWithSuit:(int)suit numeral:(int)numeral afterDelay:(NSTimeInterval)delay;
+-(void)dealCardWithSuit:(int)suit numeral:(int)numeral afterDelay:(NSTimeInterval)delay;
+
 -(void)clearCards;
 
 -(void)startDragForCard:(GLCard*)card;
