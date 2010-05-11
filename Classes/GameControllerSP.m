@@ -231,6 +231,8 @@
     
     if(self.player.status == PlayerStatusNoCards)
     {
+        //TODO: get rid of cards just in case
+        
         NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
         
         [label setObject:@"draw" forKey:@"key"]; 
@@ -243,6 +245,8 @@
     }
     else if(self.player.status == PlayerStatusShouldDealCards)
     {
+        //TODO: deal 5 cards
+        
         self.player.status = PlayerStatusDealingCards;
         
         simpleBlock work = 
@@ -251,8 +255,6 @@
         
             [self updateRenderer];
         };
-        
-        //deal 5 cards and then
 
         runLater(work);
     }
