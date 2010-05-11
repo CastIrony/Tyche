@@ -232,11 +232,6 @@
     
     [self saveData];
 }
-//
-//-(void)showHand
-//{
-//
-//}
 
 -(void)givePrize
 {

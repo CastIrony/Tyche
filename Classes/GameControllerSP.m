@@ -241,18 +241,14 @@
     {
         NSLog(@"PlayerStatusShouldDealCards");
 
-        //TODO: deal 5 cards
-        
         self.player.status = PlayerStatusDealingCards;
-        
-        simpleBlock work = 
+       
+        [self dealCards:[self.game getCards:5] andThen:
         ^{
             self.player.status = PlayerStatusDealtCards;
                     
             [self update];
-        };
-        
-        runAfterDelay(1, work);
+        }];
     }
     else if(self.player.status == PlayerStatusDealingCards)
     {
@@ -295,22 +291,20 @@
     {
         NSLog(@"PlayerStatusShouldDrawCards");
                 
-        //TODO: draw cards
-        
         self.player.status = PlayerStatusDrawingCards;
         
-        simpleBlock work = 
+        [self drawCardsAndThen:
         ^{
             self.player.status = PlayerStatusDrawnCards;
-            
+             
             [self update];
-        };
-        
-        runAfterDelay(1, work);
+        }];
     }
     else if(self.player.status == PlayerStatusDrawingCards)
     {
         NSLog(@"PlayerStatusDrawingCards");
+        
+        // do nothing
     }
     else if(self.player.status == PlayerStatusDrawnCards)
     {
@@ -342,6 +336,10 @@
     else if(self.player.status == PlayerStatusShouldReturnCards)
     {
         NSLog(@"PlayerStatusShouldReturnCards");
+
+        self.player.status = PlayerStatusReturningCards;
+        
+        [self.renderer unflipCardsAndThen:^{ self.player.status = PlayerStatusNoCards; [self update]; }];
     }
     else if(self.player.status == PlayerStatusReturningCards)
     {
