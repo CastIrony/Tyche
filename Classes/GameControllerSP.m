@@ -336,6 +336,10 @@
     else if(self.player.status == PlayerStatusShouldShowCards)
     {
         NSLog(@"PlayerStatusShouldShowCards");
+        
+        self.player.status = PlayerStatusShowingCards;
+        
+        [self.renderer flipCardsAndThen:^{ self.player.status = PlayerStatusShownCards; [self updateRenderer]; }];
     }
     else if(self.player.status == PlayerStatusShowingCards)
     {
