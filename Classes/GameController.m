@@ -166,12 +166,14 @@
 -(void)endHandAndThen:(simpleBlock)work
 {
     //TODO: refactor this into updateRendererAnimated
-    [self.renderer unflipCardsAndThen:^{ [self discardCards:self.player.cards andThen:^{ [self update]; }]; }];
+    //[self.renderer unflipCardsAndThen:^{ [self discardCards:self.player.cards andThen:^{ [self update]; }]; }];
     
     self.player.status = PlayerStatusShouldReturnCards;
     
+    [self update];
+    
     //TODO: refactor this into updateRendererAnimated
-    self.renderer.camera.status = CameraStatusNormal;
+    //self.renderer.camera.status = CameraStatusNormal;
 }
 
 -(void)saveData
