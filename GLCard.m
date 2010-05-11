@@ -35,16 +35,6 @@
 @synthesize angleFan   = _angleFan;
 @synthesize location   = _location;
 
--(GLTexture*) textureHearts   { return _textureSuits[0]; }
--(GLTexture*) textureDiamonds { return _textureSuits[1]; }
--(GLTexture*) textureClubs    { return _textureSuits[2]; }
--(GLTexture*) textureSpades   { return _textureSuits[3]; }
-
--(void)setTextureHearts:  (GLTexture*)newValue { if(_textureSuits[0] != newValue) { [_textureSuits[0] release]; _textureSuits[0] = [newValue retain]; } }
--(void)setTextureDiamonds:(GLTexture*)newValue { if(_textureSuits[1] != newValue) { [_textureSuits[1] release]; _textureSuits[1] = [newValue retain]; } }
--(void)setTextureClubs:   (GLTexture*)newValue { if(_textureSuits[2] != newValue) { [_textureSuits[2] release]; _textureSuits[2] = [newValue retain]; } }
--(void)setTextureSpades:  (GLTexture*)newValue { if(_textureSuits[3] != newValue) { [_textureSuits[3] release]; _textureSuits[3] = [newValue retain]; } }
-
 -(void)dealloc
 {
     free(arrayVertex);
