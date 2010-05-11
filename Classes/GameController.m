@@ -182,70 +182,32 @@
 }
 
 
-//TODO: make dealCards deal all cards at once, with delayed animation
 -(void)dealCards:(NSMutableArray*)cards andThen:(simpleBlock)work
 {
-    [SoundController playSoundEffectForKey:@"carddeal"];
+    GLCard* lastCard = [cards lastObject];
     
-    if(cards.count > 0)
+    int counter = 0;
+    
+    for(GLCard* card in cards)
     {
-        CardModel* card = [[[cards lastObject] retain] autorelease];
+        [self.renderer.cardGroup dealCardWithSuit:card.suit numeral:card.numeral held:NO afterDelay:0.2 * counter andThen:(card == lastCard ? work : nil)];
         
-        [cards removeObject:card];
-        
-        card.isHeld = YES;
-        
-        [self.player.cards insertObject:card atIndex:0];
-        
-        [self.renderer.cardGroup dealCardWithSuit:card.suit numeral:card.numeral held:NO afterDelay:0.2 andThen:nil];
-        
-        runAfterDelay(TIMESCALE * 0.2, ^{ [self dealCards:cards andThen:work]; });
+        counter++;
     }
-    else 
-    {
-        [self saveData];
-        
-        if(work) { runLater(work); }
-    }
-
 }
 
-//TODO: make discardCards discard all cards at once, with delayed animation
 -(void)discardCards:(NSMutableArray*)cards andThen:(simpleBlock)work
 {
     GLCard* lastCard = [cards lastObject];
     
+    int counter = 0;
+    
     for(GLCard* card in cards)
     {
-        if(card == lastCard)
-        {
-            
-        }
-        else 
-        {
+        [self.renderer.cardGroup discardCardWithSuit:card.suit numeral:card.numeral afterDelay:0.2 * counter andThen:(card == lastCard ? work : nil)];
         
-        }
+        counter++;
     }
-    
-//    if(cards.count > 0)
-//    {
-//        CardModel* card = [[[cards objectAtIndex:0] retain] autorelease];
-//        
-//        [cards removeObjectAtIndex:0];
-//        
-//        [self.game.discard addObject:card];
-//        [self.player.cards removeObject:card];
-//        
-//        [self.renderer.cardGroup discardCardWithSuit:card.suit numeral:card.numeral after];
-//        
-//        runAfterDelay(TIMESCALE * 0.2, ^{ [self discardCards:cards andThen:work]; });
-//    }
-//    else 
-//    {
-//        [self saveData];
-//        
-//        if(work) { runLater(work); }
-//    }
 }
 
 -(void)drawCardsAndThen:(simpleBlock)work
