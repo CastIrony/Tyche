@@ -9,7 +9,6 @@
 @implementation TextControllerMainMenu
 
 @synthesize appController = _appController;
-@synthesize textureLogo   = _textureLogo;
 
 -(id)init
 {
