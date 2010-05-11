@@ -14,10 +14,6 @@
 @synthesize initialAngle    = _initialAngle;
 @synthesize initialIndex    = _initialIndex;
 @synthesize finalIndex      = _finalIndex;
-@synthesize textureHearts   = _textureHearts;
-@synthesize textureDiamonds = _textureDiamonds;
-@synthesize textureClubs    = _textureClubs;
-@synthesize textureSpades   = _textureSpades;
 
 -(id)init
 {
@@ -26,7 +22,6 @@
     if(self)
     {   
         _cards     = [[NSMutableArray alloc] init];
-//        _deadCards = [[NSMutableArray alloc] init];
         
         _initialIndex = -1;
         _finalIndex   = -1;
@@ -69,43 +64,37 @@
 
 -(void)resetCardsWithBendFactor:(GLfloat)bendFactor
 {
-    //for(GLCard* card in self.deadCards) { [card resetWithBendFactor:bendFactor]; }
     for(GLCard* card in self.cards)     { [card generateWithBendFactor:bendFactor]; }
 }
 
 -(void)clearDeadCard:(GLCard*)item
 {
     [self.cards removeObject:item];   
-    //[self.deadCards removeObject:item];   
 }
 
 -(void)drawFronts
 {
-    //for(GLCard* card in self.deadCards.reverseObjectEnumerator) { [card drawFront]; }
     for(GLCard* card in self.cards)     { [card drawFront]; }
 }
 
 -(void)drawBacks
 {
-    //for(GLCard* card in self.deadCards) { [card drawBack]; }
     for(GLCard* card in self.cards.reverseObjectEnumerator)     { [card drawBack]; }
 }
 
 -(void)drawShadows
 {
-    //for(GLCard* card in self.deadCards.reverseObjectEnumerator) { [card drawShadow]; }
     for(GLCard* card in self.cards)     { [card drawShadow]; }
 }
 
 -(void)drawLabels
 {
-    //for(GLCard* card in self.deadCards) { [card drawLabel]; }
     for(GLCard* card in self.cards)     { [card drawLabel]; }
 }
 
 -(void)discardCardWithSuit:(int)suit numeral:(int)numeral afterDelay:(NSTimeInterval)delay andThen:(simpleBlock)work
 {
-    runAfterDelay(delay, 
+    runAfterDelay(self.renderer.animated ? delay : 0, 
     ^{
         for(GLCard* card in self.cards)
         {
@@ -124,7 +113,7 @@
 
 -(void)dealCardWithSuit:(int)suit numeral:(int)numeral held:(BOOL)isHeld afterDelay:(NSTimeInterval)delay andThen:(simpleBlock)work
 {
-    runAfterDelay(delay, 
+    runAfterDelay(self.renderer.animated ? delay : 0, 
     ^{
         GLCard* card = [[[GLCard alloc] initWithSuit:suit numeral:numeral] autorelease];
         
@@ -132,10 +121,6 @@
         
         card.renderer        = self.renderer;
         card.cardGroup       = self;
-        card.textureHearts   = self.textureHearts;
-        card.textureDiamonds = self.textureDiamonds;
-        card.textureClubs    = self.textureClubs;   
-        card.textureSpades   = self.textureSpades;  
         card.position        = self.cards.count;
         card.angleJitter     = randomFloat(-3.0, 3.0);
         card.isHeld          = [AnimatedFloat withValue:isHeld];

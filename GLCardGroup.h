@@ -10,10 +10,6 @@
     GLfloat          _initialAngle;
     int              _initialIndex;
     int              _finalIndex;
-    GLTexture*       _textureHearts;
-    GLTexture*       _textureDiamonds;
-    GLTexture*       _textureClubs;
-    GLTexture*       _textureSpades;
 }
 
 
