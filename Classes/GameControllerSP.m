@@ -339,7 +339,7 @@
 
         self.player.status = PlayerStatusReturningCards;
         
-        [self.renderer unflipCardsAndThen:^{ self.player.status = PlayerStatusNoCards; [self update]; }];
+        [self.renderer unflipCardsAndThen:^{ [self discardCards:self.player.cards andThen:^{self.player.status = PlayerStatusNoCards; [self update]; }]; }];
     }
     else if(self.player.status == PlayerStatusReturningCards)
     {
