@@ -213,6 +213,11 @@
 //TODO: make discardCards discard all cards at once, with delayed animation
 -(void)discardCards:(NSMutableArray*)cards andThen:(simpleBlock)work
 {
+    for(GLCard* card in cards)
+    {
+        
+    }
+    
     if(cards.count > 0)
     {
         CardModel* card = [[[cards objectAtIndex:0] retain] autorelease];
@@ -222,7 +227,7 @@
         [self.game.discard addObject:card];
         [self.player.cards removeObject:card];
         
-        [self.renderer.cardGroup discardCardWithSuit:card.suit numeral:card.numeral];
+        [self.renderer.cardGroup discardCardWithSuit:card.suit numeral:card.numeral after];
         
         runAfterDelay(TIMESCALE * 0.2, ^{ [self discardCards:cards andThen:work]; });
     }
