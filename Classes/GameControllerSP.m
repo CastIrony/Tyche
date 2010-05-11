@@ -235,9 +235,11 @@
         
         if(self.player.cards.count)
         {
+            NSTimeInterval delay = 0;
+            
             for(GLCard* card in self.player.cards)
             {    
-                [self.renderer.cardGroup discardCardWithSuit:card.suit numeral:card.numeral];
+                [self.renderer.cardGroup discardCardWithSuit:card.suit numeral:card.numeral afterDelay:delay += 0.2];
             }
             
             [self.player.cards removeAllObjects];
