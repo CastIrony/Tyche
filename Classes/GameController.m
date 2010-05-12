@@ -199,11 +199,11 @@
     {
         CardModel* card = [cards objectAtIndex:i];
         
-        [self.player.cards removeObject:card];
-
         NSLog(@"%@", [card proxyForJson]);
         
         [self.renderer.cardGroup discardCardWithSuit:card.suit numeral:card.numeral afterDelay:0.2 * i andThen:(card == lastCard ? work : nil)];
+
+        [self.player.cards removeObject:card];
     }
 }
 
