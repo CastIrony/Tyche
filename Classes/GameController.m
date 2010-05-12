@@ -156,13 +156,6 @@
     [self dealCards:[self.game getCards:5] andThen:work];
 }
 
--(void)endGameAndThen:(simpleBlock)work
-{
-    self.game = nil;
-    
-    [self update];
-}
-
 -(void)endHandAndThen:(simpleBlock)work
 {
     //TODO: refactor this into updateRendererAnimated
