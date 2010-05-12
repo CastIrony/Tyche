@@ -102,7 +102,7 @@
 
 -(void)load
 {
-    renderer.animated = NO;
+    self.animated = NO;
     
     //setup code:
         
@@ -308,7 +308,7 @@
     
     if(!self.gameController) { [self showMenus]; }
     
-    renderer.animated = YES;
+    self.animated = YES;
 }
 
 -(void)render
