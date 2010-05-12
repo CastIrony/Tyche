@@ -195,6 +195,9 @@
 {
     CardModel* lastCard = [cards lastObject];
     
+    NSLog(@"to remove %@", [cards JSONRepresentation]);
+    NSLog(@"all cards %@", [self.player.cards JSONRepresentation]);
+    
     for(uint i = 0; i < cards.count; i++)
     {
         CardModel* card = [cards objectAtIndex:i];
