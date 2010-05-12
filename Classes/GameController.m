@@ -187,7 +187,7 @@
 
         if(![self.player.cards containsObject:card]) { [self.player.cards addObject:card]; }
         
-        [self.renderer.cardGroup dealCardWithSuit:card.suit numeral:card.numeral held:card.isHeld afterDelay:0.2 * i andThen:(card == lastCard ? work : nil)];
+        [self.renderer.cardGroup dealCardWithSuit:card.suit numeral:card.numeral held:card.isHeld afterDelay:02 * i andThen:(card == lastCard ? work : nil)];
     }
 }
 
@@ -206,7 +206,7 @@
         
         [self.player.cards removeObject:card];
         
-        [self.renderer.cardGroup discardCardWithSuit:card.suit numeral:card.numeral afterDelay:0.2 * i andThen:(card == lastCard ? work : nil)];
+        [self.renderer.cardGroup discardCardWithSuit:card.suit numeral:card.numeral afterDelay:02 * i andThen:(card == lastCard ? work : nil)];
 
     }
 }
