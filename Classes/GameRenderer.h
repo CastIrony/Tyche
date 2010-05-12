@@ -93,4 +93,6 @@
 -(void)flipCardsAndThen:(simpleBlock)work;
 -(void)unflipCardsAndThen:(simpleBlock)work;
 
+-(void)labelTouchedWithKey:(NSString*)key;
+
 @end

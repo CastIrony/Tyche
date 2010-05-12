@@ -457,6 +457,12 @@
     }
 }
 
+-(void)labelTouchedWithKey:(NSString*)key
+{
+    [self.appController  labelTouchedWithKey:key];
+    [self.gameController labelTouchedWithKey:key];
+}
+
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return NO;
