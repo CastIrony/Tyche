@@ -186,15 +186,15 @@
 
 -(void)dealCards:(NSMutableArray*)cards andThen:(simpleBlock)work
 {
-    GLCard* lastCard = [cards lastObject];
+    CardModel* lastCard = [cards lastObject];
     
     for(uint i = 0; i < cards.count; i++)
     {
-        GLCard* card = [cards objectAtIndex:i];
+        CardModel* card = [cards objectAtIndex:i];
 
         if(![self.player.cards containsObject:card]) { [self.player.cards addObject:card]; }
         
-        [self.renderer.cardGroup dealCardWithSuit:card.suit numeral:card.numeral held:card.isHeld.endValue afterDelay:0.2 * i andThen:(card == lastCard ? work : nil)];
+        [self.renderer.cardGroup dealCardWithSuit:card.suit numeral:card.numeral held:card.isHeld afterDelay:0.2 * i andThen:(card == lastCard ? work : nil)];
     }
 }
 
