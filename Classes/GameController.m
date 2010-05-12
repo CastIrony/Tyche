@@ -200,13 +200,12 @@
     
     for(uint i = 0; i < cards.count; i++)
     {
-        CardModel* card = [cards objectAtIndex:i];
-        
-        NSLog(@"%@", [card proxyForJson]);
+        CardModel* card = [[cards objectAtIndex:i] retain];
+
+        [self.player.cards removeObject:card];
         
         [self.renderer.cardGroup discardCardWithSuit:card.suit numeral:card.numeral afterDelay:0.2 * i andThen:(card == lastCard ? work : nil)];
 
-        [self.player.cards removeObject:card];
     }
 }
 
