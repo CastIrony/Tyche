@@ -102,6 +102,8 @@
 
 -(void)load
 {
+    renderer.animated = NO;
+    
     //setup code:
         
     self.camera = [[[CameraController alloc] init] autorelease];
@@ -305,6 +307,8 @@
     self.gameController = [GameController loadWithRenderer:self];
     
     if(!self.gameController) { [self showMenus]; }
+    
+    renderer.animated = YES;
 }
 
 -(void)render
