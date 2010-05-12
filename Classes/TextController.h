@@ -54,7 +54,6 @@
 
 -(void)draw;
 
--(void)labelTouchedWithKey:(NSString*)key;
 
 @end
 

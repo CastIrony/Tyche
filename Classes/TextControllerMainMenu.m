@@ -84,20 +84,6 @@
     [self fillWithDictionaries:labels];
 }
 
--(void)labelTouchedWithKey:(NSString*)key
-{
-    if([key isEqualToString:@"join_multiplayer"]) 
-    {
-        NSArray* keys = self.renderer.menuLayerController.menuLayerKeys;
-        
-        NSString* nextKey = [keys objectAfter:self.renderer.menuLayerController.currentKey];
-        
-        [self.renderer.menuLayerController setKey:nextKey];
-    }
-    
-    //[self.renderer.appController labelTouchedWithKey:key];
-}
-
 -(void)draw
 {
     [super draw];

@@ -74,16 +74,4 @@
     [self fillWithDictionaries:labels];
 }
 
--(void)labelTouchedWithKey:(NSString*)key
-{
-    if([key isEqualToString:@"calibrate"]) 
-    {
-//        int newIndex = self.renderer.menuLayerController.currentIndex + 1;
-//        
-//        [self.renderer.menuLayerController setCurrentIndex:newIndex];
-    }
-    
-    //[self.renderer.appController labelTouchedWithKey:key];
-}
-
 @end

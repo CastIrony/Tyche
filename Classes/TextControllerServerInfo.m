@@ -72,32 +72,4 @@
     [self fillWithDictionaries:labels];
 }
 
--(void)labelTouchedWithKey:(NSString*)key
-{
-    MenuController* menuController = self.renderer.menuLayerController.currentLayer;
-    
-    if([key isEqualToString:@"delete"]) 
-    {
-        [menuController deleteMenuForKey:[NSString stringWithFormat:@"%@%@",self.serverIcon, self.serverName]];
-    }
-    
-    if([key isEqualToString:@"collapse"]) 
-    {
-        NSArray* keys = self.renderer.menuLayerController.menuLayerKeys;
-        
-        NSString* nextKey = [keys objectAfter:self.renderer.menuLayerController.currentKey];
-        
-        [self.renderer.menuLayerController setKey:nextKey];
-    }
-    
-    if([key isEqualToString:@"title2"]) 
-    {
-        NSArray* keys = self.renderer.menuLayerController.menuLayerKeys;
-        
-        NSString* prevKey = [keys objectBefore:self.renderer.menuLayerController.currentKey];
-        
-        [self.renderer.menuLayerController setKey:prevKey];
-    }
-}
-
 @end

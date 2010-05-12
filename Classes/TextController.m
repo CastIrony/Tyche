@@ -199,6 +199,7 @@
 
 -(void)labelTouchedWithKey:(NSString*)key
 {
+    [self.renderer labelTouchedWithKey:key];
 }
 
 @end

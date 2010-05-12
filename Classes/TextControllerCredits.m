@@ -106,9 +106,4 @@
     [self fillWithDictionaries:labels];
 }
 
--(void)labelTouchedWithKey:(NSString*)key
-{    
-    [self.renderer.gameController labelTouchedWithKey:key];
-}
-
 @end
