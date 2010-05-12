@@ -200,11 +200,11 @@
 
 -(void)discardCards:(NSMutableArray*)cards andThen:(simpleBlock)work
 {
-    GLCard* lastCard = [cards lastObject];
+    CardModel* lastCard = [cards lastObject];
     
     for(uint i = 0; i < cards.count; i++)
     {
-        GLCard* card = [cards objectAtIndex:i];
+        CardModel* card = [cards objectAtIndex:i];
         
         [self.player.cards removeObject:card];
 
