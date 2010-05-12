@@ -38,10 +38,14 @@
 
 +(GameController*)loadWithRenderer:(GameRenderer*)renderer
 {
+    renderer.animated = NO;
+    
     GameController* gameController = nil;
     
     if(!gameController) { gameController = [GameControllerSP loadWithRenderer:renderer]; }
     //if(!gameController) { gameController = [GameControllerMP loadWithRenderer:renderer]; }
+    
+    renderer.animated = YES;
     
     return gameController;
 }
