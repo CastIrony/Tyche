@@ -202,6 +202,8 @@
     {
         CardModel* card = [[[cards objectAtIndex:i] retain] autorelease];
 
+        NSLog(@"Removing card %d with suit %d and numeral %d", i, card.suit, card.numeral);
+        
         [self.player.cards removeObject:card];
         
         [self.renderer.cardGroup discardCardWithSuit:card.suit numeral:card.numeral afterDelay:0.2 * i andThen:(card == lastCard ? work : nil)];
