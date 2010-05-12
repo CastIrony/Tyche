@@ -201,7 +201,7 @@
         
         [self.player.cards removeObject:card];
 
-        NSLog((NSString*)[card JSONRepresentation]);
+        NSLog(@"%@", [card JSONRepresentation]);
         
         [self.renderer.cardGroup discardCardWithSuit:card.suit numeral:card.numeral afterDelay:0.2 * i andThen:(card == lastCard ? work : nil)];
     }
