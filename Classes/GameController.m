@@ -217,7 +217,7 @@
     
     NSArray* filteredCards = [playerCards filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isHeld == NO"]];
     
-    NSMutableArray* cardsToDiscard = [filteredCards mutableCopy]; 
+    NSMutableArray* cardsToDiscard = [[filteredCards mutableCopy] autorelease]; 
     NSMutableArray* newCards = [self.game getCards:cardsToDiscard.count];
         
     [self discardCards:cardsToDiscard andThen:^{ [self dealCards:newCards andThen:work]; }];
