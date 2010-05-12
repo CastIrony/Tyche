@@ -221,7 +221,7 @@
         {
             NSTimeInterval delay = 0;
             
-            [self discardCards:self.player.cards andThen:nil];
+            [self discardCards:[self.player.cards mutableCopy] andThen:nil];
             
             [self.player.cards removeAllObjects];
         }
@@ -340,7 +340,7 @@
         
         [self.renderer unflipCardsAndThen:
         ^{ 
-            [self discardCards:self.player.cards andThen:
+            [self discardCards:[self.player.cards mutableCopy] andThen:
             ^{
                 self.player.status = PlayerStatusNoCards; 
                 [self update]; 
