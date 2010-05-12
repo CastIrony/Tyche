@@ -194,7 +194,7 @@
 
         if(![self.player.cards containsObject:card]) { [self.player.cards addObject:card]; }
         
-        [self.renderer.cardGroup dealCardWithSuit:card.suit numeral:card.numeral held:YES afterDelay:0.2 * i andThen:(card == lastCard ? work : nil)];
+        [self.renderer.cardGroup dealCardWithSuit:card.suit numeral:card.numeral held:card.isHeld afterDelay:0.2 * i andThen:(card == lastCard ? work : nil)];
     }
 }
 
