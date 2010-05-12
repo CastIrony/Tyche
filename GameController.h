@@ -26,7 +26,6 @@
 -(void)newDeckAndThen:(simpleBlock)work;
 -(void)newGameAndThen:(simpleBlock)work;
 -(void)newHandAndThen:(simpleBlock)work;
--(void)endGameAndThen:(simpleBlock)work;
 -(void)endHandAndThen:(simpleBlock)work;
 -(void)drawCardsAndThen:(simpleBlock)work;
 -(void)dealCards:(NSMutableArray*)cards andThen:(simpleBlock)work;
