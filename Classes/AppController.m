@@ -52,7 +52,6 @@
         
         self.renderer.gameController.renderer = self.renderer;
 
-        [self.renderer.gameController endGameAndThen:nil];
         [self.renderer.gameController newGameAndThen:nil];
     }
 
@@ -62,7 +61,6 @@
         
         self.renderer.gameController.renderer = self.renderer;
         
-        [self.renderer.gameController endGameAndThen:nil];
         [self.renderer.gameController newGameAndThen:nil];
     }
 }
