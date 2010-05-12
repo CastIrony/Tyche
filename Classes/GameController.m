@@ -200,7 +200,7 @@
     
     for(uint i = 0; i < cards.count; i++)
     {
-        CardModel* card = [[cards objectAtIndex:i] retain];
+        CardModel* card = [[[cards objectAtIndex:i] retain] autorelease];
 
         [self.player.cards removeObject:card];
         
