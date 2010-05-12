@@ -202,7 +202,7 @@
     {
         CardModel* card = [[[cards objectAtIndex:i] retain] autorelease];
 
-        NSLog(@"Removing card %d with suit %d and numeral %d", i, card.suit, card.numeral);
+        NSLog(@"Removing card %d of %d with suit %d and numeral %d", i, cards.count, card.suit, card.numeral);
         
         [self.player.cards removeObject:card];
         
