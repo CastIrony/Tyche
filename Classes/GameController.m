@@ -199,7 +199,7 @@
         
         [self.player.cards removeObject:card];
         
-        [self.renderer.cardGroup discardCardWithSuit:card.suit numeral:card.numeral afterDelay:0.2 * i andThen:(card == lastCard ? work : nil)];
+        [self.renderer.cardGroup discardCardWithSuit:card.suit numeral:card.numeral afterDelay:2 * i andThen:(card == lastCard ? work : nil)];
 
         i++;
     }
