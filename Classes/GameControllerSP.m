@@ -333,7 +333,9 @@
 {
     if(self.renderer.camera.status == CameraStatusCardsFlipped)
     {
-        [self endHandAndThen:^{ [self update]; }];
+        self.player.status = PlayerStatusShouldReturnCards;
+        
+        [self update];
     }
     else 
     {
