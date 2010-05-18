@@ -117,7 +117,7 @@
     ^{
         GLCard* card = [[[GLCard alloc] initWithSuit:suit numeral:numeral] autorelease];
         
-        [self.cards insertObject:card atIndex:0];
+        [self.cards addObject:card];
         
         card.renderer       = self.renderer;
         card.cardGroup      = self;
