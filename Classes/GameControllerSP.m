@@ -223,11 +223,11 @@
     {
         self.player.status = PlayerStatusDealingCards;
        
-        [renderer.camera flattenAndThen:
+        [self.renderer.camera flattenAndThen:
         ^{ 
-            [gameController dealCards:gameController.player.cards andThen:
+            [self dealCards:gameController.player.cards andThen:
             ^{
-                  [renderer.camera unflattenAndThen:nil];
+                [self.renderer.camera unflattenAndThen:nil];
             }]; 
         }];
         
