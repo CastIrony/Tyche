@@ -295,7 +295,7 @@
     
     Vector3D light = Vector3DMake(0, -10, 0);
     
-    for(int i = 0; i < stackCount; i += 5)
+    for(int i = 0; i < stackCount; i += 10)
     {        
         GLfloat displacement = -0.15 * (i + 1);
         
