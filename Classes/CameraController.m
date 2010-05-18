@@ -127,7 +127,7 @@
 {
     self.pitchFactor = [AnimatedFloat withStartValue:self.pitchFactor.value endValue:0 forTime:(self.pitchAngle.value / 90.0)]; 
     
-    self.pitchFactor.curve = AnimationEaseInOut;
+    //self.pitchFactor.curve = AnimationEaseInOut;
     self.pitchFactor.onEnd = work;
 }
 
@@ -135,7 +135,7 @@
 {
     self.pitchFactor = [AnimatedFloat withStartValue:self.pitchFactor.value endValue:1 forTime:(self.pitchAngle.value / 90.0)]; 
     
-    self.pitchFactor.curve = AnimationEaseInOut;
+    //self.pitchFactor.curve = AnimationEaseInOut;
     self.pitchFactor.onEnd = work;
 }
 
