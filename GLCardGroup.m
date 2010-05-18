@@ -129,6 +129,8 @@
         card.location.curve = AnimationEaseInOut;
 
         [self layoutCards];
+        
+        NSLog(@"Card View: Dealt Card: %@", card);
     });
 }
 

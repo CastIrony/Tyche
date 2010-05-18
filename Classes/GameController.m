@@ -165,17 +165,17 @@
 
 
 -(void)dealCards:(NSMutableArray*)cards andThen:(simpleBlock)work
-{
+{    
     CardModel* lastCard = [cards objectAtIndex:0];
     
     int i = 0;
 
-    for(CardModel* card in cards.reverseObjectEnumerator)
+    for(CardModel* card in cards)
     {
         if(![self.player.cards containsObject:card]) { [self.player.cards addObject:card]; }
     }
     
-    for(CardModel* card in cards.reverseObjectEnumerator)
+    for(CardModel* card in cards)
     {
         [self.renderer.cardGroup dealCardWithSuit:card.suit numeral:card.numeral held:card.isHeld afterDelay:0.2 * i andThen:(card == lastCard ? work : nil)];
     
@@ -185,7 +185,6 @@
     NSLog(@"Dealt cards: %@", cards);
 
     NSLog(@"Card Model: %@", self.player.cards);
-    NSLog(@"View Model: %@", self.renderer.cardGroup.cards);
 }
 
 -(void)discardCards:(NSMutableArray*)cards andThen:(simpleBlock)work
