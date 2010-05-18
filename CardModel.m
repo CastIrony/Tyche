@@ -55,7 +55,7 @@
     return card;
 }
 
--(NSString)description
+-(NSString*)description
 {
     return [NSString stringWithFormat:@"Card with suit:%d numeral:%d", self.suit, self.numeral];
 }
