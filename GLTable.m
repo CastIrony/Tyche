@@ -85,25 +85,12 @@
 
 - (void)draw
 {
-//    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-//    
-//    glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"table"]);
-    
     // TOP
     
-    //glEnableClientState(GL_COLOR_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
     
     glNormal3f(0.0, -1.0, 0.0);
     
-//    Vector3D topVertexArray[] = 
-//    {
-//        Vector3DMake(-8.45, 0.0, -7.25),       
-//        Vector3DMake( 8.45, 0.0, -7.25),        
-//        Vector3DMake(-8.45, 0.0,  3.25),        
-//        Vector3DMake( 8.45, 0.0,  3.25),
-//    };
-
     Vector3D topVertexArray[] = 
     {
         Vector3DMake(-20.0, 0.0, -16.75),       
@@ -139,7 +126,7 @@
         
     GLfloat lightness = self.renderer.lightness.value;
     
-    glColor4f(lightness, lightness, lightness, 0.45);
+    glColor4f(lightness, lightness, lightness, 0.75);
     
     glVertexPointer  (3, GL_FLOAT, 0, topVertexArray);
     
