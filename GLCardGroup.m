@@ -130,7 +130,7 @@
 
         [self layoutCards];
         
-        NSLog(@"Card View: Dealt Card: %@", card);
+        NSLog(@"Card View: %@", self.cards);
     });
 }
 
