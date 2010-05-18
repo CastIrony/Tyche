@@ -55,6 +55,11 @@
     return card;
 }
 
+-(NSString)description
+{
+    return [NSString stringWithFormat:@"Card with suit:%d numeral:%d", self.suit, self.numeral];
+}
+
 -(NSComparisonResult)numeralCompareHigh:(CardModel*)otherCard
 {
     return [[NSNumber numberWithInt:self.numeralHigh] compare:[NSNumber numberWithInt:otherCard.numeralHigh]];
