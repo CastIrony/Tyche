@@ -13,8 +13,11 @@
 -(void)shuffle 
 {     
     srand48(time(NULL));
-        
-    [self sortUsingFunction:randomSort context:nil]; 
+    
+    for(int i = 0; i < 10; i++)
+    {
+        [self sortUsingFunction:randomSort context:nil]; 
+    }
 }
 
 -(id)randomObject
