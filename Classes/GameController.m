@@ -168,7 +168,7 @@
 {
     CardModel* lastCard = [cards objectAtIndex:0];
     
-    for(uint i = cards.count - 1; i >= 0; i++)
+    for(uint i = cards.count - 1; i >= 0; i--)
     {
         CardModel* card = [cards objectAtIndex:i];
 
@@ -181,11 +181,8 @@
 -(void)discardCards:(NSMutableArray*)cards andThen:(simpleBlock)work
 {
     CardModel* lastCard = [cards lastObject];
-    
-    NSLog(@"to remove %@", [cards JSONRepresentation]);
-    NSLog(@"all cards %@", [self.player.cards JSONRepresentation]);
-    
-    for(uint i = 0; i < cards.count; i++)
+        
+    for(uint i = cards.count - 1; i >= 0; i--)
     {
         CardModel* card = [[[cards objectAtIndex:i] retain] autorelease];
 
