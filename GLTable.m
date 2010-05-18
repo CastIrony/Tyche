@@ -126,7 +126,7 @@
         
     GLfloat lightness = self.renderer.lightness.value;
     
-    glColor4f(lightness, lightness, lightness, 0.5);
+    glColor4f(lightness, lightness, lightness, 0.4);
     
     glVertexPointer  (3, GL_FLOAT, 0, topVertexArray);
     
