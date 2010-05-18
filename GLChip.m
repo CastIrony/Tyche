@@ -108,7 +108,7 @@
         
         GLfloat distance = sqrt(self.location.x * self.location.x + self.location.z * self.location.z);
         
-        GLfloat lightness = 0.5;//clipFloat(1.0 - 0.06 * distance, 0.3, 1.0) * self.renderer.lightness.value;
+        GLfloat lightness = clipFloat(1.0 - 0.06 * distance, 0.3, 1.0) * self.renderer.lightness.value;
         
         for(int chipCounter = 0; chipCounter <= stackCount; chipCounter++) 
         {
