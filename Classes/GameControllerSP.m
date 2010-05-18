@@ -33,7 +33,13 @@
         
         gameController.game = [GameModel withDictionary:[archive JSONValue]];
         
-        [gameController dealCards:gameController.player.cards andThen:nil];
+        [renderer.camera flattenAndThen:
+        ^{ 
+            [gameController dealCards:gameController.player.cards andThen:
+            ^{
+                [renderer.camera unflattenAndThen:nil];
+            }]; 
+        }];
 
         //TODO: refactor this into updateRendererAnimated
         [gameController.renderer hideMenus];
@@ -217,11 +223,25 @@
     {
         self.player.status = PlayerStatusDealingCards;
        
-        [self dealCards:[self.game getCards:5] andThen:
-        ^{
-            self.player.status = PlayerStatusDealtCards;
-                    
-            [self update];
+        [renderer.camera flattenAndThen:
+        ^{ 
+            [gameController dealCards:gameController.player.cards andThen:
+            ^{
+                  [renderer.camera unflattenAndThen:nil];
+            }]; 
+        }];
+        
+        [renderer.camera flattenAndThen:
+        ^{         
+            [self dealCards:[self.game getCards:5] andThen:
+            ^{
+                [renderer.camera unflattenAndThen:
+                ^{
+                    self.player.status = PlayerStatusDealtCards;
+                        
+                    [self update];
+                }];
+            }];
         }];
     }
     else if(self.player.status == PlayerStatusDealingCards)

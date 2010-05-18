@@ -36,5 +36,7 @@ CameraStatus;
 -(void)setMenuVisible:(BOOL)value;
 -(void)setStatus:(CameraStatus)status;
 -(void)updateCamera;
+-(void)flattenAndThen:(simpleBlock)work;
+-(void)unflattenAndThen:(simpleBlock)work;
 
 @end

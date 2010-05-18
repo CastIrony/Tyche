@@ -153,7 +153,13 @@
 
     [self update]; 
     
-    [self dealCards:[self.game getCards:5] andThen:work];
+    [self.renderer.camera flattenAndThen:
+    ^{
+        [self dealCards:[self.game getCards:5] andThen:
+        ^{ 
+            [self.renderer.camera unflattenAndThen:work];
+        }];
+    }];
 }
 
 -(void)saveData
@@ -213,8 +219,17 @@
     
     NSMutableArray* cardsToDiscard = [[filteredCards mutableCopy] autorelease]; 
     NSMutableArray* newCards = [self.game getCards:cardsToDiscard.count];
-        
-    [self discardCards:cardsToDiscard andThen:^{ [self dealCards:newCards andThen:work]; }];
+    
+    [self.renderer.camera flattenAndThen:
+    ^{
+         [self discardCards:cardsToDiscard andThen:
+         ^{ 
+              [self dealCards:newCards andThen:
+              ^{ 
+                  [self.renderer.camera unflattenAndThen:work];
+              }];
+         }];    
+    }];
 }
 
 -(void)moveCardIndex:(int)initialIndex toIndex:(int)finalIndex
