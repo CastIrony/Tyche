@@ -54,7 +54,6 @@
         card.position = position;
         
         card.angleFan = [AnimatedFloat withStartValue:card.angleFan.value endValue:fan forTime:0.15];
-        card.angleFan.curve = AnimationEaseInOut;
         
         position++;
         
