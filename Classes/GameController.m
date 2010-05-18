@@ -170,6 +170,8 @@
     
     int i = 0;
 
+    NSLog(@"Dealing cards: %@", cards);
+    
     for(CardModel* card in cards.reverseObjectEnumerator)
     {
         if(![self.player.cards containsObject:card]) { [self.player.cards addObject:card]; }
