@@ -311,7 +311,7 @@
     self.animated = YES;
 }
 
--(void)render
+-(void)draw
 {
     TinyProfilerStart(14);
     

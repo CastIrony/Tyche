@@ -85,7 +85,7 @@
 
 -(BOOL)resizeFromLayer:(CAEAGLLayer*)layer;
 -(void)load;
--(void)render;
+-(void)draw;
 
 -(void)showMenus;
 -(void)hideMenus;

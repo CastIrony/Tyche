@@ -65,7 +65,7 @@
     
     [renderer resizeFromLayer:(CAEAGLLayer*)self.layer];
         
-    [renderer render];
+    [renderer draw];
 }
 
 -(NSInteger)animationFrameInterval
@@ -91,7 +91,7 @@
 {
 	if(!animating)
 	{
-		displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:renderer selector:@selector(render)];
+		displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:renderer selector:@selector(draw)];
 		
         [displayLink setFrameInterval:animationFrameInterval];
 		
