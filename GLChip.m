@@ -244,7 +244,7 @@
     
     int stackCount = self.count.value;
     
-    //GLfloat fade = self.count - stackCount;
+    GLfloat fade = self.count - stackCount;
     
     glTexCoordPointer(2, GL_FLOAT, 0, textureArrayShadow);            
 
@@ -311,19 +311,20 @@
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, meshArray);    
     }
 
-    if(stackCount)
-    {
-        GLfloat displacement = -0.15 * (self.count.value + 1);
-        
-        vertexArray[0] = Vector3DProjectShadow(light, Vector3DMake(self.location.x - 1.2, self.location.y + displacement, self.location.z - 1.2));        
-        vertexArray[1] = Vector3DProjectShadow(light, Vector3DMake(self.location.x + 1.2, self.location.y + displacement, self.location.z - 1.2));        
-        vertexArray[2] = Vector3DProjectShadow(light, Vector3DMake(self.location.x - 1.2, self.location.y + displacement, self.location.z + 1.2));        
-        vertexArray[3] = Vector3DProjectShadow(light, Vector3DMake(self.location.x + 1.2, self.location.y + displacement, self.location.z + 1.2));
-        
-        glVertexPointer(3, GL_FLOAT, 0, vertexArray);
-        
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, meshArray);   
-    }
+    GLfloat opacity = clipFloat(self.count.value, 0, 1) * self.markerOpacity;
+    
+    glColor4f(opacity, opacity, opacity, opacity);
+    
+    GLfloat displacement = -0.15 * (self.count.value + 1);
+    
+    vertexArray[0] = Vector3DProjectShadow(light, Vector3DMake(self.location.x - 1.2, self.location.y + displacement, self.location.z - 1.2));        
+    vertexArray[1] = Vector3DProjectShadow(light, Vector3DMake(self.location.x + 1.2, self.location.y + displacement, self.location.z - 1.2));        
+    vertexArray[2] = Vector3DProjectShadow(light, Vector3DMake(self.location.x - 1.2, self.location.y + displacement, self.location.z + 1.2));        
+    vertexArray[3] = Vector3DProjectShadow(light, Vector3DMake(self.location.x + 1.2, self.location.y + displacement, self.location.z + 1.2));
+    
+    glVertexPointer(3, GL_FLOAT, 0, vertexArray);
+    
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, meshArray);   
     
     glEnableClientState(GL_NORMAL_ARRAY);
 }
