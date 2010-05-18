@@ -193,7 +193,7 @@
         
     int i = 0;
     
-    for(CardModel* card in cards.reverseObjectEnumerator)
+    for(CardModel* card in cards)
     {
         NSLog(@"Removing card %d of %d with suit %d and numeral %d", i, cards.count, card.suit, card.numeral);
         
