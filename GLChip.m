@@ -295,7 +295,7 @@
     
     Vector3D light = Vector3DMake(0, -10, 0);
     
-    for(int i = 0; i < stackCount; i += 2)
+    for(int i = 0; i < stackCount; i += 5)
     {        
         GLfloat displacement = -0.15 * (i + 1);
         
@@ -311,7 +311,7 @@
 
     if(stackCount)
     {
-        GLfloat displacement = -0.15 * (stackCount + 1);
+        GLfloat displacement = -0.15 * (self.count.value + 1);
         
         vertexArray[0] = Vector3DProjectShadow(light, Vector3DMake(self.location.x - 1.2, self.location.y + displacement, self.location.z - 1.2));        
         vertexArray[1] = Vector3DProjectShadow(light, Vector3DMake(self.location.x + 1.2, self.location.y + displacement, self.location.z - 1.2));        
