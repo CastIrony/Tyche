@@ -24,9 +24,9 @@
     Color3D colorTouched     = Color3DMake(0,   0, 0, 0.9); 
     //Color3D labelColorTransparent = Color3DMake(1,   1, 1, 0.9); 
     
-    [self.styles setObject:[NSNumber numberWithFloat:0.1]                                         forKey:@"fadeMargin"]; 
-    [self.styles setObject:[UIFont   fontWithName:@"Helvetica-Bold" size:20]                      forKey:@"font"];
-    [self.styles setObject:[NSValue  valueWithCGSize:CGSizeMake(3, 0.35)]                      forKey:@"labelSize"];
+    [self.styles setObject:[NSNumber numberWithFloat:0.1]                                    forKey:@"fadeMargin"]; 
+    [self.styles setObject:[UIFont   fontWithName:@"Helvetica-Bold" size:20]                 forKey:@"font"];
+    [self.styles setObject:[NSValue  valueWithCGSize:CGSizeMake(3, 0.35)]                    forKey:@"labelSize"];
     [self.styles setObject:[NSValue  valueWithBytes:&colorNormal  objCType:@encode(Color3D)] forKey:@"colorNormal"];
     [self.styles setObject:[NSValue  valueWithBytes:&colorTouched objCType:@encode(Color3D)] forKey:@"colorTouched"];
     
@@ -36,7 +36,7 @@
         NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
         
         [label setObject:@"join_multiplayer" forKey:@"key"]; 
-        [label setObject:@"Connecting..."       forKey:@"textString"];          
+        [label setObject:@"Connecting..."    forKey:@"textString"];          
         [label setObject:[NSValue  valueWithBytes:&colorTouched  objCType:@encode(Color3D)] forKey:@"colorNormal"];
         
         [labels addObject:label]; 
@@ -48,8 +48,8 @@
         NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
         
         [label setObject:@"new_multiplayer" forKey:@"key"]; 
-        [label setObject:@"Joel's Supercalifragilisticexpialidocious iPhone"  forKey:@"textString"];     
-        [label setObject:@" ☐ "                forKey:@"bulletLeftString"];
+        [label setObject:@"Joel's iPhone"   forKey:@"textString"];     
+        [label setObject:@" ☐ "             forKey:@"bulletLeftString"];
         [label setObject:[NSNumber numberWithInt:UITextAlignmentLeft] forKey:@"textAlignment"];
 
         [labels addObject:label]; 
@@ -58,9 +58,9 @@
     { 
         NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
         
-        [label setObject:@"new_game"            forKey:@"key"]; 
+        [label setObject:@"new_game"    forKey:@"key"]; 
         [label setObject:@"John's iPod" forKey:@"textString"]; 
-        [label setObject:@" ☑ "                forKey:@"bulletLeftString"];
+        [label setObject:@" ☑ "         forKey:@"bulletLeftString"];
         [label setObject:[NSNumber numberWithInt:UITextAlignmentLeft] forKey:@"textAlignment"];
 
         [labels addObject:label]; 
@@ -69,9 +69,9 @@
     { 
         NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
         
-        [label setObject:@"calibrate" forKey:@"key"]; 
+        [label setObject:@"calibrate"    forKey:@"key"]; 
         [label setObject:@"Jim's iPhone" forKey:@"textString"]; 
-        [label setObject:@" ☒ "                forKey:@"bulletLeftString"];
+        [label setObject:@" ☒ "          forKey:@"bulletLeftString"];
         [label setObject:[NSNumber numberWithInt:UITextAlignmentLeft] forKey:@"textAlignment"];
 
         [labels addObject:label]; 
@@ -80,8 +80,8 @@
     { 
         NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
         
-        [label setObject:@"start" forKey:@"key"]; 
-        [label setObject:@"Start Game"       forKey:@"textString"];          
+        [label setObject:@"start"      forKey:@"key"]; 
+        [label setObject:@"Start Game" forKey:@"textString"];          
         
         [labels addObject:label]; 
     }
