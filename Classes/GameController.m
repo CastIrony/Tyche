@@ -170,7 +170,7 @@
     
     int i = 0;
     
-    foreach(CardModel* in cards.reverseObjectEnumerator)
+    for(CardModel* in cards.reverseObjectEnumerator)
     {
         CardModel* card = [cards objectAtIndex:i];
 
@@ -188,7 +188,7 @@
         
     int i = 0;
     
-    foreach(CardModel* in cards.reverseObjectEnumerator)
+    for(CardModel* in cards.reverseObjectEnumerator)
     {
         CardModel* card = [[[cards objectAtIndex:i] retain] autorelease];
 
