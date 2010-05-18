@@ -170,9 +170,9 @@
     
     int i = 0;
 
-    for(CardModel* card in cards)
+    for(CardModel* card in cards.reverseObjectEnumerator)
     {
-        if(![self.player.cards containsObject:card]) { [self.player.cards addObject:card]; }
+        if(![self.player.cards containsObject:card]) { [self.player.cards insertObject:card atIndex:0]; }
     }
     
     for(CardModel* card in cards.reverseObjectEnumerator)
