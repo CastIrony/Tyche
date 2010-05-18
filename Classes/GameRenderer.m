@@ -338,7 +338,7 @@
         //TinyProfilerStart( 1); [self.cardGroup drawShadows]; TinyProfilerStop( 1);                                                               
         //TinyProfilerStart( 2); [self.chipGroup drawShadows]; TinyProfilerStop( 2); 
         
-        //TinyProfilerStart( 3); self.table.drawStatus = GLTableDrawStatusAmbient; [self.table draw]; TinyProfilerStop( 3);                                               
+        TinyProfilerStart( 3); self.table.drawStatus = GLTableDrawStatusAmbient; [self.table draw]; TinyProfilerStop( 3);                                               
     
         TinyProfilerStart( 4); { TextController* textController = [self.textControllers objectForKey:@"credits"]; textController.opacity = 1.0/* - (cameraPitch / 90.0)*/; [textController draw]; } TinyProfilerStop( 4);
         TinyProfilerStart( 5); { TextController* textController = [self.textControllers objectForKey:@"actions"]; textController.opacity = 1.0/* - (cameraPitch / 90.0)*/; [textController draw]; } TinyProfilerStop( 5);
