@@ -93,22 +93,6 @@
     [self update];
 }
 
--(void)chipTouchedUpWithKey:(NSString*)key
-{
-    if(self.player.status == PlayerStatusDealtCards)
-    {
-        [super chipTouchedUpWithKey:key];
-    }
-}
-
--(void)chipTouchedDownWithKey:(NSString*)key;
-{
-    if(self.player.status == PlayerStatusDealtCards)
-    {
-        [super chipTouchedDownWithKey:key];
-    }
-}
-
 -(void)labelTouchedWithKey:(NSString*)key
 {
     [super labelTouchedWithKey:key];
@@ -209,26 +193,19 @@
 
 -(void)update
 {
-    TextController* textBox = [self.renderer.textControllers objectForKey:@"actions"];
+    TextController* actions = [self.renderer.textControllers objectForKey:@"actions"];
     
     NSMutableArray* labels = [[[NSMutableArray alloc] init] autorelease];
     
     if(self.player.status == PlayerStatusNoCards)
     {
-        NSLog(@"PlayerStatusNoCards");
-        
         if(self.player.cards.count)
-        {
-            NSTimeInterval delay = 0;
-            
+        {            
             [self discardCards:[[self.player.cards mutableCopy] autorelease] andThen:nil];
             
             [self.player.cards removeAllObjects];
         }
-        
-        //{ TextControllerStatusBar* textController = [self.renderer.textControllers objectForKey:@"status1"]; textController.text = @" "; [textController update]; }
-        //{ TextControllerStatusBar* textController = [self.renderer.textControllers objectForKey:@"status2"]; textController.text = @" "; [textController update]; }
-        
+                
         NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
         
         [label setObject:@"draw" forKey:@"key"]; 
@@ -238,8 +215,6 @@
     }
     else if(self.player.status == PlayerStatusShouldDealCards)
     {
-        NSLog(@"PlayerStatusShouldDealCards");
-
         self.player.status = PlayerStatusDealingCards;
        
         [self dealCards:[self.game getCards:5] andThen:
@@ -250,15 +225,11 @@
         }];
     }
     else if(self.player.status == PlayerStatusDealingCards)
-    {
-        NSLog(@"PlayerStatusDealingCards");
+    {        
         
-        //don't do anything
     }
     else if(self.player.status == PlayerStatusDealtCards)
     {
-        NSLog(@"PlayerStatusDealtCards");
-
         NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
         
         if(self.player.cardsMarked)
@@ -288,8 +259,6 @@
     }
     else if(self.player.status == PlayerStatusShouldDrawCards)
     {
-        NSLog(@"PlayerStatusShouldDrawCards");
-                
         self.player.status = PlayerStatusDrawingCards;
         
         [self drawCardsAndThen:
@@ -301,14 +270,10 @@
     }
     else if(self.player.status == PlayerStatusDrawingCards)
     {
-        NSLog(@"PlayerStatusDrawingCards");
         
-        // do nothing
     }
     else if(self.player.status == PlayerStatusDrawnCards)
     {
-        NSLog(@"PlayerStatusDrawnCards");
-
         NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
         
         [label setObject:@"call" forKey:@"key"]; 
@@ -318,24 +283,20 @@
     }
     else if(self.player.status == PlayerStatusShouldShowCards)
     {
-        NSLog(@"PlayerStatusShouldShowCards");
-        
         self.player.status = PlayerStatusShowingCards;
         
         [self.renderer flipCardsAndThen:^{ self.player.status = PlayerStatusShownCards; [self update]; }];
     }
     else if(self.player.status == PlayerStatusShowingCards)
     {
-        NSLog(@"PlayerStatusShowingCards");
+        
     }
     else if(self.player.status == PlayerStatusShownCards)
     {
-        NSLog(@"PlayerStatusShownCards");
+        
     }
     else if(self.player.status == PlayerStatusShouldReturnCards)
     {
-        NSLog(@"PlayerStatusShouldReturnCards");
-
         self.player.status = PlayerStatusReturningCards;
         
         [self.renderer unflipCardsAndThen:
@@ -349,14 +310,14 @@
     }
     else if(self.player.status == PlayerStatusReturningCards)
     {
-        NSLog(@"PlayerStatusReturningCards");
+    
     }
     else 
     {
-        NSLog(@"%d", self.player.status);
+    
     }
 
-    [textBox fillWithDictionaries:labels];
+    [actions fillWithDictionaries:labels];
     
     [super update];
 }

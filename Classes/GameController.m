@@ -156,19 +156,6 @@
     [self dealCards:[self.game getCards:5] andThen:work];
 }
 
--(void)endHandAndThen:(simpleBlock)work
-{
-    //TODO: refactor this into updateRendererAnimated
-    //[self.renderer unflipCardsAndThen:^{ [self discardCards:self.player.cards andThen:^{ [self update]; }]; }];
-    
-    self.player.status = PlayerStatusShouldReturnCards;
-    
-    [self update];
-    
-    //TODO: refactor this into updateRendererAnimated
-    //self.renderer.camera.status = CameraStatusNormal;
-}
-
 -(void)saveData
 {    
     NSString* file = [NSString stringWithFormat:@"%@.json", NSStringFromClass([self class])];
@@ -179,9 +166,9 @@
 
 -(void)dealCards:(NSMutableArray*)cards andThen:(simpleBlock)work
 {
-    CardModel* lastCard = [cards lastObject];
+    CardModel* lastCard = [cards objectAtIndex:0];
     
-    for(uint i = 0; i < cards.count; i++)
+    for(uint i = cards.count - 1; i >= 0; i++)
     {
         CardModel* card = [cards objectAtIndex:i];
 
