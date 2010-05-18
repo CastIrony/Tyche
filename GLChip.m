@@ -70,10 +70,12 @@
 
 -(void)draw
 {
+    int stackCount = self.count.value;
+    
+    if(stackCount < 0) { return; }
+    
     if(self.opacity < 0.0001) { return; }
     
-    int stackCount = self.count.value;
-
     Vector3D* stackVectors = malloc( 8 * (stackCount + 1) * sizeof(Vector3D));
     Vector2D* stackTexture = malloc( 8 * (stackCount + 1) * sizeof(Vector2D));
     GLushort* stackMesh    = malloc(12 * (stackCount + 1) * sizeof(GLushort));
@@ -210,6 +212,10 @@
 
 -(void)drawMarker
 {
+    int stackCount = self.count.value;
+    
+    if(stackCount < 0) { return; }
+    
     return;
     
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
@@ -261,12 +267,15 @@
         TRANSACTION_END
     }
     
-    
     glEnableClientState(GL_NORMAL_ARRAY);
 }
 
 -(void)drawShadow
 {
+    int stackCount = self.count.value;
+    
+    if(stackCount < 0) { return; }
+    
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
     
     glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"chips"]);
@@ -290,8 +299,6 @@
     glNormal3f(0.0, -1.0, 0.0);
     
     glDisableClientState(GL_NORMAL_ARRAY);
-        
-    int stackCount = self.count.value;
     
     glTexCoordPointer(2, GL_FLOAT, 0, textureArrayShadow);            
     
