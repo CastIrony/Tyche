@@ -222,16 +222,8 @@
     else if(self.player.status == PlayerStatusShouldDealCards)
     {
         self.player.status = PlayerStatusDealingCards;
-       
-        [self.renderer.camera flattenAndThen:
-        ^{ 
-            [self dealCards:gameController.player.cards andThen:
-            ^{
-                [self.renderer.camera unflattenAndThen:nil];
-            }]; 
-        }];
         
-        [renderer.camera flattenAndThen:
+        [self.renderer.camera flattenAndThen:
         ^{         
             [self dealCards:[self.game getCards:5] andThen:
             ^{
