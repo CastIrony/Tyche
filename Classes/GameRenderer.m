@@ -335,8 +335,8 @@
         
         TinyProfilerStart( 0); self.table.drawStatus = GLTableDrawStatusDiffuse; [self.table draw]; TinyProfilerStop( 0);                                              
         
-        //TinyProfilerStart( 1); [self.cardGroup drawShadows]; TinyProfilerStop( 1);                                                               
-        //TinyProfilerStart( 2); [self.chipGroup drawShadows]; TinyProfilerStop( 2); 
+        TinyProfilerStart( 1); [self.cardGroup drawShadows]; TinyProfilerStop( 1);                                                               
+        TinyProfilerStart( 2); [self.chipGroup drawShadows]; TinyProfilerStop( 2); 
         
         TinyProfilerStart( 3); self.table.drawStatus = GLTableDrawStatusAmbient; [self.table draw]; TinyProfilerStop( 3);                                               
     
