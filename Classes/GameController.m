@@ -168,13 +168,17 @@
 {
     CardModel* lastCard = [cards objectAtIndex:0];
     
-    for(uint i = cards.count - 1; i >= 0; i--)
+    int i = 0;
+    
+    foreach(CardModel* in cards.reverseObjectEnumerator)
     {
         CardModel* card = [cards objectAtIndex:i];
 
         if(![self.player.cards containsObject:card]) { [self.player.cards addObject:card]; }
         
         [self.renderer.cardGroup dealCardWithSuit:card.suit numeral:card.numeral held:card.isHeld afterDelay:0.2 * i andThen:(card == lastCard ? work : nil)];
+    
+        i++;
     }
 }
 
@@ -182,7 +186,9 @@
 {
     CardModel* lastCard = [cards lastObject];
         
-    for(uint i = cards.count - 1; i >= 0; i--)
+    int i = 0;
+    
+    foreach(CardModel* in cards.reverseObjectEnumerator)
     {
         CardModel* card = [[[cards objectAtIndex:i] retain] autorelease];
 
