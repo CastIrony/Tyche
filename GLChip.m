@@ -169,7 +169,7 @@
                 stackMesh[offsetMesh++] = offsetSprite * 4 + 3;
                 
                 offsetSprite++;
-            //}
+            }
         }
         
         stackVectors[offsetVector - 8].z -= 3 * (1 - fade);
