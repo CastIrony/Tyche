@@ -244,7 +244,7 @@
     
     int stackCount = self.count.value;
     
-    GLfloat fade = self.count - stackCount;
+    GLfloat fade = self.count.value - stackCount;
     
     glTexCoordPointer(2, GL_FLOAT, 0, textureArrayShadow);            
 
