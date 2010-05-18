@@ -181,14 +181,14 @@
         stackVectors[offsetVector - 2].z -= 3 * (1 - fade);
         stackVectors[offsetVector - 1].z -= 3 * (1 - fade);
         
-        //stackColors[offsetColors - 8] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity);
-        //stackColors[offsetColors - 7] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity);
-        //stackColors[offsetColors - 6] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity);
-        //stackColors[offsetColors - 5] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity);
-        //stackColors[offsetColors - 4] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity);
-        //stackColors[offsetColors - 3] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity);
-        //stackColors[offsetColors - 2] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity);
-        //stackColors[offsetColors - 1] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity);
+        stackColors[offsetColors - 8] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity);
+        stackColors[offsetColors - 7] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity);
+        stackColors[offsetColors - 6] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity);
+        stackColors[offsetColors - 5] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity);
+        stackColors[offsetColors - 4] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity,             fade * self.opacity);
+        stackColors[offsetColors - 3] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity,             fade * self.opacity);
+        stackColors[offsetColors - 2] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity,             fade * self.opacity);
+        stackColors[offsetColors - 1] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity,             fade * self.opacity);
         
         glTexCoordPointer(2, GL_FLOAT, 0, stackTexture);            
         glColorPointer   (4, GL_FLOAT, 0, stackColors);                                    
