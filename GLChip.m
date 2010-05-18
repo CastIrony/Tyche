@@ -144,8 +144,8 @@
             
             offsetSprite++;
             
-            if(chipCounter >= stackCount - 2)
-            {
+            //if(chipCounter >= stackCount - 2)
+            //{
                 stackVectors[offsetVector++] = Vector3DMake(locationJitter.x - 1.0, locationJitter.y, locationJitter.z - 1.0);
                 stackVectors[offsetVector++] = Vector3DMake(locationJitter.x + 1.0, locationJitter.y, locationJitter.z - 1.0);
                 stackVectors[offsetVector++] = Vector3DMake(locationJitter.x - 1.0, locationJitter.y, locationJitter.z + 1.0);
@@ -169,7 +169,7 @@
                 stackMesh[offsetMesh++] = offsetSprite * 4 + 3;
                 
                 offsetSprite++;
-            }
+            //}
         }
         
         stackVectors[offsetVector - 8].z -= 3 * (1 - fade);
