@@ -227,7 +227,7 @@
         ^{         
             [self dealCards:[self.game getCards:5] andThen:
             ^{
-                [renderer.camera unflattenAndThen:
+                [self.renderer.camera unflattenAndThen:
                 ^{
                     self.player.status = PlayerStatusDealtCards;
                         
