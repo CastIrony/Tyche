@@ -39,6 +39,11 @@
     [super dealloc];
 }
 
+-(NSString*)description
+{
+    return [NSString stringWithFormat:@"Card with suit:%d numeral:%d", self.suit, self.numeral];
+}
+
 -(id)initWithSuit:(int)suit numeral:(int)numeral
 {
     int cardTesselationWidth  = 11;
