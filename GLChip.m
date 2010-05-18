@@ -144,7 +144,7 @@
             
             offsetSprite++;
             
-            if(chipCounter >= stackCount - 1)
+            if(chipCounter >= stackCount - 2)
             {
                 stackVectors[offsetVector++] = Vector3DMake(locationJitter.x - 1.0, locationJitter.y, locationJitter.z - 1.0);
                 stackVectors[offsetVector++] = Vector3DMake(locationJitter.x + 1.0, locationJitter.y, locationJitter.z - 1.0);
