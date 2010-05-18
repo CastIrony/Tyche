@@ -247,9 +247,7 @@
     glDisableClientState(GL_NORMAL_ARRAY);
     
     glVertexPointer(3, GL_FLOAT, 0, vertexArray);
-    
-    int stackCount = self.count.value;
-    
+        
     GLfloat fade = self.count.value - stackCount;
     
     glTexCoordPointer(2, GL_FLOAT, 0, textureArrayShadow);            
