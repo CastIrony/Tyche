@@ -125,7 +125,7 @@
 
 -(void)flattenAndThen:(simpleBlock)work
 {
-    self.pitchFactor = [AnimatedFloat withStartValue:self.pitchFactor.value endValue:0 speed:1]; 
+    self.pitchFactor = [AnimatedFloat withStartValue:self.pitchFactor.value endValue:0 speed:2]; 
     
     self.pitchFactor.curve = AnimationEaseInOut;
     self.pitchFactor.onEnd = work;
@@ -133,7 +133,7 @@
 
 -(void)unflattenAndThen:(simpleBlock)work
 {
-    self.pitchFactor = [AnimatedFloat withStartValue:self.pitchFactor.value endValue:1 speed:1]; 
+    self.pitchFactor = [AnimatedFloat withStartValue:self.pitchFactor.value endValue:1 speed:2]; 
     
     self.pitchFactor.curve = AnimationEaseInOut;
     self.pitchFactor.onEnd = work;
