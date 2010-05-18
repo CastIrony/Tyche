@@ -271,6 +271,8 @@
     
     glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"chips"]);
     
+    glColor4f(self.markerOpacity, self.markerOpacity, self.markerOpacity, self.markerOpacity);
+    
     Vector3D vertexArray[4];
     
     Vector2D textureArrayShadow[] = 
