@@ -170,10 +170,8 @@
     
     int i = 0;
     
-    for(CardModel* in cards.reverseObjectEnumerator)
+    for(CardModel* card in cards.reverseObjectEnumerator)
     {
-        CardModel* card = [cards objectAtIndex:i];
-
         if(![self.player.cards containsObject:card]) { [self.player.cards addObject:card]; }
         
         [self.renderer.cardGroup dealCardWithSuit:card.suit numeral:card.numeral held:card.isHeld afterDelay:0.2 * i andThen:(card == lastCard ? work : nil)];
@@ -188,10 +186,8 @@
         
     int i = 0;
     
-    for(CardModel* in cards.reverseObjectEnumerator)
+    for(CardModel* card in cards.reverseObjectEnumerator)
     {
-        CardModel* card = [[[cards objectAtIndex:i] retain] autorelease];
-
         NSLog(@"Removing card %d of %d with suit %d and numeral %d", i, cards.count, card.suit, card.numeral);
         
         [self.player.cards removeObject:card];
