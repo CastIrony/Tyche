@@ -63,7 +63,7 @@
 
 -(void)resetCardsWithBendFactor:(GLfloat)bendFactor
 {
-    for(GLCard* card in self.cards) { [card generateWithBendFactor:bendFactor]; }
+    for(GLCard* card in self.cards) { [card makeControlPointsWithBendFactor:bendFactor]; }
 }
 
 -(void)clearDeadCard:(GLCard*)item

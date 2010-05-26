@@ -69,7 +69,7 @@
 -(void)drawShadow;
 -(void)drawLabel;
 
--(void)generateWithBendFactor:(GLfloat)bendFactor;
+-(void)makeControlPointsWithBendFactor:(GLfloat)bendFactor;
 -(void)rotateWithAngle:(GLfloat)angle aroundPoint:(Vector3D)point andAxis:(Vector3D)axis;
 -(void)bendWithAngle:(GLfloat)angle aroundPoint:(Vector3D)point andAxis:(Vector3D)axis;
 -(void)scaleWithFactor:(Vector3D)factor fromPoint:(Vector3D)point;

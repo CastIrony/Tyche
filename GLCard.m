@@ -292,8 +292,10 @@
     }
 }
 
--(void)generateWithBendFactor:(GLfloat)bendFactor
+-(void)makeControlPointsWithBendFactor:(GLfloat)bendFactor
 {
+    if(!self.isAnimating) { return; }
+    
     Vector3D baseCorners[] = 
     {
         Vector3DMake( 2.0,  0.0,  3.0),
