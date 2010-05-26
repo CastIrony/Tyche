@@ -43,7 +43,7 @@
 
 -(BOOL)isAnimating
 {
-    return !self.isHeld.hasEnded && !self.isSelected.hasEnded && !self.angleFlip.hasEnded && !self.angleFan.hasEnded && !self.location.hasEnded;
+    return !self.isHeld.hasEnded || !self.isSelected.hasEnded || !self.angleFlip.hasEnded || !self.angleFan.hasEnded || !self.location.hasEnded;
 }
 
 -(NSString*)description
