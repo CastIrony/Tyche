@@ -116,7 +116,7 @@
             {
                 self.pitchAngle  = [AnimatedFloat    withValue:  0];
                 self.rollAngle   = [AnimatedFloat    withValue:-90];
-                self.po sition    = [AnimatedVector3D withValue:Vector3DMake(0, 2.3, -21)];  
+                self.position    = [AnimatedVector3D withValue:Vector3DMake(0, 2.3, -21)];  
                 self.lookAt      = [AnimatedVector3D withValue:Vector3DMake(0, 2.3,   0)];  
             }
         }

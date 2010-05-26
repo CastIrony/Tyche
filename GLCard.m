@@ -28,6 +28,8 @@
 @synthesize angleFan   = _angleFan;
 @synthesize location   = _location;
 
+@dynamic isAnimating;
+
 -(void)dealloc
 {
     free(arrayVertex);
@@ -37,6 +39,11 @@
     free(arrayMesh);
     
     [super dealloc];
+}
+
+-(BOOL)isAnimating
+{
+    return !self.isHeld.hasEnded && !self.isSelected.hasEnded && !self.angleFlip.hasEnded && !self.angleFan.hasEnded && !self.location.hasEnded;
 }
 
 -(NSString*)description
