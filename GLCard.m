@@ -175,13 +175,6 @@
     glBindTexture(GL_TEXTURE_2D, 0);
     glClientActiveTexture(GL_TEXTURE0); 
     glActiveTexture(GL_TEXTURE0); 
-    
-    
-    
-    
-    
-    
-    
 }
 
 -(void)drawBack
