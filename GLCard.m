@@ -32,11 +32,20 @@
 
 -(void)dealloc
 {
-    free(arrayVertex);
-    free(arrayNormal);
-    free(arrayTexture0);
-    free(arrayTexture1);
-    free(arrayMesh);
+    free(arrayVertexFront);
+    free(arrayVertexBack);
+    free(arrayVertexShadow);
+    free(arrayNormalFront);
+    free(arrayNormalBack);
+    free(arrayNormalShadow);
+    free(arrayTexture0Front);
+    free(arrayTexture0Back);
+    free(arrayTexture0Shadow);
+    free(arrayTexture1Front);
+    free(arrayTexture1Back);
+    free(arrayMeshFront);
+    free(arrayMeshBack);
+    free(arrayMeshShadow);
     
     [super dealloc];
 }
