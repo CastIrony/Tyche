@@ -137,15 +137,15 @@
     
     glColor4f(lightness, lightness, lightness, held);
     
-    GenerateBezierVertices(arrayVertexFront,  cardTesselationWidth, cardTesselationHeight, controlPointsFront);
-    GenerateBezierNormals (arrayNormalFront,  cardTesselationWidth, cardTesselationHeight, controlPointsFront);
-    GenerateBezierMesh    (arrayMeshFront,    cardTesselationWidth, cardTesselationHeight);
+    GenerateBezierVertices(arrayVertexFront,  meshWidthFront, meshHeightFront, controlPointsFront);
+    GenerateBezierNormals (arrayNormalFront,  meshWidthFront, meshHeightFront, controlPointsFront);
+    GenerateBezierMesh    (arrayMeshFront,    meshWidthFront, meshHeightFront);
     
     glVertexPointer  (3, GL_FLOAT, 0, arrayVertexFront);
     glNormalPointer  (   GL_FLOAT, 0, arrayNormalFront);
     
-    GenerateBezierTextures(arrayTexture0Front, cardTesselationWidth, cardTesselationHeight, Vector2DMake(1, 1), Vector2DMake(0, 0));
-    GenerateBezierTextures(arrayTexture1Front, cardTesselationWidth, cardTesselationHeight, textureSizeCard, textureOffsetCard[self.numeral]);
+    GenerateBezierTextures(arrayTexture0Front, meshWidthFront, meshHeightFront, Vector2DMake(1, 1), Vector2DMake(0, 0));
+    GenerateBezierTextures(arrayTexture1Front, meshWidthFront, meshHeightFront, textureSizeCard, textureOffsetCard[self.numeral]);
         
     glClientActiveTexture(GL_TEXTURE0); 
     glActiveTexture(GL_TEXTURE0); 
@@ -161,7 +161,7 @@
     glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:[NSString stringWithFormat:@"suit%d", _suit]]);
     glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture1Front);      
     
-    glDrawElements(GL_TRIANGLES, (cardTesselationWidth - 1) * (cardTesselationHeight - 1) * 6, GL_UNSIGNED_SHORT, arrayMeshFront);
+    glDrawElements(GL_TRIANGLES, (meshWidthFront - 1) * (meshHeightFront - 1) * 6, GL_UNSIGNED_SHORT, arrayMeshFront);
     
     glClientActiveTexture(GL_TEXTURE1); 
     glActiveTexture(GL_TEXTURE1); 
