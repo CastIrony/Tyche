@@ -178,11 +178,11 @@
     
     glColor4f(lightness, lightness, lightness, held);
     
-    TinyProfilerStart(20); GenerateBezierVertices(arrayVertexBack,   cardTesselationWidth, cardTesselationHeight, controlPointsBack);                      TinyProfilerStop(20);         
-    TinyProfilerStart(21); GenerateBezierNormals (arrayNormalBack,   cardTesselationWidth, cardTesselationHeight, controlPointsBack);                      TinyProfilerStop(21);
-    TinyProfilerStart(22); GenerateBezierMesh    (arrayMeshBack,     cardTesselationWidth, cardTesselationHeight);                                          TinyProfilerStop(22);
-    TinyProfilerStart(23); GenerateBezierTextures(arrayTexture0Back, cardTesselationWidth, cardTesselationHeight, Vector2DMake(1, 1), Vector2DMake(0, 0)); TinyProfilerStop(23);
-    TinyProfilerStart(24); GenerateBezierTextures(arrayTexture1Back, cardTesselationWidth, cardTesselationHeight, textureSizeCard, textureOffsetCard[14]); TinyProfilerStop(24);
+    TinyProfilerStart(20); GenerateBezierVertices(arrayVertexBack,   meshWidthBack, meshHeightBack, controlPointsBack);                      TinyProfilerStop(20);         
+    TinyProfilerStart(21); GenerateBezierNormals (arrayNormalBack,   meshWidthBack, meshHeightBack, controlPointsBack);                      TinyProfilerStop(21);
+    TinyProfilerStart(22); GenerateBezierMesh    (arrayMeshBack,     meshWidthBack, meshHeightBack);                                          TinyProfilerStop(22);
+    TinyProfilerStart(23); GenerateBezierTextures(arrayTexture0Back, meshWidthBack, meshHeightBack, Vector2DMake(1, 1), Vector2DMake(0, 0)); TinyProfilerStop(23);
+    TinyProfilerStart(24); GenerateBezierTextures(arrayTexture1Back, meshWidthBack, meshHeightBack, textureSizeCard, textureOffsetCard[14]); TinyProfilerStop(24);
     
     glVertexPointer  (3, GL_FLOAT, 0, arrayVertexBack);                                                                             
     glNormalPointer  (   GL_FLOAT, 0, arrayNormalBack);                                                                             
@@ -209,7 +209,7 @@
     TinyProfilerStop(26); 
     TinyProfilerStart(27); 
     
-    glDrawElements(GL_TRIANGLES, (cardTesselationWidth - 1) * (cardTesselationHeight - 1) * 6, GL_UNSIGNED_SHORT, arrayMeshBack);
+    glDrawElements(GL_TRIANGLES, (meshWidthBack - 1) * (meshHeightBack - 1) * 6, GL_UNSIGNED_SHORT, arrayMeshBack);
 
     TinyProfilerStop(27); 
     
