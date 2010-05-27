@@ -271,13 +271,15 @@
 
 -(void)drawLabel
 {
+    //TODO: FIX THIS STUFF LATER
+    
     if(self.angleFlip.value < 90)
     {        
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
-        //Vector3D arrayVertex [4];
-        //Vector3D arrayNormal [4];
-        //Vector2D arrayTexture[4];
+        Vector3D arrayVertex [4];
+        Vector3D arrayNormal [4];
+        Vector2D arrayTexture[4];
         
         //GLushort arrayMesh[6];  
         
