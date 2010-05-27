@@ -151,8 +151,8 @@
     
     
     
-    GenerateBezierTextures(arrayTexture0, cardTesselationWidth, cardTesselationHeight, Vector2DMake(1, 1), Vector2DMake(0, 0));
-    GenerateBezierTextures(arrayTexture1, cardTesselationWidth, cardTesselationHeight, textureSizeCard, textureOffsetCard[self.numeral]);
+    GenerateBezierTextures(arrayTexture0Front, cardTesselationWidth, cardTesselationHeight, Vector2DMake(1, 1), Vector2DMake(0, 0));
+    GenerateBezierTextures(arrayTexture1Front, cardTesselationWidth, cardTesselationHeight, textureSizeCard, textureOffsetCard[self.numeral]);
         
     glClientActiveTexture(GL_TEXTURE0); 
     glActiveTexture(GL_TEXTURE0); 
