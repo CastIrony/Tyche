@@ -136,12 +136,12 @@
     
     glColor4f(lightness, lightness, lightness, held);
     
-    GenerateBezierVertices(arrayVertex,  cardTesselationWidth, cardTesselationHeight, controlPointsFront);
-    GenerateBezierNormals (arrayNormal,  cardTesselationWidth, cardTesselationHeight, controlPointsFront);
-    GenerateBezierMesh    (arrayMesh,    cardTesselationWidth, cardTesselationHeight);
+    GenerateBezierVertices(arrayVertexFront,  cardTesselationWidth, cardTesselationHeight, controlPointsFront);
+    GenerateBezierNormals (arrayNormalFront,  cardTesselationWidth, cardTesselationHeight, controlPointsFront);
+    GenerateBezierMesh    (arrayMeshFront,    cardTesselationWidth, cardTesselationHeight);
     
-    glVertexPointer  (3, GL_FLOAT, 0, arrayVertex);
-    glNormalPointer  (   GL_FLOAT, 0, arrayNormal);
+    glVertexPointer  (3, GL_FLOAT, 0, arrayVertexFront);
+    glNormalPointer  (   GL_FLOAT, 0, arrayNormalFront);
         
     
     
