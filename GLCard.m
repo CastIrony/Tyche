@@ -62,12 +62,32 @@
     {   
         _numeral = numeral;
         _suit    = suit;
-                
-        arrayVertex  = malloc(cardTesselationWidth * cardTesselationHeight * sizeof(Vector3D));
-        arrayNormal  = malloc(cardTesselationWidth * cardTesselationHeight * sizeof(Vector3D));
-        arrayTexture0 = malloc(cardTesselationWidth * cardTesselationHeight * sizeof(Vector2D));
-        arrayTexture1 = malloc(cardTesselationWidth * cardTesselationHeight * sizeof(Vector2D));
-        arrayMesh    = malloc((cardTesselationWidth - 1) * (cardTesselationHeight - 1) * 6 * sizeof(GLushort));
+        
+        meshWidthFront   = 9;
+        meshHeightFront  = 3;
+        meshWidthBack    = 5;
+        meshHeightBack   = 2;
+        meshWidthShadow  = 5;
+        meshHeightShadow = 2;
+        
+        arrayVertexFront    = malloc(meshWidthFront  * meshHeightFront  * sizeof(Vector3D));
+        arrayVertexBack     = malloc(meshWidthBack   * meshHeightBack   * sizeof(Vector3D));
+        arrayVertexShadow   = malloc(meshWidthShadow * meshHeightShadow * sizeof(Vector3D));
+        
+        arrayNormalFront    = malloc(meshWidthFront  * meshHeightFront  * sizeof(Vector3D));
+        arrayNormalBack     = malloc(meshWidthBack   * meshHeightBack   * sizeof(Vector3D));
+        arrayNormalShadow   = malloc(meshWidthShadow * meshHeightShadow * sizeof(Vector3D));
+        
+        arrayTexture0Front  = malloc(meshWidthFront  * meshHeightFront  * sizeof(Vector2D));
+        arrayTexture0Back   = malloc(meshWidthBack   * meshHeightBack   * sizeof(Vector2D));
+        arrayTexture0Shadow = malloc(meshWidthShadow * meshHeightShadow * sizeof(Vector2D));
+        
+        arrayTexture1Front  = malloc(meshWidthFront  * meshHeightFront  * sizeof(Vector2D));
+        arrayTexture1Back   = malloc(meshWidthBack   * meshHeightBack   * sizeof(Vector2D));
+        
+        arrayMeshFront      = malloc((meshWidthFront  - 1) * (meshHeightFront  - 1) * 6 * sizeof(GLushort));
+        arrayMeshBack       = malloc((meshWidthBack   - 1) * (meshHeightBack   - 1) * 6 * sizeof(GLushort));
+        arrayMeshShadow     = malloc((meshWidthShadow - 1) * (meshHeightShadow - 1) * 6 * sizeof(GLushort));
         
         textureSizeCard       = Vector2DMake(172.0 / 1024.0, 252.0 / 1024.0);
         textureSizeLabel      = Vector2DMake(116.0 / 1024.0,  62.0 / 1024.0);
@@ -87,6 +107,8 @@
         textureOffsetCard[12] = Vector2DMake(226.0 / 1024.0, 702.0 / 1024.0); // Queen
         textureOffsetCard[13] = Vector2DMake(426.0 / 1024.0, 702.0 / 1024.0); // King
         textureOffsetCard[14] = Vector2DMake(626.0 / 1024.0, 702.0 / 1024.0); // Back
+        
+        
         
         self.isHeld     = [AnimatedFloat withValue:0];
         self.isSelected = [AnimatedFloat withValue:0];
@@ -114,8 +136,8 @@
     
     glColor4f(lightness, lightness, lightness, held);
     
-    GenerateBezierVertices(arrayVertex,  cardTesselationWidth, cardTesselationHeight, _controlPointsFront);
-    GenerateBezierNormals (arrayNormal,  cardTesselationWidth, cardTesselationHeight, _controlPointsFront);
+    GenerateBezierVertices(arrayVertex,  cardTesselationWidth, cardTesselationHeight, controlPointsFront);
+    GenerateBezierNormals (arrayNormal,  cardTesselationWidth, cardTesselationHeight, controlPointsFront);
     GenerateBezierMesh    (arrayMesh,    cardTesselationWidth, cardTesselationHeight);
     
     glVertexPointer  (3, GL_FLOAT, 0, arrayVertex);
@@ -173,8 +195,8 @@
     
     glColor4f(lightness, lightness, lightness, held);
     
-    TinyProfilerStart(20); GenerateBezierVertices(arrayVertex,   cardTesselationWidth, cardTesselationHeight, _controlPointsBack);                      TinyProfilerStop(20);         
-    TinyProfilerStart(21); GenerateBezierNormals (arrayNormal,   cardTesselationWidth, cardTesselationHeight, _controlPointsBack);                      TinyProfilerStop(21);
+    TinyProfilerStart(20); GenerateBezierVertices(arrayVertex,   cardTesselationWidth, cardTesselationHeight, controlPointsBack);                      TinyProfilerStop(20);         
+    TinyProfilerStart(21); GenerateBezierNormals (arrayNormal,   cardTesselationWidth, cardTesselationHeight, controlPointsBack);                      TinyProfilerStop(21);
     TinyProfilerStart(22); GenerateBezierMesh    (arrayMesh,     cardTesselationWidth, cardTesselationHeight);                                          TinyProfilerStop(22);
     TinyProfilerStart(23); GenerateBezierTextures(arrayTexture0, cardTesselationWidth, cardTesselationHeight, Vector2DMake(1, 1), Vector2DMake(0, 0)); TinyProfilerStop(23);
     TinyProfilerStart(24); GenerateBezierTextures(arrayTexture1, cardTesselationWidth, cardTesselationHeight, textureSizeCard, textureOffsetCard[14]); TinyProfilerStop(24);
@@ -231,8 +253,8 @@
     
     glColor4f(1, 1, 1, held);    
     
-    GenerateBezierVertices(arrayVertex,   cardTesselationWidth, cardTesselationHeight, _controlPointsShadow);
-    GenerateBezierNormals (arrayNormal,   cardTesselationWidth, cardTesselationHeight, _controlPointsShadow);
+    GenerateBezierVertices(arrayVertex,   cardTesselationWidth, cardTesselationHeight, controlPointsShadow);
+    GenerateBezierNormals (arrayNormal,   cardTesselationWidth, cardTesselationHeight, controlPointsShadow);
     GenerateBezierTextures(arrayTexture0, cardTesselationWidth, cardTesselationHeight, textureSizeCard, textureOffsetCard[0]);
     GenerateBezierMesh    (arrayMesh,     cardTesselationWidth, cardTesselationHeight);
     
@@ -257,8 +279,8 @@
         
         //GLushort arrayMesh[6];  
         
-        GenerateBezierVertices(arrayVertex,  2, 2, _controlPointsLabel);
-        GenerateBezierNormals (arrayNormal,  2, 2, _controlPointsLabel);
+        GenerateBezierVertices(arrayVertex,  2, 2, controlPointsLabel);
+        GenerateBezierNormals (arrayNormal,  2, 2, controlPointsLabel);
         GenerateBezierMesh    (arrayMesh,    2, 2);
         
         glVertexPointer  (3, GL_FLOAT, 0, arrayVertex);
@@ -312,68 +334,68 @@
         Vector3DMake( 0.7,  0.0,  3.5)
     };
 
-    GenerateBezierControlPoints(_controlPointsBase,  baseCorners);
-    GenerateBezierControlPoints(_controlPointsLabel, labelCorners);
+    GenerateBezierControlPoints(controlPointsBase,  baseCorners);
+    GenerateBezierControlPoints(controlPointsLabel, labelCorners);
         
-    _controlPointsFront[ 0] = _controlPointsBase [ 0];
-    _controlPointsFront[ 1] = _controlPointsBase [ 1];
-    _controlPointsFront[ 2] = _controlPointsBase [ 2];
-    _controlPointsFront[ 3] = _controlPointsBase [ 3];
+    controlPointsFront[ 0] = controlPointsBase [ 0];
+    controlPointsFront[ 1] = controlPointsBase [ 1];
+    controlPointsFront[ 2] = controlPointsBase [ 2];
+    controlPointsFront[ 3] = controlPointsBase [ 3];
     
-    _controlPointsFront[ 4] = _controlPointsBase [ 4];
-    _controlPointsFront[ 5] = _controlPointsBase [ 5];
-    _controlPointsFront[ 6] = _controlPointsBase [ 6];
-    _controlPointsFront[ 7] = _controlPointsBase [ 7];
+    controlPointsFront[ 4] = controlPointsBase [ 4];
+    controlPointsFront[ 5] = controlPointsBase [ 5];
+    controlPointsFront[ 6] = controlPointsBase [ 6];
+    controlPointsFront[ 7] = controlPointsBase [ 7];
     
-    _controlPointsFront[ 8] = _controlPointsBase [ 8];
-    _controlPointsFront[ 9] = _controlPointsBase [ 9];
-    _controlPointsFront[10] = _controlPointsBase [10];
-    _controlPointsFront[11] = _controlPointsBase [11];
+    controlPointsFront[ 8] = controlPointsBase [ 8];
+    controlPointsFront[ 9] = controlPointsBase [ 9];
+    controlPointsFront[10] = controlPointsBase [10];
+    controlPointsFront[11] = controlPointsBase [11];
     
-    _controlPointsFront[12] = _controlPointsBase [12];
-    _controlPointsFront[13] = _controlPointsBase [13];
-    _controlPointsFront[14] = _controlPointsBase [14];
-    _controlPointsFront[15] = _controlPointsBase [15];
+    controlPointsFront[12] = controlPointsBase [12];
+    controlPointsFront[13] = controlPointsBase [13];
+    controlPointsFront[14] = controlPointsBase [14];
+    controlPointsFront[15] = controlPointsBase [15];
         
-    _controlPointsBack[ 0]  = _controlPointsBase [ 3];
-    _controlPointsBack[ 1]  = _controlPointsBase [ 2];
-    _controlPointsBack[ 2]  = _controlPointsBase [ 1];
-    _controlPointsBack[ 3]  = _controlPointsBase [ 0];
+    controlPointsBack[ 0]  = controlPointsBase [ 3];
+    controlPointsBack[ 1]  = controlPointsBase [ 2];
+    controlPointsBack[ 2]  = controlPointsBase [ 1];
+    controlPointsBack[ 3]  = controlPointsBase [ 0];
     
-    _controlPointsBack[ 4]  = _controlPointsBase [ 7];
-    _controlPointsBack[ 5]  = _controlPointsBase [ 6];
-    _controlPointsBack[ 6]  = _controlPointsBase [ 5];
-    _controlPointsBack[ 7]  = _controlPointsBase [ 4];
+    controlPointsBack[ 4]  = controlPointsBase [ 7];
+    controlPointsBack[ 5]  = controlPointsBase [ 6];
+    controlPointsBack[ 6]  = controlPointsBase [ 5];
+    controlPointsBack[ 7]  = controlPointsBase [ 4];
     
-    _controlPointsBack[ 8]  = _controlPointsBase [11];
-    _controlPointsBack[ 9]  = _controlPointsBase [10];
-    _controlPointsBack[10]  = _controlPointsBase [ 9];
-    _controlPointsBack[11]  = _controlPointsBase [ 8];
+    controlPointsBack[ 8]  = controlPointsBase [11];
+    controlPointsBack[ 9]  = controlPointsBase [10];
+    controlPointsBack[10]  = controlPointsBase [ 9];
+    controlPointsBack[11]  = controlPointsBase [ 8];
     
-    _controlPointsBack[12]  = _controlPointsBase [15];
-    _controlPointsBack[13]  = _controlPointsBase [14];
-    _controlPointsBack[14]  = _controlPointsBase [13];
-    _controlPointsBack[15]  = _controlPointsBase [12];
+    controlPointsBack[12]  = controlPointsBase [15];
+    controlPointsBack[13]  = controlPointsBase [14];
+    controlPointsBack[14]  = controlPointsBase [13];
+    controlPointsBack[15]  = controlPointsBase [12];
     
-    _controlPointsShadow[ 0] = _controlPointsBase [ 3];
-    _controlPointsShadow[ 1] = _controlPointsBase [ 2];
-    _controlPointsShadow[ 2] = _controlPointsBase [ 1];
-    _controlPointsShadow[ 3] = _controlPointsBase [ 0];
+    controlPointsShadow[ 0] = controlPointsBase [ 3];
+    controlPointsShadow[ 1] = controlPointsBase [ 2];
+    controlPointsShadow[ 2] = controlPointsBase [ 1];
+    controlPointsShadow[ 3] = controlPointsBase [ 0];
     
-    _controlPointsShadow[ 4] = _controlPointsBase [ 7];
-    _controlPointsShadow[ 5] = _controlPointsBase [ 6];
-    _controlPointsShadow[ 6] = _controlPointsBase [ 5];
-    _controlPointsShadow[ 7] = _controlPointsBase [ 4];
+    controlPointsShadow[ 4] = controlPointsBase [ 7];
+    controlPointsShadow[ 5] = controlPointsBase [ 6];
+    controlPointsShadow[ 6] = controlPointsBase [ 5];
+    controlPointsShadow[ 7] = controlPointsBase [ 4];
     
-    _controlPointsShadow[ 8] = _controlPointsBase [11];
-    _controlPointsShadow[ 9] = _controlPointsBase [10];
-    _controlPointsShadow[10] = _controlPointsBase [ 9];
-    _controlPointsShadow[11] = _controlPointsBase [ 8];
+    controlPointsShadow[ 8] = controlPointsBase [11];
+    controlPointsShadow[ 9] = controlPointsBase [10];
+    controlPointsShadow[10] = controlPointsBase [ 9];
+    controlPointsShadow[11] = controlPointsBase [ 8];
     
-    _controlPointsShadow[12] = _controlPointsBase [15];
-    _controlPointsShadow[13] = _controlPointsBase [14];
-    _controlPointsShadow[14] = _controlPointsBase [13];
-    _controlPointsShadow[15] = _controlPointsBase [12];
+    controlPointsShadow[12] = controlPointsBase [15];
+    controlPointsShadow[13] = controlPointsBase [14];
+    controlPointsShadow[14] = controlPointsBase [13];
+    controlPointsShadow[15] = controlPointsBase [12];
     
     [self rotateWithAngle:self.angleFlip.value aroundPoint:Vector3DMake(0.0, 0.0, 0.0) andAxis:Vector3DMake(0.0, 0.0, 1.0)];
     [self rotateWithAngle:self.angleJitter aroundPoint:Vector3DMake(0.0, 0.0, 0.0) andAxis:Vector3DMake(0.0, 1.0, 0.0)];
@@ -391,39 +413,39 @@
 
 -(void)rotateWithAngle:(GLfloat)angle aroundPoint:(Vector3D)point andAxis:(Vector3D)axis
 {   
-    rotateVectors(_controlPointsShadow, 16, angle, point, axis);
-    rotateVectors(_controlPointsFront,  16, angle, point, axis);
-    rotateVectors(_controlPointsBack,   16, angle, point, axis);
-    rotateVectors(_controlPointsLabel,  16, angle, point, axis);
+    rotateVectors(controlPointsShadow, 16, angle, point, axis);
+    rotateVectors(controlPointsFront,  16, angle, point, axis);
+    rotateVectors(controlPointsBack,   16, angle, point, axis);
+    rotateVectors(controlPointsLabel,  16, angle, point, axis);
 }
 
 -(void)bendWithAngle:(GLfloat)angle aroundPoint:(Vector3D)point andAxis:(Vector3D)axis
 {   
-    rotateVectors(_controlPointsShadow,  8, angle, point, axis);
-    rotateVectors(_controlPointsFront,   8, angle, point, axis);
-    rotateVectors(_controlPointsBack,    8, angle, point, axis);
-    rotateVectors(_controlPointsLabel,  16, angle, point, axis);
+    rotateVectors(controlPointsShadow,  8, angle, point, axis);
+    rotateVectors(controlPointsFront,   8, angle, point, axis);
+    rotateVectors(controlPointsBack,    8, angle, point, axis);
+    rotateVectors(controlPointsLabel,  16, angle, point, axis);
 }
 
 -(void)scaleWithFactor:(Vector3D)factor fromPoint:(Vector3D)point
 {
     for(int i = 0; i < 16; i++)
     {
-        _controlPointsShadow[i].x = (_controlPointsShadow[i].x - point.x) * factor.x + point.x;
-        _controlPointsShadow[i].y = (_controlPointsShadow[i].y - point.y) * factor.y + point.y;
-        _controlPointsShadow[i].z = (_controlPointsShadow[i].z - point.z) * factor.z + point.z;
+        controlPointsShadow[i].x = (controlPointsShadow[i].x - point.x) * factor.x + point.x;
+        controlPointsShadow[i].y = (controlPointsShadow[i].y - point.y) * factor.y + point.y;
+        controlPointsShadow[i].z = (controlPointsShadow[i].z - point.z) * factor.z + point.z;
         
-        _controlPointsFront[i].x  = (_controlPointsFront[i].x  - point.x) * factor.x + point.x;
-        _controlPointsFront[i].y  = (_controlPointsFront[i].y  - point.y) * factor.y + point.y;
-        _controlPointsFront[i].z  = (_controlPointsFront[i].z  - point.z) * factor.z + point.z;
+        controlPointsFront[i].x  = (controlPointsFront[i].x  - point.x) * factor.x + point.x;
+        controlPointsFront[i].y  = (controlPointsFront[i].y  - point.y) * factor.y + point.y;
+        controlPointsFront[i].z  = (controlPointsFront[i].z  - point.z) * factor.z + point.z;
         
-        _controlPointsBack[i].x   = (_controlPointsBack[i].x   - point.x) * factor.x + point.x;
-        _controlPointsBack[i].y   = (_controlPointsBack[i].y   - point.y) * factor.y + point.y;
-        _controlPointsBack[i].z   = (_controlPointsBack[i].z   - point.z) * factor.z + point.z;
+        controlPointsBack[i].x   = (controlPointsBack[i].x   - point.x) * factor.x + point.x;
+        controlPointsBack[i].y   = (controlPointsBack[i].y   - point.y) * factor.y + point.y;
+        controlPointsBack[i].z   = (controlPointsBack[i].z   - point.z) * factor.z + point.z;
         
-        _controlPointsLabel[i].x  = (_controlPointsLabel[i].x   - point.x) * factor.x + point.x;
-        _controlPointsLabel[i].y  = (_controlPointsLabel[i].y   - point.y) * factor.y + point.y;
-        _controlPointsLabel[i].z  = (_controlPointsLabel[i].z   - point.z) * factor.z + point.z;
+        controlPointsLabel[i].x  = (controlPointsLabel[i].x   - point.x) * factor.x + point.x;
+        controlPointsLabel[i].y  = (controlPointsLabel[i].y   - point.y) * factor.y + point.y;
+        controlPointsLabel[i].z  = (controlPointsLabel[i].z   - point.z) * factor.z + point.z;
     }
 }
 
@@ -431,9 +453,9 @@
 {
     for(int i = 0; i < 16; i++)
     {
-        _controlPointsShadow[i].x = (_controlPointsShadow[i].x - point.x) * factor.x + point.x;
-        _controlPointsShadow[i].y = (_controlPointsShadow[i].y - point.y) * factor.y + point.y;
-        _controlPointsShadow[i].z = (_controlPointsShadow[i].z - point.z) * factor.z + point.z;
+        controlPointsShadow[i].x = (controlPointsShadow[i].x - point.x) * factor.x + point.x;
+        controlPointsShadow[i].y = (controlPointsShadow[i].y - point.y) * factor.y + point.y;
+        controlPointsShadow[i].z = (controlPointsShadow[i].z - point.z) * factor.z + point.z;
     }
 }
 
@@ -441,21 +463,21 @@
 {
     for(int i = 0; i < 16; i++)
     {
-        _controlPointsShadow[i].x = _controlPointsShadow[i].x + vector.x;
-        _controlPointsShadow[i].y = _controlPointsShadow[i].y + vector.y;
-        _controlPointsShadow[i].z = _controlPointsShadow[i].z + vector.z;
+        controlPointsShadow[i].x = controlPointsShadow[i].x + vector.x;
+        controlPointsShadow[i].y = controlPointsShadow[i].y + vector.y;
+        controlPointsShadow[i].z = controlPointsShadow[i].z + vector.z;
         
-        _controlPointsFront[i].x  = _controlPointsFront[i].x  + vector.x;
-        _controlPointsFront[i].y  = _controlPointsFront[i].y  + vector.y;
-        _controlPointsFront[i].z  = _controlPointsFront[i].z  + vector.z;
+        controlPointsFront[i].x  = controlPointsFront[i].x  + vector.x;
+        controlPointsFront[i].y  = controlPointsFront[i].y  + vector.y;
+        controlPointsFront[i].z  = controlPointsFront[i].z  + vector.z;
         
-        _controlPointsBack[i].x   = _controlPointsBack[i].x   + vector.x;
-        _controlPointsBack[i].y   = _controlPointsBack[i].y   + vector.y;
-        _controlPointsBack[i].z   = _controlPointsBack[i].z   + vector.z;
+        controlPointsBack[i].x   = controlPointsBack[i].x   + vector.x;
+        controlPointsBack[i].y   = controlPointsBack[i].y   + vector.y;
+        controlPointsBack[i].z   = controlPointsBack[i].z   + vector.z;
         
-        _controlPointsLabel[i].x   = _controlPointsLabel[i].x   + vector.x;
-        _controlPointsLabel[i].y   = _controlPointsLabel[i].y   + vector.y;
-        _controlPointsLabel[i].z   = _controlPointsLabel[i].z   + vector.z;
+        controlPointsLabel[i].x   = controlPointsLabel[i].x   + vector.x;
+        controlPointsLabel[i].y   = controlPointsLabel[i].y   + vector.y;
+        controlPointsLabel[i].z   = controlPointsLabel[i].z   + vector.z;
     }
 }
 
@@ -465,7 +487,7 @@
     
     for(int i = 0; i < 16; i++)
     {
-        _controlPointsShadow[i] = Vector3DProjectShadow(light, _controlPointsShadow[i]);
+        controlPointsShadow[i] = Vector3DProjectShadow(light, controlPointsShadow[i]);
     }
 }
 
@@ -485,7 +507,7 @@
     glGetIntegerv(GL_VIEWPORT, viewport);
 	
     Vector2D points[16];
-    ProjectVectors(_controlPointsFront, points, 16, model_view, projection, viewport);
+    ProjectVectors(controlPointsFront, points, 16, model_view, projection, viewport);
     
     GLushort triangles[54];
     GenerateBezierMesh(triangles, 4, 4);

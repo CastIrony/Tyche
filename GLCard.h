@@ -19,33 +19,55 @@
 
     GLCardGroup* _cardGroup;
     
-    Vector3D   _controlPointsBase[16]; 
-    Vector3D   _controlPointsFront[16];
-    Vector3D   _controlPointsBack[16];
-    Vector3D   _controlPointsLabel[16];
-    Vector3D   _controlPointsShadow[16];
+    Vector3D controlPointsBase[16];
     
-    Vector2D   textureOffsetCard[15];
-    Vector2D   textureSizeCard;
-    Vector2D   textureSizeLabel;
+    Vector3D controlPointsFront[16];
+    Vector3D controlPointsBack[16];
+    Vector3D controlPointsLabel[16];
+    Vector3D controlPointsShadow[16];
     
-    Vector3D*  arrayVertex;
-    Vector3D*  arrayNormal;
-    Vector2D*  arrayTexture0;
-    Vector2D*  arrayTexture1;
-    GLushort*  arrayMesh;
+    Vector2D textureOffsetCard[15];
+    Vector2D textureSizeCard;
+    Vector2D textureSizeLabel;
     
-    GLfloat    _angleJitter;
-    int        _suit;
-    int        _numeral;
-    int        _position;
-    BOOL       _isDead;
+    int meshWidthFront;
+    int meshWidthBack;
+    int meshWidthShadow;
+
+    int meshHeightFront;
+    int meshHeightBack;
+    int meshHeightShadow;
     
-    AnimatedFloat*     _isHeld;
-    AnimatedFloat*     _isSelected;
-    AnimatedFloat*     _angleFlip;
-    AnimatedFloat*     _angleFan;
-    AnimatedVector3D*  _location;
+    Vector3D* arrayVertexFront;
+    Vector3D* arrayVertexBack;
+    Vector3D* arrayVertexShadow;
+    
+    Vector3D* arrayNormalFront;
+    Vector3D* arrayNormalBack;
+    Vector3D* arrayNormalShadow;
+    
+    Vector2D* arrayTexture0Front;
+    Vector2D* arrayTexture0Back;
+    Vector2D* arrayTexture0Shadow;
+    
+    Vector2D* arrayTexture1Front;
+    Vector2D* arrayTexture1Back;
+    
+    GLushort* arrayMeshFront;
+    GLushort* arrayMeshBack;
+    GLushort* arrayMeshShadow;
+    
+    GLfloat _angleJitter;
+    int     _suit;
+    int     _numeral;
+    int     _position;
+    BOOL    _isDead;
+    
+    AnimatedFloat*    _isHeld;
+    AnimatedFloat*    _isSelected;
+    AnimatedFloat*    _angleFlip;
+    AnimatedFloat*    _angleFan;
+    AnimatedVector3D* _location;
 }
 
 @property (nonatomic, assign)   GameRenderer*       renderer;
