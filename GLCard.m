@@ -62,9 +62,6 @@
 
 -(id)initWithSuit:(int)suit numeral:(int)numeral
 {
-    int cardTesselationWidth  = 11;
-    int cardTesselationHeight = 3;
-    
     self = [super init];
     
     if(self)
@@ -132,13 +129,8 @@
 
 -(void)drawFront
 {    
-    int cardTesselationWidth  = 9;
-    int cardTesselationHeight = 3;
-    
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    
-//    glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:[NSString stringWithFormat:@"suit%d", _suit]]);
-    
+        
     GLfloat held = self.isHeld.value     * 0.5 + 0.5;
         
     GLfloat lightness = self.renderer.lightness.value;
@@ -151,14 +143,6 @@
     
     glVertexPointer  (3, GL_FLOAT, 0, arrayVertexFront);
     glNormalPointer  (   GL_FLOAT, 0, arrayNormalFront);
-        
-    
-    
-    
-    
-    
-    
-    
     
     GenerateBezierTextures(arrayTexture0Front, cardTesselationWidth, cardTesselationHeight, Vector2DMake(1, 1), Vector2DMake(0, 0));
     GenerateBezierTextures(arrayTexture1Front, cardTesselationWidth, cardTesselationHeight, textureSizeCard, textureOffsetCard[self.numeral]);
@@ -188,9 +172,6 @@
 
 -(void)drawBack
 {
-    int cardTesselationWidth  = 5;
-    int cardTesselationHeight = 3;
-        
     GLfloat held = self.isHeld.value     * 0.5 + 0.5;
     
     GLfloat lightness = self.renderer.lightness.value;
@@ -241,10 +222,6 @@
 
 -(void)drawShadow
 {
-    
-    int cardTesselationWidth  = 5;
-    int cardTesselationHeight = 3;
-    
     glDisable(GL_CULL_FACE);
     
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
