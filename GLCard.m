@@ -188,14 +188,14 @@
     
     glColor4f(lightness, lightness, lightness, held);
     
-    TinyProfilerStart(20); GenerateBezierVertices(arrayVertex,   cardTesselationWidth, cardTesselationHeight, controlPointsBack);                      TinyProfilerStop(20);         
-    TinyProfilerStart(21); GenerateBezierNormals (arrayNormal,   cardTesselationWidth, cardTesselationHeight, controlPointsBack);                      TinyProfilerStop(21);
-    TinyProfilerStart(22); GenerateBezierMesh    (arrayMesh,     cardTesselationWidth, cardTesselationHeight);                                          TinyProfilerStop(22);
-    TinyProfilerStart(23); GenerateBezierTextures(arrayTexture0, cardTesselationWidth, cardTesselationHeight, Vector2DMake(1, 1), Vector2DMake(0, 0)); TinyProfilerStop(23);
-    TinyProfilerStart(24); GenerateBezierTextures(arrayTexture1, cardTesselationWidth, cardTesselationHeight, textureSizeCard, textureOffsetCard[14]); TinyProfilerStop(24);
+    TinyProfilerStart(20); GenerateBezierVertices(arrayVertexBack,   cardTesselationWidth, cardTesselationHeight, controlPointsBack);                      TinyProfilerStop(20);         
+    TinyProfilerStart(21); GenerateBezierNormals (arrayNormalBack,   cardTesselationWidth, cardTesselationHeight, controlPointsBack);                      TinyProfilerStop(21);
+    TinyProfilerStart(22); GenerateBezierMesh    (arrayMeshBack,     cardTesselationWidth, cardTesselationHeight);                                          TinyProfilerStop(22);
+    TinyProfilerStart(23); GenerateBezierTextures(arrayTexture0Back, cardTesselationWidth, cardTesselationHeight, Vector2DMake(1, 1), Vector2DMake(0, 0)); TinyProfilerStop(23);
+    TinyProfilerStart(24); GenerateBezierTextures(arrayTexture1Back, cardTesselationWidth, cardTesselationHeight, textureSizeCard, textureOffsetCard[14]); TinyProfilerStop(24);
     
-    glVertexPointer  (3, GL_FLOAT, 0, arrayVertex);                                                                             
-    glNormalPointer  (   GL_FLOAT, 0, arrayNormal);                                                                             
+    glVertexPointer  (3, GL_FLOAT, 0, arrayVertexBack);                                                                             
+    glNormalPointer  (   GL_FLOAT, 0, arrayNormalBack);                                                                             
     
     TinyProfilerStart(25); 
     
@@ -204,7 +204,7 @@
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"cards"]);
-    glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture0);      
+    glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture0Back);      
     
     TinyProfilerStop(25); 
     TinyProfilerStart(26); 
@@ -214,12 +214,12 @@
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"suit0"]);
-    glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture1);      
+    glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture1Back);      
     
     TinyProfilerStop(26); 
     TinyProfilerStart(27); 
     
-    glDrawElements(GL_TRIANGLES, (cardTesselationWidth - 1) * (cardTesselationHeight - 1) * 6, GL_UNSIGNED_SHORT, arrayMesh);
+    glDrawElements(GL_TRIANGLES, (cardTesselationWidth - 1) * (cardTesselationHeight - 1) * 6, GL_UNSIGNED_SHORT, arrayMeshBack);
 
     TinyProfilerStop(27); 
     
@@ -246,16 +246,16 @@
     
     glColor4f(1, 1, 1, held);    
     
-    GenerateBezierVertices(arrayVertex,   cardTesselationWidth, cardTesselationHeight, controlPointsShadow);
-    GenerateBezierNormals (arrayNormal,   cardTesselationWidth, cardTesselationHeight, controlPointsShadow);
-    GenerateBezierTextures(arrayTexture0, cardTesselationWidth, cardTesselationHeight, textureSizeCard, textureOffsetCard[0]);
-    GenerateBezierMesh    (arrayMesh,     cardTesselationWidth, cardTesselationHeight);
+    GenerateBezierVertices(arrayVertexShadow,   cardTesselationWidth, cardTesselationHeight, controlPointsShadow);
+    GenerateBezierNormals (arrayNormalShadow,   cardTesselationWidth, cardTesselationHeight, controlPointsShadow);
+    GenerateBezierTextures(arrayTexture0Shadow, cardTesselationWidth, cardTesselationHeight, textureSizeCard, textureOffsetCard[0]);
+    GenerateBezierMesh    (arrayMeshShadow,     cardTesselationWidth, cardTesselationHeight);
     
-    glVertexPointer  (3, GL_FLOAT, 0, arrayVertex);
-    glNormalPointer  (   GL_FLOAT, 0, arrayNormal);
-    glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture0);            
+    glVertexPointer  (3, GL_FLOAT, 0, arrayVertexShadow);
+    glNormalPointer  (   GL_FLOAT, 0, arrayNormalShadow);
+    glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture0Shadow);            
     
-    glDrawElements(GL_TRIANGLES, (cardTesselationWidth - 1) * (cardTesselationHeight - 1) * 6, GL_UNSIGNED_SHORT, arrayMesh);
+    glDrawElements(GL_TRIANGLES, (cardTesselationWidth - 1) * (cardTesselationHeight - 1) * 6, GL_UNSIGNED_SHORT, arrayMeshShadow);
     
     glEnable(GL_CULL_FACE);
 }
