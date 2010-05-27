@@ -232,16 +232,16 @@
     
     glColor4f(1, 1, 1, held);    
     
-    GenerateBezierVertices(arrayVertexShadow,   cardTesselationWidth, cardTesselationHeight, controlPointsShadow);
-    GenerateBezierNormals (arrayNormalShadow,   cardTesselationWidth, cardTesselationHeight, controlPointsShadow);
-    GenerateBezierTextures(arrayTexture0Shadow, cardTesselationWidth, cardTesselationHeight, textureSizeCard, textureOffsetCard[0]);
-    GenerateBezierMesh    (arrayMeshShadow,     cardTesselationWidth, cardTesselationHeight);
+    GenerateBezierVertices(arrayVertexShadow,   meshWidthShadow, meshHeightShadow, controlPointsShadow);
+    GenerateBezierNormals (arrayNormalShadow,   meshWidthShadow, meshHeightShadow, controlPointsShadow);
+    GenerateBezierTextures(arrayTexture0Shadow, meshWidthShadow, meshHeightShadow, textureSizeCard, textureOffsetCard[0]);
+    GenerateBezierMesh    (arrayMeshShadow,     meshWidthShadow, meshHeightShadow);
     
     glVertexPointer  (3, GL_FLOAT, 0, arrayVertexShadow);
     glNormalPointer  (   GL_FLOAT, 0, arrayNormalShadow);
     glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture0Shadow);            
     
-    glDrawElements(GL_TRIANGLES, (cardTesselationWidth - 1) * (cardTesselationHeight - 1) * 6, GL_UNSIGNED_SHORT, arrayMeshShadow);
+    glDrawElements(GL_TRIANGLES, (meshWidthShadow - 1) * (meshHeightShadow - 1) * 6, GL_UNSIGNED_SHORT, arrayMeshShadow);
     
     glEnable(GL_CULL_FACE);
 }
