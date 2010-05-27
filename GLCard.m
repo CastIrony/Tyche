@@ -281,7 +281,7 @@
         Vector3D arrayNormal  [4];
         Vector2D arrayTexture0[4];
         Vector2D arrayTexture1[4];
-        int      arrayMesh    [6];
+        GLushort arrayMesh    [6];
         
         //GLushort arrayMesh[6];  
         
