@@ -159,16 +159,16 @@
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"cards"]);
-    glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture0);      
+    glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture0Front);      
     
     glClientActiveTexture(GL_TEXTURE1); 
     glActiveTexture(GL_TEXTURE1); 
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:[NSString stringWithFormat:@"suit%d", _suit]]);
-    glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture1);      
+    glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture1Front);      
     
-    glDrawElements(GL_TRIANGLES, (cardTesselationWidth - 1) * (cardTesselationHeight - 1) * 6, GL_UNSIGNED_SHORT, arrayMesh);
+    glDrawElements(GL_TRIANGLES, (cardTesselationWidth - 1) * (cardTesselationHeight - 1) * 6, GL_UNSIGNED_SHORT, arrayMeshFront);
     
     glClientActiveTexture(GL_TEXTURE1); 
     glActiveTexture(GL_TEXTURE1); 
