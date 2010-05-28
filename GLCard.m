@@ -374,10 +374,11 @@
     [self flattenShadow];
 
     GenerateBezierVertices(arrayVertexFront,  meshWidthFront,  meshHeightFront,  controlPointsFront);
-    GenerateBezierNormals (arrayNormalFront,  meshWidthFront,  meshHeightFront,  controlPointsFront);
     GenerateBezierVertices(arrayVertexBack,   meshWidthBack,   meshHeightBack,   controlPointsBack);                             
-    GenerateBezierNormals (arrayNormalBack,   meshWidthBack,   meshHeightBack,   controlPointsBack);                      
     GenerateBezierVertices(arrayVertexShadow, meshWidthShadow, meshHeightShadow, controlPointsShadow);
+
+    GenerateBezierNormals (arrayNormalFront,  meshWidthFront,  meshHeightFront,  controlPointsFront);
+    GenerateBezierNormals (arrayNormalBack,   meshWidthBack,   meshHeightBack,   controlPointsBack);                      
     GenerateBezierNormals (arrayNormalShadow, meshWidthShadow, meshHeightShadow, controlPointsShadow);
 }
 
