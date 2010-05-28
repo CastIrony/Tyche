@@ -313,8 +313,6 @@
 
 -(void)draw
 {
-    TinyProfilerStart(14);
-    
     static BOOL hasRendered = NO;
 
     TRANSACTION_BEGIN
@@ -333,18 +331,16 @@
                 
         glTranslatef(0, 0, 3.0 * cameraPitch / 90.0);
         
-        TinyProfilerStart( 0); self.table.drawStatus = GLTableDrawStatusDiffuse; [self.table draw]; TinyProfilerStop( 0);                                              
+        self.table.drawStatus = GLTableDrawStatusDiffuse; [self.table draw]; TinyProfilerStop( 0);                                              
         
-        TinyProfilerStart( 1); [self.cardGroup drawShadows]; TinyProfilerStop( 1);                                                               
-        TinyProfilerStart( 2); [self.chipGroup drawShadows]; TinyProfilerStop( 2); 
+        [self.cardGroup drawShadows]; TinyProfilerStop( 1);                                                               
+        [self.chipGroup drawShadows]; TinyProfilerStop( 2); 
         
-        TinyProfilerStart( 3); self.table.drawStatus = GLTableDrawStatusAmbient; [self.table draw]; TinyProfilerStop( 3);                                               
+        self.table.drawStatus = GLTableDrawStatusAmbient; [self.table draw]; TinyProfilerStop( 3);                                               
     
-        TinyProfilerStart( 4); { TextController* textController = [self.textControllers objectForKey:@"credits"]; textController.opacity = 1.0/* - (cameraPitch / 90.0)*/; [textController draw]; } TinyProfilerStop( 4);
-        TinyProfilerStart( 5); { TextController* textController = [self.textControllers objectForKey:@"actions"]; textController.opacity = 1.0/* - (cameraPitch / 90.0)*/; [textController draw]; } TinyProfilerStop( 5);
-        TinyProfilerStart( 6); { TextController* textController = [self.textControllers objectForKey:@"status1"]; textController.opacity = 1.0/* - (cameraPitch / 90.0)*/; [textController draw]; } TinyProfilerStop( 6);
-
-        TinyProfilerStart( 7); 
+        { TextController* textController = [self.textControllers objectForKey:@"credits"]; textController.opacity = 1.0/* - (cameraPitch / 90.0)*/; [textController draw]; }
+        { TextController* textController = [self.textControllers objectForKey:@"actions"]; textController.opacity = 1.0/* - (cameraPitch / 90.0)*/; [textController draw]; }
+        { TextController* textController = [self.textControllers objectForKey:@"status1"]; textController.opacity = 1.0/* - (cameraPitch / 90.0)*/; [textController draw]; }
         
         self.chipGroup.markerOpacity = clipFloat(1.0 - cameraPitch / 90.0,  0, 1); 
         [self.chipGroup drawMarkers];         

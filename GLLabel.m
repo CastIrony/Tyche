@@ -312,8 +312,6 @@
 
 -(void)draw
 {    
-    TinyProfilerStart(16);
-    
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             
     Color3D arrayTextColor[8];

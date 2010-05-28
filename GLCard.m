@@ -178,17 +178,15 @@
     
     glColor4f(lightness, lightness, lightness, held);
     
-    TinyProfilerStart(20); GenerateBezierVertices(arrayVertexBack,   meshWidthBack, meshHeightBack, controlPointsBack);                      TinyProfilerStop(20);         
-    TinyProfilerStart(21); GenerateBezierNormals (arrayNormalBack,   meshWidthBack, meshHeightBack, controlPointsBack);                      TinyProfilerStop(21);
-    TinyProfilerStart(22); GenerateBezierMesh    (arrayMeshBack,     meshWidthBack, meshHeightBack);                                          TinyProfilerStop(22);
-    TinyProfilerStart(23); GenerateBezierTextures(arrayTexture0Back, meshWidthBack, meshHeightBack, Vector2DMake(1, 1), Vector2DMake(0, 0)); TinyProfilerStop(23);
-    TinyProfilerStart(24); GenerateBezierTextures(arrayTexture1Back, meshWidthBack, meshHeightBack, textureSizeCard, textureOffsetCard[14]); TinyProfilerStop(24);
+    GenerateBezierVertices(arrayVertexBack,   meshWidthBack, meshHeightBack, controlPointsBack);                             
+    GenerateBezierNormals (arrayNormalBack,   meshWidthBack, meshHeightBack, controlPointsBack);                      
+    GenerateBezierMesh    (arrayMeshBack,     meshWidthBack, meshHeightBack);                                         
+    GenerateBezierTextures(arrayTexture0Back, meshWidthBack, meshHeightBack, Vector2DMake(1, 1), Vector2DMake(0, 0)); 
+    GenerateBezierTextures(arrayTexture1Back, meshWidthBack, meshHeightBack, textureSizeCard, textureOffsetCard[14]); 
     
     glVertexPointer  (3, GL_FLOAT, 0, arrayVertexBack);                                                                             
     glNormalPointer  (   GL_FLOAT, 0, arrayNormalBack);                                                                             
-    
-    TinyProfilerStart(25); 
-    
+        
     glClientActiveTexture(GL_TEXTURE0); 
     glActiveTexture(GL_TEXTURE0); 
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
