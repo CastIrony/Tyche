@@ -120,9 +120,9 @@
         GenerateBezierTextures(arrayTexture1Front,  meshWidthFront,  meshHeightFront,  textureSizeCard, textureOffsetCard[self.numeral]);
         GenerateBezierTextures(arrayTexture1Back,   meshWidthBack,   meshHeightBack,   textureSizeCard, textureOffsetCard[14]); 
 
-        GenerateBezierMesh    (arrayMeshFront,    meshWidthFront, meshHeightFront);
-        GenerateBezierMesh    (arrayMeshBack,     meshWidthBack, meshHeightBack);                                         
-        GenerateBezierMesh    (arrayMeshShadow,     meshWidthShadow, meshHeightShadow);
+        GenerateBezierMesh(arrayMeshFront,  meshWidthFront,  meshHeightFront);
+        GenerateBezierMesh(arrayMeshBack,   meshWidthBack,   meshHeightBack);                                         
+        GenerateBezierMesh(arrayMeshShadow, meshWidthShadow, meshHeightShadow);
 
         self.isHeld     = [AnimatedFloat withValue:0];
         self.isSelected = [AnimatedFloat withValue:0];
@@ -144,9 +144,6 @@
     GLfloat lightness = self.renderer.lightness.value;
     
     glColor4f(lightness, lightness, lightness, held);
-    
-    GenerateBezierVertices(arrayVertexFront,  meshWidthFront, meshHeightFront, controlPointsFront);
-    GenerateBezierNormals (arrayNormalFront,  meshWidthFront, meshHeightFront, controlPointsFront);
     
     glVertexPointer  (3, GL_FLOAT, 0, arrayVertexFront);
     glNormalPointer  (   GL_FLOAT, 0, arrayNormalFront);
@@ -181,10 +178,7 @@
     GLfloat lightness = self.renderer.lightness.value;
     
     glColor4f(lightness, lightness, lightness, held);
-    
-    GenerateBezierVertices(arrayVertexBack,   meshWidthBack, meshHeightBack, controlPointsBack);                             
-    GenerateBezierNormals (arrayNormalBack,   meshWidthBack, meshHeightBack, controlPointsBack);                      
-    
+        
     glVertexPointer  (3, GL_FLOAT, 0, arrayVertexBack);                                                                             
     glNormalPointer  (   GL_FLOAT, 0, arrayNormalBack);                                                                             
         
@@ -222,10 +216,7 @@
     GLfloat held = self.isHeld.value * 0.5 + 0.5;
     
     glColor4f(1, 1, 1, held);    
-    
-    GenerateBezierVertices(arrayVertexShadow,   meshWidthShadow, meshHeightShadow, controlPointsShadow);
-    GenerateBezierNormals (arrayNormalShadow,   meshWidthShadow, meshHeightShadow, controlPointsShadow);
-    
+        
     glVertexPointer  (3, GL_FLOAT, 0, arrayVertexShadow);
     glNormalPointer  (   GL_FLOAT, 0, arrayNormalShadow);
     glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture0Shadow);            
@@ -381,6 +372,13 @@
     [self translateWithVector:self.location.value];
     
     [self flattenShadow];
+
+    GenerateBezierVertices(arrayVertexFront,  meshWidthFront,  meshHeightFront,  controlPointsFront);
+    GenerateBezierNormals (arrayNormalFront,  meshWidthFront,  meshHeightFront,  controlPointsFront);
+    GenerateBezierVertices(arrayVertexBack,   meshWidthBack,   meshHeightBack,   controlPointsBack);                             
+    GenerateBezierNormals (arrayNormalBack,   meshWidthBack,   meshHeightBack,   controlPointsBack);                      
+    GenerateBezierVertices(arrayVertexShadow, meshWidthShadow, meshHeightShadow, controlPointsShadow);
+    GenerateBezierNormals (arrayNormalShadow, meshWidthShadow, meshHeightShadow, controlPointsShadow);
 }
 
 -(void)rotateWithAngle:(GLfloat)angle aroundPoint:(Vector3D)point andAxis:(Vector3D)axis
