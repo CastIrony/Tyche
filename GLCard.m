@@ -194,22 +194,14 @@
     glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"cards"]);
     glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture0Back);      
     
-    TinyProfilerStop(25); 
-    TinyProfilerStart(26); 
-    
     glClientActiveTexture(GL_TEXTURE1); 
     glActiveTexture(GL_TEXTURE1); 
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"suit0"]);
     glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture1Back);      
-    
-    TinyProfilerStop(26); 
-    TinyProfilerStart(27); 
-    
+        
     glDrawElements(GL_TRIANGLES, (meshWidthBack - 1) * (meshHeightBack - 1) * 6, GL_UNSIGNED_SHORT, arrayMeshBack);
-
-    TinyProfilerStop(27); 
     
     glClientActiveTexture(GL_TEXTURE1); 
     glActiveTexture(GL_TEXTURE1); 

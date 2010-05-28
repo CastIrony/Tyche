@@ -483,8 +483,6 @@
     }
     
     glEnableClientState(GL_NORMAL_ARRAY);
-    
-    TinyProfilerStop(16);
 }
 
 

@@ -327,16 +327,16 @@
         
         glRotatef(cameraPitch + 90, 1.0f, 0.0f, 0.0f);            
         
-        TinyProfilerStart(17);[self.cardGroup resetCardsWithBendFactor:cameraPitch / 90.0];TinyProfilerStop(17);
+        [self.cardGroup resetCardsWithBendFactor:cameraPitch / 90.0];
                 
         glTranslatef(0, 0, 3.0 * cameraPitch / 90.0);
         
-        self.table.drawStatus = GLTableDrawStatusDiffuse; [self.table draw]; TinyProfilerStop( 0);                                              
+        self.table.drawStatus = GLTableDrawStatusDiffuse; [self.table draw];                                            
         
-        [self.cardGroup drawShadows]; TinyProfilerStop( 1);                                                               
-        [self.chipGroup drawShadows]; TinyProfilerStop( 2); 
+        [self.cardGroup drawShadows];                                                              
+        [self.chipGroup drawShadows];
         
-        self.table.drawStatus = GLTableDrawStatusAmbient; [self.table draw]; TinyProfilerStop( 3);                                               
+        self.table.drawStatus = GLTableDrawStatusAmbient; [self.table draw];                                              
     
         { TextController* textController = [self.textControllers objectForKey:@"credits"]; textController.opacity = 1.0/* - (cameraPitch / 90.0)*/; [textController draw]; }
         { TextController* textController = [self.textControllers objectForKey:@"actions"]; textController.opacity = 1.0/* - (cameraPitch / 90.0)*/; [textController draw]; }
@@ -345,32 +345,24 @@
         self.chipGroup.markerOpacity = clipFloat(1.0 - cameraPitch / 90.0,  0, 1); 
         [self.chipGroup drawMarkers];         
         
-        TinyProfilerStop( 7);
-        
-        TinyProfilerStart( 8);
-        
         self.chipGroup.opacity = clipFloat(-0.04 * cameraPitch + 3.4, 0, 1);
         [self.chipGroup drawChips];
         
-        TinyProfilerStop( 8);
-       
-        TinyProfilerStart( 9); [self.cardGroup drawBacks];  TinyProfilerStop( 9);
-        TinyProfilerStart(10); [self.cardGroup drawFronts]; TinyProfilerStop(10);
-        TinyProfilerStart(11); [self.cardGroup drawLabels]; TinyProfilerStop(11);
+        [self.cardGroup drawBacks]; 
+        [self.cardGroup drawFronts];
+        [self.cardGroup drawLabels];
         
-        TinyProfilerStart(12); { TextController* textController = [self.textControllers objectForKey:@"status2"]; textController.opacity = cameraPitch / 45 - 1; [textController draw]; } TinyProfilerStop(12);
-            
-        TinyProfilerStart(13); [self.menuLayerController draw]; TinyProfilerStop(13);
+        { TextController* textController = [self.textControllers objectForKey:@"status2"]; textController.opacity = cameraPitch / 45 - 1; [textController draw]; }
+        
+        [self.menuLayerController draw];
     }
     TRANSACTION_END;
     
-    TinyProfilerStart(15); [self.splash draw]; TinyProfilerStop(15);
+    [self.splash draw];
        
     hasRendered = YES;
 
     [_context presentRenderbuffer:GL_RENDERBUFFER_OES];
-
-    TinyProfilerStop(14);
 
     TinyProfilerLog();
 }
