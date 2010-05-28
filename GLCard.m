@@ -114,11 +114,16 @@
         textureOffsetCard[13] = Vector2DMake(426.0 / 1024.0, 702.0 / 1024.0); // King
         textureOffsetCard[14] = Vector2DMake(626.0 / 1024.0, 702.0 / 1024.0); // Back
         
-        GenerateBezierTextures(arrayTexture0Front, meshWidthFront, meshHeightFront, Vector2DMake(1, 1), Vector2DMake(0, 0));
-        GenerateBezierTextures(arrayTexture1Front, meshWidthFront, meshHeightFront, textureSizeCard, textureOffsetCard[self.numeral]);
+        GenerateBezierTextures(arrayTexture0Front,  meshWidthFront,  meshHeightFront,  Vector2DMake(1, 1), Vector2DMake(0, 0));
+        GenerateBezierTextures(arrayTexture0Back,   meshWidthBack,   meshHeightBack,   Vector2DMake(1, 1), Vector2DMake(0, 0)); 
+        GenerateBezierTextures(arrayTexture0Shadow, meshWidthShadow, meshHeightShadow, textureSizeCard, textureOffsetCard[0]);
+        GenerateBezierTextures(arrayTexture1Front,  meshWidthFront,  meshHeightFront,  textureSizeCard, textureOffsetCard[self.numeral]);
+        GenerateBezierTextures(arrayTexture1Back,   meshWidthBack,   meshHeightBack,   textureSizeCard, textureOffsetCard[14]); 
 
-        
-        
+        GenerateBezierMesh    (arrayMeshFront,    meshWidthFront, meshHeightFront);
+        GenerateBezierMesh    (arrayMeshBack,     meshWidthBack, meshHeightBack);                                         
+        GenerateBezierMesh    (arrayMeshShadow,     meshWidthShadow, meshHeightShadow);
+
         self.isHeld     = [AnimatedFloat withValue:0];
         self.isSelected = [AnimatedFloat withValue:0];
         self.angleFlip  = [AnimatedFloat withValue:0];
@@ -142,7 +147,6 @@
     
     GenerateBezierVertices(arrayVertexFront,  meshWidthFront, meshHeightFront, controlPointsFront);
     GenerateBezierNormals (arrayNormalFront,  meshWidthFront, meshHeightFront, controlPointsFront);
-    GenerateBezierMesh    (arrayMeshFront,    meshWidthFront, meshHeightFront);
     
     glVertexPointer  (3, GL_FLOAT, 0, arrayVertexFront);
     glNormalPointer  (   GL_FLOAT, 0, arrayNormalFront);
@@ -180,9 +184,6 @@
     
     GenerateBezierVertices(arrayVertexBack,   meshWidthBack, meshHeightBack, controlPointsBack);                             
     GenerateBezierNormals (arrayNormalBack,   meshWidthBack, meshHeightBack, controlPointsBack);                      
-    GenerateBezierMesh    (arrayMeshBack,     meshWidthBack, meshHeightBack);                                         
-    GenerateBezierTextures(arrayTexture0Back, meshWidthBack, meshHeightBack, Vector2DMake(1, 1), Vector2DMake(0, 0)); 
-    GenerateBezierTextures(arrayTexture1Back, meshWidthBack, meshHeightBack, textureSizeCard, textureOffsetCard[14]); 
     
     glVertexPointer  (3, GL_FLOAT, 0, arrayVertexBack);                                                                             
     glNormalPointer  (   GL_FLOAT, 0, arrayNormalBack);                                                                             
@@ -224,8 +225,6 @@
     
     GenerateBezierVertices(arrayVertexShadow,   meshWidthShadow, meshHeightShadow, controlPointsShadow);
     GenerateBezierNormals (arrayNormalShadow,   meshWidthShadow, meshHeightShadow, controlPointsShadow);
-    GenerateBezierTextures(arrayTexture0Shadow, meshWidthShadow, meshHeightShadow, textureSizeCard, textureOffsetCard[0]);
-    GenerateBezierMesh    (arrayMeshShadow,     meshWidthShadow, meshHeightShadow);
     
     glVertexPointer  (3, GL_FLOAT, 0, arrayVertexShadow);
     glNormalPointer  (   GL_FLOAT, 0, arrayNormalShadow);
