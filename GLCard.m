@@ -114,6 +114,9 @@
         textureOffsetCard[13] = Vector2DMake(426.0 / 1024.0, 702.0 / 1024.0); // King
         textureOffsetCard[14] = Vector2DMake(626.0 / 1024.0, 702.0 / 1024.0); // Back
         
+        GenerateBezierTextures(arrayTexture0Front, meshWidthFront, meshHeightFront, Vector2DMake(1, 1), Vector2DMake(0, 0));
+        GenerateBezierTextures(arrayTexture1Front, meshWidthFront, meshHeightFront, textureSizeCard, textureOffsetCard[self.numeral]);
+
         
         
         self.isHeld     = [AnimatedFloat withValue:0];
@@ -143,10 +146,7 @@
     
     glVertexPointer  (3, GL_FLOAT, 0, arrayVertexFront);
     glNormalPointer  (   GL_FLOAT, 0, arrayNormalFront);
-    
-    GenerateBezierTextures(arrayTexture0Front, meshWidthFront, meshHeightFront, Vector2DMake(1, 1), Vector2DMake(0, 0));
-    GenerateBezierTextures(arrayTexture1Front, meshWidthFront, meshHeightFront, textureSizeCard, textureOffsetCard[self.numeral]);
-        
+            
     glClientActiveTexture(GL_TEXTURE0); 
     glActiveTexture(GL_TEXTURE0); 
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
