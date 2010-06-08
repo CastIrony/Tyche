@@ -53,7 +53,7 @@
 
 -(BOOL)isMeshAnimating
 {    
-    return !self.bendFactor.hasEnded || !self.angleFlip.hasEnded || !self.angleFan.hasEnded || !self.location.hasEnded;
+    return YES;//!self.bendFactor.hasEnded || !self.angleFlip.hasEnded || !self.angleFan.hasEnded || !self.location.hasEnded;
 }
 
 -(NSString*)description
