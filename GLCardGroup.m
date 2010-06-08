@@ -24,7 +24,7 @@
 
 -(void)setBendFactor:(GLfloat)bendFactor
 {
-    foreach(GLCard* card in self.cards)
+    for(GLCard* card in self.cards)
     {
         card.bendFactor = bendFactor;
     }
