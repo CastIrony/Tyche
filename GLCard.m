@@ -53,7 +53,7 @@
 
 -(BOOL)isMeshAnimating
 {    
-    return YES;//!self.bendFactor.hasEnded || !self.angleFlip.hasEnded || !self.angleFan.hasEnded || !self.location.hasEnded;
+    return !self.bendFactor.hasEnded || !self.angleFlip.hasEnded || !self.angleFan.hasEnded || !self.location.hasEnded;
 }
 
 -(NSString*)description
@@ -281,7 +281,7 @@
 
 -(void)makeControlPoints
 {
-    if(!self.isMeshAnimating) { return; }
+    //if(!self.isMeshAnimating) { return; }
     
     Vector3D baseCorners[] = 
     {

@@ -331,6 +331,8 @@
                         
         glTranslatef(0, 0, 3.0 * cameraPitch / 90.0);
         
+        [self.cardGroup makeControlPoints];
+        
         self.table.drawStatus = GLTableDrawStatusDiffuse; [self.table draw];                                            
         
         [self.cardGroup drawShadows];                                                              
