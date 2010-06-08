@@ -26,7 +26,7 @@
 {
     for(GLCard* card in self.cards)
     {
-        //if(within(card.bendFactor.value, bendFactor, 0.01)) { continue; }
+        if(within(card.bendFactor.value, bendFactor, 0.01)) { continue; }
            
         card.bendFactor = [AnimatedFloat withStartValue:card.bendFactor.value endValue:bendFactor speed:1];
     }
