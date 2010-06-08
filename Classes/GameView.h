@@ -27,7 +27,7 @@
 }
 
 @property (nonatomic, assign) AppController* appController;
-@property (readonly, nonatomic, getter=isAnimating) BOOL animating;
+@property (readonly, nonatomic, getter=isMeshAnimating) BOOL animating;
 @property (nonatomic) NSInteger animationFrameInterval;
 
 - (void) startAnimation;

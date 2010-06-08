@@ -28,7 +28,7 @@
 @synthesize angleFan   = _angleFan;
 @synthesize location   = _location;
 
-@dynamic isAnimating;
+@dynamic isMeshAnimating;
 
 -(void)dealloc
 {
@@ -279,7 +279,7 @@
 
 -(void)makeControlPointsWithBendFactor:(GLfloat)bendFactor
 {
-    if(!self.isAnimating) { return; }
+    if(!self.isMeshAnimating) { return; }
     
     Vector3D baseCorners[] = 
     {

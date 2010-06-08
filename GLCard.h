@@ -82,7 +82,7 @@
 @property (nonatomic, retain)   AnimatedFloat*      angleFlip;
 @property (nonatomic, retain)   AnimatedFloat*      angleFan;
 @property (nonatomic, retain)   AnimatedVector3D*   location;
-@property (nonatomic, readonly) BOOL                isAnimating;
+@property (nonatomic, readonly) BOOL                isMeshAnimating;
 
 -(id)initWithSuit:(int)suit numeral:(int)numeral;
 
