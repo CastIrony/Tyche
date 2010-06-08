@@ -28,8 +28,7 @@
     {
         if(within(card.bendFactor.value, bendFactor, 0.001)) { continue; }
            
-        card.bendFactor = [AnimatedFloat withStartValue:card.bendFactor.value endValue:bendFactor forTime:0.05];
-        card.bendFactor.curve = AnimationEaseInOut;
+        card.bendFactor = [AnimatedFloat withStartValue:card.bendFactor.value endValue:bendFactor forTime:0.25];
     }
 }
 
