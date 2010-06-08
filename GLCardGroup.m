@@ -19,7 +19,7 @@
 
 -(GLfloat)bendFactor
 {
-    return [[self.cards objectAtIndex:0] bendFactor];
+    return [[[self.cards objectAtIndex:0] bendFactor] value];
 }
 
 -(void)setBendFactor:(GLfloat)bendFactor
