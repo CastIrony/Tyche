@@ -327,6 +327,8 @@
     
     if(self.hasBorder)
     {        
+        TinyProfilerStart(0);
+
         if(self.isLabelTouched && self.labelStatus == LabelStatusTextSelected)
         {
             colorLabelOpaque      = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity);
@@ -352,10 +354,14 @@
             glDrawElements(GL_TRIANGLES, 54, GL_UNSIGNED_SHORT, arrayBorderMesh);    
         }
         TRANSACTION_END
+    
+        TinyProfilerStop(0);
     }
     
     if(self.textureText)
     {   
+        TinyProfilerStart(1);
+
         glEnableClientState(GL_COLOR_ARRAY);
         
         GLfloat textWidth    = self.textSize.width;
@@ -424,10 +430,14 @@
         TRANSACTION_END
         
         glDisableClientState(GL_COLOR_ARRAY);
+        
+        TinyProfilerStop(1);
     }
     
     if(self.textureBulletRight)
     {
+        TinyProfilerStart(2);
+        
         if(self.isLabelTouched && self.labelStatus == LabelStatusBulletRightSelected)
         {
             colorLabelOpaque      = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity);
@@ -453,10 +463,14 @@
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, arrayBulletMesh);    
         }
         TRANSACTION_END
+        
+        TinyProfilerStop(2);
     }
     
     if(self.textureBulletLeft)
     {
+        TinyProfilerStart(3);
+        
         if(self.isLabelTouched && self.labelStatus == LabelStatusBulletLeftSelected)
         {
             colorLabelOpaque      = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity);
@@ -480,6 +494,8 @@
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, arrayBulletMesh);    
         }
         TRANSACTION_END
+        
+        TinyProfilerStop(3);
     }
     
     glEnableClientState(GL_NORMAL_ARRAY);

@@ -38,7 +38,7 @@
     
     if(self)
     {   
-        _cards     = [[NSMutableArray alloc] init];
+        _cards = [[NSMutableArray alloc] init];
         
         _initialIndex = -1;
         _finalIndex   = -1;
