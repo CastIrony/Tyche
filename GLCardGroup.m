@@ -28,7 +28,7 @@
     {
         if(within(card.bendFactor.value, bendFactor, 0.001)) { continue; }
            
-        card.bendFactor = [AnimatedFloat withCalue:bendFactor];
+        card.bendFactor = [AnimatedFloat withValue:bendFactor];
     }
 }
 
