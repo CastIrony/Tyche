@@ -67,6 +67,7 @@
     AnimatedFloat*    _isSelected;
     AnimatedFloat*    _angleFlip;
     AnimatedFloat*    _angleFan;
+    AnimatedFloat*    _bendFactor;
     AnimatedVector3D* _location;
 }
 
@@ -81,6 +82,7 @@
 @property (nonatomic, retain)   AnimatedFloat*      isSelected;
 @property (nonatomic, retain)   AnimatedFloat*      angleFlip;
 @property (nonatomic, retain)   AnimatedFloat*      angleFan;
+@property (nonatomic, retain)   AnimatedFloat*      bendFactor;
 @property (nonatomic, retain)   AnimatedVector3D*   location;
 @property (nonatomic, readonly) BOOL                isMeshAnimating;
 
@@ -91,7 +93,7 @@
 -(void)drawShadow;
 -(void)drawLabel;
 
--(void)makeControlPointsWithBendFactor:(GLfloat)bendFactor;
+-(void)makeControlPoints;
 -(void)rotateWithAngle:(GLfloat)angle aroundPoint:(Vector3D)point andAxis:(Vector3D)axis;
 -(void)bendWithAngle:(GLfloat)angle aroundPoint:(Vector3D)point andAxis:(Vector3D)axis;
 -(void)scaleWithFactor:(Vector3D)factor fromPoint:(Vector3D)point;

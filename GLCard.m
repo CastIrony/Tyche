@@ -24,6 +24,7 @@
 
 @synthesize isHeld     = _isHeld;
 @synthesize isSelected = _isSelected;
+@synthesize bendFactor = _bendFactor;
 @synthesize angleFlip  = _angleFlip;
 @synthesize angleFan   = _angleFan;
 @synthesize location   = _location;
@@ -52,7 +53,7 @@
 
 -(BOOL)isMeshAnimating
 {    
-    return !self.angleFlip.hasEnded || !self.angleFan.hasEnded || !self.location.hasEnded;
+    return !self.angleFlip.hasEnded || !self.angleFlip.hasEnded || !self.angleFan.hasEnded || !self.location.hasEnded;
 }
 
 -(NSString*)description
@@ -95,8 +96,8 @@
         arrayMeshBack       = malloc((meshWidthBack   - 1) * (meshHeightBack   - 1) * 6 * sizeof(GLushort));
         arrayMeshShadow     = malloc((meshWidthShadow - 1) * (meshHeightShadow - 1) * 6 * sizeof(GLushort));
         
-        textureSizeCard       = Vector2DMake(172.0 / 1024.0, 252.0 / 1024.0);
-        textureSizeLabel      = Vector2DMake(116.0 / 1024.0,  62.0 / 1024.0);
+        textureSizeCard     = Vector2DMake(172.0 / 1024.0, 252.0 / 1024.0);
+        textureSizeLabel    = Vector2DMake(116.0 / 1024.0,  62.0 / 1024.0);
         
         textureOffsetCard[ 0] = Vector2DMake(826.0 / 1024.0, 702.0 / 1024.0); // Shadow
         textureOffsetCard[ 1] = Vector2DMake( 26.0 / 1024.0,  36.0 / 1024.0); // Ace
@@ -277,7 +278,7 @@
     }
 }
 
--(void)makeControlPointsWithBendFactor:(GLfloat)bendFactor
+-(void)makeControlPoints
 {
     if(!self.isMeshAnimating) { return; }
     

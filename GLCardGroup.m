@@ -15,6 +15,21 @@
 @synthesize initialIndex    = _initialIndex;
 @synthesize finalIndex      = _finalIndex;
 
+@dynamic bendFactor;
+
+-(GLfloat)bendFactor
+{
+    return 0;
+}
+
+-(void)setBendFactor:(GLfloat)bendFactor
+{
+    foreach(GLCard* card in self.cards)
+    {
+        card.bendFactor = bendFactor;
+    }
+}
+
 -(id)init
 {
     self = [super init];
@@ -61,11 +76,11 @@
     }
 }
 
--(void)makeControlPointsWithBendFactor:(GLfloat)bendFactor
+-(void)makeControlPoints
 {
     for(GLCard* card in self.cards) 
     {         
-        [card makeControlPointsWithBendFactor:bendFactor]; 
+        [card makeControlPoints]; 
     }
 }
 
