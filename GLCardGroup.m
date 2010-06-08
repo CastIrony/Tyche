@@ -143,8 +143,6 @@
         card.location.curve = AnimationEaseInOut;
 
         [self layoutCards];
-        
-        NSLog(@"Card View: %@", self.cards);
     });
 }
 

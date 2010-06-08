@@ -187,10 +187,6 @@
     
         i++;
     }
-
-    NSLog(@"Dealt cards: %@", cards);
-
-    NSLog(@"Card Model: %@", self.player.cards);
 }
 
 -(void)discardCards:(NSMutableArray*)cards andThen:(simpleBlock)work
@@ -200,9 +196,7 @@
     int i = 0;
     
     for(CardModel* card in cards)
-    {
-        NSLog(@"Removing card %d of %d with suit %d and numeral %d", i, cards.count, card.suit, card.numeral);
-        
+    {        
         [self.player.cards removeObject:card];
         
         [self.renderer.cardGroup discardCardWithSuit:card.suit numeral:card.numeral afterDelay:0.2 * i andThen:(card == lastCard ? work : nil)];
