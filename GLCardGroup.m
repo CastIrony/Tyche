@@ -61,15 +61,11 @@
     }
 }
 
--(void)resetCardsWithBendFactor:(GLfloat)bendFactor
+-(void)makeControlPointsWithBendFactor:(GLfloat)bendFactor
 {
     for(GLCard* card in self.cards) 
-    { 
-        TinyProfilerStart(0);
-        
+    {         
         [card makeControlPointsWithBendFactor:bendFactor]; 
-        
-        TinyProfilerStop(0); 
     }
 }
 
@@ -82,11 +78,7 @@
 {
     for(GLCard* card in self.cards) 
     { 
-        TinyProfilerStart(1);
-
         [card drawFront]; 
-
-        TinyProfilerStop(1); 
     }
 }
 
@@ -94,11 +86,7 @@
 {
     for(GLCard* card in self.cards.reverseObjectEnumerator) 
     { 
-        TinyProfilerStart(2);
-
         [card drawBack]; 
-    
-        TinyProfilerStop(2); 
     }
 }
 
@@ -106,11 +94,7 @@
 {
     for(GLCard* card in self.cards) 
     { 
-        TinyProfilerStart(3);
-
         [card drawShadow]; 
-
-        TinyProfilerStop(3); 
     }
 }
 
@@ -118,11 +102,7 @@
 {
     for(GLCard* card in self.cards) 
     { 
-        TinyProfilerStart(4);
-
         [card drawLabel]; 
-        
-        TinyProfilerStop(4); 
     }
 }
 

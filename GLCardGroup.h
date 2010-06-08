@@ -26,7 +26,7 @@
 -(void)drawLabels;
 
 -(void)layoutCards;
--(void)resetCardsWithBendFactor:(GLfloat)bendFactor;
+-(void)makeControlPointsWithBendFactor:(GLfloat)bendFactor;
 
 -(void)discardCardWithSuit:(int)suit numeral:(int)numeral                   afterDelay:(NSTimeInterval)delay andThen:(simpleBlock)work;
 -(void)dealCardWithSuit:   (int)suit numeral:(int)numeral held:(BOOL)isHeld afterDelay:(NSTimeInterval)delay andThen:(simpleBlock)work;
