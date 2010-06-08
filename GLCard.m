@@ -50,15 +50,9 @@
     [super dealloc];
 }
 
--(BOOL)isAnimating
-{
-    if(!self.isHeld.hasEnded)     { NSLog(@"isHeld"); }
-    if(!self.isSelected.hasEnded) { NSLog(@"isSelected"); }
-    if(!self.angleFlip.hasEnded)  { NSLog(@"angleFlip"); }
-    if(!self.angleFan.hasEnded)   { NSLog(@"angleFan"); }
-    if(!self.location.hasEnded)   { NSLog(@"location"); }
-    
-    return !self.isHeld.hasEnded || !self.isSelected.hasEnded || !self.angleFlip.hasEnded || !self.angleFan.hasEnded || !self.location.hasEnded;
+-(BOOL)isMeshAnimating
+{    
+    return !self.angleFlip.hasEnded || !self.angleFan.hasEnded || !self.location.hasEnded;
 }
 
 -(NSString*)description
