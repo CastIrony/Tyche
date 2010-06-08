@@ -363,9 +363,9 @@
     
     [self rotateWithAngle:self.angleFlip.value aroundPoint:Vector3DMake(0.0, 0.0, 0.0) andAxis:Vector3DMake(0.0, 0.0, 1.0)];
     [self rotateWithAngle:self.angleJitter aroundPoint:Vector3DMake(0.0, 0.0, 0.0) andAxis:Vector3DMake(0.0, 1.0, 0.0)];
-    [self rotateWithAngle:bendFactor * self.angleFan.value aroundPoint:Vector3DMake(0.0, 0.0, -30.0) andAxis:Vector3DMake(0.0, 1.0, 0.0)];
+    [self rotateWithAngle:self.bendFactor.value * self.angleFan.value aroundPoint:Vector3DMake(0.0, 0.0, -30.0) andAxis:Vector3DMake(0.0, 1.0, 0.0)];
     
-    [self bendWithAngle:bendFactor * 108 aroundPoint:Vector3DMake(0.0, 0.0, 0.0) andAxis:Vector3DMake(1.0, 0.0, 0.0)];
+    [self bendWithAngle:self.bendFactor.value * 108 aroundPoint:Vector3DMake(0.0, 0.0, 0.0) andAxis:Vector3DMake(1.0, 0.0, 0.0)];
     
     [self scaleWithFactor:Vector3DMake(1.0, 1.2, 1.0) fromPoint:Vector3DMake(0.0, 0.0, 0.0)];
     
