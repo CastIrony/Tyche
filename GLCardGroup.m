@@ -63,7 +63,14 @@
 
 -(void)resetCardsWithBendFactor:(GLfloat)bendFactor
 {
-    for(GLCard* card in self.cards) { [card makeControlPointsWithBendFactor:bendFactor]; }
+    for(GLCard* card in self.cards) 
+    { 
+        TinyProfilerStart(0);
+        
+        [card makeControlPointsWithBendFactor:bendFactor]; 
+        
+        TinyProfilerStop(0); 
+    }
 }
 
 -(void)clearDeadCard:(GLCard*)item
@@ -73,22 +80,50 @@
 
 -(void)drawFronts
 {
-    for(GLCard* card in self.cards) { [card drawFront]; }
+    for(GLCard* card in self.cards) 
+    { 
+        TinyProfilerStart(1);
+
+        [card drawFront]; 
+
+        TinyProfilerStop(1); 
+    }
 }
 
 -(void)drawBacks
 {
-    for(GLCard* card in self.cards.reverseObjectEnumerator) { [card drawBack]; }
+    for(GLCard* card in self.cards.reverseObjectEnumerator) 
+    { 
+        TinyProfilerStart(2);
+
+        [card drawBack]; 
+    
+        TinyProfilerStop(2); 
+    }
 }
 
 -(void)drawShadows
 {
-    for(GLCard* card in self.cards) { [card drawShadow]; }
+    for(GLCard* card in self.cards) 
+    { 
+        TinyProfilerStart(3);
+
+        [card drawShadow]; 
+
+        TinyProfilerStop(3); 
+    }
 }
 
 -(void)drawLabels
 {
-    for(GLCard* card in self.cards) { [card drawLabel]; }
+    for(GLCard* card in self.cards) 
+    { 
+        TinyProfilerStart(4);
+
+        [card drawLabel]; 
+        
+        TinyProfilerStop(4); 
+    }
 }
 
 -(void)discardCardWithSuit:(int)suit numeral:(int)numeral afterDelay:(NSTimeInterval)delay andThen:(simpleBlock)work
