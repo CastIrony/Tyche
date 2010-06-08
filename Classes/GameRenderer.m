@@ -327,10 +327,8 @@
         
         glRotatef(cameraPitch + 90, 1.0f, 0.0f, 0.0f);            
         
-        self.cardGroup.bendFactor = 
-        
-        [self.cardGroup makeControlPointsWithBendFactor:cameraPitch / 90.0];
-                
+        self.cardGroup.bendFactor = cameraPitch / 90.0;
+                        
         glTranslatef(0, 0, 3.0 * cameraPitch / 90.0);
         
         self.table.drawStatus = GLTableDrawStatusDiffuse; [self.table draw];                                            
