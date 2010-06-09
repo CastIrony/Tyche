@@ -64,17 +64,18 @@
 {
     GLLabel* label = (GLLabel*)object;
     
-    if(label.key                     != self.key              && ![label.key              isEqual:self.key])              { return NO; }
-    if(label.textString               != self.textString        && ![label.textString        isEqual:self.textString])        { return NO; }
-    if(label.font               != self.font        && ![label.font        isEqual:self.font])        { return NO; }
-    if(label.bulletLeftString         != self.bulletLeftString  && ![label.bulletLeftString  isEqual:self.bulletLeftString])  { return NO; }
-    if(label.bulletRightString        != self.bulletRightString && ![label.bulletRightString isEqual:self.bulletRightString]) { return NO; }
-    if(label.fadeMargin               != self.fadeMargin)               { return NO; }
+    if(![label.key               isEqual:self.key])               { return NO; }
+    if(![label.textString        isEqual:self.textString])        { return NO; }
+    if(![label.font              isEqual:self.font])              { return NO; }
+    if(![label.bulletLeftString  isEqual:self.bulletLeftString])  { return NO; }
+    if(![label.bulletRightString isEqual:self.bulletRightString]) { return NO; }
+    
+    if(label.fadeMargin         != self.fadeMargin)         { return NO; }
     if(label.textAlignment      != self.textAlignment)      { return NO; }
-    if(label.hasBorder               != self.hasBorder)               { return NO; }
-    if(label.hasShadow               != self.hasShadow)               { return NO; }
-    if(label.labelSize.width         != self.labelSize.width)         { return NO; }
-    if(label.labelSize.height        != self.labelSize.height)        { return NO; }
+    if(label.hasBorder          != self.hasBorder)          { return NO; }
+    if(label.hasShadow          != self.hasShadow)          { return NO; }
+    if(label.labelSize.width    != self.labelSize.width)    { return NO; }
+    if(label.labelSize.height   != self.labelSize.height)   { return NO; }
     if(label.colorNormal.red    != self.colorNormal.red)    { return NO; }
     if(label.colorNormal.green  != self.colorNormal.green)  { return NO; }
     if(label.colorNormal.blue   != self.colorNormal.blue)   { return NO; }
@@ -349,8 +350,6 @@
         
         if(self.hasBorder)
         {        
-            TinyProfilerStart(0);
-
             if(self.isLabelTouched && self.labelStatus == LabelStatusTextSelected)
             {
                 colorLabelOpaque      = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity);
@@ -370,14 +369,10 @@
             glColor4f(colorLabelOpaque.red, colorLabelOpaque.green, colorLabelOpaque.blue, colorLabelOpaque.alpha);
             
             glDrawElements(GL_TRIANGLES, 54, GL_UNSIGNED_SHORT, arrayBorderMesh);    
-        
-            TinyProfilerStop(0);
         }
         
         if(self.textureText)
         {   
-            TinyProfilerStart(1);
-
             glEnableClientState(GL_COLOR_ARRAY);
                         
             if(self.isLabelTouched && self.labelStatus == LabelStatusTextSelected)
@@ -430,14 +425,10 @@
             glDrawElements(GL_TRIANGLES, 18, GL_UNSIGNED_SHORT, arrayTextMesh);    
             
             glDisableClientState(GL_COLOR_ARRAY);
-            
-            TinyProfilerStop(1);
         }
         
         if(self.textureBulletRight)
         {
-            TinyProfilerStart(2);
-            
             if(self.isLabelTouched && self.labelStatus == LabelStatusBulletRightSelected)
             {
                 colorLabelOpaque = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity);
@@ -457,14 +448,10 @@
             glColor4f(colorLabelOpaque.red, colorLabelOpaque.green, colorLabelOpaque.blue, colorLabelOpaque.alpha);
                     
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, arrayBulletMesh);    
-            
-            TinyProfilerStop(2);
         }
         
         if(self.textureBulletLeft)
         {
-            TinyProfilerStart(3);
-            
             if(self.isLabelTouched && self.labelStatus == LabelStatusBulletLeftSelected)
             {
                 colorLabelOpaque = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity);
@@ -482,8 +469,6 @@
             glColor4f(colorLabelOpaque.red, colorLabelOpaque.green, colorLabelOpaque.blue, colorLabelOpaque.alpha);
                     
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, arrayBulletMesh);    
-            
-            TinyProfilerStop(3);
         }
     }
     TRANSACTION_END    

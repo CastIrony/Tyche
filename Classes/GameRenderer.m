@@ -317,6 +317,8 @@
 
     TRANSACTION_BEGIN
     {
+        TinyProfilerStart(0);
+        
         GLfloat cameraPitch = self.camera.pitchAngle.value * self.camera.pitchFactor.value;
         
         glClear(GL_COLOR_BUFFER_BIT);
@@ -331,32 +333,76 @@
                         
         glTranslatef(0, 0, 3.0 * cameraPitch / 90.0);
         
+        TinyProfilerStop(0);
+        TinyProfilerStart(1);
+
         [self.cardGroup makeControlPoints];
+
+        TinyProfilerStop(1);
+        TinyProfilerStart(2);
         
         self.table.drawStatus = GLTableDrawStatusDiffuse; [self.table draw];                                            
         
-        [self.cardGroup drawShadows];                                                              
+        TinyProfilerStop(2);
+        TinyProfilerStart(3);
+        
+        [self.cardGroup drawShadows];
+        
+        TinyProfilerStop(3);
+        TinyProfilerStart(4);
+        
         [self.chipGroup drawShadows];
+        
+        TinyProfilerStop(4);
+        TinyProfilerStart(5);
         
         self.table.drawStatus = GLTableDrawStatusAmbient; [self.table draw];                                              
     
+        TinyProfilerStop(5);
+        TinyProfilerStart(6);
+        
         { TextController* textController = [self.textControllers objectForKey:@"credits"]; textController.opacity = 1.0/* - (cameraPitch / 90.0)*/; [textController draw]; }
         { TextController* textController = [self.textControllers objectForKey:@"actions"]; textController.opacity = 1.0/* - (cameraPitch / 90.0)*/; [textController draw]; }
         { TextController* textController = [self.textControllers objectForKey:@"status1"]; textController.opacity = 1.0/* - (cameraPitch / 90.0)*/; [textController draw]; }
         
+        TinyProfilerStop(6);
+        TinyProfilerStart(7);
+        
         self.chipGroup.markerOpacity = clipFloat(1.0 - cameraPitch / 90.0,  0, 1); 
         [self.chipGroup drawMarkers];         
+        
+        TinyProfilerStop(7);
+        TinyProfilerStart(8);
         
         self.chipGroup.opacity = clipFloat(-0.04 * cameraPitch + 3.4, 0, 1);
         [self.chipGroup drawChips];
         
+        TinyProfilerStop(8);
+        TinyProfilerStart(9);
+        
         [self.cardGroup drawBacks]; 
+        
+        TinyProfilerStop(9);
+        TinyProfilerStart(10);
+        
         [self.cardGroup drawFronts];
+        
+        TinyProfilerStop(10);
+        TinyProfilerStart(11);
+        
         [self.cardGroup drawLabels];
+        
+        TinyProfilerStop(11);
+        TinyProfilerStart(12);
         
         { TextController* textController = [self.textControllers objectForKey:@"status2"]; textController.opacity = cameraPitch / 45 - 1; [textController draw]; }
         
+        TinyProfilerStop(12);
+        TinyProfilerStart(13);
+        
         [self.menuLayerController draw];
+        
+        TinyProfilerStop(13);
     }
     TRANSACTION_END;
     
