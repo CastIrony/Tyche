@@ -100,7 +100,7 @@
     
     [label setValuesForKeysWithDictionary:styles];
  
-    [label layoutText];
+    [label makeMeshes];
 
     return label;
 }
@@ -169,7 +169,7 @@
     return label;
 }
 
--(void)layoutText
+-(void)makeMeshes
 {
     if(!self.textureText) { [self makeTextures]; }
     
@@ -325,179 +325,161 @@
     
     GLfloat lightness = self.lightness * self.textController.renderer.lightness.value;
     
-    if(self.hasBorder)
-    {        
-        TinyProfilerStart(0);
-
-        if(self.isLabelTouched && self.labelStatus == LabelStatusTextSelected)
-        {
-            colorLabelOpaque      = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity);
-            colorLabelTransparent = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue, 0);
-        }
-        else 
-        {
-            colorLabelOpaque       = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * self.layoutOpacity.value * self.textController.opacity);
-            colorLabelTransparent  = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, 0);    
-        }
-                
-        glBindTexture(GL_TEXTURE_2D, self.isLabelTouched && self.labelStatus == LabelStatusTextSelected ? [TextureController nameForKey:@"borderTouched"] : [TextureController nameForKey:@"borderNormal"]);
-                
-        glVertexPointer  (3, GL_FLOAT, 0, arrayBorderVertex);
-        glTexCoordPointer(2, GL_FLOAT, 0, arrayBorderTexture);            
-
-        glColor4f(colorLabelOpaque.red, colorLabelOpaque.green, colorLabelOpaque.blue, colorLabelOpaque.alpha);
+    TRANSACTION_BEGIN
+    {
+        glTranslatef(self.layoutLocation.value.x, self.layoutLocation.value.y, self.layoutLocation.value.z);
         
-        TRANSACTION_BEGIN
-        {
-            glTranslatef(self.layoutLocation.value.x, self.layoutLocation.value.y, self.layoutLocation.value.z);
+        if(self.hasBorder)
+        {        
+            TinyProfilerStart(0);
+
+            if(self.isLabelTouched && self.labelStatus == LabelStatusTextSelected)
+            {
+                colorLabelOpaque      = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity);
+                colorLabelTransparent = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue, 0);
+            }
+            else 
+            {
+                colorLabelOpaque       = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * self.layoutOpacity.value * self.textController.opacity);
+                colorLabelTransparent  = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, 0);    
+            }
+                    
+            glBindTexture(GL_TEXTURE_2D, self.isLabelTouched && self.labelStatus == LabelStatusTextSelected ? [TextureController nameForKey:@"borderTouched"] : [TextureController nameForKey:@"borderNormal"]);
+                    
+            glVertexPointer  (3, GL_FLOAT, 0, arrayBorderVertex);
+            glTexCoordPointer(2, GL_FLOAT, 0, arrayBorderTexture);            
+
+            glColor4f(colorLabelOpaque.red, colorLabelOpaque.green, colorLabelOpaque.blue, colorLabelOpaque.alpha);
             
             glDrawElements(GL_TRIANGLES, 54, GL_UNSIGNED_SHORT, arrayBorderMesh);    
+        
+            TinyProfilerStop(0);
         }
-        TRANSACTION_END
-    
-        TinyProfilerStop(0);
-    }
-    
-    if(self.textureText)
-    {   
-        TinyProfilerStart(1);
+        
+        if(self.textureText)
+        {   
+            TinyProfilerStart(1);
 
-        glEnableClientState(GL_COLOR_ARRAY);
-        
-        GLfloat textWidth    = self.textSize.width;
-        GLfloat textHeight   = self.textSize.height;
-        
-        GLfloat bulletRightWidth  = self.textureBulletRight ? self.bulletRightSize.width / self.bulletRightSize.height * self.labelSize.height : 0;
-        GLfloat bulletLeftWidth   = self.textureBulletLeft ? self.bulletLeftSize.width / self.bulletLeftSize.height * self.labelSize.height : 0;
-        
-        GLfloat labelRight  = -(self.labelSize.width  / 2.0) + bulletRightWidth;
-        GLfloat labelLeft   =  (self.labelSize.width  / 2.0) - bulletLeftWidth;
-        
-        GLfloat labelWidth  = labelLeft - labelRight;
-        GLfloat labelHeight = self.labelSize.height;
-             
-        GLfloat labelViewportWidth = (labelWidth) / (labelHeight * (textWidth / textHeight));
-        
-        GLfloat textureStringRight  = self.scrollBase + sin(CFAbsoluteTimeGetCurrent()) * self.scrollAmplitude + (1.0 + labelViewportWidth) / 2.0;
-        GLfloat textureStringLeft   = self.scrollBase + sin(CFAbsoluteTimeGetCurrent()) * self.scrollAmplitude + (1.0 - labelViewportWidth) / 2.0;
-        GLfloat textureStringTop    = 0.0;
-        GLfloat textureStringBottom = 1.0;
-        
-        GLfloat textureStringRightMargin = textureStringRight  - (self.fadeMargin / labelWidth * labelViewportWidth);
-        GLfloat textureStringLeftMargin  = textureStringLeft   + (self.fadeMargin / labelWidth * labelViewportWidth);
-        
-        arrayTextTexture[0] = Vector2DMake(textureStringRight,        textureStringTop);
-        arrayTextTexture[1] = Vector2DMake(textureStringRightMargin,  textureStringTop);
-        arrayTextTexture[2] = Vector2DMake(textureStringLeftMargin,   textureStringTop);
-        arrayTextTexture[3] = Vector2DMake(textureStringLeft,         textureStringTop);
-        arrayTextTexture[4] = Vector2DMake(textureStringRight,        textureStringBottom);
-        arrayTextTexture[5] = Vector2DMake(textureStringRightMargin,  textureStringBottom);
-        arrayTextTexture[6] = Vector2DMake(textureStringLeftMargin,   textureStringBottom);
-        arrayTextTexture[7] = Vector2DMake(textureStringLeft,         textureStringBottom);
-        
-        if(self.isLabelTouched && self.labelStatus == LabelStatusTextSelected)
-        {
-            colorLabelOpaque      = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity);
-            colorLabelTransparent = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue, 0);
-        }
-        else 
-        {
-            colorLabelOpaque       = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * self.layoutOpacity.value * self.textController.opacity);
-            colorLabelTransparent  = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, 0);    
-        }
-                
-        glBindTexture(GL_TEXTURE_2D, self.textureText.name);
-        
-        arrayTextColor[0] = colorLabelTransparent;
-        arrayTextColor[1] = colorLabelOpaque;
-        arrayTextColor[2] = colorLabelOpaque;
-        arrayTextColor[3] = colorLabelTransparent;
-        arrayTextColor[4] = colorLabelTransparent;
-        arrayTextColor[5] = colorLabelOpaque;
-        arrayTextColor[6] = colorLabelOpaque;
-        arrayTextColor[7] = colorLabelTransparent;
-                
-        glVertexPointer  (3, GL_FLOAT, 0, arrayTextVertex);
-        glTexCoordPointer(2, GL_FLOAT, 0, arrayTextTexture);            
-        glColorPointer   (4, GL_FLOAT, 0, arrayTextColor);
-        
-        TRANSACTION_BEGIN
-        {
-            glTranslatef(self.layoutLocation.value.x, self.layoutLocation.value.y, self.layoutLocation.value.z);
+            glEnableClientState(GL_COLOR_ARRAY);
+            
+            GLfloat textWidth    = self.textSize.width;
+            GLfloat textHeight   = self.textSize.height;
+            
+            GLfloat bulletRightWidth  = self.textureBulletRight ? self.bulletRightSize.width / self.bulletRightSize.height * self.labelSize.height : 0;
+            GLfloat bulletLeftWidth   = self.textureBulletLeft ? self.bulletLeftSize.width / self.bulletLeftSize.height * self.labelSize.height : 0;
+            
+            GLfloat labelRight  = -(self.labelSize.width  / 2.0) + bulletRightWidth;
+            GLfloat labelLeft   =  (self.labelSize.width  / 2.0) - bulletLeftWidth;
+            
+            GLfloat labelWidth  = labelLeft - labelRight;
+            GLfloat labelHeight = self.labelSize.height;
+                 
+            GLfloat labelViewportWidth = (labelWidth) / (labelHeight * (textWidth / textHeight));
+            
+            GLfloat textureStringRight  = self.scrollBase + sin(CFAbsoluteTimeGetCurrent()) * self.scrollAmplitude + (1.0 + labelViewportWidth) / 2.0;
+            GLfloat textureStringLeft   = self.scrollBase + sin(CFAbsoluteTimeGetCurrent()) * self.scrollAmplitude + (1.0 - labelViewportWidth) / 2.0;
+            GLfloat textureStringTop    = 0.0;
+            GLfloat textureStringBottom = 1.0;
+            
+            GLfloat textureStringRightMargin = textureStringRight  - (self.fadeMargin / labelWidth * labelViewportWidth);
+            GLfloat textureStringLeftMargin  = textureStringLeft   + (self.fadeMargin / labelWidth * labelViewportWidth);
+            
+            arrayTextTexture[0] = Vector2DMake(textureStringRight,        textureStringTop);
+            arrayTextTexture[1] = Vector2DMake(textureStringRightMargin,  textureStringTop);
+            arrayTextTexture[2] = Vector2DMake(textureStringLeftMargin,   textureStringTop);
+            arrayTextTexture[3] = Vector2DMake(textureStringLeft,         textureStringTop);
+            arrayTextTexture[4] = Vector2DMake(textureStringRight,        textureStringBottom);
+            arrayTextTexture[5] = Vector2DMake(textureStringRightMargin,  textureStringBottom);
+            arrayTextTexture[6] = Vector2DMake(textureStringLeftMargin,   textureStringBottom);
+            arrayTextTexture[7] = Vector2DMake(textureStringLeft,         textureStringBottom);
+            
+            if(self.isLabelTouched && self.labelStatus == LabelStatusTextSelected)
+            {
+                colorLabelOpaque      = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity);
+                colorLabelTransparent = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue, 0);
+            }
+            else 
+            {
+                colorLabelOpaque       = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * self.layoutOpacity.value * self.textController.opacity);
+                colorLabelTransparent  = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, 0);    
+            }
+                    
+            glBindTexture(GL_TEXTURE_2D, self.textureText.name);
+            
+            arrayTextColor[0] = colorLabelTransparent;
+            arrayTextColor[1] = colorLabelOpaque;
+            arrayTextColor[2] = colorLabelOpaque;
+            arrayTextColor[3] = colorLabelTransparent;
+            arrayTextColor[4] = colorLabelTransparent;
+            arrayTextColor[5] = colorLabelOpaque;
+            arrayTextColor[6] = colorLabelOpaque;
+            arrayTextColor[7] = colorLabelTransparent;
+                    
+            glVertexPointer  (3, GL_FLOAT, 0, arrayTextVertex);
+            glTexCoordPointer(2, GL_FLOAT, 0, arrayTextTexture);            
+            glColorPointer   (4, GL_FLOAT, 0, arrayTextColor);
             
             glDrawElements(GL_TRIANGLES, 18, GL_UNSIGNED_SHORT, arrayTextMesh);    
-        }
-        TRANSACTION_END
-        
-        glDisableClientState(GL_COLOR_ARRAY);
-        
-        TinyProfilerStop(1);
-    }
-    
-    if(self.textureBulletRight)
-    {
-        TinyProfilerStart(2);
-        
-        if(self.isLabelTouched && self.labelStatus == LabelStatusBulletRightSelected)
-        {
-            colorLabelOpaque = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity);
-        }
-        else 
-        {
-            colorLabelOpaque = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * self.layoutOpacity.value * self.textController.opacity);
-        }
-        
-        glBindTexture(GL_TEXTURE_2D, self.textureBulletRight.name);
-        
-        glDisableClientState(GL_NORMAL_ARRAY);
-        
-        glVertexPointer  (3, GL_FLOAT, 0, arrayBulletRightVertex);
-        glTexCoordPointer(2, GL_FLOAT, 0, arrayBulletTexture);            
-        
-        glColor4f(colorLabelOpaque.red, colorLabelOpaque.green, colorLabelOpaque.blue, colorLabelOpaque.alpha);
-                
-        TRANSACTION_BEGIN
-        {
-            glTranslatef(self.layoutLocation.value.x, self.layoutLocation.value.y, self.layoutLocation.value.z);
             
-            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, arrayBulletMesh);    
-        }
-        TRANSACTION_END
-        
-        TinyProfilerStop(2);
-    }
-    
-    if(self.textureBulletLeft)
-    {
-        TinyProfilerStart(3);
-        
-        if(self.isLabelTouched && self.labelStatus == LabelStatusBulletLeftSelected)
-        {
-            colorLabelOpaque = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity);
-        }
-        else 
-        {
-            colorLabelOpaque = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * self.layoutOpacity.value * self.textController.opacity);
-        }
-                
-        glBindTexture(GL_TEXTURE_2D, self.textureBulletLeft.name);
-                
-        glVertexPointer  (3, GL_FLOAT, 0, arrayBulletLeftVertex);
-        glTexCoordPointer(2, GL_FLOAT, 0, arrayBulletTexture);           
-        
-        glColor4f(colorLabelOpaque.red, colorLabelOpaque.green, colorLabelOpaque.blue, colorLabelOpaque.alpha);
-                
-        TRANSACTION_BEGIN
-        {
-            glTranslatef(self.layoutLocation.value.x, self.layoutLocation.value.y, self.layoutLocation.value.z);
+            glDisableClientState(GL_COLOR_ARRAY);
             
-            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, arrayBulletMesh);    
+            TinyProfilerStop(1);
         }
-        TRANSACTION_END
         
-        TinyProfilerStop(3);
+        if(self.textureBulletRight)
+        {
+            TinyProfilerStart(2);
+            
+            if(self.isLabelTouched && self.labelStatus == LabelStatusBulletRightSelected)
+            {
+                colorLabelOpaque = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity);
+            }
+            else 
+            {
+                colorLabelOpaque = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * self.layoutOpacity.value * self.textController.opacity);
+            }
+            
+            glBindTexture(GL_TEXTURE_2D, self.textureBulletRight.name);
+            
+            glDisableClientState(GL_NORMAL_ARRAY);
+            
+            glVertexPointer  (3, GL_FLOAT, 0, arrayBulletRightVertex);
+            glTexCoordPointer(2, GL_FLOAT, 0, arrayBulletTexture);            
+            
+            glColor4f(colorLabelOpaque.red, colorLabelOpaque.green, colorLabelOpaque.blue, colorLabelOpaque.alpha);
+                    
+            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, arrayBulletMesh);    
+            
+            TinyProfilerStop(2);
+        }
+        
+        if(self.textureBulletLeft)
+        {
+            TinyProfilerStart(3);
+            
+            if(self.isLabelTouched && self.labelStatus == LabelStatusBulletLeftSelected)
+            {
+                colorLabelOpaque = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity);
+            }
+            else 
+            {
+                colorLabelOpaque = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * self.layoutOpacity.value * self.textController.opacity);
+            }
+                    
+            glBindTexture(GL_TEXTURE_2D, self.textureBulletLeft.name);
+                    
+            glVertexPointer  (3, GL_FLOAT, 0, arrayBulletLeftVertex);
+            glTexCoordPointer(2, GL_FLOAT, 0, arrayBulletTexture);           
+            
+            glColor4f(colorLabelOpaque.red, colorLabelOpaque.green, colorLabelOpaque.blue, colorLabelOpaque.alpha);
+                    
+            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, arrayBulletMesh);    
+            
+            TinyProfilerStop(3);
+        }
     }
-    
+    TRANSACTION_END    
+        
     glEnableClientState(GL_NORMAL_ARRAY);
 }
 
