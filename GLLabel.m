@@ -440,11 +440,11 @@
         
         if(self.isLabelTouched && self.labelStatus == LabelStatusBulletRightSelected)
         {
-            colorLabelOpaque      = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity);
+            colorLabelOpaque = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity);
         }
         else 
         {
-            colorLabelOpaque       = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * self.layoutOpacity.value * self.textController.opacity);
+            colorLabelOpaque = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * self.layoutOpacity.value * self.textController.opacity);
         }
         
         glBindTexture(GL_TEXTURE_2D, self.textureBulletRight.name);
@@ -473,11 +473,11 @@
         
         if(self.isLabelTouched && self.labelStatus == LabelStatusBulletLeftSelected)
         {
-            colorLabelOpaque      = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity);
+            colorLabelOpaque = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity);
         }
         else 
         {
-            colorLabelOpaque       = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * self.layoutOpacity.value * self.textController.opacity);
+            colorLabelOpaque = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * self.layoutOpacity.value * self.textController.opacity);
         }
                 
         glBindTexture(GL_TEXTURE_2D, self.textureBulletLeft.name);
