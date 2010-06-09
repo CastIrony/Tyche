@@ -308,6 +308,38 @@
     arrayBulletMesh[ 3] = 2;
     arrayBulletMesh[ 4] = 1;
     arrayBulletMesh[ 5] = 3;
+    
+    
+    GLfloat textWidth    = self.textSize.width;
+    GLfloat textHeight   = self.textSize.height;
+    
+    GLfloat bulletRightWidth  = self.textureBulletRight ? self.bulletRightSize.width / self.bulletRightSize.height * self.labelSize.height : 0;
+    GLfloat bulletLeftWidth   = self.textureBulletLeft ? self.bulletLeftSize.width / self.bulletLeftSize.height * self.labelSize.height : 0;
+    
+    GLfloat labelRight  = -(self.labelSize.width  / 2.0) + bulletRightWidth;
+    GLfloat labelLeft   =  (self.labelSize.width  / 2.0) - bulletLeftWidth;
+    
+    GLfloat labelWidth  = labelLeft - labelRight;
+    GLfloat labelHeight = self.labelSize.height;
+    
+    GLfloat labelViewportWidth = (labelWidth) / (labelHeight * (textWidth / textHeight));
+    
+    GLfloat textureStringRight  = self.scrollBase + sin(CFAbsoluteTimeGetCurrent()) * self.scrollAmplitude + (1.0 + labelViewportWidth) / 2.0;
+    GLfloat textureStringLeft   = self.scrollBase + sin(CFAbsoluteTimeGetCurrent()) * self.scrollAmplitude + (1.0 - labelViewportWidth) / 2.0;
+    GLfloat textureStringTop    = 0.0;
+    GLfloat textureStringBottom = 1.0;
+    
+    GLfloat textureStringRightMargin = textureStringRight  - (self.fadeMargin / labelWidth * labelViewportWidth);
+    GLfloat textureStringLeftMargin  = textureStringLeft   + (self.fadeMargin / labelWidth * labelViewportWidth);
+    
+    arrayTextTextureBase[0] = Vector2DMake(textureStringRight,        textureStringTop);
+    arrayTextTextureBase[1] = Vector2DMake(textureStringRightMargin,  textureStringTop);
+    arrayTextTextureBase[2] = Vector2DMake(textureStringLeftMargin,   textureStringTop);
+    arrayTextTextureBase[3] = Vector2DMake(textureStringLeft,         textureStringTop);
+    arrayTextTextureBase[4] = Vector2DMake(textureStringRight,        textureStringBottom);
+    arrayTextTextureBase[5] = Vector2DMake(textureStringRightMargin,  textureStringBottom);
+    arrayTextTextureBase[6] = Vector2DMake(textureStringLeftMargin,   textureStringBottom);
+    arrayTextTextureBase[7] = Vector2DMake(textureStringLeft,         textureStringBottom);
 }
 
 -(void)draw
@@ -361,38 +393,7 @@
             TinyProfilerStart(1);
 
             glEnableClientState(GL_COLOR_ARRAY);
-            
-            GLfloat textWidth    = self.textSize.width;
-            GLfloat textHeight   = self.textSize.height;
-            
-            GLfloat bulletRightWidth  = self.textureBulletRight ? self.bulletRightSize.width / self.bulletRightSize.height * self.labelSize.height : 0;
-            GLfloat bulletLeftWidth   = self.textureBulletLeft ? self.bulletLeftSize.width / self.bulletLeftSize.height * self.labelSize.height : 0;
-            
-            GLfloat labelRight  = -(self.labelSize.width  / 2.0) + bulletRightWidth;
-            GLfloat labelLeft   =  (self.labelSize.width  / 2.0) - bulletLeftWidth;
-            
-            GLfloat labelWidth  = labelLeft - labelRight;
-            GLfloat labelHeight = self.labelSize.height;
-                 
-            GLfloat labelViewportWidth = (labelWidth) / (labelHeight * (textWidth / textHeight));
-            
-            GLfloat textureStringRight  = self.scrollBase + sin(CFAbsoluteTimeGetCurrent()) * self.scrollAmplitude + (1.0 + labelViewportWidth) / 2.0;
-            GLfloat textureStringLeft   = self.scrollBase + sin(CFAbsoluteTimeGetCurrent()) * self.scrollAmplitude + (1.0 - labelViewportWidth) / 2.0;
-            GLfloat textureStringTop    = 0.0;
-            GLfloat textureStringBottom = 1.0;
-            
-            GLfloat textureStringRightMargin = textureStringRight  - (self.fadeMargin / labelWidth * labelViewportWidth);
-            GLfloat textureStringLeftMargin  = textureStringLeft   + (self.fadeMargin / labelWidth * labelViewportWidth);
-            
-            arrayTextTextureBase[0] = Vector2DMake(textureStringRight,        textureStringTop);
-            arrayTextTextureBase[1] = Vector2DMake(textureStringRightMargin,  textureStringTop);
-            arrayTextTextureBase[2] = Vector2DMake(textureStringLeftMargin,   textureStringTop);
-            arrayTextTextureBase[3] = Vector2DMake(textureStringLeft,         textureStringTop);
-            arrayTextTextureBase[4] = Vector2DMake(textureStringRight,        textureStringBottom);
-            arrayTextTextureBase[5] = Vector2DMake(textureStringRightMargin,  textureStringBottom);
-            arrayTextTextureBase[6] = Vector2DMake(textureStringLeftMargin,   textureStringBottom);
-            arrayTextTextureBase[7] = Vector2DMake(textureStringLeft,         textureStringBottom);
-            
+                        
             if(self.isLabelTouched && self.labelStatus == LabelStatusTextSelected)
             {
                 colorLabelOpaque      = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity);
