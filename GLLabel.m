@@ -148,7 +148,7 @@
         arrayBulletRightVertex = malloc( 4 * sizeof(Vector3D));
         arrayBulletLeftVertex  = malloc( 4 * sizeof(Vector3D));
         arrayBorderVertex      = malloc(16 * sizeof(Vector3D));
-        arrayTextTexture       = malloc( 8 * sizeof(Vector2D));
+        arrayTextTextureBase       = malloc( 8 * sizeof(Vector2D));
         arrayBulletTexture     = malloc( 4 * sizeof(Vector2D));
         arrayBorderTexture     = malloc(16 * sizeof(Vector2D));
         arrayTextMesh          = malloc(18 * sizeof(GLushort));
@@ -384,14 +384,14 @@
             GLfloat textureStringRightMargin = textureStringRight  - (self.fadeMargin / labelWidth * labelViewportWidth);
             GLfloat textureStringLeftMargin  = textureStringLeft   + (self.fadeMargin / labelWidth * labelViewportWidth);
             
-            arrayTextTexture[0] = Vector2DMake(textureStringRight,        textureStringTop);
-            arrayTextTexture[1] = Vector2DMake(textureStringRightMargin,  textureStringTop);
-            arrayTextTexture[2] = Vector2DMake(textureStringLeftMargin,   textureStringTop);
-            arrayTextTexture[3] = Vector2DMake(textureStringLeft,         textureStringTop);
-            arrayTextTexture[4] = Vector2DMake(textureStringRight,        textureStringBottom);
-            arrayTextTexture[5] = Vector2DMake(textureStringRightMargin,  textureStringBottom);
-            arrayTextTexture[6] = Vector2DMake(textureStringLeftMargin,   textureStringBottom);
-            arrayTextTexture[7] = Vector2DMake(textureStringLeft,         textureStringBottom);
+            arrayTextTextureBase[0] = Vector2DMake(textureStringRight,        textureStringTop);
+            arrayTextTextureBase[1] = Vector2DMake(textureStringRightMargin,  textureStringTop);
+            arrayTextTextureBase[2] = Vector2DMake(textureStringLeftMargin,   textureStringTop);
+            arrayTextTextureBase[3] = Vector2DMake(textureStringLeft,         textureStringTop);
+            arrayTextTextureBase[4] = Vector2DMake(textureStringRight,        textureStringBottom);
+            arrayTextTextureBase[5] = Vector2DMake(textureStringRightMargin,  textureStringBottom);
+            arrayTextTextureBase[6] = Vector2DMake(textureStringLeftMargin,   textureStringBottom);
+            arrayTextTextureBase[7] = Vector2DMake(textureStringLeft,         textureStringBottom);
             
             if(self.isLabelTouched && self.labelStatus == LabelStatusTextSelected)
             {
@@ -416,7 +416,7 @@
             arrayTextColor[7] = colorLabelTransparent;
                     
             glVertexPointer  (3, GL_FLOAT, 0, arrayTextVertex);
-            glTexCoordPointer(2, GL_FLOAT, 0, arrayTextTexture);            
+            glTexCoordPointer(2, GL_FLOAT, 0, arrayTextTextureBase);            
             glColorPointer   (4, GL_FLOAT, 0, arrayTextColor);
             
             glDrawElements(GL_TRIANGLES, 18, GL_UNSIGNED_SHORT, arrayTextMesh);    

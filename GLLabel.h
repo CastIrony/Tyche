@@ -60,7 +60,7 @@ LabelStatus;
     Vector3D* arrayBorderVertex;
     Vector3D* arrayBulletRightVertex;
     Vector3D* arrayBulletLeftVertex;
-    Vector2D* arrayTextTexture;
+    Vector2D* arrayTextTextureBase;
     Vector2D* arrayBorderTexture;
     Vector2D* arrayBulletTexture;
     GLushort* arrayTextMesh;
