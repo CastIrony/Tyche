@@ -310,19 +310,19 @@
     arrayBulletMesh[ 5] = 3;
     
     
-    GLfloat textWidth    = self.textSize.width;
-    GLfloat textHeight   = self.textSize.height;
-    
-    GLfloat bulletRightWidth  = self.textureBulletRight ? self.bulletRightSize.width / self.bulletRightSize.height * self.labelSize.height : 0;
-    GLfloat bulletLeftWidth   = self.textureBulletLeft ? self.bulletLeftSize.width / self.bulletLeftSize.height * self.labelSize.height : 0;
-    
-    GLfloat labelRight  = -(self.labelSize.width  / 2.0) + bulletRightWidth;
-    GLfloat labelLeft   =  (self.labelSize.width  / 2.0) - bulletLeftWidth;
-    
-    GLfloat labelWidth  = labelLeft - labelRight;
-    GLfloat labelHeight = self.labelSize.height;
-    
-    GLfloat labelViewportWidth = (labelWidth) / (labelHeight * (textWidth / textHeight));
+//    GLfloat textWidth    = self.textSize.width;
+//    GLfloat textHeight   = self.textSize.height;
+//    
+//    GLfloat bulletRightWidth  = self.textureBulletRight ? self.bulletRightSize.width / self.bulletRightSize.height * self.labelSize.height : 0;
+//    GLfloat bulletLeftWidth   = self.textureBulletLeft ? self.bulletLeftSize.width / self.bulletLeftSize.height * self.labelSize.height : 0;
+//    
+//    GLfloat labelRight  = -(self.labelSize.width  / 2.0) + bulletRightWidth;
+//    GLfloat labelLeft   =  (self.labelSize.width  / 2.0) - bulletLeftWidth;
+//    
+//    GLfloat labelWidth  = labelLeft - labelRight;
+//    GLfloat labelHeight = self.labelSize.height;
+//    
+//    GLfloat labelViewportWidth = (labelWidth) / (labelHeight * (textWidth / textHeight));
     
     GLfloat textureStringRight  = self.scrollBase + sin(CFAbsoluteTimeGetCurrent()) * self.scrollAmplitude + (1.0 + labelViewportWidth) / 2.0;
     GLfloat textureStringLeft   = self.scrollBase + sin(CFAbsoluteTimeGetCurrent()) * self.scrollAmplitude + (1.0 - labelViewportWidth) / 2.0;
