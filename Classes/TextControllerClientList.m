@@ -48,7 +48,7 @@
         NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
         
         [label setObject:@"new_multiplayer" forKey:@"key"]; 
-        [label setObject:@"Joel's iPhone"   forKey:@"textString"];     
+        [label setObject:@"Joel's asddasdsasadsdsdsad iPhone"   forKey:@"textString"];     
         [label setObject:@" ☐ "             forKey:@"bulletLeftString"];
         [label setObject:[NSNumber numberWithInt:UITextAlignmentLeft] forKey:@"textAlignment"];
 
