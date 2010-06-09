@@ -49,6 +49,7 @@ LabelStatus;
     CGSize            _bulletLeftSize;
     CGSize            _bulletRightSize;
     
+    GLfloat           _scrollBase;
     GLfloat           _scrollAmplitude;
     
     BOOL              _isLabelTouched;
@@ -94,6 +95,7 @@ LabelStatus;
 @property (nonatomic, assign)   Color3D           colorTouched;
 @property (nonatomic, assign)   UITextAlignment   textAlignment;
 
+@property (nonatomic, assign)   GLfloat           scrollBase;
 @property (nonatomic, assign)   GLfloat           scrollAmplitude;
 
 @property (nonatomic, assign)   BOOL              isLabelTouched;
