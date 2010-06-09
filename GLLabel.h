@@ -49,7 +49,6 @@ LabelStatus;
     CGSize            _bulletLeftSize;
     CGSize            _bulletRightSize;
     
-    GLfloat           _scrollBase;
     GLfloat           _scrollAmplitude;
     
     BOOL              _isLabelTouched;
@@ -61,6 +60,7 @@ LabelStatus;
     Vector3D* arrayBulletRightVertex;
     Vector3D* arrayBulletLeftVertex;
     Vector2D* arrayTextTextureBase;
+    Vector2D* arrayTextTextureScrolled;
     Vector2D* arrayBorderTexture;
     Vector2D* arrayBulletTexture;
     GLushort* arrayTextMesh;
@@ -94,7 +94,6 @@ LabelStatus;
 @property (nonatomic, assign)   Color3D           colorTouched;
 @property (nonatomic, assign)   UITextAlignment   textAlignment;
 
-@property (nonatomic, assign)   GLfloat           scrollBase;
 @property (nonatomic, assign)   GLfloat           scrollAmplitude;
 
 @property (nonatomic, assign)   BOOL              isLabelTouched;

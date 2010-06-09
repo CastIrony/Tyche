@@ -144,16 +144,17 @@
         
         self.layoutOpacity  = [AnimatedFloat withValue:0.0];
         
-        arrayTextVertex        = malloc( 8 * sizeof(Vector3D));
-        arrayBulletRightVertex = malloc( 4 * sizeof(Vector3D));
-        arrayBulletLeftVertex  = malloc( 4 * sizeof(Vector3D));
-        arrayBorderVertex      = malloc(16 * sizeof(Vector3D));
-        arrayTextTextureBase       = malloc( 8 * sizeof(Vector2D));
-        arrayBulletTexture     = malloc( 4 * sizeof(Vector2D));
-        arrayBorderTexture     = malloc(16 * sizeof(Vector2D));
-        arrayTextMesh          = malloc(18 * sizeof(GLushort));
-        arrayBulletMesh        = malloc( 6 * sizeof(GLushort));
-        arrayBorderMesh        = malloc(54 * sizeof(GLushort));
+        arrayTextVertex          = malloc( 8 * sizeof(Vector3D));
+        arrayBulletRightVertex   = malloc( 4 * sizeof(Vector3D));
+        arrayBulletLeftVertex    = malloc( 4 * sizeof(Vector3D));
+        arrayBorderVertex        = malloc(16 * sizeof(Vector3D));
+        arrayTextTextureBase     = malloc( 8 * sizeof(Vector2D));
+        arrayTextTextureScrolled = malloc( 8 * sizeof(Vector2D));
+        arrayBulletTexture       = malloc( 4 * sizeof(Vector2D));
+        arrayBorderTexture       = malloc(16 * sizeof(Vector2D));
+        arrayTextMesh            = malloc(18 * sizeof(GLushort));
+        arrayBulletMesh          = malloc( 6 * sizeof(GLushort));
+        arrayBorderMesh          = malloc(54 * sizeof(GLushort));
     }
     
     return self;
@@ -309,8 +310,8 @@
     arrayBulletMesh[ 4] = 1;
     arrayBulletMesh[ 5] = 3;
     
-    GLfloat textureStringRight  = self.scrollBase + sin(CFAbsoluteTimeGetCurrent()) * self.scrollAmplitude + (1.0 + labelViewportWidth) / 2.0;
-    GLfloat textureStringLeft   = self.scrollBase + sin(CFAbsoluteTimeGetCurrent()) * self.scrollAmplitude + (1.0 - labelViewportWidth) / 2.0;
+    GLfloat textureStringRight  = self.scrollBase + (1.0 + labelViewportWidth) / 2.0;
+    GLfloat textureStringLeft   = self.scrollBase + (1.0 - labelViewportWidth) / 2.0;
     GLfloat textureStringTop    = 0.0;
     GLfloat textureStringBottom = 1.0;
     
@@ -400,9 +401,30 @@
             arrayTextColor[5] = colorLabelOpaque;
             arrayTextColor[6] = colorLabelOpaque;
             arrayTextColor[7] = colorLabelTransparent;
+
+            if(within(self.scrollAmplitude, 0, 0.01))
+            {
+                glTexCoordPointer(2, GL_FLOAT, 0, arrayTextTextureBase);
+            }
+            else 
+            {
+                float scroll = self.scrollAmplitude * sin(CFAbsoluteTimeGetCurrent());
+                
+                memcpy(arrayTextTextureScrolled, arrayTextTextureBase, sizeof(Vector2D) * 8);
+                
+                arrayTextTextureScrolled[0].u = arrayTextTextureScrolled[0].u + scroll;
+                arrayTextTextureScrolled[1].u = arrayTextTextureScrolled[1].u + scroll;
+                arrayTextTextureScrolled[2].u = arrayTextTextureScrolled[2].u + scroll;
+                arrayTextTextureScrolled[3].u = arrayTextTextureScrolled[3].u + scroll;
+                arrayTextTextureScrolled[4].u = arrayTextTextureScrolled[4].u + scroll;
+                arrayTextTextureScrolled[5].u = arrayTextTextureScrolled[5].u + scroll;
+                arrayTextTextureScrolled[6].u = arrayTextTextureScrolled[6].u + scroll;
+                arrayTextTextureScrolled[7].u = arrayTextTextureScrolled[7].u + scroll;
+                
+                glTexCoordPointer(2, GL_FLOAT, 0, arrayTextTextureScrolled);
+            }
                     
             glVertexPointer  (3, GL_FLOAT, 0, arrayTextVertex);
-            glTexCoordPointer(2, GL_FLOAT, 0, arrayTextTextureBase);            
             glColorPointer   (4, GL_FLOAT, 0, arrayTextColor);
             
             glDrawElements(GL_TRIANGLES, 18, GL_UNSIGNED_SHORT, arrayTextMesh);    
