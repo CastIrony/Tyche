@@ -113,7 +113,6 @@ LabelStatus;
 +(GLLabel*)emptyLabel;
 +(GLLabel*)withDictionaries:(NSArray*)dictionaries;
 -(void)makeMeshes;
--(void)makeColors;
 -(void)draw;
 
 @end
