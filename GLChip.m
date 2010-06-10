@@ -193,7 +193,7 @@
         stackColors[offsetColors - 1] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity);
         
         TinyProfilerStop(14);
-        TinyProfilerStart(15)
+        TinyProfilerStart(15);
         
         glTexCoordPointer(2, GL_FLOAT, 0, stackTexture);            
         glColorPointer   (4, GL_FLOAT, 0, stackColors);                                    
