@@ -13,6 +13,11 @@
     Vector2D shadowOffset;
     Vector2D chipSize;
     
+    Vector3D* stackVectors;
+    Vector2D* stackTexture;
+    GLushort* stackMesh;   
+    Color3D*  stackColors;
+    
     GameRenderer*    _renderer;
     Vector3D         _location;
     AnimatedFloat*   _count;
