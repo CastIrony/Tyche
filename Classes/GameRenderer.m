@@ -336,6 +336,8 @@
         TinyProfilerStop(0);
         TinyProfilerStart(1);
 
+        // !
+        
         [self.cardGroup makeControlPoints];
 
         TinyProfilerStop(1);
@@ -360,6 +362,8 @@
     
         TinyProfilerStop(5);
         TinyProfilerStart(6);
+
+        // !
         
         { TextController* textController = [self.textControllers objectForKey:@"credits"]; textController.opacity = 1.0/* - (cameraPitch / 90.0)*/; [textController draw]; }
         { TextController* textController = [self.textControllers objectForKey:@"actions"]; textController.opacity = 1.0/* - (cameraPitch / 90.0)*/; [textController draw]; }
@@ -374,6 +378,8 @@
         TinyProfilerStop(7);
         TinyProfilerStart(8);
         
+        // !
+                
         self.chipGroup.opacity = clipFloat(-0.04 * cameraPitch + 3.4, 0, 1);
         [self.chipGroup drawChips];
         
@@ -399,6 +405,8 @@
         
         TinyProfilerStop(12);
         TinyProfilerStart(13);
+        
+        // !
         
         [self.menuLayerController draw];
         

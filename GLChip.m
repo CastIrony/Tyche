@@ -92,6 +92,8 @@
         
         glNormal3f(0.0, -1.0, 0.0);
         
+        TinyProfilerStart(14);
+
         GLfloat fade = self.count.value - stackCount;
         
         int seed = arc4random();
@@ -190,6 +192,9 @@
         stackColors[offsetColors - 2] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity);
         stackColors[offsetColors - 1] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity);
         
+        TinyProfilerStop(14);
+        TinyProfilerStart(15)
+        
         glTexCoordPointer(2, GL_FLOAT, 0, stackTexture);            
         glColorPointer   (4, GL_FLOAT, 0, stackColors);                                    
         glVertexPointer  (3, GL_FLOAT, 0, stackVectors);
@@ -197,6 +202,8 @@
         glDrawElements(GL_TRIANGLES, offsetMesh, GL_UNSIGNED_SHORT, stackMesh);    
         
         srand48(seed);
+
+        TinyProfilerStop(15);
         
         glEnableClientState(GL_NORMAL_ARRAY);
         glDisableClientState(GL_COLOR_ARRAY);
