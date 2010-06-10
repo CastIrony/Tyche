@@ -68,6 +68,11 @@
 
 }
 
+-(void)generateMesh
+{
+    
+}
+
 -(void)draw
 {
     int stackCount = self.count.value;
@@ -192,6 +197,8 @@
         stackColors[offsetColors - 2] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity);
         stackColors[offsetColors - 1] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity);
         
+        _meshSize = offsetMesh;
+        
         TinyProfilerStop(14);
         TinyProfilerStart(15);
         
@@ -199,7 +206,7 @@
         glColorPointer   (4, GL_FLOAT, 0, stackColors);                                    
         glVertexPointer  (3, GL_FLOAT, 0, stackVectors);
         
-        glDrawElements(GL_TRIANGLES, offsetMesh, GL_UNSIGNED_SHORT, stackMesh);    
+        glDrawElements(GL_TRIANGLES, _meshSize, GL_UNSIGNED_SHORT, stackMesh);    
         
         srand48(seed);
 

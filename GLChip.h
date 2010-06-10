@@ -18,6 +18,8 @@
     GLushort* stackMesh;   
     Color3D*  stackColors;
     
+    int _meshSize;
+    
     GameRenderer*    _renderer;
     Vector3D         _location;
     AnimatedFloat*   _count;
