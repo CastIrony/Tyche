@@ -76,10 +76,10 @@
     
     if(self.opacity < 0.0001) { return; }
     
-    stackVectors = malloc( 8 * (3 + 1) * sizeof(Vector3D));
-    stackTexture = malloc( 8 * (3 + 1) * sizeof(Vector2D));
-    stackMesh    = malloc(12 * (3 + 1) * sizeof(GLushort));
-    stackColors  = malloc( 8 * (3 + 1) * sizeof(Color3D));
+    stackVectors = malloc( 8 * (100 + 1) * sizeof(Vector3D));
+    stackTexture = malloc( 8 * (100 + 1) * sizeof(Vector2D));
+    stackMesh    = malloc(12 * (100 + 1) * sizeof(GLushort));
+    stackColors  = malloc( 8 * (100 + 1) * sizeof(Color3D));
     
     @try
     {
