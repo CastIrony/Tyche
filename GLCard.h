@@ -18,17 +18,17 @@
 //    GameRenderer* _renderer;
 //
 //    GLCardGroup* _cardGroup;
-//    
-//    Vector3D controlPointsBase[16];
-//    
-//    Vector3D controlPointsFront[16];
-//    Vector3D controlPointsBack[16];
-//    Vector3D controlPointsLabel[16];
-//    Vector3D controlPointsShadow[16];
-//    
-//    Vector2D textureOffsetCard[15];
-//    Vector2D textureSizeCard;
-//    Vector2D textureSizeLabel;
+    
+    Vector3D controlPointsBase[16];
+    
+    Vector3D controlPointsFront[16];
+    Vector3D controlPointsBack[16];
+    Vector3D controlPointsLabel[16];
+    Vector3D controlPointsShadow[16];
+    
+    Vector2D textureOffsetCard[15];
+    Vector2D textureSizeCard;
+    Vector2D textureSizeLabel;
     
     int meshWidthFront;
     int meshWidthBack;
