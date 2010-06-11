@@ -456,8 +456,8 @@
     }
     else 
     {
-        self.menuLayerController.hidden.value = 1; 
-        self.lightness.value = 1;
+        self.menuLayerController.hidden.value = [AnimatedFloat withValue:1]; 
+        self.lightness.value = [AnimatedFloat withValue:1];
     }    
 }
 
