@@ -1,11 +1,11 @@
 @interface GLChipGroup : NSObject 
 {
-    NSMutableDictionary* _chips;
-    
-    AnimatedFloat* _offset;
-    
-    GLfloat _opacity;
-    GLfloat _markerOpacity;
+//    NSMutableDictionary* _chips;
+//    
+//    AnimatedFloat* _offset;
+//    
+//    GLfloat _opacity;
+//    GLfloat _markerOpacity;
 }
 
 @property (nonatomic, retain) NSMutableDictionary* chips;
