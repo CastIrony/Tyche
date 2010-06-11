@@ -63,6 +63,8 @@
         stackColors  = malloc( 8 * (100 + 1) * sizeof(Color3D));
         
         self.count = [AnimatedFloat withValue:0];
+    
+        [self generateMesh];
     }
     
     return self;
