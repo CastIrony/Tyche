@@ -11,9 +11,9 @@
 @interface GLMenu : NSObject
 {
     Vector3D   _controlPoints[16];
-//    
-//    Vector2D   _textureOffset;
-//    Vector2D   _textureSize;
+    
+    Vector2D   _textureOffset;
+    Vector2D   _textureSize;
 //    
 //    GLTexture* _texture;
 //    TextController* _textController;
