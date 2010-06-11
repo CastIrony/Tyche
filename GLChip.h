@@ -22,17 +22,17 @@
     Vector2D* shadowTexture;
     GLushort* shadowMesh;   
     Color3D*  shadowColors;
-    
-    int _meshSize;
-    
-    GameRenderer*    _renderer;
-    Vector3D         _location;
-    AnimatedFloat*   _count;
-    int              _chipNumber;
-    int              _maxCount;
-    GLfloat          _initialCount;
-    GLfloat          _markerOpacity;
-    GLfloat          _opacity;
+//    
+//    int _meshSize;
+//    
+//    GameRenderer*    _renderer;
+//    Vector3D         _location;
+//    AnimatedFloat*   _count;
+//    int              _chipNumber;
+//    int              _maxCount;
+//    GLfloat          _initialCount;
+//    GLfloat          _markerOpacity;
+//    GLfloat          _opacity;
 }
 
 @property (nonatomic, assign) GameRenderer*   renderer;

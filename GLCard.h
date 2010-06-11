@@ -1,11 +1,3 @@
-//
-//  GLCard.h
-//  Tyche
-//
-//  Created by Joel Bernstein on 6/28/09.
-//  Copyright 2009 Joel Bernstein. All rights reserved.
-//
-
 #import "Touchable.h"
 #import "GameController.h"
 
