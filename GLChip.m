@@ -83,6 +83,8 @@
 
 -(void)generateMesh
 {
+    int stackCount = clipInt(self.count.value, 0, 100);
+
     GLfloat fade = self.count.value - stackCount;
     
     int seed = arc4random();
@@ -90,8 +92,6 @@
     srand48(self.chipNumber);
     
     Vector3D rotateAxis = Vector3DMake(0, 1, 0);
-    
-    int stackCount = clipInt(self.count.value, 0, 100) ;
     
     int offsetVector  = 0;
     int offsetTexture = 0;
