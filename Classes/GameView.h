@@ -4,12 +4,10 @@
 
 @interface GameView : UIView
 {    
-//	AppController* appController;
     GameRenderer* renderer;
 	
-//	BOOL animating;
 	BOOL displayLinkSupported;
-//	NSInteger animationFrameInterval;
+	NSInteger animationFrameInterval;
 	id displayLink;
 }
 
