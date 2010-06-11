@@ -17,6 +17,11 @@
     Vector2D* stackTexture;
     GLushort* stackMesh;   
     Color3D*  stackColors;
+
+    Vector3D* shadowVectors;
+    Vector2D* shadowTexture;
+    GLushort* shadowMesh;   
+    Color3D*  shadowColors;
     
     int _meshSize;
     
