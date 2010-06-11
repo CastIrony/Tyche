@@ -563,7 +563,7 @@
                 angle = (rawAngle - clampLow) / (clampHigh - clampLow) * 90.0;
             }
             
-            self.camera.pitchAngle.value = angle * 0.10 + self.camera.pitchAngle.value * 0.90;
+            self.camera.pitchAngle = [AnimatedFloat withValue:angle * 0.10 + self.camera.pitchAngle.value * 0.90];
         }
     }
 }

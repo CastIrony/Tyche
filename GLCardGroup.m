@@ -175,7 +175,7 @@
     self.draggedCard = card;
     self.initialAngle = card.angleFan.value;
     self.initialIndex = card.position;
-    self.draggedCard.isSelected.value = 1;
+    self.draggedCard.isSelected = [AnimatedFloat withValue:1];
 }
 
 -(void)dragCardToTarget:(int)target withDelta:(GLfloat)delta
@@ -190,7 +190,7 @@
         
         self.finalIndex = target;
         
-        self.draggedCard.angleFan.value = self.initialAngle - delta * 25 / 480;
+        self.draggedCard.angleFan.value = [AnimatedFloat withValue:self.initialAngle - delta * 25 / 480];
     }
 }
 
