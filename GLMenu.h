@@ -19,10 +19,10 @@
 //    TextController* _textController;
 //    TextControllerPageMarker* _dots;
 //    
-//    Vector3D*  _arrayVertex;
-//    Vector3D*  _arrayNormal;
-//    Vector2D*  _arrayTexture;
-//    GLushort*  _arrayMesh;
+    Vector3D*  _arrayVertex;
+    Vector3D*  _arrayNormal;
+    Vector2D*  _arrayTexture;
+    GLushort*  _arrayMesh;
 //
 //    GLfloat    _angleJitter;
 //    GLfloat    _angleSin;
