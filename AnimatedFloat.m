@@ -1,12 +1,5 @@
 #import "AnimatedFloat.h"
 
-@interface AnimatedFloat ()
-
-@property (nonatomic, assign) BOOL hasStarted;
-@property (nonatomic, assign) BOOL hasEnded;
-
-@end
-
 @implementation AnimatedFloat 
 
 @synthesize startValue = _startValue;
