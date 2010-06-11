@@ -202,7 +202,16 @@
     [servers addObject:@"♘Michele's iPod"];                           
     [servers addObject:@"☂Bonnie's iPhone"];                           
     [servers addObject:@"♂Charles's iPod"];    
-
+    
+    [servers addObject:@"☃Joel's iPhone 2"];                           
+    [servers addObject:@"☝Rachel's iPod 2"];                           
+    [servers addObject:@"♜Carolyn's iPhone 2"];                           
+    [servers addObject:@"☠John's iPod 2"];                           
+    [servers addObject:@"Sarah's iPhone 2"];                           
+    [servers addObject:@"♘Michele's iPod 2"];                           
+    [servers addObject:@"☂Bonnie's iPhone 2"];                           
+    [servers addObject:@"♂Charles's iPod 2"];  
+    
     srand48(time(NULL));
 
 //    {
@@ -211,7 +220,7 @@
 //        [self.menuLayerController addMenuLayer:layer forKey:@"0"];
 //    }
     
-    for(int i = 0; i < 2; i++)
+    for(int i = 0; i < 1; i++)
     {        
         MenuControllerJoinGame* layer = [[[MenuControllerJoinGame alloc] initWithRenderer:self] autorelease];
         
