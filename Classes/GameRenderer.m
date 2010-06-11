@@ -205,11 +205,11 @@
 
     srand48(time(NULL));
 
-    {
-        MenuControllerMain* layer = [[[MenuControllerMain alloc] initWithRenderer:self] autorelease];
-        
-        [self.menuLayerController addMenuLayer:layer forKey:@"0"];
-    }
+//    {
+//        MenuControllerMain* layer = [[[MenuControllerMain alloc] initWithRenderer:self] autorelease];
+//        
+//        [self.menuLayerController addMenuLayer:layer forKey:@"0"];
+//    }
     
     for(int i = 0; i < 2; i++)
     {        
