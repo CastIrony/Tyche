@@ -218,126 +218,126 @@
 
 -(void)drawMarker
 {
-    int stackCount = self.count.value;
-    
-    if(stackCount < 0) { return; }
-    
-    return;
-    
-    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-    
-    glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"chip"]);
-    
-    Vector3D vertexArray[] = 
-    {
-        Vector3DMake(-1,  0.0, -1),        
-        Vector3DMake( 1,  0.0, -1),        
-        Vector3DMake(-1,  0.0,  1),        
-        Vector3DMake( 1,  0.0,  1),
-    };
-        
-    Vector2D textureArrayShadow[] = 
-    {
-        Vector2DMake(1.0 * chipSize.u + markerOffsets[self.chipNumber].u, 0.0 * chipSize.v + markerOffsets[self.chipNumber].v),
-        Vector2DMake(0.0 * chipSize.u + markerOffsets[self.chipNumber].u, 0.0 * chipSize.v + markerOffsets[self.chipNumber].v),
-        Vector2DMake(1.0 * chipSize.u + markerOffsets[self.chipNumber].u, 1.0 * chipSize.v + markerOffsets[self.chipNumber].v),
-        Vector2DMake(0.0 * chipSize.u + markerOffsets[self.chipNumber].u, 1.0 * chipSize.v + markerOffsets[self.chipNumber].v),
-    };
-    
-    GLushort meshArray[6];
-    
-    GenerateBezierMesh(meshArray, 2, 2);
-    
-    glNormal3f(0.0, -1.0, 0.0);
-    
-    glDisableClientState(GL_NORMAL_ARRAY);
-    
-    glVertexPointer(3, GL_FLOAT, 0, vertexArray);
-        
-    GLfloat fade = self.count.value - stackCount;
-    
-    glTexCoordPointer(2, GL_FLOAT, 0, textureArrayShadow);            
-
-    glColor4f(self.markerOpacity, self.markerOpacity, self.markerOpacity, self.markerOpacity);
-
-    if(stackCount == 0)
-    {
-        TRANSACTION_BEGIN
-        {
-            glTranslatef(self.location.x, self.location.y, self.location.z);
-            
-            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, meshArray);    
-        }
-        TRANSACTION_END
-    }
-    
-    glEnableClientState(GL_NORMAL_ARRAY);
+//    int stackCount = self.count.value;
+//    
+//    if(stackCount < 0) { return; }
+//    
+//    return;
+//    
+//    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+//    
+//    glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"chip"]);
+//    
+//    Vector3D vertexArray[] = 
+//    {
+//        Vector3DMake(-1,  0.0, -1),        
+//        Vector3DMake( 1,  0.0, -1),        
+//        Vector3DMake(-1,  0.0,  1),        
+//        Vector3DMake( 1,  0.0,  1),
+//    };
+//        
+//    Vector2D textureArrayShadow[] = 
+//    {
+//        Vector2DMake(1.0 * chipSize.u + markerOffsets[self.chipNumber].u, 0.0 * chipSize.v + markerOffsets[self.chipNumber].v),
+//        Vector2DMake(0.0 * chipSize.u + markerOffsets[self.chipNumber].u, 0.0 * chipSize.v + markerOffsets[self.chipNumber].v),
+//        Vector2DMake(1.0 * chipSize.u + markerOffsets[self.chipNumber].u, 1.0 * chipSize.v + markerOffsets[self.chipNumber].v),
+//        Vector2DMake(0.0 * chipSize.u + markerOffsets[self.chipNumber].u, 1.0 * chipSize.v + markerOffsets[self.chipNumber].v),
+//    };
+//    
+//    GLushort meshArray[6];
+//    
+//    GenerateBezierMesh(meshArray, 2, 2);
+//    
+//    glNormal3f(0.0, -1.0, 0.0);
+//    
+//    glDisableClientState(GL_NORMAL_ARRAY);
+//    
+//    glVertexPointer(3, GL_FLOAT, 0, vertexArray);
+//        
+//    GLfloat fade = self.count.value - stackCount;
+//    
+//    glTexCoordPointer(2, GL_FLOAT, 0, textureArrayShadow);            
+//
+//    glColor4f(self.markerOpacity, self.markerOpacity, self.markerOpacity, self.markerOpacity);
+//
+//    if(stackCount == 0)
+//    {
+//        TRANSACTION_BEGIN
+//        {
+//            glTranslatef(self.location.x, self.location.y, self.location.z);
+//            
+//            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, meshArray);    
+//        }
+//        TRANSACTION_END
+//    }
+//    
+//    glEnableClientState(GL_NORMAL_ARRAY);
 }
 
 -(void)drawShadow
 {
-    int stackCount = self.count.value;
-    
-    if(stackCount < 0) { return; }
-    
-    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-    
-    glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"chips"]);
-    
-    glColor4f(self.markerOpacity, self.markerOpacity, self.markerOpacity, self.markerOpacity);
-    
-    Vector3D vertexArray[4];
-    
-    Vector2D textureArrayShadow[] = 
-    {
-        Vector2DMake(1.0 * chipSize.u + shadowOffset.u, 0.0 * chipSize.v + shadowOffset.v),
-        Vector2DMake(0.0 * chipSize.u + shadowOffset.u, 0.0 * chipSize.v + shadowOffset.v),
-        Vector2DMake(1.0 * chipSize.u + shadowOffset.u, 1.0 * chipSize.v + shadowOffset.v),
-        Vector2DMake(0.0 * chipSize.u + shadowOffset.u, 1.0 * chipSize.v + shadowOffset.v),
-    };
-    
-    GLushort meshArray[6];
-    
-    GenerateBezierMesh(meshArray, 2, 2);
-    
-    glNormal3f(0.0, -1.0, 0.0);
-    
-    glDisableClientState(GL_NORMAL_ARRAY);
-    
-    glTexCoordPointer(2, GL_FLOAT, 0, textureArrayShadow);            
-    
-    Vector3D light = Vector3DMake(0, -10, 0);
-    
-    for(int i = 0; i < stackCount; i += 10)
-    {        
-        GLfloat displacement = -0.15 * (i + 1);
-        
-        vertexArray[0] = Vector3DProjectShadow(light, Vector3DMake(self.location.x - 1.2, self.location.y + displacement, self.location.z - 1.2));        
-        vertexArray[1] = Vector3DProjectShadow(light, Vector3DMake(self.location.x + 1.2, self.location.y + displacement, self.location.z - 1.2));        
-        vertexArray[2] = Vector3DProjectShadow(light, Vector3DMake(self.location.x - 1.2, self.location.y + displacement, self.location.z + 1.2));        
-        vertexArray[3] = Vector3DProjectShadow(light, Vector3DMake(self.location.x + 1.2, self.location.y + displacement, self.location.z + 1.2));
-        
-        glVertexPointer(3, GL_FLOAT, 0, vertexArray);
-
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, meshArray);    
-    }
-
-    GLfloat opacity = clipFloat(self.count.value, 0, 1) * self.markerOpacity;
-    
-    glColor4f(opacity, opacity, opacity, opacity);
-    
-    GLfloat displacement = -0.15 * (self.count.value + 1);
-    
-    vertexArray[0] = Vector3DProjectShadow(light, Vector3DMake(self.location.x - 1.2, self.location.y + displacement, self.location.z - 1.2));        
-    vertexArray[1] = Vector3DProjectShadow(light, Vector3DMake(self.location.x + 1.2, self.location.y + displacement, self.location.z - 1.2));        
-    vertexArray[2] = Vector3DProjectShadow(light, Vector3DMake(self.location.x - 1.2, self.location.y + displacement, self.location.z + 1.2));        
-    vertexArray[3] = Vector3DProjectShadow(light, Vector3DMake(self.location.x + 1.2, self.location.y + displacement, self.location.z + 1.2));
-    
-    glVertexPointer(3, GL_FLOAT, 0, vertexArray);
-    
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, meshArray);   
-    
-    glEnableClientState(GL_NORMAL_ARRAY);
+//    int stackCount = self.count.value;
+//    
+//    if(stackCount < 0) { return; }
+//    
+//    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+//    
+//    glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"chips"]);
+//    
+//    glColor4f(self.markerOpacity, self.markerOpacity, self.markerOpacity, self.markerOpacity);
+//    
+//    Vector3D vertexArray[4];
+//    
+//    Vector2D textureArrayShadow[] = 
+//    {
+//        Vector2DMake(1.0 * chipSize.u + shadowOffset.u, 0.0 * chipSize.v + shadowOffset.v),
+//        Vector2DMake(0.0 * chipSize.u + shadowOffset.u, 0.0 * chipSize.v + shadowOffset.v),
+//        Vector2DMake(1.0 * chipSize.u + shadowOffset.u, 1.0 * chipSize.v + shadowOffset.v),
+//        Vector2DMake(0.0 * chipSize.u + shadowOffset.u, 1.0 * chipSize.v + shadowOffset.v),
+//    };
+//    
+//    GLushort meshArray[6];
+//    
+//    GenerateBezierMesh(meshArray, 2, 2);
+//    
+//    glNormal3f(0.0, -1.0, 0.0);
+//    
+//    glDisableClientState(GL_NORMAL_ARRAY);
+//    
+//    glTexCoordPointer(2, GL_FLOAT, 0, textureArrayShadow);            
+//    
+//    Vector3D light = Vector3DMake(0, -10, 0);
+//    
+//    for(int i = 0; i < stackCount; i += 10)
+//    {        
+//        GLfloat displacement = -0.15 * (i + 1);
+//        
+//        vertexArray[0] = Vector3DProjectShadow(light, Vector3DMake(self.location.x - 1.2, self.location.y + displacement, self.location.z - 1.2));        
+//        vertexArray[1] = Vector3DProjectShadow(light, Vector3DMake(self.location.x + 1.2, self.location.y + displacement, self.location.z - 1.2));        
+//        vertexArray[2] = Vector3DProjectShadow(light, Vector3DMake(self.location.x - 1.2, self.location.y + displacement, self.location.z + 1.2));        
+//        vertexArray[3] = Vector3DProjectShadow(light, Vector3DMake(self.location.x + 1.2, self.location.y + displacement, self.location.z + 1.2));
+//        
+//        glVertexPointer(3, GL_FLOAT, 0, vertexArray);
+//
+//        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, meshArray);    
+//    }
+//
+//    GLfloat opacity = clipFloat(self.count.value, 0, 1) * self.markerOpacity;
+//    
+//    glColor4f(opacity, opacity, opacity, opacity);
+//    
+//    GLfloat displacement = -0.15 * (self.count.value + 1);
+//    
+//    vertexArray[0] = Vector3DProjectShadow(light, Vector3DMake(self.location.x - 1.2, self.location.y + displacement, self.location.z - 1.2));        
+//    vertexArray[1] = Vector3DProjectShadow(light, Vector3DMake(self.location.x + 1.2, self.location.y + displacement, self.location.z - 1.2));        
+//    vertexArray[2] = Vector3DProjectShadow(light, Vector3DMake(self.location.x - 1.2, self.location.y + displacement, self.location.z + 1.2));        
+//    vertexArray[3] = Vector3DProjectShadow(light, Vector3DMake(self.location.x + 1.2, self.location.y + displacement, self.location.z + 1.2));
+//    
+//    glVertexPointer(3, GL_FLOAT, 0, vertexArray);
+//    
+//    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, meshArray);   
+//    
+//    glEnableClientState(GL_NORMAL_ARRAY);
 }
 
 @end
