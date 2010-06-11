@@ -201,7 +201,10 @@
     
     glNormal3f(0.0, -1.0, 0.0);
 
-    [self generateMesh];
+    if(!self.count.hasEnded)
+    {
+        [self generateMesh];
+    }
     
     glTexCoordPointer(2, GL_FLOAT, 0, stackTexture);            
     glColorPointer   (4, GL_FLOAT, 0, stackColors);                                    
