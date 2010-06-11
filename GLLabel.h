@@ -20,44 +20,6 @@ LabelStatus;
 
 @interface GLLabel : NSObject
 {   
-//    LabelStatus       _labelStatus;
-//    
-//    TextController*   _textController;
-//    
-//    GLTexture*        _textureText;
-//    GLTexture*        _textureBulletLeft;
-//    GLTexture*        _textureBulletRight;
-//    
-//    NSString*         _key;
-//    
-//    GLfloat           _lightness;
-//    
-//    AnimatedVector3D* _layoutLocation;
-//    AnimatedFloat*    _layoutOpacity;
-//    
-//    NSString*         _textString;
-//    NSString*         _bulletLeftString;
-//    NSString*         _bulletRightString;
-//    UIFont*           _font;
-//    CGSize            _labelSize;
-//    GLfloat           _fadeMargin;
-//    Color3D           _colorNormal;
-//    Color3D           _colorTouched;
-//    UITextAlignment   _textAlignment;
-//    
-//    CGSize            _textSize;
-//    CGSize            _bulletLeftSize;
-//    CGSize            _bulletRightSize;
-//    
-//    GLfloat           _scrollBase;
-//    GLfloat           _scrollAmplitude;
-//    
-//    BOOL              _isLabelTouched;
-//    BOOL              _hasBorder;
-//    BOOL              _hasShadow;
-//
-//    id _owner;
-    
     Vector3D* arrayTextVertex;
     Vector3D* arrayBorderVertex;
     Vector3D* arrayBulletRightVertex;
