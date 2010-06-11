@@ -4,12 +4,12 @@
 
 @interface GLCardGroup : NSObject 
 {
-    GameRenderer*    _renderer;
-    NSMutableArray*  _cards;
-    GLCard*          _draggedCard;
-    GLfloat          _initialAngle;
-    int              _initialIndex;
-    int              _finalIndex;
+//    GameRenderer*    _renderer;
+//    NSMutableArray*  _cards;
+//    GLCard*          _draggedCard;
+//    GLfloat          _initialAngle;
+//    int              _initialIndex;
+//    int              _finalIndex;
 }
 
 @property (nonatomic, assign) GameRenderer*   renderer;
