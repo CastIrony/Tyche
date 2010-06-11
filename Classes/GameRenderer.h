@@ -1,11 +1,3 @@
-//
-//  GameRenderer.h
-//  OpenGLTest
-//
-//  Created by Joel Bernstein on 9/24/09.
-//  Copyright Joel Bernstein 2009. All rights reserved.
-//
-
 #import "Geometry.h"
 #import "GameController.h"
 
