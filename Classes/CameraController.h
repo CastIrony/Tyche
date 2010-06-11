@@ -12,15 +12,15 @@ CameraStatus;
 
 @interface CameraController : NSObject 
 {
-    GameRenderer*     _renderer;
-    BOOL              _menuVisible;
-    CameraStatus      _status;
-    AnimatedVector3D* _position;
-    AnimatedVector3D* _lookAt;
-    AnimatedFloat*    _pitchAngle;
-    AnimatedFloat*    _pitchFactor;
-    AnimatedFloat*    _rollAngle;
-    NSNumber*         _isAutomatic;
+//    GameRenderer*     _renderer;
+//    BOOL              _menuVisible;
+//    CameraStatus      _status;
+//    AnimatedVector3D* _position;
+//    AnimatedVector3D* _lookAt;
+//    AnimatedFloat*    _pitchAngle;
+//    AnimatedFloat*    _pitchFactor;
+//    AnimatedFloat*    _rollAngle;
+//    NSNumber*         _isAutomatic;
 }
 
 @property (nonatomic, assign)   GameRenderer*      renderer;
