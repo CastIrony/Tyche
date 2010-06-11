@@ -8,13 +8,13 @@
     GameRenderer* renderer;
 	
 //	BOOL animating;
-//	BOOL displayLinkSupported;
+	BOOL displayLinkSupported;
 	NSInteger animationFrameInterval;
 	id displayLink;
 }
 
 @property (nonatomic, assign) AppController* appController;
-@property (readonly, nonatomic, getter=isMeshAnimating) BOOL animating;
+//@property (readonly, nonatomic, getter=isMeshAnimating) BOOL animating;
 @property (nonatomic) NSInteger animationFrameInterval;
 
 - (void) startAnimation;
