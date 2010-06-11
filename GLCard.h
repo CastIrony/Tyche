@@ -15,12 +15,7 @@
 
 @interface GLCard : NSObject
 {
-//    GameRenderer* _renderer;
-//
-//    GLCardGroup* _cardGroup;
-    
     Vector3D controlPointsBase[16];
-    
     Vector3D controlPointsFront[16];
     Vector3D controlPointsBack[16];
     Vector3D controlPointsLabel[16];
@@ -56,19 +51,6 @@
     GLushort* arrayMeshFront;
     GLushort* arrayMeshBack;
     GLushort* arrayMeshShadow;
-    
-//    GLfloat _angleJitter;
-//    int     _suit;
-//    int     _numeral;
-//    int     _position;
-//    BOOL    _isDead;
-//    
-//    AnimatedFloat*    _isHeld;
-//    AnimatedFloat*    _isSelected;
-//    AnimatedFloat*    _angleFlip;
-//    AnimatedFloat*    _angleFan;
-//    AnimatedFloat*    _bendFactor;
-//    AnimatedVector3D* _location;
 }
 
 @property (nonatomic, assign)   GameRenderer*       renderer;
