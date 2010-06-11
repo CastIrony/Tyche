@@ -64,11 +64,11 @@
 {
     GLLabel* label = (GLLabel*)object;
     
-    if(![label.key               isEqual:self.key])               { return NO; }
-    if(![label.textString        isEqual:self.textString])        { return NO; }
-    if(![label.font              isEqual:self.font])              { return NO; }
-    if(![label.bulletLeftString  isEqual:self.bulletLeftString])  { return NO; }
-    if(![label.bulletRightString isEqual:self.bulletRightString]) { return NO; }
+    if(label.key               != self.key               && ![label.key               isEqual:self.key])               { return NO; }
+    if(label.textString        != self.textString        && ![label.textString        isEqual:self.textString])        { return NO; }
+    if(label.font              != self.font              && ![label.font              isEqual:self.font])              { return NO; }
+    if(label.bulletLeftString  != self.bulletLeftString  && ![label.bulletLeftString  isEqual:self.bulletLeftString])  { return NO; }
+    if(label.bulletRightString != self.bulletRightString && ![label.bulletRightString isEqual:self.bulletRightString]) { return NO; }
     
     if(label.fadeMargin         != self.fadeMargin)         { return NO; }
     if(label.textAlignment      != self.textAlignment)      { return NO; }
