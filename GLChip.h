@@ -40,6 +40,7 @@
 @property (nonatomic, assign) GLfloat         opacity;
 
 -(id)initWithChipNumber:(int)chipNumber;
+-(void)generateMesh;
 -(void)draw;
 -(void)drawShadow;
 -(void)drawMarker;
