@@ -29,7 +29,7 @@
 
 @property (nonatomic, assign)   AnimationCurve curve;
 
-@property (nonatomic, assign)   GLfloat        value;
+@property (nonatomic, readonly)   GLfloat        value;
 
 +(id)withValue:(GLfloat)value;
 +(id)withStartValue:(GLfloat)startValue endValue:(GLfloat)endValue speed:(GLfloat)speed;

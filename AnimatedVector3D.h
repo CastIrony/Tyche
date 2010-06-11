@@ -29,7 +29,7 @@
 
 @property (nonatomic, assign)   AnimationCurve curve;
 
-@property (nonatomic, assign)   Vector3D        value;
+@property (nonatomic, readonly)   Vector3D        value;
 
 +(id)withValue:(Vector3D)value;
 

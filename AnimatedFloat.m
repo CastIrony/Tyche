@@ -118,16 +118,16 @@
     return (1.0 - proportion) * self.startValue + (proportion) * self.endValue;
 }
 
--(void)setValue:(GLfloat)value
-{
-    NSTimeInterval now = CFAbsoluteTimeGetCurrent();
-    
-    self.startTime  = now;
-    self.endTime    = now;
-    self.startValue = value;
-    self.endValue   = value;
-    self.hasStarted = YES;
-    self.hasEnded   = YES;
-}
+//-(void)setValue:(GLfloat)value
+//{
+//    NSTimeInterval now = CFAbsoluteTimeGetCurrent();
+//    
+//    self.startTime  = now;
+//    self.endTime    = now;
+//    self.startValue = value;
+//    self.endValue   = value;
+//    self.hasStarted = YES;
+//    self.hasEnded   = YES;
+//}
 
 @end

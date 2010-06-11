@@ -121,16 +121,16 @@
     return Vector3DInterpolate(self.startValue, self.endValue, proportion);
 }
 
--(void)setValue:(Vector3D)value
-{
-    NSTimeInterval now = CFAbsoluteTimeGetCurrent();
-    
-    self.startTime  = now;
-    self.endTime    = now;
-    self.startValue = value;
-    self.endValue   = value;
-    self.hasStarted = YES;
-    self.hasEnded   = YES;
-}
+//-(void)setValue:(Vector3D)value
+//{
+//    NSTimeInterval now = CFAbsoluteTimeGetCurrent();
+//    
+//    self.startTime  = now;
+//    self.endTime    = now;
+//    self.startValue = value;
+//    self.endValue   = value;
+//    self.hasStarted = YES;
+//    self.hasEnded   = YES;
+//}
 
 @end
