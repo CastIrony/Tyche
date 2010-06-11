@@ -26,38 +26,38 @@
 
 @interface GameRenderer : UIViewController <UIAccelerometerDelegate>
 {
-    EAGLContext* _context;
-	
-	GLint _backingWidth;
-	GLint _backingHeight;
-	
-	GLuint _defaultFramebuffer;
-    GLuint _colorRenderbuffer;
-    
-    BOOL _animated;
-    
-    GameController*      _gameController;
-    AppController*       _appController;
-    SoundController*     _soundController;
-    
-    NSMutableDictionary* _touchedObjects;
-    NSMutableDictionary* _touchedLocations;
-    
-    NSMutableDictionary* _textControllers;
-    
-    MenuLayerController* _menuLayerController;
-    GLChipGroup*         _chipGroup;
-    GLCardGroup*         _cardGroup;
-    GLTable*             _table;
-    GLSplash*            _splash;
-    
-    CameraController*    _camera;
-
-    GLLabel*             _creditLabel;
-    GLLabel*             _betLabel;
-    NSMutableDictionary* _betItems;
-    
-    AnimatedFloat*       _lightness;
+//    EAGLContext* _context;
+//	
+//	GLint _backingWidth;
+//	GLint _backingHeight;
+//	
+//	GLuint _defaultFramebuffer;
+//    GLuint _colorRenderbuffer;
+//    
+//    BOOL _animated;
+//    
+//    GameController*      _gameController;
+//    AppController*       _appController;
+//    SoundController*     _soundController;
+//    
+//    NSMutableDictionary* _touchedObjects;
+//    NSMutableDictionary* _touchedLocations;
+//    
+//    NSMutableDictionary* _textControllers;
+//    
+//    MenuLayerController* _menuLayerController;
+//    GLChipGroup*         _chipGroup;
+//    GLCardGroup*         _cardGroup;
+//    GLTable*             _table;
+//    GLSplash*            _splash;
+//    
+//    CameraController*    _camera;
+//
+//    GLLabel*             _creditLabel;
+//    GLLabel*             _betLabel;
+//    NSMutableDictionary* _betItems;
+//    
+//    AnimatedFloat*       _lightness;
 }
 
 @property (nonatomic, assign) BOOL animated;
