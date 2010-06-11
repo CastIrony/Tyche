@@ -10,14 +10,14 @@ typedef enum
 
 @interface GLTexture : NSObject
 {
-	GLuint						_name;
-	CGSize						_size;
-	NSUInteger					_width,
-								_height;
-	GLTexturePixelFormat		_format;
-	GLfloat						_maxS,
-								_maxT;
-	BOOL						_hasPremultipliedAlpha;
+//	GLuint						_name;
+//	CGSize						_size;
+//	NSUInteger					_width,
+//								_height;
+//	GLTexturePixelFormat		_format;
+//	GLfloat						_maxS,
+//								_maxT;
+//	BOOL						_hasPremultipliedAlpha;
 }
 
 - (id) initWithData:(const void*)data pixelFormat:(GLTexturePixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size;
