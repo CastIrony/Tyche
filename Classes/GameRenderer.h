@@ -26,14 +26,14 @@
 
 @interface GameRenderer : UIViewController <UIAccelerometerDelegate>
 {
-//    EAGLContext* _context;
-//	
-//	GLint _backingWidth;
-//	GLint _backingHeight;
-//	
-//	GLuint _defaultFramebuffer;
-//    GLuint _colorRenderbuffer;
-//    
+    EAGLContext* _context;
+	
+	GLint _backingWidth;
+	GLint _backingHeight;
+	
+	GLuint _defaultFramebuffer;
+    GLuint _colorRenderbuffer;
+    
 //    BOOL _animated;
 //    
 //    GameController*      _gameController;
