@@ -190,7 +190,7 @@
         
         self.finalIndex = target;
         
-        self.draggedCard.angleFan.value = [AnimatedFloat withValue:self.initialAngle - delta * 25 / 480];
+        self.draggedCard.angleFan = [AnimatedFloat withValue:self.initialAngle - delta * 25 / 480];
     }
 }
 
