@@ -56,11 +56,24 @@
         
         shadingOffset    = Vector2DMake(524.0 / 1024.0,   0.0 / 1024.0); // Shading
         shadowOffset     = Vector2DMake(655.0 / 1024.0,   0.0 / 1024.0); // Shadow
+
+        stackVectors = malloc( 8 * (100 + 1) * sizeof(Vector3D));
+        stackTexture = malloc( 8 * (100 + 1) * sizeof(Vector2D));
+        stackMesh    = malloc(12 * (100 + 1) * sizeof(GLushort));
+        stackColors  = malloc( 8 * (100 + 1) * sizeof(Color3D));
         
         self.count = [AnimatedFloat withValue:0];
     }
     
     return self;
+}
+
+-(void)dealloc
+{
+    free(stackVectors);
+    free(stackTexture);
+    free(stackMesh);   
+    free(stackColors); 
 }
 
 -(void)drawSpot
@@ -70,77 +83,76 @@
 
 -(void)generateMesh
 {
+    GLfloat fade = self.count.value - stackCount;
     
-}
-
--(void)draw
-{
-    int stackCount = self.count.value;
+    int seed = arc4random();
     
-    if(stackCount < 0) { return; }
+    srand48(self.chipNumber);
     
-    if(self.opacity < 0.0001) { return; }
+    Vector3D rotateAxis = Vector3DMake(0, 1, 0);
     
-    stackVectors = malloc( 8 * (100 + 1) * sizeof(Vector3D));
-    stackTexture = malloc( 8 * (100 + 1) * sizeof(Vector2D));
-    stackMesh    = malloc(12 * (100 + 1) * sizeof(GLushort));
-    stackColors  = malloc( 8 * (100 + 1) * sizeof(Color3D));
+    int stackCount = clipInt(self.count.value, 0, 100) ;
     
-    @try
+    int offsetVector  = 0;
+    int offsetTexture = 0;
+    int offsetColors  = 0;
+    int offsetMesh    = 0;
+    int offsetSprite  = 0;
+    
+    GLfloat distance = sqrt(self.location.x * self.location.x + self.location.z * self.location.z);
+    
+    GLfloat lightness = clipFloat(1.0 - 0.06 * distance, 0.3, 1.0) * self.renderer.lightness.value;
+    
+    for(int chipCounter = 0; chipCounter <= stackCount; chipCounter++) 
     {
-        glDisableClientState(GL_NORMAL_ARRAY);
-        glEnableClientState(GL_COLOR_ARRAY);
+        GLfloat displacement = -0.15 * (chipCounter + 1);
         
-        glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+        Vector3D locationJitter = randomVector3D(self.location.x, self.location.y + displacement, self.location.z, 0.1, 0.0, 0.1);
         
-        glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"chips"]);
+        GLfloat angleJitter = randomFloat(-30, 30);
         
-        glNormal3f(0.0, -1.0, 0.0);
+        stackVectors[offsetVector++] = Vector3DMake(locationJitter.x - 1.0, locationJitter.y, locationJitter.z - 1.0);
+        stackVectors[offsetVector++] = Vector3DMake(locationJitter.x + 1.0, locationJitter.y, locationJitter.z - 1.0);
+        stackVectors[offsetVector++] = Vector3DMake(locationJitter.x - 1.0, locationJitter.y, locationJitter.z + 1.0);
+        stackVectors[offsetVector++] = Vector3DMake(locationJitter.x + 1.0, locationJitter.y, locationJitter.z + 1.0);
         
-        TinyProfilerStart(14);
-
-        GLfloat fade = self.count.value - stackCount;
+        rotateVectors(stackVectors + offsetVector - 4, 4, angleJitter, locationJitter, rotateAxis);
         
-        int seed = arc4random();
+        stackTexture[offsetTexture++] = Vector2DMake(1.0 * chipSize.u + chipOffsets[self.chipNumber].u, 0.0 * chipSize.v + chipOffsets[self.chipNumber].v);
+        stackTexture[offsetTexture++] = Vector2DMake(0.0 * chipSize.u + chipOffsets[self.chipNumber].u, 0.0 * chipSize.v + chipOffsets[self.chipNumber].v);
+        stackTexture[offsetTexture++] = Vector2DMake(1.0 * chipSize.u + chipOffsets[self.chipNumber].u, 1.0 * chipSize.v + chipOffsets[self.chipNumber].v);
+        stackTexture[offsetTexture++] = Vector2DMake(0.0 * chipSize.u + chipOffsets[self.chipNumber].u, 1.0 * chipSize.v + chipOffsets[self.chipNumber].v);
         
-        srand48(self.chipNumber);
+        stackColors[offsetColors++] = Color3DMake(lightness * self.opacity, lightness * self.opacity, lightness * self.opacity, self.opacity);
+        stackColors[offsetColors++] = Color3DMake(lightness * self.opacity, lightness * self.opacity, lightness * self.opacity, self.opacity);
+        stackColors[offsetColors++] = Color3DMake(lightness * self.opacity, lightness * self.opacity, lightness * self.opacity, self.opacity);
+        stackColors[offsetColors++] = Color3DMake(lightness * self.opacity, lightness * self.opacity, lightness * self.opacity, self.opacity);
         
-        Vector3D rotateAxis = Vector3DMake(0, 1, 0);
+        stackMesh[offsetMesh++] = offsetSprite * 4 + 0;
+        stackMesh[offsetMesh++] = offsetSprite * 4 + 1;
+        stackMesh[offsetMesh++] = offsetSprite * 4 + 2;
+        stackMesh[offsetMesh++] = offsetSprite * 4 + 2;
+        stackMesh[offsetMesh++] = offsetSprite * 4 + 1;
+        stackMesh[offsetMesh++] = offsetSprite * 4 + 3;
         
-        int offsetVector  = 0;
-        int offsetTexture = 0;
-        int offsetColors  = 0;
-        int offsetMesh    = 0;
-        int offsetSprite  = 0;
+        offsetSprite++;
         
-        GLfloat distance = sqrt(self.location.x * self.location.x + self.location.z * self.location.z);
-        
-        GLfloat lightness = clipFloat(1.0 - 0.06 * distance, 0.3, 1.0) * self.renderer.lightness.value;
-        
-        for(int chipCounter = 0; chipCounter <= stackCount; chipCounter++) 
+        if(chipCounter >= stackCount - 2)
         {
-            GLfloat displacement = -0.15 * (chipCounter + 1);
-            
-            Vector3D locationJitter = randomVector3D(self.location.x, self.location.y + displacement, self.location.z, 0.1, 0.0, 0.1);
-            
-            GLfloat angleJitter = randomFloat(-30, 30);
-            
             stackVectors[offsetVector++] = Vector3DMake(locationJitter.x - 1.0, locationJitter.y, locationJitter.z - 1.0);
             stackVectors[offsetVector++] = Vector3DMake(locationJitter.x + 1.0, locationJitter.y, locationJitter.z - 1.0);
             stackVectors[offsetVector++] = Vector3DMake(locationJitter.x - 1.0, locationJitter.y, locationJitter.z + 1.0);
             stackVectors[offsetVector++] = Vector3DMake(locationJitter.x + 1.0, locationJitter.y, locationJitter.z + 1.0);
-                        
-            rotateVectors(stackVectors + offsetVector - 4, 4, angleJitter, locationJitter, rotateAxis);
             
-            stackTexture[offsetTexture++] = Vector2DMake(1.0 * chipSize.u + chipOffsets[self.chipNumber].u, 0.0 * chipSize.v + chipOffsets[self.chipNumber].v);
-            stackTexture[offsetTexture++] = Vector2DMake(0.0 * chipSize.u + chipOffsets[self.chipNumber].u, 0.0 * chipSize.v + chipOffsets[self.chipNumber].v);
-            stackTexture[offsetTexture++] = Vector2DMake(1.0 * chipSize.u + chipOffsets[self.chipNumber].u, 1.0 * chipSize.v + chipOffsets[self.chipNumber].v);
-            stackTexture[offsetTexture++] = Vector2DMake(0.0 * chipSize.u + chipOffsets[self.chipNumber].u, 1.0 * chipSize.v + chipOffsets[self.chipNumber].v);
+            stackTexture[offsetTexture++] = Vector2DMake(1.0 * chipSize.u + shadingOffset.u, 0.0 * chipSize.v + shadingOffset.v);
+            stackTexture[offsetTexture++] = Vector2DMake(0.0 * chipSize.u + shadingOffset.u, 0.0 * chipSize.v + shadingOffset.v);
+            stackTexture[offsetTexture++] = Vector2DMake(1.0 * chipSize.u + shadingOffset.u, 1.0 * chipSize.v + shadingOffset.v);
+            stackTexture[offsetTexture++] = Vector2DMake(0.0 * chipSize.u + shadingOffset.u, 1.0 * chipSize.v + shadingOffset.v);
             
-            stackColors[offsetColors++] = Color3DMake(lightness * self.opacity, lightness * self.opacity, lightness * self.opacity, self.opacity);
-            stackColors[offsetColors++] = Color3DMake(lightness * self.opacity, lightness * self.opacity, lightness * self.opacity, self.opacity);
-            stackColors[offsetColors++] = Color3DMake(lightness * self.opacity, lightness * self.opacity, lightness * self.opacity, self.opacity);
-            stackColors[offsetColors++] = Color3DMake(lightness * self.opacity, lightness * self.opacity, lightness * self.opacity, self.opacity);
+            stackColors[offsetColors++] = Color3DMake(self.opacity * lightness, self.opacity * lightness, self.opacity * lightness, self.opacity * lightness);
+            stackColors[offsetColors++] = Color3DMake(self.opacity * lightness, self.opacity * lightness, self.opacity * lightness, self.opacity * lightness);
+            stackColors[offsetColors++] = Color3DMake(self.opacity * lightness, self.opacity * lightness, self.opacity * lightness, self.opacity * lightness);
+            stackColors[offsetColors++] = Color3DMake(self.opacity * lightness, self.opacity * lightness, self.opacity * lightness, self.opacity * lightness);
             
             stackMesh[offsetMesh++] = offsetSprite * 4 + 0;
             stackMesh[offsetMesh++] = offsetSprite * 4 + 1;
@@ -150,78 +162,55 @@
             stackMesh[offsetMesh++] = offsetSprite * 4 + 3;
             
             offsetSprite++;
-            
-            if(chipCounter >= stackCount - 2)
-            {
-                stackVectors[offsetVector++] = Vector3DMake(locationJitter.x - 1.0, locationJitter.y, locationJitter.z - 1.0);
-                stackVectors[offsetVector++] = Vector3DMake(locationJitter.x + 1.0, locationJitter.y, locationJitter.z - 1.0);
-                stackVectors[offsetVector++] = Vector3DMake(locationJitter.x - 1.0, locationJitter.y, locationJitter.z + 1.0);
-                stackVectors[offsetVector++] = Vector3DMake(locationJitter.x + 1.0, locationJitter.y, locationJitter.z + 1.0);
-
-                stackTexture[offsetTexture++] = Vector2DMake(1.0 * chipSize.u + shadingOffset.u, 0.0 * chipSize.v + shadingOffset.v);
-                stackTexture[offsetTexture++] = Vector2DMake(0.0 * chipSize.u + shadingOffset.u, 0.0 * chipSize.v + shadingOffset.v);
-                stackTexture[offsetTexture++] = Vector2DMake(1.0 * chipSize.u + shadingOffset.u, 1.0 * chipSize.v + shadingOffset.v);
-                stackTexture[offsetTexture++] = Vector2DMake(0.0 * chipSize.u + shadingOffset.u, 1.0 * chipSize.v + shadingOffset.v);
-
-                stackColors[offsetColors++] = Color3DMake(self.opacity * lightness, self.opacity * lightness, self.opacity * lightness, self.opacity * lightness);
-                stackColors[offsetColors++] = Color3DMake(self.opacity * lightness, self.opacity * lightness, self.opacity * lightness, self.opacity * lightness);
-                stackColors[offsetColors++] = Color3DMake(self.opacity * lightness, self.opacity * lightness, self.opacity * lightness, self.opacity * lightness);
-                stackColors[offsetColors++] = Color3DMake(self.opacity * lightness, self.opacity * lightness, self.opacity * lightness, self.opacity * lightness);
-
-                stackMesh[offsetMesh++] = offsetSprite * 4 + 0;
-                stackMesh[offsetMesh++] = offsetSprite * 4 + 1;
-                stackMesh[offsetMesh++] = offsetSprite * 4 + 2;
-                stackMesh[offsetMesh++] = offsetSprite * 4 + 2;
-                stackMesh[offsetMesh++] = offsetSprite * 4 + 1;
-                stackMesh[offsetMesh++] = offsetSprite * 4 + 3;
-                
-                offsetSprite++;
-            }
         }
-        
-        stackVectors[offsetVector - 8].z -= 3 * (1 - fade);
-        stackVectors[offsetVector - 7].z -= 3 * (1 - fade);
-        stackVectors[offsetVector - 6].z -= 3 * (1 - fade);
-        stackVectors[offsetVector - 5].z -= 3 * (1 - fade);
-        stackVectors[offsetVector - 4].z -= 3 * (1 - fade);
-        stackVectors[offsetVector - 3].z -= 3 * (1 - fade);
-        stackVectors[offsetVector - 2].z -= 3 * (1 - fade);
-        stackVectors[offsetVector - 1].z -= 3 * (1 - fade);
-        
-        stackColors[offsetColors - 8] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity,             fade * self.opacity);
-        stackColors[offsetColors - 7] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity,             fade * self.opacity);
-        stackColors[offsetColors - 6] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity,             fade * self.opacity);
-        stackColors[offsetColors - 5] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity,             fade * self.opacity);
-        stackColors[offsetColors - 4] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity);
-        stackColors[offsetColors - 3] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity);
-        stackColors[offsetColors - 2] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity);
-        stackColors[offsetColors - 1] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity);
-        
-        _meshSize = offsetMesh;
-        
-        TinyProfilerStop(14);
-        TinyProfilerStart(15);
-        
-        glTexCoordPointer(2, GL_FLOAT, 0, stackTexture);            
-        glColorPointer   (4, GL_FLOAT, 0, stackColors);                                    
-        glVertexPointer  (3, GL_FLOAT, 0, stackVectors);
-        
-        glDrawElements(GL_TRIANGLES, _meshSize, GL_UNSIGNED_SHORT, stackMesh);    
-        
-        srand48(seed);
+    }
+    
+    stackVectors[offsetVector - 8].z -= 3 * (1 - fade);
+    stackVectors[offsetVector - 7].z -= 3 * (1 - fade);
+    stackVectors[offsetVector - 6].z -= 3 * (1 - fade);
+    stackVectors[offsetVector - 5].z -= 3 * (1 - fade);
+    stackVectors[offsetVector - 4].z -= 3 * (1 - fade);
+    stackVectors[offsetVector - 3].z -= 3 * (1 - fade);
+    stackVectors[offsetVector - 2].z -= 3 * (1 - fade);
+    stackVectors[offsetVector - 1].z -= 3 * (1 - fade);
+    
+    stackColors[offsetColors - 8] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity,             fade * self.opacity);
+    stackColors[offsetColors - 7] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity,             fade * self.opacity);
+    stackColors[offsetColors - 6] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity,             fade * self.opacity);
+    stackColors[offsetColors - 5] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity,             fade * self.opacity);
+    stackColors[offsetColors - 4] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity);
+    stackColors[offsetColors - 3] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity);
+    stackColors[offsetColors - 2] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity);
+    stackColors[offsetColors - 1] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity);
+    
+    _meshSize = offsetMesh;
+}
 
-        TinyProfilerStop(15);
+-(void)draw
+{
+    if(self.opacity < 0.0001) { return; }
         
-        glEnableClientState(GL_NORMAL_ARRAY);
-        glDisableClientState(GL_COLOR_ARRAY);
-    }
-    @finally 
-    {
-        free(stackVectors);
-        free(stackTexture);
-        free(stackMesh);   
-        free(stackColors); 
-    }
+    glDisableClientState(GL_NORMAL_ARRAY);
+    glEnableClientState(GL_COLOR_ARRAY);
+    
+    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+    
+    glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"chips"]);
+    
+    glNormal3f(0.0, -1.0, 0.0);
+
+    [self generateMesh];
+    
+    glTexCoordPointer(2, GL_FLOAT, 0, stackTexture);            
+    glColorPointer   (4, GL_FLOAT, 0, stackColors);                                    
+    glVertexPointer  (3, GL_FLOAT, 0, stackVectors);
+    
+    glDrawElements(GL_TRIANGLES, _meshSize, GL_UNSIGNED_SHORT, stackMesh);    
+    
+    srand48(seed);
+    
+    glEnableClientState(GL_NORMAL_ARRAY);
+    glDisableClientState(GL_COLOR_ARRAY);
 }
 
 -(void)drawMarker
