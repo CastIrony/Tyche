@@ -5,12 +5,12 @@
 @interface GameView : UIView
 {    
 //	AppController* appController;
-//    GameRenderer* renderer;
+    GameRenderer* renderer;
 	
 //	BOOL animating;
 //	BOOL displayLinkSupported;
-//	NSInteger animationFrameInterval;
-//	id displayLink;
+	NSInteger animationFrameInterval;
+	id displayLink;
 }
 
 @property (nonatomic, assign) AppController* appController;
