@@ -14,23 +14,11 @@
     
     Vector2D   _textureOffset;
     Vector2D   _textureSize;
-//    
-//    GLTexture* _texture;
-//    TextController* _textController;
-//    TextControllerPageMarker* _dots;
-//    
+
     Vector3D*  _arrayVertex;
     Vector3D*  _arrayNormal;
     Vector2D*  _arrayTexture;
     GLushort*  _arrayMesh;
-//
-//    GLfloat    _angleJitter;
-//    GLfloat    _angleSin;
-//    
-//    GLfloat            _lightness;
-//    AnimatedFloat*     _opacity;
-//    AnimatedVector3D*  _location;
-//    id _owner;
 }
 
 @property (nonatomic, retain) GLTexture* texture;
