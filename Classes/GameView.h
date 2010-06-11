@@ -9,7 +9,7 @@
 	
 //	BOOL animating;
 	BOOL displayLinkSupported;
-	NSInteger animationFrameInterval;
+//	NSInteger animationFrameInterval;
 	id displayLink;
 }
 
