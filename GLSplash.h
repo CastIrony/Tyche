@@ -2,8 +2,6 @@
 
 @interface GLSplash : NSObject 
 {
-    GameRenderer* _renderer;
-    AnimatedFloat* _opacity;
 }
 
 @property (nonatomic, assign) GameRenderer* renderer;

@@ -21,9 +21,6 @@ GLTableDrawStatus;
 
 @interface GLTable : NSObject
 {
-    GameRenderer* _renderer;
-    
-    GLTableDrawStatus _drawStatus;
     Vector3D topCorners[4];
     Vector3D frontControlPoints[16]; 
 }
