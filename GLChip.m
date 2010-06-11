@@ -184,6 +184,8 @@
     stackColors[offsetColors - 1] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity);
     
     _meshSize = offsetMesh;
+
+    srand48(seed);
 }
 
 -(void)draw
@@ -206,9 +208,7 @@
     glVertexPointer  (3, GL_FLOAT, 0, stackVectors);
     
     glDrawElements(GL_TRIANGLES, _meshSize, GL_UNSIGNED_SHORT, stackMesh);    
-    
-    srand48(seed);
-    
+        
     glEnableClientState(GL_NORMAL_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
 }
