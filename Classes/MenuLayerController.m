@@ -41,7 +41,7 @@
     [self.menuLayers setObject:menu forKey:key];
     [self.menuLayerKeys addObject:key];
 
-    self.currentLayer.collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:1 speed:1];
+    self.currentLayer.collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:0 speed:1];
 }
 
 -(void)popUntilKey:(NSString*)key
@@ -52,7 +52,7 @@
         [self.menuLayerKeys removeLastObject];
     }
     
-    self.currentLayer.collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:0 speed:1];
+    self.currentLayer.collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:1 speed:1];
 }
 
 -(void)cancelMenuLayer
