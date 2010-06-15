@@ -18,7 +18,7 @@
 @property (nonatomic, retain) AnimatedFloat* hidden;
 @property (nonatomic, readonly) MenuController* currentLayer;
 
--(void)pushMenu:(MenuController*)menu withKey:(NSString*)key;
+-(void)pushMenu:(MenuController*)menu forKey:(NSString*)key;
 -(void)popUntilKey:(NSString*)key;
 -(void)cancelMenuLayer;
 

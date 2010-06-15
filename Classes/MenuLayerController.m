@@ -34,7 +34,7 @@
     return self;
 }
 
--(void)pushMenu:(MenuController*)menu withKey:(NSString*)key
+-(void)pushMenu:(MenuController*)menu forKey:(NSString*)key
 {
     menu.owner = self;
     
