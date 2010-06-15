@@ -38,7 +38,7 @@
 {
     self.currentLayer.collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:1 speed:1];
     
-    [self.menuLayers setObject:layer forKey:key];
+    [self.menuLayers setObject:menu forKey:key];
     [self.menuLayerKeys addObject:key];
         
     layer.owner = self;
