@@ -46,13 +46,13 @@
 
 -(void)popUntilKey:(NSString*)key
 {
+    self.currentLayer.collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:1 speed:1];
+    
     while(![[self.menuLayerKeys lastObject] isEqualToString:key])
     {
         [self.menuLayers removeObjectForKey:[self.menuLayerKeys lastObject]];
         [self.menuLayerKeys removeLastObject];
     }
-    
-    self.currentLayer.collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:1 speed:1];
 }
 
 -(void)cancelMenuLayer
