@@ -32,10 +32,10 @@
 @property (nonatomic, assign) id                   owner;
 
 -(id)initWithRenderer:(GameRenderer*)renderer;
++(id)withRenderer:(GameRenderer*)renderer;
 
 -(void)addMenu:(GLMenu*)menu forKey:(NSString*)key;
 -(void)deleteMenuForKey:(NSString*)key;
-
 -(void)layoutMenus;
 -(void)draw;
 

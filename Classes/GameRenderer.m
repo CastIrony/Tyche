@@ -170,28 +170,7 @@
     self.cardGroup.renderer = self;
     self.splash.renderer = self;
     self.table.renderer = self;
-    
-//    { 
-//        GLMenu* menu  = [[[GLMenu alloc] init] autorelease]; 
-//        
-//        menu.textController = [[[TextControllerMainMenu alloc] init] autorelease];
-//        
-//        menu.textController.center = NO;
-//        menu.textController.opacity = 1;
-//        
-//        menu.renderer = self;
-//        menu.textController.renderer = self;
-//        
-//        menu.location.value = Vector3DMake(30, 0, 0); 
-//        menu.texture = self.cardGroup.textureDiamonds;
-//    
-//        srand48(time(NULL));
-//                
-//        menu.angleJitter = randomFloat(-10.0, 10.0);
-//                
-//        [self.menus setObject:menu forKey:@"main"];
-//    }
-    
+        
     NSMutableArray* servers = [[[NSMutableArray alloc] init] autorelease];
                                 
     [servers addObject:@"☃Joel's iPhone"];                           
@@ -214,25 +193,7 @@
     
     srand48(time(NULL));
 
-//    {
-//        MenuControllerMain* layer = [[[MenuControllerMain alloc] initWithRenderer:self] autorelease];
-//        
-//        //[self.menuLayerController addMenuLayer:layer forKey:@"0"];
-//    }
-//    
-//    for(int i = 0; i < 1; i++)
-//    {        
-//        MenuControllerJoinGame* layer = [[[MenuControllerJoinGame alloc] initWithRenderer:self] autorelease];
-//        
-//        for(NSString* server in servers)
-//        { 
-//            [layer addServerWithPeerId:server name:server];
-//        }
-//        
-//        //[self.menuLayerController addMenuLayer:layer forKey:[NSString stringWithFormat:@"%d", i + 1]];
-//    }
-//    
-//    [self.menuLayerController setKey:@"0"];
+    [self.menuLayerController pushMenu:[[[MenuControllerMain alloc] initWithRenderer:self] autorelease] withKey:@"main"];
     
     { GLChip* chip = [[[GLChip alloc] initWithChipNumber:0] autorelease]; chip.renderer = self; [self.chipGroup.chips setObject:chip forKey:@"1"]; }
     { GLChip* chip = [[[GLChip alloc] initWithChipNumber:1] autorelease]; chip.renderer = self; [self.chipGroup.chips setObject:chip forKey:@"5"]; }
