@@ -7,8 +7,9 @@
 
 #import "MenuController.h"
 
-@interface MenuControllerHostGame : MenuController 
+@interface MenuControllerHostGame : MenuController
 {
+    
 }
 
 -(id)initWithRenderer:(GameRenderer*)renderer;

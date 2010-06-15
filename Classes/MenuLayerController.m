@@ -11,14 +11,13 @@
 @synthesize renderer = _renderer;
 @synthesize menuLayerKeys = _menuLayerKeys;
 @synthesize menuLayers = _menuLayers;
-@synthesize currentKey = _currentKey;
 @synthesize hidden = _hidden;
 
 @dynamic currentLayer;
 
 -(MenuController*)currentLayer
 {
-    return [self.menuLayers objectForKey:self.currentKey];
+    return [self.menuLayers objectForKey:[self.menuLayerKeys lastObject]];
 }
 
 -(id)init
@@ -35,63 +34,42 @@
     return self;
 }
 
--(void)setKey:(NSString*)currentKey
+-(void)pushMenu:(MenuController*)menu withKey:(NSString*)key
 {
-    if(![self.menuLayerKeys containsObject:currentKey]) { return; }
+    self.currentLayer.collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:1 speed:1];
     
-    self.currentKey = currentKey;
-    
-    BOOL found = NO;
-    
-    for(NSString* key in self.menuLayerKeys) 
-    {
-        MenuController* layer = [self.menuLayers objectForKey:key];
-        
-        BOOL collapsed;
-        BOOL hidden;
-        
-        if([key isEqualToString:currentKey]) 
-        {
-            found = YES;
-            
-            collapsed = NO;
-            hidden    = NO;
-        }
-        else if(found)
-        {
-            collapsed = NO;
-            hidden    = YES;
-        }
-        else 
-        {
-            collapsed = YES;
-            hidden    = NO;
-        }
-        
-        layer.collapsed = self.renderer.animated ? [AnimatedFloat withStartValue:layer.collapsed.value endValue:collapsed forTime:1] : [AnimatedFloat withValue:collapsed];
-        layer.hidden = self.renderer.animated ? [AnimatedFloat withStartValue:layer.hidden.value endValue:hidden forTime:1] : [AnimatedFloat withValue:hidden];
-    
-        [layer layoutMenus];
-    }
-}   
-
--(void)addMenuLayer:(MenuController*)layer forKey:(NSString*)key
-{
     [self.menuLayers setObject:layer forKey:key];
     [self.menuLayerKeys addObject:key];
-    
+        
     layer.owner = self;
 }
 
--(void)removeMenuLayerForKey:(NSString*)key
+-(void)popUntilKey:(NSString*)key
 {
-    [self.menuLayerKeys removeObject:key];
-    [self.menuLayers removeObjectForKey:key];
+    while(![[self.menuLayerKeys lastObject] isStringEqual:key])
+    {
+    }    
 }
+
+  
+//
+//-(void)addMenuLayer:(MenuController*)layer forKey:(NSString*)key
+//{
+//    [self.menuLayers setObject:layer forKey:key];
+//    [self.menuLayerKeys addObject:key];
+//    
+//    layer.owner = self;
+//}
+//
+//-(void)removeMenuLayerForKey:(NSString*)key
+//{
+//    [self.menuLayerKeys removeObject:key];
+//    [self.menuLayers removeObjectForKey:key];
+//}
 
 -(void)cancelMenuLayer;
 {
-    [self setCurrentKey:[self.menuLayerKeys objectBefore:self.currentKey]];
+    [self popUntilKey:[self.menuLayerKeys objectBefore:self.currentKey]];
 }
 
 -(void)draw

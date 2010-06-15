@@ -13,16 +13,15 @@
 }
 
 @property (nonatomic, assign) GameRenderer* renderer;
-@property (nonatomic, retain) NSString* currentKey;
 @property (nonatomic, retain) NSMutableArray* menuLayerKeys;
 @property (nonatomic, retain) NSMutableDictionary* menuLayers;
 @property (nonatomic, retain) AnimatedFloat* hidden;
 @property (nonatomic, readonly) MenuController* currentLayer;
 
--(void)addMenuLayer:(MenuController*)layer forKey:(NSString*)key;
--(void)removeMenuLayerForKey:(NSString*)key;
--(void)setKey:(NSString*)currentKey;
+-(void)pushMenu:(MenuController*)menu withKey:(NSString*)key;
+-(void)popUntilKey:(NSString*)key;
 -(void)cancelMenuLayer;
+
 -(void)draw;
 
 @end
