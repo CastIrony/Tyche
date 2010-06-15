@@ -2,7 +2,8 @@
 
 @interface MenuControllerHostGame : MenuController 
 {
-    -(id)initWithRenderer:(GameRenderer*)renderer;
 }
+
+-(id)initWithRenderer:(GameRenderer*)renderer;
 
 @end
