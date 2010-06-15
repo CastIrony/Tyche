@@ -192,7 +192,7 @@
     
     srand48(time(NULL));
 
-    [self.menuLayerController pushMenu:[[[MenuControllerMain alloc] initWithRenderer:self] autorelease] forKey:@"main"];
+    [self.menuLayerController pushMenu:[MenuControllerMain withRenderer:self] forKey:@"main"];
     
     { GLChip* chip = [[[GLChip alloc] initWithChipNumber:0] autorelease]; chip.renderer = self; [self.chipGroup.chips setObject:chip forKey:@"1"]; }
     { GLChip* chip = [[[GLChip alloc] initWithChipNumber:1] autorelease]; chip.renderer = self; [self.chipGroup.chips setObject:chip forKey:@"5"]; }

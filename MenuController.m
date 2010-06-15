@@ -45,7 +45,7 @@
 
 +(MenuController*)withRenderer:(GameRenderer *)renderer
 {
-    return [[[MenuController alloc] initWithRenderer:renderer] autorelease];
+    return [[[self alloc] initWithRenderer:renderer] autorelease];
 }
 
 -(void)addMenu:(GLMenu*)menu forKey:(NSString*)key
