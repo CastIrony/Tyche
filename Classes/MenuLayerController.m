@@ -37,11 +37,11 @@
 -(void)pushMenu:(MenuController*)menu withKey:(NSString*)key
 {
     self.currentLayer.collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:1 speed:1];
+
+    menu.owner = self;
     
     [self.menuLayers setObject:menu forKey:key];
     [self.menuLayerKeys addObject:key];
-        
-    layer.owner = self;
 }
 
 -(void)popUntilKey:(NSString*)key
