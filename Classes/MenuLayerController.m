@@ -57,7 +57,7 @@
 
 -(void)cancelMenuLayer
 {
-    NSString* key = [self.menuLayerKeys objectBefore:[self.menuLayerKeys lastObject]]
+    NSString* key = [self.menuLayerKeys objectBefore:[self.menuLayerKeys lastObject]];
     
     if([key isEqualToString:[self.menuLayerKeys lastObject]]) { return; }
     
