@@ -55,7 +55,7 @@
     self.currentLayer.collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:0 speed:1];
 }
 
--(void)cancelMenuLayer;
+-(void)cancelMenuLayer
 {
     [self popUntilKey:[self.menuLayerKeys objectBefore:[self.menuLayerKeys lastObject]]];
 }
