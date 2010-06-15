@@ -46,7 +46,7 @@
 
 -(void)popUntilKey:(NSString*)key
 {
-    while(![[self.menuLayerKeys lastObject] isStringEqual:key])
+    while(![[self.menuLayerKeys lastObject] isEqualToString:key])
     {
     }    
 }
