@@ -220,18 +220,18 @@
         [self.menuLayerController addMenuLayer:layer forKey:@"0"];
     }
     
-//    for(int i = 0; i < 1; i++)
-//    {        
-//        MenuControllerJoinGame* layer = [[[MenuControllerJoinGame alloc] initWithRenderer:self] autorelease];
-//        
-//        for(NSString* server in servers)
-//        { 
-//            [layer addServerWithPeerId:server name:server];
-//        }
-//        
-//        [self.menuLayerController addMenuLayer:layer forKey:[NSString stringWithFormat:@"%d", i + 1]];
-//    }
-//    
+    for(int i = 0; i < 1; i++)
+    {        
+        MenuControllerJoinGame* layer = [[[MenuControllerJoinGame alloc] initWithRenderer:self] autorelease];
+        
+        for(NSString* server in servers)
+        { 
+            [layer addServerWithPeerId:server name:server];
+        }
+        
+        [self.menuLayerController addMenuLayer:layer forKey:[NSString stringWithFormat:@"%d", i + 1]];
+    }
+    
     [self.menuLayerController setKey:@"0"];
     
     { GLChip* chip = [[[GLChip alloc] initWithChipNumber:0] autorelease]; chip.renderer = self; [self.chipGroup.chips setObject:chip forKey:@"1"]; }
