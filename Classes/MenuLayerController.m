@@ -69,7 +69,7 @@
 
 -(void)cancelMenuLayer;
 {
-    [self popUntilKey:[self.menuLayerKeys objectBefore:self.currentKey]];
+    [self popUntilKey:[self.menuLayerKeys objectBefore:[self.menuLayerKeys lastObject]]];
 }
 
 -(void)draw
