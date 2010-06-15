@@ -57,7 +57,11 @@
 
 -(void)cancelMenuLayer
 {
-    [self popUntilKey:[self.menuLayerKeys objectBefore:[self.menuLayerKeys lastObject]]];
+    NSString* key = [self.menuLayerKeys objectBefore:[self.menuLayerKeys lastObject]]
+    
+    if([key isEqualToString:[self.menuLayerKeys lastObject]]) { return; }
+    
+    [self popUntilKey:key];
 }
 
 -(void)draw
