@@ -36,36 +36,24 @@
 
 -(void)pushMenu:(MenuController*)menu withKey:(NSString*)key
 {
-    self.currentLayer.collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:1 speed:1];
-
     menu.owner = self;
     
     [self.menuLayers setObject:menu forKey:key];
     [self.menuLayerKeys addObject:key];
+
+    self.currentLayer.collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:1 speed:1];
 }
 
 -(void)popUntilKey:(NSString*)key
 {
     while(![[self.menuLayerKeys lastObject] isEqualToString:key])
     {
-    }    
+        [self.menuLayers removeObjectForKey:[self.menuLayerKeys lastObject]];
+        [self.menuLayerKeys removeLastObject];
+    }
+    
+    self.currentLayer.collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:0 speed:1];
 }
-
-  
-//
-//-(void)addMenuLayer:(MenuController*)layer forKey:(NSString*)key
-//{
-//    [self.menuLayers setObject:layer forKey:key];
-//    [self.menuLayerKeys addObject:key];
-//    
-//    layer.owner = self;
-//}
-//
-//-(void)removeMenuLayerForKey:(NSString*)key
-//{
-//    [self.menuLayerKeys removeObject:key];
-//    [self.menuLayers removeObjectForKey:key];
-//}
 
 -(void)cancelMenuLayer;
 {
