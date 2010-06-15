@@ -181,7 +181,6 @@
     [servers addObject:@"♘Michele's iPod"];                           
     [servers addObject:@"☂Bonnie's iPhone"];                           
     [servers addObject:@"♂Charles's iPod"];    
-    
     [servers addObject:@"☃Joel's iPhone 2"];                           
     [servers addObject:@"☝Rachel's iPod 2"];                           
     [servers addObject:@"♜Carolyn's iPhone 2"];                           
@@ -193,7 +192,7 @@
     
     srand48(time(NULL));
 
-    [self.menuLayerController pushMenu:[[[MenuControllerMain alloc] initWithRenderer:self] autorelease] withKey:@"main"];
+    [self.menuLayerController pushMenu:[MenuControllerMain withRenderer:self] forKey:@"main"];
     
     { GLChip* chip = [[[GLChip alloc] initWithChipNumber:0] autorelease]; chip.renderer = self; [self.chipGroup.chips setObject:chip forKey:@"1"]; }
     { GLChip* chip = [[[GLChip alloc] initWithChipNumber:1] autorelease]; chip.renderer = self; [self.chipGroup.chips setObject:chip forKey:@"5"]; }
