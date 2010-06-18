@@ -112,21 +112,9 @@
     
     if(self.curve == AnimationEaseIn)    { proportion = (3 * delta - delta3) / 2; }
     if(self.curve == AnimationEaseOut)   { proportion = (3 * delta2 - delta3) / 2; }
-    if(self.curve == AnimationEaseInOut) { proportion = (3 * delta2 - 2 * delta3); }
+    /*if(self.curve == AnimationEaseInOut)*/ { proportion = (3 * delta2 - 2 * delta3); }
     
     return (1.0 - proportion) * self.startValue + (proportion) * self.endValue;
 }
-
-//-(void)setValue:(GLfloat)value
-//{
-//    NSTimeInterval now = CFAbsoluteTimeGetCurrent();
-//    
-//    self.startTime  = now;
-//    self.endTime    = now;
-//    self.startValue = value;
-//    self.endValue   = value;
-//    self.hasStarted = YES;
-//    self.hasEnded   = YES;
-//}
 
 @end
