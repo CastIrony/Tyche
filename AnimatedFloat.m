@@ -84,14 +84,20 @@
     
     if(now > self.startTime && !self.hasStarted) 
     {
-        if(self.onStart) { runLater(self.onStart); } 
-        self.hasStarted = YES;         
+        runLater(
+        ^{
+            if(self.onStart) { runLater(self.onStart); } 
+            self.hasStarted = YES;         
+        });
     }
     
     if(now > self.endTime && !self.hasEnded) 
     { 
-        if(self.onEnd) { runLater(self.onEnd); }
-        self.hasEnded = YES; 
+        runLater(
+        ^{
+            if(self.onEnd) { runLater(self.onEnd); }
+            self.hasEnded = YES; 
+        });
     }
     
     if(now < self.startTime) { return self.startValue; }
