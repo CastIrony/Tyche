@@ -265,14 +265,16 @@ static GLTexturePixelFormat defaultAlphaPixelFormat = kGLTexturePixelFormat_Defa
 -(id)initWithDots:(int)dots current:(int)current
 {    
     dots = 10;
+    current = 4;
     
     int spacing = 16;
-    int radius  =  4;
+    int radius =  4;
+    int perRow = 8;
     
-    int width =  spacing * 2 * dots;
-    int height = spacing * 2;
+    int width = spacing * 2 * (dots > perRow ? perRow : dots);
+    int height = spacing * 2 * ((dots - 1) / perRow + 1);
     
-	int textureWidth  = roundPowerTwo(width + 3);
+	int textureWidth  = roundPowerTwo(width);
 	int textureHeight = roundPowerTwo(height);
 	
     NSLog(@"%d, %d, %d, %d, %d, %d", spacing, dots, width, textureWidth, height, textureHeight);
@@ -285,16 +287,54 @@ static GLTexturePixelFormat defaultAlphaPixelFormat = kGLTexturePixelFormat_Defa
 	
     CGColorSpaceRelease(colorSpace);
 	
+    CGContextScaleCTM(context, textureWidth / (width + 2.0), textureHeight / (height + 2.0));
+    CGContextTranslateCTM(context, 1.0, 1.0);
+    
     UIGraphicsPushContext(context);
     {
-        for(int i = 0; i < dots; i++)
+        //  xx    xx    xx    xx    xx
+        //  xx    xx    xx    xx    xx
+        //  xx    xx    xx    xx    xx
+        //           **    xx
+        
+        CGContextSetLineWidth(context, 4.0);
+        
+        for(int i = 0; i < (dots / perRow); i++)
         {
-            CGContextSetGrayFillColor(context, 1.0, i == current ? 1.0 : 0.2);
+            for(int j = 0; j < perRow; j++)
+            {
+                int dot = i * perRow + j
+                
+                CGContextSetGrayFillColor(context, 1.0, dot == current ? 1.0 : 0.2);
+                
+                GLfloat x = 2 * spacing * j;
+                GLfloat y = 2 * spacing * i;
+                
+                CGRect position = CGRectMake(x + spacing - radius, y + spacing - radius, x + spacing + radius, y + spacing + radius);
+                
+                CGContextAddEllipseInRect(context, position);
+                
+                CGContextFillPath(context);
+            }
+        }
+        
+        int bottomDots = dots % perRow;
+        
+        GLfloat offset = -1.0 * spacing * bottomDots;
+        
+        for(int i = 0; i < bottomDots; i++)
+        {
+            int dot = (dots / perRow * perRow) + j
             
-            CGContextSetLineWidth(context, 4.0);
+            CGContextSetGrayFillColor(context, 1.0, dot == current ? 1.0 : 0.2);
             
-            CGContextAddEllipseInRect(context, CGRectMake(spacing - radius, spacing - radius, spacing + radius, spacing + radius));
-            CGContextTranslateCTM(context, spacing * 2, 0);
+            GLfloat x = offset + i * spacing * 2;
+            GLfloat y = (dots / perRow) + 1;
+            
+            CGRect position = CGRectMake(x + spacing - radius, y + spacing - radius, x + spacing + radius, y + spacing + radius);
+            
+            CGContextAddEllipseInRect(context, position);
+
             CGContextFillPath(context);
         }
     }
