@@ -183,7 +183,7 @@
     glGetIntegerv(GL_VIEWPORT, viewport);
 	
     Vector2D points[16];
-    ProjectVectors(_controlPoints, points, 16, model_view, projection, viewport);
+    ProjectVectors(_arrayVertex, points, 16, model_view, projection, viewport);
     
     GLushort triangles[54];
     GenerateBezierMesh(triangles, 4, 4);
