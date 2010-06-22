@@ -96,13 +96,13 @@
         glRotatef(self.angleSin, 0, 1, 0);
         
         
-        glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"cards"]);
-        
-        glVertexPointer  (3, GL_FLOAT, 0, _arrayVertex);
-        glNormalPointer  (   GL_FLOAT, 0, _arrayNormal);
-        glTexCoordPointer(2, GL_FLOAT, 0, _arrayTexture);            
-        
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, _arrayMesh);
+//        glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"cards"]);
+//        
+//        glVertexPointer  (3, GL_FLOAT, 0, _arrayVertex);
+//        glNormalPointer  (   GL_FLOAT, 0, _arrayNormal);
+//        glTexCoordPointer(2, GL_FLOAT, 0, _arrayTexture);            
+//        
+//        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, _arrayMesh);
 
         
         glBindTexture(GL_TEXTURE_2D, self.textureDots.name);
