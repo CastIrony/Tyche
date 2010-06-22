@@ -331,7 +331,7 @@ static GLTexturePixelFormat defaultAlphaPixelFormat = kGLTexturePixelFormat_Defa
             CGContextSetGrayFillColor(context, 1.0, dot == current ? 1.0 : 0.2);
             
             GLfloat x = offset + i * spacing * 2;
-            GLfloat y = (dots / perRow) + 1;
+            GLfloat y = ((dots / perRow) + 1) * spacing * 2;
             
             CGRect position = CGRectMake(x + spacing - radius, y + spacing - radius, 2 * radius, 2 * radius);
             
