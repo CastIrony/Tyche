@@ -42,7 +42,7 @@
         NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease];
         
         //[label setObject:[[[GLTexture alloc] initWithImageFile:@"logo.png"] autorelease]           forKey:@"textureText"]; 
-        [label setObject:[[[GLTexture alloc] initWithDots:20 current:5] autorelease]               forKey:@"textureText"]; 
+        [label setObject:[[[GLTexture alloc] initWithDots:16 current:0] autorelease]               forKey:@"textureText"]; 
 
         [label setObject:@"Join Game"        forKey:@"textString"];          
         [label setObject:[NSValue valueWithCGSize:CGSizeMake(181, 109)]                            forKey:@"textSize"]; 
