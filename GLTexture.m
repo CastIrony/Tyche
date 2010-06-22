@@ -322,7 +322,7 @@ static GLTexturePixelFormat defaultAlphaPixelFormat = kGLTexturePixelFormat_Defa
         
         int bottomDots = dots % perRow;
         
-        GLfloat offset = -1.0 * spacing * bottomDots;
+        GLfloat offset = width / 2.0 - spacing * bottomDots;
         
         for(int i = 0; i < bottomDots; i++)
         {
