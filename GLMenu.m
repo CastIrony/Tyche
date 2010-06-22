@@ -74,7 +74,7 @@
     _arrayVertexDots[2] = Vector3DMake( 1.5,  0.0,  1.0);
     _arrayVertexDots[3] = Vector3DMake( 1.5,  0.0, -1.0);
     
-    GenerateBezierNormals (_arrayNormal,      2, 2, _controlPoints);
+    GenerateBezierNormals (_arrayNormal,      2, 2, _arrayVertex);
     GenerateBezierTextures(_arrayTexture,     2, 2, _textureSize, _textureOffset);
     GenerateBezierMesh    (_arrayMesh,        2, 2);
 }
