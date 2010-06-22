@@ -104,7 +104,8 @@
 //        
 //        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, _arrayMesh);
 
-        
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
         glBindTexture(GL_TEXTURE_2D, self.textureDots.name);
         
         glVertexPointer  (3, GL_FLOAT, 0, _arrayVertexDots);
