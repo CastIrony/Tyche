@@ -308,6 +308,7 @@ static GLTexturePixelFormat defaultAlphaPixelFormat = kGLTexturePixelFormat_Defa
                 int dot = i * perRow + j;
                 
                 CGContextSetGrayFillColor(context, 1.0, dot == current ? 1.0 : 0.2);
+                CGContextSetGrayStrokeColor(context, 1.0, dot == current ? 0.0 : 1.0);
                 
                 GLfloat x = 2 * spacing * j;
                 GLfloat y = 2 * spacing * i;
@@ -318,7 +319,9 @@ static GLTexturePixelFormat defaultAlphaPixelFormat = kGLTexturePixelFormat_Defa
                 
                 CGContextAddEllipseInRect(context, position);
                 
-                CGContextFillPath(context);
+                CGContextDrawPath(context, kCGPathEOFillStroke);
+                
+                //CGContextFillPath(context);
             }
         }
         
