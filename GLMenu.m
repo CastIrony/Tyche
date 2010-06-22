@@ -81,9 +81,10 @@
     };
     
     GenerateBezierControlPoints(_controlPoints, baseCorners);
+    GenerateBezierControlPoints(_controlPointsDots, baseCorners);
 
     GenerateBezierVertices(_arrayVertex,      2, 2, _controlPoints);
-    GenerateBezierVertices(_arrayVertexDots,  2, 2, _controlPoints);
+    GenerateBezierVertices(_arrayVertexDots,  2, 2, _controlPointsDots);
     GenerateBezierNormals (_arrayNormal,      2, 2, _controlPoints);
     GenerateBezierTextures(_arrayTexture,     2, 2, _textureSize, _textureOffset);
     GenerateBezierMesh    (_arrayMesh,        2, 2);
