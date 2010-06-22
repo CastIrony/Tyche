@@ -50,7 +50,7 @@
         
         [label setObject:@"logo" forKey:@"key"]; 
         
-        [labels addObject:label]; 
+        [labels addObject:label];
     }
     
     { 

@@ -144,6 +144,7 @@
         _hasShadow = NO;
         
         self.layoutOpacity  = [AnimatedFloat withValue:0.0];
+        self.fadeMargin = 0;
         
         arrayTextVertex          = malloc( 8 * sizeof(Vector3D));
         arrayBulletRightVertex   = malloc( 4 * sizeof(Vector3D));
