@@ -23,6 +23,7 @@
 @synthesize opacity        = _opacity;
 @synthesize location       = _location;
 @synthesize owner          = _owner;
+@synthesize textureDots    = _textureDots;
 
 -(void)dealloc
 {
