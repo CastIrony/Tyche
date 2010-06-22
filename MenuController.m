@@ -109,8 +109,8 @@
                 menu.location = [AnimatedVector3D withValue:Vector3DMake(-4 * counter, 0, 0)];
             }
 
-            menu.dots.page = counter;
-            menu.dots.total = self.liveMenuKeys.count;
+//            menu.dots.page = counter;
+//            menu.dots.total = self.liveMenuKeys.count;
             
             //[menu.dots update];
             
