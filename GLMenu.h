@@ -16,6 +16,7 @@
     Vector2D   _textureSize;
 
     Vector3D*  _arrayVertex;
+    Vector3D*  _arrayVertexDots;
     Vector3D*  _arrayNormal;
     Vector2D*  _arrayTexture;
     GLushort*  _arrayMesh;
