@@ -334,7 +334,8 @@ static GLTexturePixelFormat defaultAlphaPixelFormat = kGLTexturePixelFormat_Defa
             int dot = (dots / perRow * perRow) + i;
             
             CGContextSetGrayFillColor(context, 1.0, dot == current ? 1.0 : 0.2);
-            
+            CGContextSetGrayStrokeColor(context, 1.0, dot == current ? 1.0 : 1.0);
+
             GLfloat x = offset + i * spacing * 2;
             GLfloat y = (dots / perRow) * spacing * 2;
             
@@ -342,7 +343,9 @@ static GLTexturePixelFormat defaultAlphaPixelFormat = kGLTexturePixelFormat_Defa
             
             CGContextAddEllipseInRect(context, position);
 
-            CGContextFillPath(context);
+            CGContextDrawPath(context, kCGPathEOFillStroke);
+
+//            CGContextFillPath(context);
         }
     }
     UIGraphicsPopContext();
