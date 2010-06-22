@@ -331,7 +331,7 @@ static GLTexturePixelFormat defaultAlphaPixelFormat = kGLTexturePixelFormat_Defa
             GLfloat x = offset + i * spacing * 2;
             GLfloat y = (dots / perRow) + 1;
             
-            CGRect position = CGRectMake(x + spacing - radius, y + spacing - radius, x + spacing + radius, y + spacing + radius);
+            CGRect position = CGRectMake(x + spacing - radius, y + spacing - radius, 2 * radius, 2 * radius);
             
             CGContextAddEllipseInRect(context, position);
 
