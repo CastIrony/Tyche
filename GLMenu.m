@@ -74,10 +74,10 @@
     
     Vector3D baseCornersDots[] = 
     {
-        Vector3DMake(-1.5,  0.0, 2.5),
-        Vector3DMake(-1.5,  0.0, 1.0),
-        Vector3DMake( 1.5,  0.0, 2.5),
-        Vector3DMake( 1.5,  0.0, 1.0)
+        Vector3DMake(-1.5,  0.0, 2.75),
+        Vector3DMake(-1.5,  0.0, 1.25),
+        Vector3DMake( 1.5,  0.0, 2.75),
+        Vector3DMake( 1.5,  0.0, 1.25)
     };
     
     GenerateBezierControlPoints(_controlPoints, baseCorners);
