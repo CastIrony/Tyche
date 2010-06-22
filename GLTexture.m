@@ -303,7 +303,7 @@ static GLTexturePixelFormat defaultAlphaPixelFormat = kGLTexturePixelFormat_Defa
         {
             for(int j = 0; j < perRow; j++)
             {
-                int dot = i * perRow + j
+                int dot = i * perRow + j;
                 
                 CGContextSetGrayFillColor(context, 1.0, dot == current ? 1.0 : 0.2);
                 
