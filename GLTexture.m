@@ -333,8 +333,8 @@ static GLTexturePixelFormat defaultAlphaPixelFormat = kGLTexturePixelFormat_Defa
         {
             int dot = (dots / perRow * perRow) + i;
             
-            CGContextSetGrayFillColor(context, 1.0, dot == current ? 1.0 : 0.1);
-            CGContextSetGrayStrokeColor(context, 1.0, dot == current ? 1.0 : 0.3);
+            CGContextSetGrayFillColor(context, 1.0, dot == current ? 1.0 : 0.2);
+            CGContextSetGrayStrokeColor(context, 1.0, dot == current ? 1.0 : 0.4);
 
             GLfloat x = offset + i * spacing * 2;
             GLfloat y = (dots / perRow) * spacing * 2;
