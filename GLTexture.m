@@ -278,7 +278,7 @@ static GLTexturePixelFormat defaultAlphaPixelFormat = kGLTexturePixelFormat_Defa
 	int textureHeight = roundPowerTwo(height);
 	
     NSLog(@"%d, %d, %d, %d, %d, %d", spacing, dots, width, textureWidth, height, textureHeight);
-    
+
     void* data = calloc(textureHeight, textureWidth);
 	
 	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceGray();
