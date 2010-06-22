@@ -286,9 +286,11 @@ static GLTexturePixelFormat defaultAlphaPixelFormat = kGLTexturePixelFormat_Defa
     CGContextRef context = CGBitmapContextCreate(data, textureWidth, textureHeight, 8, textureWidth, colorSpace, kCGImageAlphaNone);
 	
     CGColorSpaceRelease(colorSpace);
-	
+   
+    CGContextTranslateCTM(context, 0.0f, height);
     CGContextScaleCTM(context, textureWidth / (width + 2.0), textureHeight / (height + 2.0));
-    CGContextTranslateCTM(context, 1.0, 1.0);
+    CGContextScaleCTM(context, 1.0f, -1.0f); //NOTE: NSString draws in UIKit referential i.e. renders upside-down compared to CGBitmapContext referential
+	CGContextTranslateCTM(context, 1.0, 1.0);
     
     UIGraphicsPushContext(context);
     {
