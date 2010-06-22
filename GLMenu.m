@@ -64,17 +64,27 @@
     _textureSize   = Vector2DMake(1,1);
     _textureOffset = Vector2DMake(0,0);
         
-    _arrayVertex[0] = Vector3DMake(-2.0,  0.0,  3.0);
-    _arrayVertex[1] = Vector3DMake(-2.0,  0.0, -3.0);
-    _arrayVertex[2] = Vector3DMake( 2.0,  0.0,  3.0);
-    _arrayVertex[3] = Vector3DMake( 2.0,  0.0, -3.0);
+    Vector3D baseCorners[] = 
+    {
+        Vector3DMake(-2.0,  0.0,  3.0),
+        Vector3DMake(-2.0,  0.0, -3.0),
+        Vector3DMake( 2.0,  0.0,  3.0),
+        Vector3DMake( 2.0,  0.0, -3.0)
+    };
     
-    _arrayVertexDots[0] = Vector3DMake(-1.5,  0.0,  1.0);
-    _arrayVertexDots[1] = Vector3DMake(-1.5,  0.0, -1.0);
-    _arrayVertexDots[2] = Vector3DMake( 1.5,  0.0,  1.0);
-    _arrayVertexDots[3] = Vector3DMake( 1.5,  0.0, -1.0);
+    Vector3D baseCornersDots[] = 
+    {
+        Vector3DMake(-1.5,  0.0,  1.0),
+        Vector3DMake(-1.5,  0.0, -1.0),
+        Vector3DMake( 1.5,  0.0,  1.0),
+        Vector3DMake( 1.5,  0.0, -1.0)
+    };
     
-    GenerateBezierNormals (_arrayNormal,      2, 2, _arrayVertex);
+    GenerateBezierControlPoints(_controlPoints, baseCorners);
+
+    GenerateBezierVertices(_arrayVertex,      2, 2, _controlPoints);
+    GenerateBezierVertices(_arrayVertexDots,  2, 2, _controlPoints);
+    GenerateBezierNormals (_arrayNormal,      2, 2, _controlPoints);
     GenerateBezierTextures(_arrayTexture,     2, 2, _textureSize, _textureOffset);
     GenerateBezierMesh    (_arrayMesh,        2, 2);
 }
@@ -183,7 +193,7 @@
     glGetIntegerv(GL_VIEWPORT, viewport);
 	
     Vector2D points[16];
-    ProjectVectors(_arrayVertex, points, 16, model_view, projection, viewport);
+    ProjectVectors(_controlPoints, points, 16, model_view, projection, viewport);
     
     GLushort triangles[54];
     GenerateBezierMesh(triangles, 4, 4);
