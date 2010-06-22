@@ -32,6 +32,8 @@
 @property (nonatomic, retain) AnimatedVector3D* location;
 @property (nonatomic, assign) id owner;
 
+@property (nonatomic, retain) GLTexture* textureDots;
+
 -(void)reset;
 
 -(void)draw;
