@@ -17,7 +17,6 @@
 
 @synthesize texture        = _texture;
 @synthesize textController = _textController;
-@synthesize dots           = _dots;
 @synthesize angleJitter    = _angleJitter;
 @synthesize angleSin       = _angleSin;
 
@@ -29,6 +28,7 @@
 -(void)dealloc
 {
     free(_arrayVertex);
+    free(_arrayVertexDots);
     free(_arrayNormal);
     free(_arrayTexture);
     free(_arrayMesh);
@@ -42,22 +42,15 @@
     
     if(self)
     {           
-        _arrayVertex  = malloc(4 * sizeof(Vector3D));
-        _arrayNormal  = malloc(4 * sizeof(Vector3D));
-        _arrayTexture = malloc(4 * sizeof(Vector2D));
-        _arrayMesh    = malloc(6 * sizeof(GLushort));
+        _arrayVertexDots  = malloc(4 * sizeof(Vector3D));
+        _arrayVertex      = malloc(4 * sizeof(Vector3D));
+        _arrayNormal      = malloc(4 * sizeof(Vector3D));
+        _arrayTexture     = malloc(4 * sizeof(Vector2D));
+        _arrayMesh        = malloc(6 * sizeof(GLushort));
         
         self.opacity  = [AnimatedFloat withValue:1];
         self.location = [AnimatedVector3D withValue:Vector3DMake(0, 0, 0)];
         
-        self.dots = [[[TextControllerPageMarker alloc] init] autorelease];
-        self.dots.center = NO;
-        self.dots.opacity = 1;
-        self.dots.location = Vector3DMake(0, 0, 2.25);
-        self.dots.owner = self;
-        
-        [self.dots update];
-                
         [self reset];
     }
     
@@ -79,10 +72,11 @@
     
     GenerateBezierControlPoints(_controlPoints, baseCorners);
 
-    GenerateBezierVertices(_arrayVertex,  2, 2, _controlPoints);
-    GenerateBezierNormals (_arrayNormal,  2, 2, _controlPoints);
-    GenerateBezierTextures(_arrayTexture, 2, 2, _textureSize, _textureOffset);
-    GenerateBezierMesh    (_arrayMesh,    2, 2);
+    GenerateBezierVertices(_arrayVertex,      2, 2, _controlPoints);
+    GenerateBezierVertices(_arrayVertexDots,  2, 2, _controlPoints);
+    GenerateBezierNormals (_arrayNormal,      2, 2, _controlPoints);
+    GenerateBezierTextures(_arrayTexture,     2, 2, _textureSize, _textureOffset);
+    GenerateBezierMesh    (_arrayMesh,        2, 2);
 }
 
 -(void)draw
@@ -91,7 +85,7 @@
     
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 
-    glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"cards"]);
+    glColor4f(self.opacity.value * self.lightness, self.opacity.value * self.lightness, self.opacity.value * self.lightness, self.opacity.value);
     
     TRANSACTION_BEGIN
     {
@@ -99,22 +93,29 @@
 
         glRotatef(self.angleSin, 0, 1, 0);
         
+        
+        glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"cards"]);
+        
         glVertexPointer  (3, GL_FLOAT, 0, _arrayVertex);
         glNormalPointer  (   GL_FLOAT, 0, _arrayNormal);
         glTexCoordPointer(2, GL_FLOAT, 0, _arrayTexture);            
         
-        glColor4f(self.opacity.value * self.lightness, self.opacity.value * self.lightness, self.opacity.value * self.lightness, self.opacity.value);
-        
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, _arrayMesh);
+
+        
+        glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"cards"]);
+        
+        glVertexPointer  (3, GL_FLOAT, 0, _arrayVertex);
+        glNormalPointer  (   GL_FLOAT, 0, _arrayNormal);
+        glTexCoordPointer(2, GL_FLOAT, 0, _arrayTexture);            
+
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, _arrayMesh);
+
         
         self.textController.opacity = self.opacity.value;
-        self.dots.opacity = self.opacity.value;
-        
         self.textController.lightness = self.lightness;
-        self.dots.lightness = self.lightness;
         
         [self.textController draw];
-        [self.dots draw];
     }
     TRANSACTION_END
     
