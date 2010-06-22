@@ -87,7 +87,6 @@
     
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 
-    glColor4f(self.opacity.value * self.lightness, self.opacity.value * self.lightness, self.opacity.value * self.lightness, self.opacity.value);
     
     TRANSACTION_BEGIN
     {
@@ -96,14 +95,19 @@
         glRotatef(self.angleSin, 0, 1, 0);
         
         
-//        glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"cards"]);
-//        
-//        glVertexPointer  (3, GL_FLOAT, 0, _arrayVertex);
-//        glNormalPointer  (   GL_FLOAT, 0, _arrayNormal);
-//        glTexCoordPointer(2, GL_FLOAT, 0, _arrayTexture);            
-//        
-//        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, _arrayMesh);
+        glColor4f(self.opacity.value * self.lightness, self.opacity.value * self.lightness, self.opacity.value * self.lightness, self.opacity.value);
+        
+        glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"cards"]);
+        
+        glVertexPointer  (3, GL_FLOAT, 0, _arrayVertex);
+        glNormalPointer  (   GL_FLOAT, 0, _arrayNormal);
+        glTexCoordPointer(2, GL_FLOAT, 0, _arrayTexture);            
+        
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, _arrayMesh);
 
+        
+        glColor4f(0, 0, 0, self.opacity.value);
+        
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         glBindTexture(GL_TEXTURE_2D, self.textureDots.name);
