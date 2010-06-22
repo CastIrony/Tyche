@@ -51,6 +51,8 @@
         self.opacity  = [AnimatedFloat withValue:1];
         self.location = [AnimatedVector3D withValue:Vector3DMake(0, 0, 0)];
         
+        self.textureDots = [[[GLTexture alloc] initWithDots:23 current:4] autorelease];
+        
         [self reset];
     }
     
@@ -103,7 +105,7 @@
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, _arrayMesh);
 
         
-        glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"cards"]);
+        glBindTexture(GL_TEXTURE_2D, self.textureDots.name);
         
         glVertexPointer  (3, GL_FLOAT, 0, _arrayVertexDots);
         glNormalPointer  (   GL_FLOAT, 0, _arrayNormal);
