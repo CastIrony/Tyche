@@ -22,6 +22,9 @@
 }
 
 @property (nonatomic, retain) TextController* textController;
+
+@property (nonatomic, retain) GLDots* dots;
+
 @property (nonatomic, assign) GLfloat  angleJitter;
 @property (nonatomic, assign) GLfloat  angleSin;
 
