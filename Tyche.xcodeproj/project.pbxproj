@@ -54,6 +54,7 @@
 		C54152A41084167400D4E1A9 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = C541529E1084167400D4E1A9 /* SBJsonWriter.m */; };
 		C543A2F51187D18B005372E1 /* lightmap.png in Resources */ = {isa = PBXBuildFile; fileRef = C543A2F41187D18B005372E1 /* lightmap.png */; };
 		C543A3A31187E295005372E1 /* heartsflat.pvr4 in Resources */ = {isa = PBXBuildFile; fileRef = C543A3A21187E295005372E1 /* heartsflat.pvr4 */; };
+		C547C59111D19950001BC46B /* GLDots.m in Sources */ = {isa = PBXBuildFile; fileRef = C547C59011D19950001BC46B /* GLDots.m */; };
 		C5543A25109BEC8B00CE722D /* GLSplash.m in Sources */ = {isa = PBXBuildFile; fileRef = C5543A24109BEC8B00CE722D /* GLSplash.m */; };
 		C555DA2610E9BE6A00E3D448 /* TextController.m in Sources */ = {isa = PBXBuildFile; fileRef = C555DA2510E9BE6A00E3D448 /* TextController.m */; };
 		C555DA9C10E9E36300E3D448 /* TextControllerActions.m in Sources */ = {isa = PBXBuildFile; fileRef = C555DA9B10E9E36300E3D448 /* TextControllerActions.m */; };
@@ -190,6 +191,8 @@
 		C541529E1084167400D4E1A9 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
 		C543A2F41187D18B005372E1 /* lightmap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lightmap.png; sourceTree = "<group>"; };
 		C543A3A21187E295005372E1 /* heartsflat.pvr4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = heartsflat.pvr4; sourceTree = "<group>"; };
+		C547C58F11D19950001BC46B /* GLDots.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLDots.h; sourceTree = "<group>"; };
+		C547C59011D19950001BC46B /* GLDots.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLDots.m; sourceTree = "<group>"; };
 		C5543A23109BEC8B00CE722D /* GLSplash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLSplash.h; sourceTree = "<group>"; };
 		C5543A24109BEC8B00CE722D /* GLSplash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLSplash.m; sourceTree = "<group>"; };
 		C555DA2410E9BE6A00E3D448 /* TextController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextController.h; sourceTree = "<group>"; };
@@ -424,6 +427,8 @@
 				C5415257108415E000D4E1A9 /* GLChip.m */,
 				C541525C108415E000D4E1A9 /* GLMenu.h */,
 				C541525D108415E000D4E1A9 /* GLMenu.m */,
+				C547C58F11D19950001BC46B /* GLDots.h */,
+				C547C59011D19950001BC46B /* GLDots.m */,
 				C5415262108415E000D4E1A9 /* GLLabel.h */,
 				C5415263108415E000D4E1A9 /* GLLabel.m */,
 				C5543A23109BEC8B00CE722D /* GLSplash.h */,
@@ -732,6 +737,7 @@
 				C5EF7FA1116C5A6C00801ECA /* TextControllerClientList.m in Sources */,
 				C52529361191425700160B7F /* GLTexture.m in Sources */,
 				C513EBB211C71F260077703B /* MenuControllerHostGame.m in Sources */,
+				C547C59111D19950001BC46B /* GLDots.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

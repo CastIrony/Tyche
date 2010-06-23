@@ -23,7 +23,7 @@
     GLushort*  _arrayMesh;
 }
 
-@property (nonatomic, retain) GLTexture* texture;
+//@property (nonatomic, retain) GLTexture* texture;
 @property (nonatomic, retain) TextController* textController;
 @property (nonatomic, assign) GLfloat  angleJitter;
 @property (nonatomic, assign) GLfloat  angleSin;
