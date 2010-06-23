@@ -267,8 +267,9 @@ static GLTexturePixelFormat defaultAlphaPixelFormat = kGLTexturePixelFormat_Defa
 //    dots = 10;
 //    current = 4;
     
-    int spacing = 8;
-    int radius =  2;
+    GLfloat spacing = 9;
+    GLfloat radius =  2.75;
+    
     int perRow = 10;
     
     int width = spacing * 2 * (dots > perRow ? perRow : dots);
