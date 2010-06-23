@@ -38,8 +38,8 @@
 -(void)draw
 {
     if(!self.texture) { return; }
-    
-    glColor4f(0, 0, 0, self.menu.opacity.value);
+        
+    glColor4f(0.5, 0, 0, self.menu.opacity.value * 0.75);
     
     //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
