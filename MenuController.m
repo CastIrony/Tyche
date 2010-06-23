@@ -248,7 +248,7 @@
 //        }
 //        else 
         {
-            self.currentIndex = clipInt(newIndex, 0, self.liveMenuKeys.count - 1);
+            self.currentIndex = clipInt(newIndex, -1, self.liveMenuKeys.count - 1);
             self.currentKey = [self.liveMenuKeys objectAtIndex:self.currentIndex];
 
             self.offset = [AnimatedFloat withStartValue:self.offset.value endValue:self.currentIndex speed:2.0];
