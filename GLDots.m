@@ -1,3 +1,4 @@
+#import "GLTexture.h"
 #import "GLDots.h"
 
 @implementation GLDots
