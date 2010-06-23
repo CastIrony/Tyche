@@ -52,6 +52,8 @@
                 
         self.dots = [[[GLDots alloc] init] autorelease];
         
+        [self.dots setDots:8 current:3]; 
+        
         [self reset];
     }
     
