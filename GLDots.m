@@ -4,4 +4,9 @@
 
 @synthesize texture;
 
+-(void)draw
+{
+    
+}
+
 @end

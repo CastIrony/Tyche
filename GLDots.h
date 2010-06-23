@@ -2,6 +2,9 @@
 #import "Common.h"
 #import "Geometry.h"
 
+@class GLTexture;
+@class GLMenu;
+
 @interface GLDots : NSObject 
 {
     Vector3D   _controlPoints[16];
@@ -17,5 +20,9 @@
 }
 
 @property (nonatomic, retain) GLTexture* texture;
+
+-(void)setDots:(int)dots current:(int)current;
+
+-(void)draw;
 
 @end
