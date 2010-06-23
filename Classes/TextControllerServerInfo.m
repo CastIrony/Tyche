@@ -24,7 +24,7 @@
 
 -(void)update
 {
-    Color3D colorNormal      = Color3DMake(0.6, 0.1, 0, 0.7); 
+    Color3D colorNormal      = Color3DMake(0.4, 0.0, 0, 0.7); 
     Color3D colorTouched     = Color3DMake(0.0, 0.0, 0, 0.7); 
     
     [self.styles setObject:[NSNumber numberWithFloat:0.0]                                         forKey:@"fadeMargin"]; 
