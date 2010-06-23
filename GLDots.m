@@ -54,13 +54,18 @@
 
 -(void)setDots:(int)dots current:(int)current;
 {
+    if($dots < 2)
+    {
+        self.texture = nil;
+        
+        return;
+    }
+    
     self.texture = [[[GLTexture alloc] initWithDots:dots current:current] autorelease];
     
     GLfloat height = self.texture.contentSize.height / 100;
     GLfloat width = self.texture.contentSize.width / 100; 
-    
-    NSLog(@"Dots: <%f3, %f3>", self.texture.contentSize.width, self.texture.contentSize.height);
-    
+        
     Vector3D baseCorners[] = 
     {
         Vector3DMake(-width / 2,  0.0, 2.6),
