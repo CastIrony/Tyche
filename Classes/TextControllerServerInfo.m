@@ -24,8 +24,8 @@
 
 -(void)update
 {
-    Color3D colorNormal      = Color3DMake(0.5, 0.0, 0, 0.7); 
-    Color3D colorTouched     = Color3DMake(0.0, 0.0, 0, 0.7); 
+    Color3D colorNormal      = Color3DMake(0.5, 0.0, 0, 0.75); 
+    Color3D colorTouched     = Color3DMake(0.0, 0.0, 0, 0.75); 
     
     [self.styles setObject:[NSNumber numberWithFloat:0.0]                                         forKey:@"fadeMargin"]; 
     [self.styles setObject:[UIFont   fontWithName:@"Helvetica-Bold" size:20]                      forKey:@"font"];
