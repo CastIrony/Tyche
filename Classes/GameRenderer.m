@@ -181,13 +181,13 @@
     [servers addObject:@"♘Michele's iPod"];                           
     [servers addObject:@"☂Bonnie's iPhone"];                           
     [servers addObject:@"♂Charles's iPod"];    
-    [servers addObject:@"☃Joel's iPhone 2"];                           
-    [servers addObject:@"☝Rachel's iPod 2"];                           
-    [servers addObject:@"♜Carolyn's iPhone 2"];                           
-    [servers addObject:@"☠John's iPod 2"];                           
-    [servers addObject:@"Sarah's iPhone 2"];                           
-    [servers addObject:@"♘Michele's iPod 2"];                           
-    [servers addObject:@"☂Bonnie's iPhone 2"];                           
+//    [servers addObject:@"☃Joel's iPhone 2"];                           
+//    [servers addObject:@"☝Rachel's iPod 2"];                           
+//    [servers addObject:@"♜Carolyn's iPhone 2"];                           
+//    [servers addObject:@"☠John's iPod 2"];                           
+//    [servers addObject:@"Sarah's iPhone 2"];                           
+//    [servers addObject:@"♘Michele's iPod 2"];                           
+//    [servers addObject:@"☂Bonnie's iPhone 2"];                           
     
     srand48(time(NULL));
 
