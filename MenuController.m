@@ -160,8 +160,8 @@
                 
         for(NSString* key in self.allMenuKeys)
         {
-            if(key == [self.allMenuKeys objectBefore:self.currentKey] || key == [self.allMenuKeys objectAfter:self.currentKey])
-            {
+//            if(key == [self.allMenuKeys objectBefore:self.currentKey] || key == [self.allMenuKeys objectAfter:self.currentKey])
+//            {
                 GLMenu* menu = [self.menus objectForKey:key];
                 
                 menu.angleSin = 7.5 * sin(2 * self.offset.value + 2 * menu.angleJitter);
@@ -170,17 +170,17 @@
                 
                 [menu reset];
                 [menu draw];
-            }
+//            }
         }
         
-        GLMenu* menu = [self.menus objectForKey:self.currentKey];
-        
-        menu.angleSin = 7.5 * sin(2 * self.offset.value + 2 * menu.angleJitter);
-
-        menu.lightness = 1 - self.collapsed.value * 0.5;
-        
-        [menu reset];
-        [menu draw];
+//        GLMenu* menu = [self.menus objectForKey:self.currentKey];
+//        
+//        menu.angleSin = 7.5 * sin(2 * self.offset.value + 2 * menu.angleJitter);
+//
+//        menu.lightness = 1 - self.collapsed.value * 0.5;
+//        
+//        [menu reset];
+//        [menu draw];
     }
     TRANSACTION_END
     
