@@ -7,7 +7,7 @@
 
 -(void)draw
 {
-    glColor4f(0, 0, 0, self.opacity.value);
+    glColor4f(0, 0, 0, self.menu.opacity.value);
     
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
