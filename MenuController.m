@@ -249,7 +249,7 @@
 //        else 
         {
             self.currentIndex = clipInt(newIndex, -1, self.liveMenuKeys.count - 1);
-            self.currentKey = [self.liveMenuKeys objectAtIndex:self.currentIndex];
+            self.currentKey = self.currentIndex == -1 ? nil : self.liveMenuKeys objectAtIndex:self.currentIndex];
 
             self.offset = [AnimatedFloat withStartValue:self.offset.value endValue:self.currentIndex speed:2.0];
             self.offset.curve = AnimationEaseInOut;
