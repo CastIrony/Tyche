@@ -14,7 +14,7 @@
 
 @implementation GLMenu
 
-@synthesize texture        = _texture;
+//@synthesize texture        = _texture;
 @synthesize textController = _textController;
 @synthesize angleJitter    = _angleJitter;
 @synthesize angleSin       = _angleSin;
