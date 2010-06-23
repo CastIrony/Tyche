@@ -9,8 +9,37 @@
 @synthesize texture;
 @synthesize menu;
 
+-(void)dealloc
+{
+    free(_arrayVertex);
+    free(_arrayNormal);
+    free(_arrayTexture);
+    free(_arrayMesh);
+    
+    [super dealloc];
+}
+
+-(id)init
+{    
+    self = [super init];
+    
+    if(self)
+    {           
+        _arrayVertex      = malloc(4 * sizeof(Vector3D));
+        _arrayNormal      = malloc(4 * sizeof(Vector3D));
+        _arrayTexture     = malloc(4 * sizeof(Vector2D));
+        _arrayMesh        = malloc(6 * sizeof(GLushort));
+                
+        [self reset];
+    }
+    
+    return self;
+}
+
 -(void)draw
 {
+    if(!self.texture) { return; }
+    
     glColor4f(0, 0, 0, self.menu.opacity.value);
     
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -27,6 +56,22 @@
 -(void)setDots:(int)dots current:(int)current;
 {
     self.texture = [[[GLTexture alloc] initWithDots:23 current:4] autorelease];
+    
+    Vector3D baseCorners[] = 
+    {
+        Vector3DMake(-1.5,  0.0, 2.75),
+        Vector3DMake(-1.5,  0.0, 1.25),
+        Vector3DMake( 1.5,  0.0, 2.75),
+        Vector3DMake( 1.5,  0.0, 1.25)
+    };
+    
+    GenerateBezierControlPoints(_controlPoints, baseCorners);
+    
+    GenerateBezierVertices(_arrayVertex,      2, 2, _controlPoints);
+    GenerateBezierNormals (_arrayNormal,      2, 2, _controlPoints);
+    GenerateBezierTextures(_arrayTexture,     2, 2, _textureSize, _textureOffset);
+    GenerateBezierMesh    (_arrayMesh,        2, 2);
+    
 }
 
 @end

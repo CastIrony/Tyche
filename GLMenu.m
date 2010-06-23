@@ -26,7 +26,6 @@
 -(void)dealloc
 {
     free(_arrayVertex);
-    free(_arrayVertexDots);
     free(_arrayNormal);
     free(_arrayTexture);
     free(_arrayMesh);
@@ -40,7 +39,6 @@
     
     if(self)
     {           
-        _arrayVertexDots  = malloc(4 * sizeof(Vector3D));
         _arrayVertex      = malloc(4 * sizeof(Vector3D));
         _arrayNormal      = malloc(4 * sizeof(Vector3D));
         _arrayTexture     = malloc(4 * sizeof(Vector2D));
@@ -68,19 +66,9 @@
         Vector3DMake( 2.0,  0.0, -3.0)
     };
     
-    Vector3D baseCornersDots[] = 
-    {
-        Vector3DMake(-1.5,  0.0, 2.75),
-        Vector3DMake(-1.5,  0.0, 1.25),
-        Vector3DMake( 1.5,  0.0, 2.75),
-        Vector3DMake( 1.5,  0.0, 1.25)
-    };
-    
     GenerateBezierControlPoints(_controlPoints, baseCorners);
-    GenerateBezierControlPoints(_controlPointsDots, baseCornersDots);
 
     GenerateBezierVertices(_arrayVertex,      2, 2, _controlPoints);
-    GenerateBezierVertices(_arrayVertexDots,  2, 2, _controlPointsDots);
     GenerateBezierNormals (_arrayNormal,      2, 2, _controlPoints);
     GenerateBezierTextures(_arrayTexture,     2, 2, _textureSize, _textureOffset);
     GenerateBezierMesh    (_arrayMesh,        2, 2);

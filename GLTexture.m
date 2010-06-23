@@ -350,7 +350,7 @@ static GLTexturePixelFormat defaultAlphaPixelFormat = kGLTexturePixelFormat_Defa
     }
     UIGraphicsPopContext();
 	
-	self = [self initWithData:data pixelFormat:kGLTexturePixelFormat_A8 pixelsWide:textureWidth pixelsHigh:textureHeight contentSize:CGSizeMake(textureWidth, textureHeight)];
+	self = [self initWithData:data pixelFormat:kGLTexturePixelFormat_A8 pixelsWide:textureWidth pixelsHigh:textureHeight contentSize:CGSizeMake(width, height)];
 	
 	CGContextRelease(context);
 	free(data);
