@@ -56,8 +56,8 @@
 {
     self.texture = [[[GLTexture alloc] initWithDots:dots current:current] autorelease];
     
-    GLfloat height = self.texture.contentSize.height / 50;
-    GLfloat width = self.texture.contentSize.width / 50; 
+    GLfloat height = self.texture.contentSize.height / 200;
+    GLfloat width = self.texture.contentSize.width / 200; 
     
     NSLog(@"Dots: <%f3, %f3>", self.texture.contentSize.width, self.texture.contentSize.height);
     
