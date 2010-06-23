@@ -1,4 +1,5 @@
 #import "AnimatedFloat.h"
+#import "Bezier.h"
 #import "GLTexture.h"
 #import "GLMenu.h"
 
