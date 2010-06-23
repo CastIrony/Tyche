@@ -14,6 +14,8 @@
 
 @implementation GLMenu
 
+@synthesize dots;
+
 @synthesize textController = _textController;
 @synthesize angleJitter    = _angleJitter;
 @synthesize angleSin       = _angleSin;
