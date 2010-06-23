@@ -343,11 +343,8 @@
 
     glNormal3f(0.0, -1.0, 0.0);
     
-    GLfloat lightness = self.lightness * self.textController.renderer.lightness.value;
-    
-    GLfloat lightness1 = self.lightness;
-    GLfloat lightness2 = self.textController.renderer.lightness.value;
-    
+    GLfloat lightness = self.lightness * self.textController.lightness.value;
+        
     TRANSACTION_BEGIN
     {
         glTranslatef(self.layoutLocation.value.x, self.layoutLocation.value.y, self.layoutLocation.value.z);
