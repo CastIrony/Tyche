@@ -20,6 +20,7 @@
 }
 
 @property (nonatomic, retain) GLTexture* texture;
+@property (nonatomic, assign) GLMenu* menu;
 
 -(void)setDots:(int)dots current:(int)current;
 

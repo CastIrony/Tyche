@@ -4,6 +4,7 @@
 @implementation GLDots
 
 @synthesize texture;
+@synthesize menu;
 
 -(void)draw
 {
