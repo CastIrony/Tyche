@@ -188,7 +188,6 @@
     [servers addObject:@"Sarah's iPhone 2"];                           
     [servers addObject:@"♘Michele's iPod 2"];                           
     [servers addObject:@"☂Bonnie's iPhone 2"];                           
-    [servers addObject:@"♂Charles's iPod 2"];  
     
     srand48(time(NULL));
 
