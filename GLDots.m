@@ -10,7 +10,7 @@
     
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
-    glBindTexture(GL_TEXTURE_2D, self.textureDots.name);
+    glBindTexture(GL_TEXTURE_2D, self.texture.name);
     
     glVertexPointer  (3, GL_FLOAT, 0, _arrayVertex);
     glNormalPointer  (   GL_FLOAT, 0, _arrayNormal);
@@ -21,7 +21,7 @@
 
 -(void)setDots:(int)dots current:(int)current;
 {
-    self.textureDots = [[[GLTexture alloc] initWithDots:23 current:4] autorelease];
+    self.texture = [[[GLTexture alloc] initWithDots:23 current:4] autorelease];
 }
 
 @end
