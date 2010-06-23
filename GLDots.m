@@ -54,7 +54,7 @@
 
 -(void)setDots:(int)dots current:(int)current;
 {
-    if($dots < 2)
+    if(dots < 2)
     {
         self.texture = nil;
         
