@@ -272,8 +272,8 @@ static GLTexturePixelFormat defaultAlphaPixelFormat = kGLTexturePixelFormat_Defa
     
     int perRow = 10;
     
-    int width = spacing * 2 * (dots > perRow ? perRow : dots);
-    int height = spacing * 2 * (dots / perRow + 1);
+    GLfloat width = spacing * 2 * (dots > perRow ? perRow : dots);
+    GLfloat height = spacing * 2 * (dots / perRow + 1);
     
 	int textureWidth  = roundPowerTwo(width);
 	int textureHeight = roundPowerTwo(height);
