@@ -343,7 +343,7 @@
 
     glNormal3f(0.0, -1.0, 0.0);
     
-    GLfloat lightness = self.lightness * self.textController.lightness.value;
+    GLfloat lightness = self.lightness * self.textController.lightness;
         
     TRANSACTION_BEGIN
     {
