@@ -56,7 +56,7 @@
 {
     self.texture = [[[GLTexture alloc] initWithDots:dots current:current] autorelease];
     
-    GLfloat height = 3 * self.texture.size.height / self.texture.size.width; 
+    GLfloat height = 3 * self.texture.contentSize.height / self.texture.contentSize.width; 
     
     Vector3D baseCorners[] = 
     {
