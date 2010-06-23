@@ -6,6 +6,7 @@
 #import "TextController.h"
 #import "MenuController.h"
 #import "GLLabel.h"
+#import "GLDots.h"
 #import "MenuLayerController.h"
 
 @implementation MenuController
