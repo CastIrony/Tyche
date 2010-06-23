@@ -58,7 +58,7 @@
     
     GLfloat height = 3 * self.texture.contentSize.height / self.texture.contentSize.width; 
     
-    NSLog(@"Dots: <%f3, %f3>" self.texture.contentSize.width, self.texture.contentSize.height);
+    NSLog(@"Dots: <%f3, %f3>", self.texture.contentSize.width, self.texture.contentSize.height);
     
     Vector3D baseCorners[] = 
     {
