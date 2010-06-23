@@ -7,6 +7,7 @@
 @class TextControllerPageMarker;
 @class MenuController;
 @class GLTexture;
+@class GLDots;
 
 @interface GLMenu : NSObject
 {
