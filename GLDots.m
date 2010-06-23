@@ -56,12 +56,14 @@
 {
     self.texture = [[[GLTexture alloc] initWithDots:dots current:current] autorelease];
     
+    GLFloat height = 3 * self.texture.size.height / self.texture.size.width; 
+    
     Vector3D baseCorners[] = 
     {
         Vector3DMake(-1.5,  0.0, 2.75),
-        Vector3DMake(-1.5,  0.0, 1.25),
+        Vector3DMake(-1.5,  0.0, 2.75 - height),
         Vector3DMake( 1.5,  0.0, 2.75),
-        Vector3DMake( 1.5,  0.0, 1.25)
+        Vector3DMake( 1.5,  0.0, 2.75 - height)
     };
     
     GenerateBezierControlPoints(_controlPoints, baseCorners);
