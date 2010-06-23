@@ -54,7 +54,7 @@
 
 -(void)setDots:(int)dots current:(int)current;
 {
-    self.texture = [[[GLTexture alloc] initWithDots:23 current:4] autorelease];
+    self.texture = [[[GLTexture alloc] initWithDots:dots current:current] autorelease];
     
     Vector3D baseCorners[] = 
     {
