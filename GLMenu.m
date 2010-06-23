@@ -54,7 +54,7 @@
         
         self.dots.menu = self;
         
-        [self.dots setDots:83 current:3]; 
+        [self.dots setDots:2 current:3]; 
         
         [self reset];
     }
