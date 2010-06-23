@@ -267,8 +267,8 @@ static GLTexturePixelFormat defaultAlphaPixelFormat = kGLTexturePixelFormat_Defa
 //    dots = 10;
 //    current = 4;
     
-    GLfloat spacing = 8;
-    GLfloat radius =  2.75;
+    GLfloat spacing = 12;
+    GLfloat radius =  4.5;
     
     int perRow = 10;
     
@@ -298,7 +298,7 @@ static GLTexturePixelFormat defaultAlphaPixelFormat = kGLTexturePixelFormat_Defa
         //  xx    xx    xx    xx    xx
         //           **    xx
         
-        CGContextSetLineWidth(context, 1.0);
+        CGContextSetLineWidth(context, 1.5);
         
         for(int i = 0; i < (dots / perRow); i++)
         {
