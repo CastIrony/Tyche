@@ -67,7 +67,7 @@
     
     GenerateBezierVertices(_arrayVertex,      2, 2, _controlPoints);
     GenerateBezierNormals (_arrayNormal,      2, 2, _controlPoints);
-    GenerateBezierTextures(_arrayTexture,     2, 2, _textureSize, _textureOffset);
+    GenerateBezierTextures(_arrayTexture,     2, 2, Vector2DMake(1, 1), Vector2DMake(0, 0));
     GenerateBezierMesh    (_arrayMesh,        2, 2);
     
 }
