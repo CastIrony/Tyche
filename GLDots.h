@@ -16,4 +16,6 @@
     GLushort*  _arrayMesh;
 }
 
+@property (nonatomic, retain) GLTexture* texture;
+
 @end

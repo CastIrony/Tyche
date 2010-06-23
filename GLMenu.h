@@ -23,17 +23,15 @@
     GLushort*  _arrayMesh;
 }
 
-//@property (nonatomic, retain) GLTexture* texture;
 @property (nonatomic, retain) TextController* textController;
 @property (nonatomic, assign) GLfloat  angleJitter;
 @property (nonatomic, assign) GLfloat  angleSin;
 
-@property (nonatomic, assign) GLfloat  lightness;
+@property (nonatomic, assign) GLfloat           lightness;
 @property (nonatomic, retain) AnimatedFloat*    opacity;
 @property (nonatomic, retain) AnimatedVector3D* location;
 @property (nonatomic, assign) id owner;
 
-@property (nonatomic, retain) GLTexture* textureDots;
 
 -(void)reset;
 

@@ -2,4 +2,6 @@
 
 @implementation GLDots
 
+@synthesize texture;
+
 @end
