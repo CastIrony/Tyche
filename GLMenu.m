@@ -49,6 +49,8 @@
         self.opacity  = [AnimatedFloat withValue:1];
         self.location = [AnimatedVector3D withValue:Vector3DMake(0, 0, 0)];
                 
+        self.dots = [[[GLDots alloc] init] autorelease];
+        
         [self reset];
     }
     
@@ -100,11 +102,7 @@
         
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, _arrayMesh);
 
-        
-        
-        
-        
-        
+        [self.dots draw];
         
         self.textController.opacity = self.opacity.value;
         self.textController.lightness = self.lightness;
