@@ -114,6 +114,8 @@
             
             //[menu.dots update];
             
+            [menu.dots setDots:self.liveMenuKeys.count current:counter];
+            
             if(!collapsed) 
             { 
                 counter++; 
