@@ -29,8 +29,6 @@
         _arrayNormal      = malloc(4 * sizeof(Vector3D));
         _arrayTexture     = malloc(4 * sizeof(Vector2D));
         _arrayMesh        = malloc(6 * sizeof(GLushort));
-                
-        [self reset];
     }
     
     return self;
