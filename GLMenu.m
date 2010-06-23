@@ -4,6 +4,7 @@
 #import "Bezier.h"
 #import "Projection.h"
 #import "GLLabel.h"
+#import "GLDots.h"
 #import "AnimatedFloat.h"
 #import "AnimatedVector3D.h"
 #import "TextController.h"
