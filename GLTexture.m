@@ -298,7 +298,7 @@ static GLTexturePixelFormat defaultAlphaPixelFormat = kGLTexturePixelFormat_Defa
         //  xx    xx    xx    xx    xx
         //           **    xx
         
-        CGContextSetLineWidth(context, 2);
+        CGContextSetLineWidth(context, 1);
         
         for(int i = 0; i < (dots / perRow); i++)
         {
