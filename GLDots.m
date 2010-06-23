@@ -56,16 +56,17 @@
 {
     self.texture = [[[GLTexture alloc] initWithDots:dots current:current] autorelease];
     
-    GLfloat height = 3 * self.texture.contentSize.height / self.texture.contentSize.width; 
+    GLfloat height = 10 * self.texture.contentSize.height;
+    GLfloat width = 10 * self.texture.contentSize.width; 
     
     NSLog(@"Dots: <%f3, %f3>", self.texture.contentSize.width, self.texture.contentSize.height);
     
     Vector3D baseCorners[] = 
     {
-        Vector3DMake(-1.5,  0.0, 2.75),
-        Vector3DMake(-1.5,  0.0, 2.75 - height),
-        Vector3DMake( 1.5,  0.0, 2.75),
-        Vector3DMake( 1.5,  0.0, 2.75 - height)
+        Vector3DMake(-width / 2,  0.0, 2.75),
+        Vector3DMake(-width / 2,  0.0, 2.75 - height),
+        Vector3DMake( width / 2,  0.0, 2.75),
+        Vector3DMake( width / 2,  0.0, 2.75 - height)
     };
     
     GenerateBezierControlPoints(_controlPoints, baseCorners);
