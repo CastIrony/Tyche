@@ -61,8 +61,8 @@
         menu.hidden.curve = AnimationEaseInOut;
 //        menu.hidden.onEnd = 
 //        ^{
-//            [self.menuLayers removeObjectForKey:[self.menuLayerKeys lastObject]];
-//            [self.menuLayerKeys removeLastObject];
+            [self.menuLayers removeObjectForKey:[self.menuLayerKeys lastObject]];
+            [self.menuLayerKeys removeLastObject];
 //        };
     }
 }
