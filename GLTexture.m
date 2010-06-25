@@ -293,11 +293,6 @@ static GLTexturePixelFormat defaultAlphaPixelFormat = kGLTexturePixelFormat_Defa
     
     UIGraphicsPushContext(context);
     {
-        //  xx    xx    xx    xx    xx
-        //  xx    xx    xx    xx    xx
-        //  xx    xx    xx    xx    xx
-        //           **    xx
-        
         CGContextSetLineWidth(context, 2.5);
         
         for(int i = 0; i < (dots / perRow); i++)
@@ -319,8 +314,6 @@ static GLTexturePixelFormat defaultAlphaPixelFormat = kGLTexturePixelFormat_Defa
                 CGContextAddEllipseInRect(context, position);
                 
                 CGContextDrawPath(context, kCGPathEOFillStroke);
-                
-                //CGContextFillPath(context);
             }
         }
         
@@ -343,8 +336,6 @@ static GLTexturePixelFormat defaultAlphaPixelFormat = kGLTexturePixelFormat_Defa
             CGContextAddEllipseInRect(context, position);
 
             CGContextDrawPath(context, kCGPathEOFillStroke);
-
-//            CGContextFillPath(context);
         }
     }
     UIGraphicsPopContext();

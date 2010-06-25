@@ -46,6 +46,8 @@
 
 -(void)popUntilKey:(NSString*)key
 {
+    if(![self.menuLayerKeys containsObject:key]) { return; }
+    
     self.currentLayer.collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:1 speed:1];
     
     while(![[self.menuLayerKeys lastObject] isEqualToString:key])
