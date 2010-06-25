@@ -44,18 +44,18 @@
     [self.menuLayers setObject:menu forKey:key];
     [self.menuLayerKeys addObject:key];
 
-    self.currentLayer.collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:0 speed:1];
+    self.currentLayer.collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:1 speed:1];
 }
 
 -(void)popUntilKey:(NSString*)key
 {
     if(![self.menuLayerKeys containsObject:key]) { return; }
     
-    self.currentLayer.collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:1 speed:1];
+    self.currentLayer.collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:0 speed:1];
     
     while(![[self.menuLayerKeys lastObject] isEqualToString:key])
     {
-        MenuController* menu = [self.menuLayerKeys lastObject];
+        MenuController* menu = [self.menuLayers layerForKey:[self.menuLayerKeys lastObject]];
         
         menu.hidden = [AnimatedFloat withStartValue:menu.hidden.value endValue:1 speed:1];
         menu.hidden.curve = AnimationEaseInOut;
