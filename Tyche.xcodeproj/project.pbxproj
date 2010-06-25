@@ -32,6 +32,7 @@
 		C50F907C10E1C58700F179EB /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C50F907B10E1C58700F179EB /* AudioToolbox.framework */; };
 		C513EBB211C71F260077703B /* MenuControllerHostGame.m in Sources */ = {isa = PBXBuildFile; fileRef = C513EBB111C71F260077703B /* MenuControllerHostGame.m */; };
 		C52529361191425700160B7F /* GLTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = C52529351191425700160B7F /* GLTexture.m */; };
+		C535BD2911D54822009D539B /* DisplayContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = C535BD2811D54822009D539B /* DisplayContainer.m */; };
 		C53A517C11741B2100DE975B /* logo2.png in Resources */ = {isa = PBXBuildFile; fileRef = C53A517B11741B2100DE975B /* logo2.png */; };
 		C5415266108415E000D4E1A9 /* GLChip.m in Sources */ = {isa = PBXBuildFile; fileRef = C5415257108415E000D4E1A9 /* GLChip.m */; };
 		C5415267108415E000D4E1A9 /* GLCardGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = C5415259108415E000D4E1A9 /* GLCardGroup.m */; };
@@ -142,6 +143,8 @@
 		C513EBB111C71F260077703B /* MenuControllerHostGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuControllerHostGame.m; sourceTree = "<group>"; };
 		C52529341191425700160B7F /* GLTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLTexture.h; sourceTree = "<group>"; };
 		C52529351191425700160B7F /* GLTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLTexture.m; sourceTree = "<group>"; };
+		C535BD2711D54822009D539B /* DisplayContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayContainer.h; sourceTree = "<group>"; };
+		C535BD2811D54822009D539B /* DisplayContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayContainer.m; sourceTree = "<group>"; };
 		C53A517B11741B2100DE975B /* logo2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo2.png; sourceTree = "<group>"; };
 		C5415256108415E000D4E1A9 /* GLChip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLChip.h; sourceTree = "<group>"; };
 		C5415257108415E000D4E1A9 /* GLChip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLChip.m; sourceTree = "<group>"; };
@@ -472,6 +475,8 @@
 				C54152741084165100D4E1A9 /* AnimatedFloat.m */,
 				C54152751084165100D4E1A9 /* AnimatedVector3D.h */,
 				C54152761084165100D4E1A9 /* AnimatedVector3D.m */,
+				C535BD2711D54822009D539B /* DisplayContainer.h */,
+				C535BD2811D54822009D539B /* DisplayContainer.m */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -738,6 +743,7 @@
 				C52529361191425700160B7F /* GLTexture.m in Sources */,
 				C513EBB211C71F260077703B /* MenuControllerHostGame.m in Sources */,
 				C547C59111D19950001BC46B /* GLDots.m in Sources */,
+				C535BD2911D54822009D539B /* DisplayContainer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
