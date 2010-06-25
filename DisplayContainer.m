@@ -5,7 +5,11 @@
 @synthesize keys;
 @synthesize objects;
 
-+(DisplayContainer*)emptyContainer {}
++(DisplayContainer*)emptyContainer 
+{
+    return [[[DisplayContainer alloc] init] autorelease];
+}
+
 +(DisplayContainer*)containerWithKeys:(NSArray*)keys objectDictionary:(NSDictionary*)objects {}
 
 -(DisplayContainer*)insertObject:(id)object asFirstWithKey:(id)key {}
