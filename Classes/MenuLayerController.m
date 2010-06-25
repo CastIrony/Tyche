@@ -38,6 +38,9 @@
 {
     menu.owner = self;
     
+    menu.hidden = [AnimatedFloat withStartValue:1 endValue:0 speed:1];
+    menu.hidden.curve = AnimationEaseInOut;
+    
     [self.menuLayers setObject:menu forKey:key];
     [self.menuLayerKeys addObject:key];
 
@@ -52,8 +55,13 @@
     
     while(![[self.menuLayerKeys lastObject] isEqualToString:key])
     {
-        [self.menuLayers removeObjectForKey:[self.menuLayerKeys lastObject]];
-        [self.menuLayerKeys removeLastObject];
+        menu.hidden = [AnimatedFloat withStartValue:menu.hidden.value endValue:1 speed:1];
+        menu.hidden.curve = AnimationEaseInOut;
+        menu.hidden.onEnd = 
+        ^{
+            [self.menuLayers removeObjectForKey:[self.menuLayerKeys lastObject]];
+            [self.menuLayerKeys removeLastObject];
+        };
     }
 }
 
