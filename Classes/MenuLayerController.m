@@ -59,11 +59,11 @@
         
         menu.hidden = [AnimatedFloat withStartValue:menu.hidden.value endValue:1 speed:1];
         menu.hidden.curve = AnimationEaseInOut;
-        menu.hidden.onEnd = 
-        ^{
-            [self.menuLayers removeObjectForKey:[self.menuLayerKeys lastObject]];
-            [self.menuLayerKeys removeLastObject];
-        };
+//        menu.hidden.onEnd = 
+//        ^{
+//            [self.menuLayers removeObjectForKey:[self.menuLayerKeys lastObject]];
+//            [self.menuLayerKeys removeLastObject];
+//        };
     }
 }
 
