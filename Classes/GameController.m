@@ -17,6 +17,7 @@
 #import "GameControllerMP.h"
 #import "CameraController.h"
 #import "SoundController.h"
+#import "MenuControllerMain.h"
 
 @implementation GameController
 
