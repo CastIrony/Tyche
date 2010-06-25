@@ -55,6 +55,8 @@
     
     while(![[self.menuLayerKeys lastObject] isEqualToString:key])
     {
+        MenuController* menu = [self.menuLayerKeys lastObject];
+        
         menu.hidden = [AnimatedFloat withStartValue:menu.hidden.value endValue:1 speed:1];
         menu.hidden.curve = AnimationEaseInOut;
         menu.hidden.onEnd = 
