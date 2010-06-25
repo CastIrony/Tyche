@@ -6,7 +6,7 @@
 @property (nonatomic, retain) NSArray*      keys;
 @property (nonatomic, retain) NSDictionary* objects;
 
-+(DisplayContainer*)emptyContainer;
++(DisplayContainer*)container;
 +(DisplayContainer*)containerWithKeys:(NSArray*)keys objectDictionary:(NSDictionary*)objects;
 
 -(DisplayContainer*)insertObject:(id)object asFirstWithKey:(id)key;
