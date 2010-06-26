@@ -33,8 +33,8 @@
 
 -(DisplayContainer*)insertObject:(id)object asFirstWithKey:(id)key 
 {
-    NSMutableArray*      keys      = [[self.keys      mutableCopy] autorelease];
-    NSMutableDictionary* hashtable = [[self.hashtable mutableCopy] autorelease];
+    NSMutableArray*      newKeys      = [[self.keys      mutableCopy] autorelease];
+    NSMutableDictionary* newHashtable = [[self.hashtable mutableCopy] autorelease];
     
     if([self.keys containsObject:key])
     {
@@ -51,11 +51,11 @@
     }
     else 
     {
-        [keys insertObject:object atIndex:0];
-        [hashtable setValue:object forKey:key];
+        [newKeys insertObject:object atIndex:0];
+        [newHashtable setValue:object forKey:key];
     }
     
-    return [DisplayContainer containerWithKeys:keys hashtable:hashtable]; 
+    return [DisplayContainer containerWithKeys:newKeys hashtable:newHashtable]; 
 }
 
 -(DisplayContainer*)insertObject:(id)object asLastWithKey:(id)key 
