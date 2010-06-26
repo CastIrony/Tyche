@@ -131,7 +131,7 @@
 
 -(NSEnumerator*)keyEnumerator 
 {
-    return self.keys.objectEnumerator; 
+    return [self.keys copy].objectEnumerator; 
 }
 
 -(NSEnumerator*)objectEnumerator 
@@ -141,23 +141,22 @@
 
 -(NSEnumerator*)topObjectEnumerator 
 {
-    return nil; 
+    return self.topObjects.objectEnumerator; 
 }
-
 
 -(NSEnumerator*)reverseKeyEnumerator 
 {
-    return nil; 
+    return self.keys.reverseObjectEnumerator; 
 }
 
 -(NSEnumerator*)reverseObjectEnumerator 
 {
-    return nil; 
+    return self.objects.reverseObjectEnumerator; 
 }
 
 -(NSEnumerator*)reverseTopObjectEnumerator 
 {
-    return nil; 
+    return self.topObjects.reverseObjectEnumerator; 
 }
 
 @end
