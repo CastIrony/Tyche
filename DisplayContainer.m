@@ -126,7 +126,7 @@
 
 -(id)topObjectForKey:(id)key 
 {
-    return nil; 
+    return [[[self.objects] objectForKey:key] lastObject];
 }
 
 -(NSEnumerator*)keyEnumerator 
