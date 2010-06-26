@@ -56,9 +56,7 @@
 {
     menu.owner = self;
     
-    [self.menus setObject:menu forKey:key];
-    [self.liveMenuKeys addObject:key];
-    [self.allMenuKeys addObject:key];
+    [self.menus insertObject:menu asLastWithKey:key];
     
     [self layoutMenus];
 }
