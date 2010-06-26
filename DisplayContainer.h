@@ -10,8 +10,8 @@
 -(DisplayContainer*)insertObject:(id)object asFirstWithKey:(id)key;
 -(DisplayContainer*)insertObject:(id)object asLastWithKey:(id)key;
 -(DisplayContainer*)insertObject:(id)object withKey:(id)key atIndex:(int)index;
--(DisplayContainer*)insertObject:(id)object withKey:(id)key beforeKey:(id)before;
--(DisplayContainer*)insertObject:(id)object withKey:(id)key afterKey:(id)after;
+-(DisplayContainer*)insertObject:(id)object withKey:(id)key beforeKey:(id)target;
+-(DisplayContainer*)insertObject:(id)object withKey:(id)key afterKey:(id)target;
 
 -(DisplayContainer*)moveKeyToFirst:(id)key;
 -(DisplayContainer*)moveKeyToLast:(id)key;

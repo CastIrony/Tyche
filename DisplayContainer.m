@@ -107,9 +107,9 @@
     return [DisplayContainer containerWithKeys:newKeys hashtable:newHashtable]; 
 }
 
--(DisplayContainer*)insertObject:(id)object withKey:(id)key beforeKey:(id)before 
+-(DisplayContainer*)insertObject:(id)object withKey:(id)key beforeKey:(id)target 
 {
-    if(![self.keys containsObject:before]) { return self; }
+    if(![self.keys containsObject:target]) { return self; }
 
     NSMutableArray*      newKeys      = [[self.keys      mutableCopy] autorelease];
     NSMutableDictionary* newHashtable = [[self.hashtable mutableCopy] autorelease];
@@ -119,16 +119,16 @@
     [newArray addObject:object];
     
     [newKeys removeObject:key];
-    [newKeys insertObject:key atIndex:[newKeys indexOfObject:before]];
+    [newKeys insertObject:key atIndex:[newKeys indexOfObject:target]];
     
     [newHashtable setValue:newArray forKey:key];
     
     return [DisplayContainer containerWithKeys:newKeys hashtable:newHashtable];  
 }
 
--(DisplayContainer*)insertObject:(id)object withKey:(id)key afterKey:(id)after 
+-(DisplayContainer*)insertObject:(id)object withKey:(id)key afterKey:(id)target 
 {
-    if(![self.keys containsObject:after]) { return self; }
+    if(![self.keys containsObject:target]) { return self; }
 
     NSMutableArray*      newKeys      = [[self.keys      mutableCopy] autorelease];
     NSMutableDictionary* newHashtable = [[self.hashtable mutableCopy] autorelease];
@@ -138,7 +138,7 @@
     [newArray addObject:object];
     
     [newKeys removeObject:key];
-    [newKeys insertObject:key atIndex:[newKeys indexOfObject:after] + 1];
+    [newKeys insertObject:key atIndex:[newKeys indexOfObject:target] + 1];
     
     [newHashtable setValue:newArray forKey:key];
     
