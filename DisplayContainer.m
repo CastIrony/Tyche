@@ -131,7 +131,7 @@
 
 -(NSEnumerator*)keyEnumerator 
 {
-    return [self.keys copy].objectEnumerator; 
+    return [[self.keys copy] objectEnumerator]; 
 }
 
 -(NSEnumerator*)objectEnumerator 
