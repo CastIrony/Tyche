@@ -10,7 +10,7 @@
     return [[[DisplayContainer alloc] init] autorelease];
 }
 
-+(DisplayContainer*)containerWithKeys:(NSArray*)keys objectDictionary:(NSDictionary*)objects 
++(DisplayContainer*)containerWithKeys:(NSMutableArray*)keys objectDictionary:(NSMutableDictionary*)objects 
 {
     DisplayContainer* container = [[[DisplayContainer alloc] init] autorelease];
     
