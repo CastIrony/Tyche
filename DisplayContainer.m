@@ -29,7 +29,7 @@
     else 
     {
         [self.objects setValue:object forKey:key];
-        [self.keys ]
+        [self.keys insertObject:object atIndex:0];
     }
 
     return self; 
@@ -37,11 +37,31 @@
 
 -(DisplayContainer*)insertObject:(id)object asLastWithKey:(id)key 
 {
+    if([self.keys containsObject:key])
+    {
+        
+    }
+    else 
+    {
+        [self.objects setValue:object forKey:key];
+        [self.keys addObject:object];
+    }
+    
     return self; 
 }
 
 -(DisplayContainer*)insertObject:(id)object withKey:(id)key atIndex:(int)index 
 {
+    if([self.keys containsObject:key])
+    {
+        
+    }
+    else 
+    {
+        [self.objects setValue:object forKey:key];
+        [self.keys insertObject:object atIndex:index];
+    }
+    
     return self; 
 }
 
