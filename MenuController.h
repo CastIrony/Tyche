@@ -2,6 +2,7 @@
 
 @class AnimatedFloat;
 @class GLMenu;
+@class DisplayContainer;
 
 @interface MenuController : NSObject 
 {
