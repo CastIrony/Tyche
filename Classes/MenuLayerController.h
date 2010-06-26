@@ -1,6 +1,7 @@
 #import "Touchable.h"
 
 @class MenuController;
+@class AnimatedFloat;
 
 @interface MenuLayerController : NSObject 
 {
