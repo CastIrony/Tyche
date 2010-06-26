@@ -5,11 +5,6 @@
     
 }
 
-@property (nonatomic, retain) NSMutableArray*      keys;
-@property (nonatomic, retain) NSMutableDictionary* hashtable;
-@property (nonatomic, retain) NSMutableArray*      objects;
-@property (nonatomic, retain) NSMutableArray*      topObjects;
-
 +(DisplayContainer*)container;
 
 -(DisplayContainer*)insertObject:(id)object asFirstWithKey:(id)key;

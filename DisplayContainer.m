@@ -2,7 +2,10 @@
 
 @interface DisplayContainer () 
 {
-    
+    @property (nonatomic, retain) NSMutableArray*      keys;
+    @property (nonatomic, retain) NSMutableDictionary* hashtable;
+    @property (nonatomic, retain) NSMutableArray*      objects;
+    @property (nonatomic, retain) NSMutableArray*      topObjects;
 }
 
 @implementation DisplayContainer
