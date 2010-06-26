@@ -138,7 +138,7 @@
     [newArray addObject:object];
     
     [newKeys removeObject:key];
-    [newKeys insertObject:key atIndex:[newKeys indexOfObject:before] + 1];
+    [newKeys insertObject:key atIndex:[newKeys indexOfObject:after] + 1];
     
     [newHashtable setValue:newArray forKey:key];
     
