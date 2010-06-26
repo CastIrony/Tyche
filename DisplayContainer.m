@@ -27,7 +27,7 @@
 
 +(DisplayContainer*)containerWithKeys:(NSMutableArray*)keys hashtable:(NSMutableDictionary*)hashtable
 {
-    DisplayContainer* container = [[[DisplayContainer alloc] init] autorelease];
+    DisplayContainer* container = [DisplayContainer container];
     
     container.keys = keys;
     container.hashtable = hashtable;
