@@ -1,7 +1,4 @@
-
-
 @interface DisplayContainer : NSObject 
-
 
 +(DisplayContainer*)container;
 
