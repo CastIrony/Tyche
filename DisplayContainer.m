@@ -131,12 +131,12 @@
 
 -(NSEnumerator*)keyEnumerator 
 {
-    return nil; 
+    return self.keys.objectEnumerator; 
 }
 
 -(NSEnumerator*)objectEnumerator 
 {
-    return nil; 
+    return self.objects.objectEnumerator; 
 }
 
 -(NSEnumerator*)topObjectEnumerator 
