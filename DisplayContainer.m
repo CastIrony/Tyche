@@ -13,6 +13,8 @@
 
 @synthesize keys;
 @synthesize hashtable;
+@synthesize objects;
+@synthesize topObjects;
 
 +(DisplayContainer*)container 
 {
