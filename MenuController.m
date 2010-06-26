@@ -63,32 +63,34 @@
 
 -(void)deleteMenuForKey:(NSString*)key
 {
-    GLMenu* menu = [self.menus objectForKey:key];
-    
-    if(menu)
-    {
-        [self.liveMenuKeys removeObject:key];
-
-        if(self.renderer.animated)
-        {
-            menu.location = [AnimatedVector3D withStartValue:menu.location.value endValue:Vector3DMake(menu.location.value.x, menu.location.value.y, menu.location.value.z - 20) forTime:1.0];
-            menu.location.curve = AnimationEaseInOut;
-        }
-        
-        [self layoutMenus];
-    }
+//    TODO: fix this method
+//
+//    GLMenu* menu = [self.menus objectForKey:key];
+//    
+//    if(menu)
+//    {
+//        [self.liveMenuKeys removeObject:key];
+//
+//        if(self.renderer.animated)
+//        {
+//            menu.location = [AnimatedVector3D withStartValue:menu.location.value endValue:Vector3DMake(menu.location.value.x, menu.location.value.y, menu.location.value.z - 20) forTime:1.0];
+//            menu.location.curve = AnimationEaseInOut;
+//        }
+//        
+//        [self layoutMenus];
+//    }
 }
 
 -(void)layoutMenus
 {
     BOOL collapsed = _collapsed.endValue > 0.5;
     
-    if(self.liveMenuKeys.count == 0) { return; }
+    NSArray* liveMenus = self.menus.topObjects;
+    
+    if(liveMenus.count == 0) { return; }
     
     int counter = collapsed ? self.currentIndex : 0;
       
-    //int counter = 0;
-    
     for(NSString* key in self.liveMenuKeys)
     {
         GLMenu* menu = [self.menus objectForKey:key];
