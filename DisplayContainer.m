@@ -20,29 +20,29 @@
     return container;
 }
 
--(DisplayContainer*)insertObject:(id)object asFirstWithKey:(id)key {}
--(DisplayContainer*)insertObject:(id)object asLastWithKey:(id)key {}
--(DisplayContainer*)insertObject:(id)object withKey:(id)key atIndex:(int)index {}
--(DisplayContainer*)insertObject:(id)object withKey:(id)key beforeKey:(id)before {}
--(DisplayContainer*)insertObject:(id)object withKey:(id)key afterKey:(id)after {}
+-(DisplayContainer*)insertObject:(id)object asFirstWithKey:(id)key { return self; }
+-(DisplayContainer*)insertObject:(id)object asLastWithKey:(id)key { return self; }
+-(DisplayContainer*)insertObject:(id)object withKey:(id)key atIndex:(int)index { return self; }
+-(DisplayContainer*)insertObject:(id)object withKey:(id)key beforeKey:(id)before { return self; }
+-(DisplayContainer*)insertObject:(id)object withKey:(id)key afterKey:(id)after { return self; }
 
--(DisplayContainer*)moveKeyToFirst:(id)key {}
--(DisplayContainer*)moveKeyToLast:(id)key {}
--(DisplayContainer*)moveKey:(id)key toIndex:(int)index {}
--(DisplayContainer*)moveKey:(id)key beforeKey:(id)before {}
--(DisplayContainer*)moveKey:(id)key afterKey:(id)after {}
+-(DisplayContainer*)moveKeyToFirst:(id)key { return self; }
+-(DisplayContainer*)moveKeyToLast:(id)key { return self; }
+-(DisplayContainer*)moveKey:(id)key toIndex:(int)index { return self; }
+-(DisplayContainer*)moveKey:(id)key beforeKey:(id)before { return self; }
+-(DisplayContainer*)moveKey:(id)key afterKey:(id)after { return self; }
 
--(DisplayContainer*)pruneObjectsForKey:(id)key toFormat:(NSString*)format {}
+-(DisplayContainer*)pruneObjectsForKey:(id)key toFormat:(NSString*)format { return self; }
 
--(NSArray*)objectsForKey:(id)key {}
--(id)topObjectForKey:(id)key {}
+-(NSArray*)objectsForKey:(id)key { return nil; }
+-(id)topObjectForKey:(id)key { return nil; }
 
--(NSEnumerator*)keyEnumerator {}
--(NSEnumerator*)objectEnumerator {}
--(NSEnumerator*)topObjectEnumerator {}
+-(NSEnumerator*)keyEnumerator { return nil; }
+-(NSEnumerator*)objectEnumerator { return nil; }
+-(NSEnumerator*)topObjectEnumerator { return nil; }
 
--(NSEnumerator*)reverseKeyEnumerator {}
--(NSEnumerator*)reverseObjectEnumerator {}
--(NSEnumerator*)reverseTopObjectEnumerator {}
+-(NSEnumerator*)reverseKeyEnumerator { return nil; }
+-(NSEnumerator*)reverseObjectEnumerator { return nil; }
+-(NSEnumerator*)reverseTopObjectEnumerator { return nil; }
 
 @end
