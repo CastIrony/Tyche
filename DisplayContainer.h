@@ -24,12 +24,4 @@
 -(NSArray*)objectsForKey:(id)key;
 -(id)topObjectForKey:(id)key;
 
--(NSEnumerator*)keyEnumerator;
--(NSEnumerator*)objectEnumerator;
--(NSEnumerator*)topObjectEnumerator;
-
--(NSEnumerator*)reverseKeyEnumerator;
--(NSEnumerator*)reverseObjectEnumerator;
--(NSEnumerator*)reverseTopObjectEnumerator;
-
 @end
