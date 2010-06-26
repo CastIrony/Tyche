@@ -7,6 +7,10 @@
 @property (nonatomic, retain) NSMutableArray* objects;
 @property (nonatomic, retain) NSMutableArray* topObjects;
 
++(DisplayContainer*)containerWithKeys:(NSMutableArray*)keys hashtable:(NSMutableDictionary*)hashtable;
+
+-(void)updateObjectLists;
+
 @end
 
 @implementation DisplayContainer
@@ -28,7 +32,28 @@
     container.keys = keys;
     container.hashtable = hashtable;
     
+    [container updateObjectLists];
+    
     return container;
+}
+
+-(void)updateObjectLists
+{
+    NSMutableArray* newObjects = [NSMutableArray array];
+    NSMutableArray* newTopObjects = [NSMutableArray array];
+    
+    for(id key in self.keys)
+    {
+        for(id object in [self.hashtable objectForKey:key]) 
+        {
+            [newObjects addObject:object];
+        }
+        
+        [newTopObjects addObject:[[self.hashtable objectForKey:key] lastObject]];
+    }
+    
+    self.objects = newObjects;
+    self.topObjects = newTopObjects;
 }
 
 -(DisplayContainer*)insertObject:(id)object asFirstWithKey:(id)key 
@@ -36,24 +61,25 @@
     NSMutableArray*      newKeys      = [[self.keys      mutableCopy] autorelease];
     NSMutableDictionary* newHashtable = [[self.hashtable mutableCopy] autorelease];
     
-    if([self.keys containsObject:key])
+    NSMutableArray* newArray;
+    
+    if([newKeys containsObject:key])
     {
-        NSMutableArray* array = [[[self.hashtable objectForKey:key] mutableCopy] autorelease];
+        newArray = [[[newHashtable objectForKey:key] mutableCopy] autorelease];
         
-        if([array containsObject:object])
-        {
-            
-        }
-        else 
-        {
+        if([newArray containsObject:object]) { [newArray removeObject:object]; }
         
-        }
+        [newArray addObject:object];
+        
+        [newKeys removeObject:key];
     }
     else 
     {
-        [newKeys insertObject:object atIndex:0];
-        [newHashtable setValue:object forKey:key];
+        newArray = [NSMutableArray arrayWithObject:object];
     }
+
+    [newKeys insertObject:key atIndex:0];
+    [newHashtable setValue:newArray forKey:key];
     
     return [DisplayContainer containerWithKeys:newKeys hashtable:newHashtable]; 
 }
