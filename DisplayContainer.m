@@ -185,8 +185,8 @@
 {
     if(![self.keys containsObject:key]) { return self; }
     
-    NSMutableArray* newArray = [[[newHashtable objectForKey:key] mutableCopy] autorelease];
     NSMutableDictionary* newHashtable = [[self.hashtable mutableCopy] autorelease];
+    NSMutableArray* newArray = [[[newHashtable objectForKey:key] mutableCopy] autorelease];
 
     [newArray filterUsingPredicate:[NSPredicate predicateWithFormat:format]];
     
