@@ -6,9 +6,9 @@
 @interface MenuController : NSObject 
 {
     GameRenderer*        _renderer;
-    NSMutableArray*      _liveMenuKeys;
-    NSMutableArray*      _allMenuKeys;
-    NSMutableDictionary* _menus;
+//    NSMutableArray*      _liveMenuKeys;
+//    NSMutableArray*      _allMenuKeys;
+//    NSMutableDictionary* _menus;
     AnimatedFloat*       _offset;
     GLfloat              _initialOffset;
     int                  _currentIndex;
@@ -20,9 +20,11 @@
 }
 
 @property (nonatomic, assign) GameRenderer*        renderer;
-@property (nonatomic, retain) NSMutableArray*      liveMenuKeys;
-@property (nonatomic, retain) NSMutableArray*      allMenuKeys;
-@property (nonatomic, retain) NSMutableDictionary* menus;
+
+//@property (nonatomic, retain) NSMutableArray*      liveMenuKeys;
+//@property (nonatomic, retain) NSMutableArray*      allMenuKeys;
+@property (nonatomic, retain) DisplayContainer*    menus;
+
 @property (nonatomic, retain) AnimatedFloat*       offset;
 @property (nonatomic, assign) GLfloat              initialOffset;
 @property (nonatomic, assign) int                  currentIndex;
