@@ -21,7 +21,7 @@
     return [[[DisplayContainer alloc] init] autorelease];
 }
 
-+(DisplayContainer*)containerWithKeys:(NSMutableArray*)keys hashtable:(NSMutableDictionary*)hashtable 
++(DisplayContainer*)containerWithKeys:(NSMutableArray*)keys hashtable:(NSMutableDictionary*)hashtable
 {
     DisplayContainer* container = [[[DisplayContainer alloc] init] autorelease];
     
@@ -33,17 +33,29 @@
 
 -(DisplayContainer*)insertObject:(id)object asFirstWithKey:(id)key 
 {
+    NSMutableArray*      keys      = [[self.keys      mutableCopy] autorelease];
+    NSMutableDictionary* hashtable = [[self.hashtable mutableCopy] autorelease];
+    
     if([self.keys containsObject:key])
     {
+        NSMutableArray* array = [[[self.hashtable objectForKey:key] mutableCopy] autorelease];
         
+        if([array containsObject:object])
+        {
+            
+        }
+        else 
+        {
+        
+        }
     }
     else 
     {
-        [self.hashtable setValue:object forKey:key];
-        [self.keys insertObject:object atIndex:0];
+        [keys insertObject:object atIndex:0];
+        [hashtable setValue:object forKey:key];
     }
-
-    return self; 
+    
+    return [DisplayContainer containerWithKeys:keys hashtable:hashtable]; 
 }
 
 -(DisplayContainer*)insertObject:(id)object asLastWithKey:(id)key 
@@ -121,42 +133,12 @@
 
 -(NSArray*)objectsForKey:(id)key 
 {
-    return nil; 
+    return [self.hashtable objectForKey:key]; 
 }
 
 -(id)topObjectForKey:(id)key 
 {
     return [[self.hashtable objectForKey:key] lastObject];
-}
-
--(NSEnumerator*)keyEnumerator 
-{
-    return self.keys.objectEnumerator; 
-}
-
--(NSEnumerator*)objectEnumerator 
-{
-    return self.objects.objectEnumerator; 
-}
-
--(NSEnumerator*)topObjectEnumerator 
-{
-    return self.topObjects.objectEnumerator; 
-}
-
--(NSEnumerator*)reverseKeyEnumerator 
-{
-    return self.keys.reverseObjectEnumerator; 
-}
-
--(NSEnumerator*)reverseObjectEnumerator 
-{
-    return self.objects.reverseObjectEnumerator; 
-}
-
--(NSEnumerator*)reverseTopObjectEnumerator 
-{
-    return self.topObjects.reverseObjectEnumerator; 
 }
 
 @end
