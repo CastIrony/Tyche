@@ -1,12 +1,13 @@
 #import "DisplayContainer.h"
 
 @interface DisplayContainer () 
-{
+
     @property (nonatomic, retain) NSMutableArray*      keys;
     @property (nonatomic, retain) NSMutableDictionary* hashtable;
     @property (nonatomic, retain) NSMutableArray*      objects;
     @property (nonatomic, retain) NSMutableArray*      topObjects;
-}
+
+@end
 
 @implementation DisplayContainer
 
