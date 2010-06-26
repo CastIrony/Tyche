@@ -5,9 +5,11 @@
 
 @property (nonatomic, retain) NSMutableArray*      keys;
 @property (nonatomic, retain) NSMutableDictionary* objects;
+//@property (nonatomic, retain) NSMutableArray*      keys;
+//@property (nonatomic, retain) NSMutableArray*      keys;
 
 +(DisplayContainer*)container;
-+(DisplayContainer*)containerWithKeys:(NSArray*)keys objectDictionary:(NSDictionary*)objects;
++(DisplayContainer*)containerWithKeys:(NSMutableArray*)keys objectDictionary:(NSMutableDictionary*)objects;
 
 -(DisplayContainer*)insertObject:(id)object asFirstWithKey:(id)key;
 -(DisplayContainer*)insertObject:(id)object asLastWithKey:(id)key;
