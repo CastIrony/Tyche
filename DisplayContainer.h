@@ -3,8 +3,8 @@
     
 }
 
-@property (nonatomic, retain) NSArray*      keys;
-@property (nonatomic, retain) NSDictionary* objects;
+@property (nonatomic, retain) NSMutableArray*      keys;
+@property (nonatomic, retain) NSMutableDictionary* objects;
 
 +(DisplayContainer*)container;
 +(DisplayContainer*)containerWithKeys:(NSArray*)keys objectDictionary:(NSDictionary*)objects;
