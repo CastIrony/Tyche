@@ -16,8 +16,8 @@
 -(DisplayContainer*)moveKeyToFirst:(id)key;
 -(DisplayContainer*)moveKeyToLast:(id)key;
 -(DisplayContainer*)moveKey:(id)key toIndex:(int)index;
--(DisplayContainer*)moveKey:(id)key beforeKey:(id)before;
--(DisplayContainer*)moveKey:(id)key afterKey:(id)after;
+-(DisplayContainer*)moveKey:(id)key beforeKey:(id)target;
+-(DisplayContainer*)moveKey:(id)key afterKey:(id)target;
 
 -(DisplayContainer*)pruneObjectsForKey:(id)key toFormat:(NSString*)format;
 

@@ -182,28 +182,28 @@
     return [DisplayContainer containerWithKeys:newKeys hashtable:self.hashtable]; 
 }
 
--(DisplayContainer*)moveKey:(id)key beforeKey:(id)before 
+-(DisplayContainer*)moveKey:(id)key beforeKey:(id)target 
 {
     if(![self.keys containsObject:key]) { return self; }
-    if(![self.keys containsObject:before]) { return self; }
+    if(![self.keys containsObject:target]) { return self; }
     
     NSMutableArray* newKeys = [[self.keys mutableCopy] autorelease];
     
     [newKeys removeObject:key];
-    [newKeys insertObject:key atIndex:[newKeys indexOfObject:before]];
+    [newKeys insertObject:key atIndex:[newKeys indexOfObject:target]];
     
     return [DisplayContainer containerWithKeys:newKeys hashtable:self.hashtable]; 
 }
 
--(DisplayContainer*)moveKey:(id)key afterKey:(id)after 
+-(DisplayContainer*)moveKey:(id)key afterKey:(id)target 
 {
     if(![self.keys containsObject:key]) { return self; }
-    if(![self.keys containsObject:after]) { return self; }
+    if(![self.keys containsObject:target]) { return self; }
     
     NSMutableArray* newKeys = [[self.keys mutableCopy] autorelease];
     
     [newKeys removeObject:key];
-    [newKeys insertObject:key atIndex:[newKeys indexOfObject:after] + 1];
+    [newKeys insertObject:key atIndex:[newKeys indexOfObject:target] + 1];
     
     return [DisplayContainer containerWithKeys:newKeys hashtable:self.hashtable];
 }
