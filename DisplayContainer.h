@@ -1,15 +1,16 @@
+
+
 @interface DisplayContainer : NSObject 
 {
     
 }
 
 @property (nonatomic, retain) NSMutableArray*      keys;
-@property (nonatomic, retain) NSMutableDictionary* objects;
-//@property (nonatomic, retain) NSMutableArray*      keys;
-//@property (nonatomic, retain) NSMutableArray*      keys;
+@property (nonatomic, retain) NSMutableDictionary* hashtable;
+@property (nonatomic, retain) NSMutableArray*      objects;
+@property (nonatomic, retain) NSMutableArray*      topObjects;
 
 +(DisplayContainer*)container;
-+(DisplayContainer*)containerWithKeys:(NSMutableArray*)keys objectDictionary:(NSMutableDictionary*)objects;
 
 -(DisplayContainer*)insertObject:(id)object asFirstWithKey:(id)key;
 -(DisplayContainer*)insertObject:(id)object asLastWithKey:(id)key;

@@ -1,21 +1,26 @@
 #import "DisplayContainer.h"
 
+@interface DisplayContainer () 
+{
+    
+}
+
 @implementation DisplayContainer
 
 @synthesize keys;
-@synthesize objects;
+@synthesize hashtable;
 
 +(DisplayContainer*)container 
 {
     return [[[DisplayContainer alloc] init] autorelease];
 }
 
-+(DisplayContainer*)containerWithKeys:(NSMutableArray*)keys objectDictionary:(NSMutableDictionary*)objects 
++(DisplayContainer*)containerWithKeys:(NSMutableArray*)keys hashtable:(NSMutableDictionary*)hashtable 
 {
     DisplayContainer* container = [[[DisplayContainer alloc] init] autorelease];
     
     container.keys = keys;
-    container.objects = objects;
+    container.hashtable = hashtable;
     
     return container;
 }
@@ -28,7 +33,7 @@
     }
     else 
     {
-        [self.objects setValue:object forKey:key];
+        [self.hashtable setValue:object forKey:key];
         [self.keys insertObject:object atIndex:0];
     }
 
@@ -43,7 +48,7 @@
     }
     else 
     {
-        [self.objects setValue:object forKey:key];
+        [self.hashtable setValue:object forKey:key];
         [self.keys addObject:object];
     }
     
@@ -58,7 +63,7 @@
     }
     else 
     {
-        [self.objects setValue:object forKey:key];
+        [self.hashtable setValue:object forKey:key];
         [self.keys insertObject:object atIndex:index];
     }
     
