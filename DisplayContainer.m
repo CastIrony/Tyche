@@ -60,25 +60,14 @@
 {
     NSMutableArray*      newKeys      = [[self.keys      mutableCopy] autorelease];
     NSMutableDictionary* newHashtable = [[self.hashtable mutableCopy] autorelease];
+    NSMutableArray*      newArray     = [newKeys containsObject:key] ? [[[newHashtable objectForKey:key] mutableCopy] autorelease] : [NSMutableArray array];
+        
+    [newArray removeObject:object];
+    [newArray addObject:object];
     
-    NSMutableArray* newArray;
-    
-    if([newKeys containsObject:key])
-    {
-        newArray = [[[newHashtable objectForKey:key] mutableCopy] autorelease];
-        
-        if([newArray containsObject:object]) { [newArray removeObject:object]; }
-        
-        [newArray addObject:object];
-        
-        [newKeys removeObject:key];
-    }
-    else 
-    {
-        newArray = [NSMutableArray arrayWithObject:object];
-    }
-
+    [newKeys removeObject:key];
     [newKeys insertObject:key atIndex:0];
+    
     [newHashtable setValue:newArray forKey:key];
     
     return [DisplayContainer containerWithKeys:newKeys hashtable:newHashtable]; 
@@ -86,32 +75,36 @@
 
 -(DisplayContainer*)insertObject:(id)object asLastWithKey:(id)key 
 {
-    if([self.keys containsObject:key])
-    {
-        
-    }
-    else 
-    {
-        [self.hashtable setValue:object forKey:key];
-        [self.keys addObject:object];
-    }
+    NSMutableArray*      newKeys      = [[self.keys      mutableCopy] autorelease];
+    NSMutableDictionary* newHashtable = [[self.hashtable mutableCopy] autorelease];
+    NSMutableArray*      newArray     = [newKeys containsObject:key] ? [[[newHashtable objectForKey:key] mutableCopy] autorelease] : [NSMutableArray array];
     
-    return self; 
+    [newArray removeObject:object];
+    [newArray addObject:object];
+    
+    [newKeys removeObject:key];
+    [newKeys addObject:key];
+    
+    [newHashtable setValue:newArray forKey:key];
+    
+    return [DisplayContainer containerWithKeys:newKeys hashtable:newHashtable]; 
 }
 
 -(DisplayContainer*)insertObject:(id)object withKey:(id)key atIndex:(int)index 
 {
-    if([self.keys containsObject:key])
-    {
-        
-    }
-    else 
-    {
-        [self.hashtable setValue:object forKey:key];
-        [self.keys insertObject:object atIndex:index];
-    }
+    NSMutableArray*      newKeys      = [[self.keys      mutableCopy] autorelease];
+    NSMutableDictionary* newHashtable = [[self.hashtable mutableCopy] autorelease];
+    NSMutableArray*      newArray     = [newKeys containsObject:key] ? [[[newHashtable objectForKey:key] mutableCopy] autorelease] : [NSMutableArray array];
     
-    return self; 
+    [newArray removeObject:object];
+    [newArray addObject:object];
+    
+    [newKeys removeObject:key];
+    [newKeys insertObject:key atIndex:index];
+    
+    [newHashtable setValue:newArray forKey:key];
+    
+    return [DisplayContainer containerWithKeys:newKeys hashtable:newHashtable]; 
 }
 
 -(DisplayContainer*)insertObject:(id)object withKey:(id)key beforeKey:(id)before 
