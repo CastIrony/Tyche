@@ -200,7 +200,7 @@
 {
     if(within(self.collapsed.value, 0, 0.001))
     {
-        int newIndex = [self.menus.keys indexOfObject:self.currentkey];
+        int newIndex = [self.menus.keys indexOfObject:self.currentKey];
         
         if(pointTo.x - pointFrom.x > 10)
         {
