@@ -87,7 +87,7 @@
     
     NSArray* liveMenus = self.menus.topObjects;
     
-    int currentIndex = [self.menus.keys indexOfObject:self.currentKey];
+    //int currentIndex = [self.menus.keys indexOfObject:self.currentKey];
     
     if(liveMenus.count == 0) { return; }
     
