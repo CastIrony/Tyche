@@ -122,7 +122,7 @@
         
     int currentIndex = [self.menus.keys indexOfObject:self.currentKey];
     
-    if(self.currentIndex != NSNotFound)
+    if(currentIndex != NSNotFound)
     {
         if(self.renderer.animated)
         {
