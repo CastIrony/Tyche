@@ -86,9 +86,7 @@
     BOOL collapsed = _collapsed.endValue > 0.5;
     
     NSArray* liveMenus = self.menus.topObjects;
-    
-    //int currentIndex = [self.menus.keys indexOfObject:self.currentKey];
-    
+        
     if(liveMenus.count == 0) { return; }
     
     int counter = collapsed ?  : 0;
@@ -122,26 +120,18 @@
         } 
     }
         
-    if([self.liveMenuKeys containsObject:self.currentKey])
-    {
-        self.currentIndex = clipInt([self.liveMenuKeys indexOfObject:self.currentKey], 0, self.liveMenuKeys.count - 1);
-    }    
-    else 
-    {
-        self.currentIndex = clipInt(self.currentIndex, 0, self.liveMenuKeys.count - 1);
-        self.currentKey = [self.liveMenuKeys objectAtIndex:self.currentIndex];
-    }
+    int currentIndex = [self.menus.keys indexOfObject:self.currentKey];
     
-    if(self.currentIndex >= 0)
+    if(self.currentIndex != NSNotFound)
     {
         if(self.renderer.animated)
         {
-            self.offset = [AnimatedFloat withStartValue:self.offset.value endValue:self.currentIndex speed:2.0];
+            self.offset = [AnimatedFloat withStartValue:self.offset.value endValue:currentIndex speed:2.0];
             self.offset.curve = AnimationEaseInOut;
         }
         else
         {
-            self.offset = [AnimatedFloat withValue:self.currentIndex];
+            self.offset = [AnimatedFloat withValue:currentIndex];
         }
     }
 }
