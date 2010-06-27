@@ -81,6 +81,24 @@
 //    }
 }
 
+-(void)updateOffset
+{
+    int currentIndex = [self.menus.keys indexOfObject:self.currentKey];
+    
+    if(currentIndex != NSNotFound)
+    {
+        if(self.renderer.animated)
+        {
+            self.offset = [AnimatedFloat withStartValue:self.offset.value endValue:currentIndex speed:2.0];
+            self.offset.curve = AnimationEaseInOut;
+        }
+        else
+        {
+            self.offset = [AnimatedFloat withValue:currentIndex];
+        }
+    }
+}
+
 -(void)layoutMenus
 {
     BOOL collapsed = _collapsed.endValue > 0.5;
@@ -120,20 +138,7 @@
         } 
     }
         
-    int currentIndex = [self.menus.keys indexOfObject:self.currentKey];
-    
-    if(currentIndex != NSNotFound)
-    {
-        if(self.renderer.animated)
-        {
-            self.offset = [AnimatedFloat withStartValue:self.offset.value endValue:currentIndex speed:2.0];
-            self.offset.curve = AnimationEaseInOut;
-        }
-        else
-        {
-            self.offset = [AnimatedFloat withValue:currentIndex];
-        }
-    }
+    [self updateOffset];
 }
 
 -(void)draw
@@ -155,13 +160,6 @@
         }
     }
     TRANSACTION_END
-    
-// TODO:find a better place for this:    
-//    
-//    if(self.menus.keys.count == 0)
-//    {
-//        [self.owner cancelMenuLayer];
-//    }
 }
 
 -(id<Touchable>)testTouch:(UITouch*)touch withPreviousObject:(id<Touchable>)object
@@ -200,27 +198,18 @@
 {
     if(within(self.collapsed.value, 0, 0.001))
     {
-        int newIndex = [self.menus.keys indexOfObject:self.currentKey];
-        
         if(pointTo.x - pointFrom.x > 10)
         {
-            newIndex--;
+            
         }
         else if(pointTo.x - pointFrom.x < -10)
         {
-            newIndex++;
+
         }
 
-        self.currentIndex = clipInt(newIndex, -1, self.liveMenuKeys.count - 1);
         self.currentKey = (self.currentIndex == -1) ? nil : [self.liveMenuKeys objectAtIndex:self.currentIndex];
 
-        self.offset = [AnimatedFloat withStartValue:self.offset.value endValue:self.currentIndex speed:2.0];
-        self.offset.curve = AnimationEaseInOut;
-
-        if(newIndex < 0)
-        {
-            [self.owner cancelMenuLayer];
-        }
+        [self updateOffset];
     }
 }
 
