@@ -21,7 +21,7 @@
 
 @synthesize offset        = _offset;
 @synthesize initialOffset = _initialOffset;
-@synthesize currentIndex  = _currentIndex;
+//@synthesize currentIndex  = _currentIndex;
 @synthesize currentKey    = _currentKey;
 @synthesize collapsed     = _collapsed;
 @synthesize hidden        = _hidden;
@@ -91,45 +91,33 @@
     
     int counter = collapsed ? self.currentIndex : 0;
       
-    for(NSString* key in self.liveMenuKeys)
+    for(GLMenu* menu in liveMenus)
     {
-        GLMenu* menu = [self.menus objectForKey:key];
+        BOOL visible = !collapsed || key == self.currentKey;
         
-        if(menu)
+        if(self.renderer.animated)
         {
-            BOOL visible = !collapsed || key == self.currentKey;
-            
-            if(self.renderer.animated)
-            {
-                menu.opacity = [AnimatedFloat withStartValue:menu.opacity.value endValue:visible forTime:1.0];
-                menu.opacity.curve = AnimationEaseInOut;
+            menu.opacity = [AnimatedFloat withStartValue:menu.opacity.value endValue:visible forTime:1.0];
+            menu.opacity.curve = AnimationEaseInOut;
 
-                menu.location = [AnimatedVector3D withStartValue:menu.location.value endValue:Vector3DMake(-4 * counter, 0, 0) forTime:1.0];
-                menu.location.curve = AnimationEaseInOut;
-            }
-            else 
-            {
-                menu.opacity = [AnimatedFloat withValue:visible];
-                
-                menu.location = [AnimatedVector3D withValue:Vector3DMake(-4 * counter, 0, 0)];
-            }
-
-//            menu.dots.page = counter;
-//            menu.dots.total = self.liveMenuKeys.count;
-            
-            //[menu.dots update];
-            
-            [menu.dots setDots:self.liveMenuKeys.count current:counter];
-            
-            if(!collapsed) 
-            { 
-                counter++; 
-            } 
+            menu.location = [AnimatedVector3D withStartValue:menu.location.value endValue:Vector3DMake(-4 * counter, 0, 0) forTime:1.0];
+            menu.location.curve = AnimationEaseInOut;
         }
+        else 
+        {
+            menu.opacity = [AnimatedFloat withValue:visible];
+            
+            menu.location = [AnimatedVector3D withValue:Vector3DMake(-4 * counter, 0, 0)];
+        }
+
+        [menu.dots setDots:liveMenus.count current:counter];
+        
+        if(!collapsed) 
+        { 
+            counter++; 
+        } 
     }
-    
-    //int newIndex = NSNotFound;
-    
+        
     if([self.liveMenuKeys containsObject:self.currentKey])
     {
         self.currentIndex = clipInt([self.liveMenuKeys indexOfObject:self.currentKey], 0, self.liveMenuKeys.count - 1);
