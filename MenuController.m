@@ -172,10 +172,7 @@
         
         for(GLMenu* menu in self.menus.topObjects)
         {
-            if(menu)
-            {
-                object = [menu testTouch:touch withPreviousObject:object];
-            }
+            object = [menu testTouch:touch withPreviousObject:object];
         }
     }
     TRANSACTION_END
@@ -203,7 +200,7 @@
 {
     if(within(self.collapsed.value, 0, 0.001))
     {
-        int newIndex = self.currentIndex;
+        int newIndex = [self.menus.keys indexOfObject:self.currentkey];
         
         if(pointTo.x - pointFrom.x > 10)
         {
