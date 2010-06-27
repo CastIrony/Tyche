@@ -144,36 +144,24 @@
         
         glTranslatef(offset, 0, 0);
                 
-        for(NSString* key in self.allMenuKeys)
+        for(GLMenu* menu in self.menus.objects)
         {
-//            if(key == [self.allMenuKeys objectBefore:self.currentKey] || key == [self.allMenuKeys objectAfter:self.currentKey])
-//            {
-                GLMenu* menu = [self.menus objectForKey:key];
-                
-                menu.angleSin = 7.5 * sin(2 * self.offset.value + 2 * menu.angleJitter);
-                
-                menu.lightness = 1 - self.collapsed.value * 0.5;
-                
-                [menu reset];
-                [menu draw];
-//            }
+            menu.angleSin = 7.5 * sin(2 * self.offset.value + 2 * menu.angleJitter);
+            
+            menu.lightness = 1 - self.collapsed.value * 0.5;
+            
+            [menu reset];
+            [menu draw];
         }
-        
-//        GLMenu* menu = [self.menus objectForKey:self.currentKey];
-//        
-//        menu.angleSin = 7.5 * sin(2 * self.offset.value + 2 * menu.angleJitter);
-//
-//        menu.lightness = 1 - self.collapsed.value * 0.5;
-//        
-//        [menu reset];
-//        [menu draw];
     }
     TRANSACTION_END
     
-    if(self.liveMenuKeys.count == 0)
-    {
-        [self.owner cancelMenuLayer];
-    }
+// TODO:find a better place for this:    
+//    
+//    if(self.menus.keys.count == 0)
+//    {
+//        [self.owner cancelMenuLayer];
+//    }
 }
 
 -(id<Touchable>)testTouch:(UITouch*)touch withPreviousObject:(id<Touchable>)object
@@ -182,10 +170,8 @@
     {
         glTranslatef(self.offset.value * 4, 0, 0);
         
-        for(NSString* key in self.allMenuKeys)
+        for(GLMenu* menu in self.menus.topObjects)
         {
-            GLMenu* menu = [self.menus objectForKey:key];
-            
             if(menu)
             {
                 object = [menu testTouch:touch withPreviousObject:object];
