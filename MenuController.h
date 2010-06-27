@@ -10,14 +10,14 @@
 //    NSMutableArray*      _liveMenuKeys;
 //    NSMutableArray*      _allMenuKeys;
 //    NSMutableDictionary* _menus;
-    AnimatedFloat*       _offset;
-    GLfloat              _initialOffset;
-    int                  _currentIndex;
-    NSString*            _currentKey;
-    AnimatedFloat*       _collapsed;
-    AnimatedFloat*       _hidden;
-    
-    id _owner;
+//    AnimatedFloat*       _offset;
+//    GLfloat              _initialOffset;
+//    int                  _currentIndex;
+//    NSString*            _currentKey;
+//    AnimatedFloat*       _collapsed;
+//    AnimatedFloat*       _hidden;
+//    
+//    id _owner;
 }
 
 @property (nonatomic, assign) GameRenderer*        renderer;
@@ -28,7 +28,7 @@
 
 @property (nonatomic, retain) AnimatedFloat*       offset;
 @property (nonatomic, assign) GLfloat              initialOffset;
-@property (nonatomic, assign) int                  currentIndex;
+//@property (nonatomic, assign) int                  currentIndex;
 @property (nonatomic, retain) NSString*            currentKey;
 @property (nonatomic, retain) AnimatedFloat*       collapsed;
 @property (nonatomic, retain) AnimatedFloat*       hidden;
