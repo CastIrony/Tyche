@@ -87,9 +87,11 @@
     
     NSArray* liveMenus = self.menus.topObjects;
     
+    int currentIndex = [self.menus.keys indexOfObject:self.currentKey];
+    
     if(liveMenus.count == 0) { return; }
     
-    int counter = collapsed ? self.currentIndex : 0;
+    int counter = collapsed ?  : 0;
       
     for(NSString* key in self.menus.keys)
     {
