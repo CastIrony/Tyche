@@ -91,8 +91,10 @@
     
     int counter = collapsed ? self.currentIndex : 0;
       
-    for(GLMenu* menu in liveMenus)
+    for(NSString* key in self.menus.keys)
     {
+        GLMenu* menu = [self.menus topObjectForKey:key];
+        
         BOOL visible = !collapsed || key == self.currentKey;
         
         if(self.renderer.animated)
