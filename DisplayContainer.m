@@ -87,7 +87,7 @@
     
     [newHashtable setValue:newArray forKey:key];
     
-    return [DisplayContainer containerWithKeys:newKeys hashtable:newHashtable]; 
+    return [DisplayContainer containerWithPredicate:self.predicate hashtable:newHashtable keys:newKeys];
 }
 
 -(DisplayContainer*)insertObject:(id)object asLastWithKey:(id)key 
@@ -104,7 +104,7 @@
     
     [newHashtable setValue:newArray forKey:key];
     
-    return [DisplayContainer containerWithKeys:newKeys hashtable:newHashtable]; 
+    return [DisplayContainer containerWithPredicate:self.predicate hashtable:newHashtable keys:newKeys];
 }
 
 -(DisplayContainer*)insertObject:(id)object withKey:(id)key atIndex:(int)index 
@@ -121,7 +121,7 @@
     
     [newHashtable setValue:newArray forKey:key];
     
-    return [DisplayContainer containerWithKeys:newKeys hashtable:newHashtable]; 
+    return [DisplayContainer containerWithPredicate:self.predicate hashtable:newHashtable keys:newKeys];
 }
 
 -(DisplayContainer*)insertObject:(id)object withKey:(id)key beforeKey:(id)target 
@@ -140,7 +140,7 @@
     
     [newHashtable setValue:newArray forKey:key];
     
-    return [DisplayContainer containerWithKeys:newKeys hashtable:newHashtable];  
+    return [DisplayContainer containerWithPredicate:self.predicate hashtable:newHashtable keys:newKeys];
 }
 
 -(DisplayContainer*)insertObject:(id)object withKey:(id)key afterKey:(id)target 
@@ -159,7 +159,7 @@
     
     [newHashtable setValue:newArray forKey:key];
     
-    return [DisplayContainer containerWithKeys:newKeys hashtable:newHashtable]; 
+    return [DisplayContainer containerWithPredicate:self.predicate hashtable:newHashtable keys:newKeys];
 }
 
 -(DisplayContainer*)moveKeyToFirst:(id)key 
@@ -171,7 +171,7 @@
     [newKeys removeObject:key];
     [newKeys insertObject:key atIndex:0];
         
-    return [DisplayContainer containerWithKeys:newKeys hashtable:self.hashtable]; 
+    return [DisplayContainer containerWithPredicate:self.predicate hashtable:newHashtable keys:newKeys];
 }
 
 -(DisplayContainer*)moveKeyToLast:(id)key 
@@ -183,7 +183,7 @@
     [newKeys removeObject:key];
     [newKeys addObject:key];
     
-    return [DisplayContainer containerWithKeys:newKeys hashtable:self.hashtable]; 
+    return [DisplayContainer containerWithPredicate:self.predicate hashtable:newHashtable keys:newKeys];
 }
 
 -(DisplayContainer*)moveKey:(id)key toIndex:(int)index 
@@ -195,7 +195,7 @@
     [newKeys removeObject:key];
     [newKeys insertObject:key atIndex:index];
     
-    return [DisplayContainer containerWithKeys:newKeys hashtable:self.hashtable]; 
+    return [DisplayContainer containerWithPredicate:self.predicate hashtable:newHashtable keys:newKeys];
 }
 
 -(DisplayContainer*)moveKey:(id)key beforeKey:(id)target 
@@ -208,7 +208,7 @@
     [newKeys removeObject:key];
     [newKeys insertObject:key atIndex:[newKeys indexOfObject:target]];
     
-    return [DisplayContainer containerWithKeys:newKeys hashtable:self.hashtable]; 
+    return [DisplayContainer containerWithPredicate:self.predicate hashtable:newHashtable keys:newKeys];
 }
 
 -(DisplayContainer*)moveKey:(id)key afterKey:(id)target 
@@ -221,7 +221,7 @@
     [newKeys removeObject:key];
     [newKeys insertObject:key atIndex:[newKeys indexOfObject:target] + 1];
     
-    return [DisplayContainer containerWithKeys:newKeys hashtable:self.hashtable];
+    return [DisplayContainer containerWithPredicate:self.predicate hashtable:newHashtable keys:newKeys];
 }
 
 -(id)keyBefore:(id)target
