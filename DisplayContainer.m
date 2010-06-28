@@ -15,10 +15,13 @@
 
 @implementation DisplayContainer
 
-@synthesize keys;
+@synthesize format;
+
 @synthesize hashtable;
+@synthesize keys;
+@synthesize liveKeys;
 @synthesize objects;
-@synthesize topObjects;
+@synthesize liveObjects;
 
 +(DisplayContainer*)container 
 {
