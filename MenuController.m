@@ -166,7 +166,7 @@
     {
         glTranslatef(self.offset.value * 4, 0, 0);
         
-        for(GLMenu* menu in self.menus.topObjects)
+        for(GLMenu* menu in self.menus.liveObjects)
         {
             object = [menu testTouch:touch withPreviousObject:object];
         }
@@ -194,6 +194,8 @@
 
 -(void)handleTouchUp:(UITouch*)touch fromPoint:(CGPoint)pointFrom toPoint:(CGPoint)pointTo
 {
+    // TODO: fix this:
+    
     if(within(self.collapsed.value, 0, 0.001))
     {
         if(pointTo.x - pointFrom.x > 10)
@@ -205,7 +207,7 @@
 
         }
 
-        self.currentKey = (self.currentIndex == -1) ? nil : [self.liveMenuKeys objectAtIndex:self.currentIndex];
+        //self.currentKey = (self.currentIndex == -1) ? nil : [self.liveMenuKeys objectAtIndex:self.currentIndex];
 
         [self updateOffset];
     }
