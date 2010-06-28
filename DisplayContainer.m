@@ -2,7 +2,7 @@
 
 @interface DisplayContainer () 
 
-@property (nonatomic, retain) NSString*            format;
+@property (nonatomic, retain) NSPredicate*            predicate;
 @property (nonatomic, retain) NSMutableDictionary* hashtable;
 @property (nonatomic, retain) NSMutableArray*      keys;
 @property (nonatomic, retain) NSMutableArray*      liveKeys;

@@ -1,6 +1,6 @@
 @interface DisplayContainer : NSObject 
 
-@property (nonatomic, retain, readonly) NSString* format;
+@property (nonatomic, retain, readonly) NSPredicate* predicate;
 
 @property (nonatomic, retain, readonly) NSMutableDictionary* hashtable;
 @property (nonatomic, retain, readonly) NSMutableArray* keys;
