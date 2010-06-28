@@ -129,7 +129,7 @@
 
 -(void)insertObject:(id)object withKey:(id)key beforeKey:(id)target 
 {
-    if(![self.keys containsObject:target]) { return self; }
+    if(![self.keys containsObject:target]) { return; }
 
     NSMutableArray*      newKeys      = [[self.keys      mutableCopy] autorelease];
     NSMutableDictionary* newHashtable = [[self.hashtable mutableCopy] autorelease];
@@ -149,7 +149,7 @@
 
 -(void)insertObject:(id)object withKey:(id)key afterKey:(id)target 
 {
-    if(![self.keys containsObject:target]) { return self; }
+    if(![self.keys containsObject:target]) { return; }
 
     NSMutableArray*      newKeys      = [[self.keys      mutableCopy] autorelease];
     NSMutableDictionary* newHashtable = [[self.hashtable mutableCopy] autorelease];
@@ -169,7 +169,7 @@
 
 -(void)moveKeyToFirst:(id)key 
 {
-    if(![self.keys containsObject:key]) { return self; }
+    if(![self.keys containsObject:key]) { return; }
 
     NSMutableArray* newKeys = [[self.keys mutableCopy] autorelease];
 
@@ -181,7 +181,7 @@
 
 -(void)moveKeyToLast:(id)key 
 {
-    if(![self.keys containsObject:key]) { return self; }
+    if(![self.keys containsObject:key]) { return; }
 
     NSMutableArray* newKeys = [[self.keys mutableCopy] autorelease];
     
@@ -193,7 +193,7 @@
 
 -(void)moveKey:(id)key toIndex:(int)index 
 {
-    if(![self.keys containsObject:key]) { return self; }
+    if(![self.keys containsObject:key]) { return; }
 
     NSMutableArray* newKeys = [[self.keys mutableCopy] autorelease];
     
@@ -205,8 +205,8 @@
 
 -(void)moveKey:(id)key beforeKey:(id)target 
 {
-    if(![self.keys containsObject:key]) { return self; }
-    if(![self.keys containsObject:target]) { return self; }
+    if(![self.keys containsObject:key]) { return; }
+    if(![self.keys containsObject:target]) { return; }
     
     NSMutableArray* newKeys = [[self.keys mutableCopy] autorelease];
     
@@ -218,8 +218,8 @@
 
 -(void)moveKey:(id)key afterKey:(id)target 
 {
-    if(![self.keys containsObject:key]) { return self; }
-    if(![self.keys containsObject:target]) { return self; }
+    if(![self.keys containsObject:key]) { return; }
+    if(![self.keys containsObject:target]) { return; }
     
     NSMutableArray* newKeys = [[self.keys mutableCopy] autorelease];
     
@@ -231,7 +231,7 @@
 
 -(void)prune
 {
-    return [DisplayContainer containerWithPredicate:self.predicate hashtable:self.hashtable keys:self.keys];
+    //return [DisplayContainer containerWithPredicate:self.predicate hashtable:self.hashtable keys:self.keys];
 }
 
 -(id)keyBefore:(id)target
