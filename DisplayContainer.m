@@ -2,12 +2,12 @@
 
 @interface DisplayContainer () 
 
-@property (nonatomic, retain) NSString* format;
+@property (nonatomic, retain) NSString*            format;
 @property (nonatomic, retain) NSMutableDictionary* hashtable;
-@property (nonatomic, retain) NSMutableArray* keys;
-@property (nonatomic, retain) NSMutableArray* liveKeys;
-@property (nonatomic, retain) NSMutableArray* objects;
-@property (nonatomic, retain) NSMutableArray* liveObjects;
+@property (nonatomic, retain) NSMutableArray*      keys;
+@property (nonatomic, retain) NSMutableArray*      liveKeys;
+@property (nonatomic, retain) NSMutableArray*      objects;
+@property (nonatomic, retain) NSMutableArray*      liveObjects;
 
 +(DisplayContainer*)containerWithKeys:(NSMutableArray*)keys hashtable:(NSMutableDictionary*)hashtable;
 
@@ -18,7 +18,6 @@
 @implementation DisplayContainer
 
 @synthesize format;
-
 @synthesize hashtable;
 @synthesize keys;
 @synthesize liveKeys;
@@ -34,31 +33,27 @@
 {
     DisplayContainer* container = [DisplayContainer container];
     
-    container.keys = keys;
-    container.hashtable = hashtable;
+    NSMutableArray* liveKeys    = [NSMutableArray array];
+    NSMutableArray* objects     = [NSMutableArray array];
+    NSMutableArray* liveObjects = [NSMutableArray array];
     
-    [container updateObjectLists];
-    
-    return container;
-}
-
--(void)updateObjectLists
-{
-    NSMutableArray* newObjects = [NSMutableArray array];
-    NSMutableArray* newLiveObjects = [NSMutableArray array];
-    
-    for(id key in self.keys)
+    for(id key in keys)
     {
-        for(id object in [self.hashtable objectForKey:key]) 
+        for(id object in [hashtable objectForKey:key]) 
         {
-            [newObjects addObject:object];
+            [objects addObject:object];
         }
         
-        [newLiveObjects addObject:[[self.hashtable objectForKey:key] lastObject]];
+        [liveObjects addObject:[[hashtable objectForKey:key] lastObject]];
     }
     
-    self.objects = newObjects;
-    self.liveObjects = newLiveObjects;
+    container.hashtable   = hashtable;
+    container.keys        = keys;
+    container.liveKeys    = liveKeys;
+    container.objects     = objects;
+    container.liveObjects = liveObjects;
+    
+    return container;
 }
 
 -(DisplayContainer*)insertObject:(id)object asFirstWithKey:(id)key 
@@ -150,7 +145,6 @@
     return [DisplayContainer containerWithKeys:newKeys hashtable:newHashtable]; 
 }
 
-
 -(DisplayContainer*)moveKeyToFirst:(id)key 
 {
     if(![self.keys containsObject:key]) { return self; }
@@ -212,7 +206,6 @@
     
     return [DisplayContainer containerWithKeys:newKeys hashtable:self.hashtable];
 }
-
 
 -(DisplayContainer*)pruneObjectsForKey:(id)key
 {
