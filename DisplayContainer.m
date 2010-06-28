@@ -11,8 +11,6 @@
 
 +(DisplayContainer*)containerWithPredicate:(NSPredicate*)predicate hashtable:(NSMutableDictionary*)hashtable keys:(NSMutableArray*)keys;
 
--(void)updateObjectLists;
-
 @end
 
 @implementation DisplayContainer
