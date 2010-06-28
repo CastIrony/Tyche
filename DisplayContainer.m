@@ -9,7 +9,7 @@
 @property (nonatomic, retain) NSMutableArray*      objects;
 @property (nonatomic, retain) NSMutableArray*      liveObjects;
 
-+(DisplayContainer*)containerWithPredicate:(NSPredicate*)predicate hashtable:(NSMutableDictionary*)hashtable keys:(NSMutableArray*)keys;
++(DisplayContainer*)containerWithPredicate:(NSPredicate*)predicate hashtable:(NSMutableDictionary*)hashtable keys:(NSMutableArray*)keys liveKeys(NSMutableArray*)liveKeys;
 
 @end
 
@@ -22,49 +22,46 @@
 @synthesize objects;
 @synthesize liveObjects;
 
-+(DisplayContainer*)containerWithFormat:(NSString*)format
-{
-    DisplayContainer* container = [[[DisplayContainer alloc] init] autorelease];
-    
-    container.predicate = [NSPredicate predicateWithFormat:format];
-    
-    return container;
-}
-
-+(DisplayContainer*)containerWithPredicate:(NSPredicate*)predicate hashtable:(NSMutableDictionary*)hashtable keys:(NSMutableArray*)keys
++(DisplayContainer*)containerWithPredicate:(NSPredicate*)predicate hashtable:(NSMutableDictionary*)hashtable keys:(NSMutableArray*)keys liveKeys(NSMutableArray*)liveKeys
 {
     DisplayContainer* container = [[[DisplayContainer alloc] init] autorelease];
 
     container.predicate = predicate;
     
-    container.hashtable   = [hashtable mutableCopy];
-    container.keys        = [keys mutableCopy];
-    container.liveKeys    = [NSMutableArray array];
+    container.hashtable   = hashtable;
+    container.keys        = keys;
+    container.liveKeys    = liveKeys;
     container.objects     = [NSMutableArray array];
     container.liveObjects = [NSMutableArray array];
     
     for(id key in keys)
     {
-        BOOL live = NO;
+        BOOL allDead = YES;
         
         for(id object in [container.hashtable objectForKey:key]) 
         {
             if([container.predicate evaluateWithObject:object])
             {
                 [container.objects addObject:object];
-                live = YES;
+                allDead = NO;
+            }
+            else 
+            {
+                [[container.hashtable objectForKey:key] removeObject:object];
             }
         }
         
-        if(live)
-        {
-            [container.liveKeys addObject:key];
-            [container.liveObjects addObject:[[container.hashtable objectForKey:key] lastObject]];
-        }
-        else 
+        if(allDead)
         {
             [container.hashtable removeObjectForKey:key];
             [container.keys removeObject:key];
+        }
+        else 
+        {
+            if([liveKeys containsObject:key])
+            {
+                [container.liveObjects addObject:[[container.hashtable objectForKey:key] lastObject]];
+            }
         }
     }
     
@@ -222,6 +219,11 @@
     return [DisplayContainer containerWithPredicate:self.predicate hashtable:self.hashtable keys:newKeys];
 }
 
+-(DisplayContainer*)prune
+{
+    return [DisplayContainer containerWithPredicate:self.predicate hashtable:self.hashtable keys:self.keys];
+}
+
 -(id)keyBefore:(id)target
 {
     if(self.keys.count == 0) { return nil; }
@@ -244,13 +246,25 @@
     return [self.keys objectAtIndex:index + 1];    
 }
 
+-(id)liveKeyBefore:(id)target
+{
+    
+}
+
+-(id)liveKeyAfter:(id)target
+{
+    
+}
+
 -(NSArray*)objectsForKey:(id)key 
 {
     return [self.hashtable objectForKey:key]; 
 }
 
--(id)topObjectForKey:(id)key 
+-(id)liveObjectForKey:(id)key 
 {
+    if(![self.liveKeys containsObject:key]) { return nil; }
+    
     return [[self.hashtable objectForKey:key] lastObject];
 }
 
