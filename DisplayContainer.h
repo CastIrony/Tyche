@@ -1,11 +1,14 @@
 @interface DisplayContainer : NSObject 
 
-@property (nonatomic, retain, readonly) NSMutableArray* keys;
-@property (nonatomic, retain, readonly) NSMutableDictionary* hashtable;
-@property (nonatomic, retain, readonly) NSMutableArray* objects;
-@property (nonatomic, retain, readonly) NSMutableArray* topObjects;
+@property (nonatomic, retain, readonly) NSString* format;
 
-+(DisplayContainer*)container;
+@property (nonatomic, retain, readonly) NSMutableDictionary* hashtable;
+@property (nonatomic, retain, readonly) NSMutableArray* keys;
+@property (nonatomic, retain, readonly) NSMutableArray* liveKeys;
+@property (nonatomic, retain, readonly) NSMutableArray* objects;
+@property (nonatomic, retain, readonly) NSMutableArray* liveObjects;
+
++(DisplayContainer*)containerWithFormat:(NSString*)format;
 
 -(DisplayContainer*)insertObject:(id)object asFirstWithKey:(id)key;
 -(DisplayContainer*)insertObject:(id)object asLastWithKey:(id)key;
@@ -19,9 +22,14 @@
 -(DisplayContainer*)moveKey:(id)key beforeKey:(id)target;
 -(DisplayContainer*)moveKey:(id)key afterKey:(id)target;
 
--(DisplayContainer*)pruneObjectsForKey:(id)key toFormat:(NSString*)format;
+-(DisplayContainer*)prune;
+
+-(id)keyBefore:(id)target;
+-(id)keyAfter:(id)target;
+-(id)liveKeyBefore:(id)target;
+-(id)liveKeyAfter:(id)target;
 
 -(NSArray*)objectsForKey:(id)key;
--(id)topObjectForKey:(id)key;
+-(id)liveObjectForKey:(id)key;
 
 @end

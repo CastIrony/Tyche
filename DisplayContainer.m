@@ -223,6 +223,33 @@
     return [DisplayContainer containerWithKeys:self.keys hashtable:newHashtable]; 
 }
 
+-(id)keyBefore:(id)target
+{
+    if(self.keys.count == 0) { return nil; }
+    
+    int index = [self.keys indexOfObject:target];
+    
+    if(index == NSNotFound || index == 0) 
+    {
+        return [self.keys objectAtIndex:0];
+    }
+    
+    return [self.keys objectAtIndex:index - 1];
+}
+
+-(id)keyAfter:(id)target
+{
+    if(self.keys.count == 0) { return nil; }
+    
+    int index = [self.keys indexOfObject:target];
+    
+    if(index == NSNotFound || index = self.keys.count - 1)
+    {
+        return [self.keys lastObject];
+    }
+    
+    return [self.keys objectAtIndex:index + 1];    
+}
 
 -(NSArray*)objectsForKey:(id)key 
 {
