@@ -241,7 +241,7 @@
 {
     if(self.keys.count == 0) { return nil; }
     
-    int index = [self.keys indexOfObject:target];
+    uint index = [self.keys indexOfObject:target];
     
     if(index == NSNotFound || index == self.keys.count - 1)
     {
