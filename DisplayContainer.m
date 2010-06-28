@@ -91,7 +91,7 @@
     
     [newHashtable setValue:newArray forKey:key];
     
-    return [DisplayContainer containerWithPredicate:self.predicate hashtable:newHashtable keys:newKeys];
+    return [DisplayContainer containerWithPredicate:self.predicate hashtable:newHashtable keys:newKeys liveKeys:self.liveKeys];
 }
 
 -(DisplayContainer*)insertObject:(id)object asLastWithKey:(id)key 
