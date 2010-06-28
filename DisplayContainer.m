@@ -45,7 +45,7 @@
 -(void)updateObjectLists
 {
     NSMutableArray* newObjects = [NSMutableArray array];
-    NSMutableArray* newTopObjects = [NSMutableArray array];
+    NSMutableArray* newLiveObjects = [NSMutableArray array];
     
     for(id key in self.keys)
     {
@@ -54,11 +54,11 @@
             [newObjects addObject:object];
         }
         
-        [newTopObjects addObject:[[self.hashtable objectForKey:key] lastObject]];
+        [newLiveObjects addObject:[[self.hashtable objectForKey:key] lastObject]];
     }
     
     self.objects = newObjects;
-    self.topObjects = newTopObjects;
+    self.liveObjects = newLiveObjects;
 }
 
 -(DisplayContainer*)insertObject:(id)object asFirstWithKey:(id)key 
