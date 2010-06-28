@@ -8,6 +8,8 @@
 @property (nonatomic, retain, readonly) NSMutableArray* objects;
 @property (nonatomic, retain, readonly) NSMutableArray* liveObjects;
 
++(DisplayContainer*)containerWithPredicate:(NSPredicate *)predicate;
+
 -(DisplayContainer*)insertObject:(id)object asFirstWithKey:(id)key;
 -(DisplayContainer*)insertObject:(id)object asLastWithKey:(id)key;
 -(DisplayContainer*)insertObject:(id)object withKey:(id)key atIndex:(int)index;
