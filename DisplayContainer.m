@@ -9,7 +9,7 @@
 @property (nonatomic, retain) NSMutableArray*      objects;
 @property (nonatomic, retain) NSMutableArray*      liveObjects;
 
-+(DisplayContainer*)containerWithFormat:(NSString*)format hashtable:(NSMutableDictionary*)hashtable keys:(NSMutableArray*)keys
++(DisplayContainer*)containerWithPredicate:(NSPredicate*)predicate hashtable:(NSMutableDictionary*)hashtable keys:(NSMutableArray*)keys;
 
 -(void)updateObjectLists;
 
@@ -33,9 +33,11 @@
     return container;
 }
 
-+(DisplayContainer*)containerWithFormat:(NSString*)format hashtable:(NSMutableDictionary*)hashtable keys:(NSMutableArray*)keys
++(DisplayContainer*)containerWithPredicate:(NSPredicate*)predicate hashtable:(NSMutableDictionary*)hashtable keys:(NSMutableArray*)keys
 {
-    DisplayContainer* container = [DisplayContainer containerWithFormat:format];
+    DisplayContainer* container = [[[DisplayContainer alloc] init] autorelease];
+
+    container.predicate = predicate;
     
     container.hashtable   = [hashtable mutableCopy];
     container.keys        = [keys mutableCopy];
