@@ -24,7 +24,7 @@
 @synthesize objects;
 @synthesize liveObjects;
 
-+(DisplayContainer*)container 
++(DisplayContainer*)containerWithFormat:(NSString*)format
 {
     return [[[DisplayContainer alloc] init] autorelease];
 }
@@ -40,7 +40,7 @@
     container.objects     = [NSMutableArray array];
     container.liveObjects = [NSMutableArray array];
     
-    for(id key in oldKeys)
+    for(id key in keys)
     {
         BOOL live = NO;
         
