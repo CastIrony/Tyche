@@ -15,7 +15,8 @@
 
 @implementation DisplayContainer
 
-@synthesize predicate;
+@synthesize alive;
+@synthesize dead;
 @synthesize hashtable;
 @synthesize keys;
 @synthesize objects;
