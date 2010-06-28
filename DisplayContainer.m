@@ -33,44 +33,37 @@
 {
     DisplayContainer* container = [DisplayContainer container];
     
-    NSPredicate*    predicate   = [NSPredicate predicateWithFormat:format];
-    
-    NSMutableDictionary* hashtable   = [oldHashtable mutableCopy];
-    NSMutableArray*      keys        = [oldKeys mutableCopy];
-    NSMutableArray*      liveKeys    = [NSMutableArray array];
-    NSMutableArray*      objects     = [NSMutableArray array];
-    NSMutableArray*      liveObjects = [NSMutableArray array];
+    container.predicate   = [NSPredicate predicateWithFormat:format];
+    container.hashtable   = [oldHashtable mutableCopy];
+    container.keys        = [oldKeys mutableCopy];
+    container.liveKeys    = [NSMutableArray array];
+    container.objects     = [NSMutableArray array];
+    container.liveObjects = [NSMutableArray array];
     
     for(id key in oldKeys)
     {
         BOOL live = NO;
         
-        for(id object in [hashtable objectForKey:key]) 
+        for(id object in [container.hashtable objectForKey:key]) 
         {
-            if([predicate evaluateWithObject:object])
+            if([container.predicate evaluateWithObject:object])
             {
-                [objects addObject:object];
+                [container.objects addObject:object];
                 live = YES;
             }
         }
         
         if(live)
         {
-            [liveKeys addObject:key];
-            [liveObjects addObject:[[hashtable objectForKey:key] lastObject]];
+            [container.liveKeys addObject:key];
+            [container.liveObjects addObject:[[container.hashtable objectForKey:key] lastObject]];
         }
         else 
         {
-            [hashtable removeObjectForKey:key];
-            [keys removeObject:key];
+            [container.hashtable removeObjectForKey:key];
+            [container.keys removeObject:key];
         }
     }
-    
-    container.hashtable   = hashtable;
-    container.keys        = keys;
-    container.liveKeys    = liveKeys;
-    container.objects     = objects;
-    container.liveObjects = liveObjects;
     
     return container;
 }
