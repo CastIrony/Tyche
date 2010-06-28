@@ -212,14 +212,14 @@
 }
 
 
--(DisplayContainer*)pruneObjectsForKey:(id)key toFormat:(NSString*)format 
+-(DisplayContainer*)pruneObjectsForKey:(id)key
 {
     if(![self.keys containsObject:key]) { return self; }
     
     NSMutableDictionary* newHashtable = [[self.hashtable mutableCopy] autorelease];
     NSMutableArray* newArray = [[[newHashtable objectForKey:key] mutableCopy] autorelease];
 
-    [newArray filterUsingPredicate:[NSPredicate predicateWithFormat:format]];
+    [newArray filterUsingPredicate:[NSPredicate predicateWithFormat:self.format]];
     
     [newHashtable setValue:newArray forKey:key];
     
