@@ -259,12 +259,12 @@
 
 -(id)liveKeyBefore:(id)target
 {
-    
+    return nil;
 }
 
 -(id)liveKeyAfter:(id)target
 {
-    
+    return nil;
 }
 
 -(NSArray*)objectsForKey:(id)key 
