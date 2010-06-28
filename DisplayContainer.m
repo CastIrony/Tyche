@@ -227,12 +227,9 @@
 {
     if(self.keys.count == 0) { return nil; }
     
-    int index = [self.keys indexOfObject:target];
+    uint index = [self.keys indexOfObject:target];
     
-    if(index == NSNotFound || index == 0) 
-    {
-        return [self.keys objectAtIndex:0];
-    }
+    if(index == NSNotFound || index == 0) { return [self.keys objectAtIndex:0]; }
     
     return [self.keys objectAtIndex:index - 1];
 }
@@ -243,10 +240,7 @@
     
     uint index = [self.keys indexOfObject:target];
     
-    if(index == NSNotFound || index == self.keys.count - 1)
-    {
-        return [self.keys lastObject];
-    }
+    if(index == NSNotFound || index == self.keys.count - 1) { return [self.keys lastObject]; }
     
     return [self.keys objectAtIndex:index + 1];    
 }
