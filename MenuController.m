@@ -101,7 +101,7 @@
 {
     BOOL collapsed = _collapsed.endValue > 0.5;
     
-    NSArray* liveMenus = self.menus.topObjects;
+    NSArray* liveMenus = self.menus.liveObjects;
         
     if(liveMenus.count == 0) { return; }
     
