@@ -26,14 +26,17 @@
 
 +(DisplayContainer*)containerWithFormat:(NSString*)format
 {
-    return [[[DisplayContainer alloc] init] autorelease];
+    DisplayContainer* container = [[[DisplayContainer alloc] init] autorelease];
+    
+    container.predicate = [NSPredicate predicateWithFormat:format];
+    
+    return container;
 }
 
 +(DisplayContainer*)containerWithFormat:(NSString*)format hashtable:(NSMutableDictionary*)hashtable keys:(NSMutableArray*)keys
 {
-    DisplayContainer* container = [DisplayContainer container];
+    DisplayContainer* container = [DisplayContainer containerWithFormat:format];
     
-    container.predicate   = [NSPredicate predicateWithFormat:format];
     container.hashtable   = [hashtable mutableCopy];
     container.keys        = [keys mutableCopy];
     container.liveKeys    = [NSMutableArray array];
