@@ -35,8 +35,8 @@
     
     NSPredicate*    predicate   = [NSPredicate predicateWithFormat:format];
     
-    NSMutableDictionary* hashTable   = [hashtable mutableCopy];
-    NSMutableArray*      keys        = [keys mutableCopy];
+    NSMutableDictionary* hashtable   = [oldHashtable mutableCopy];
+    NSMutableArray*      keys        = [oldKeys mutableCopy];
     NSMutableArray*      liveKeys    = [NSMutableArray array];
     NSMutableArray*      objects     = [NSMutableArray array];
     NSMutableArray*      liveObjects = [NSMutableArray array];
