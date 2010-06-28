@@ -73,7 +73,7 @@
 //    return container;
 //}
 
--(DisplayContainer*)insertObject:(id)object asFirstWithKey:(id)key 
+-(void)insertObject:(id)object asFirstWithKey:(id)key 
 {
     NSMutableArray*      newKeys      = [[self.keys      mutableCopy] autorelease];
     NSMutableDictionary* newHashtable = [[self.hashtable mutableCopy] autorelease];
@@ -91,7 +91,7 @@
     self.keys = newKeys;
 }
 
--(DisplayContainer*)insertObject:(id)object asLastWithKey:(id)key 
+-(void)insertObject:(id)object asLastWithKey:(id)key 
 {
     NSMutableArray*      newKeys      = [[self.keys      mutableCopy] autorelease];
     NSMutableDictionary* newHashtable = [[self.hashtable mutableCopy] autorelease];
@@ -109,7 +109,7 @@
     self.keys = newKeys;
 }
 
--(DisplayContainer*)insertObject:(id)object withKey:(id)key atIndex:(int)index 
+-(void)insertObject:(id)object withKey:(id)key atIndex:(int)index 
 {
     NSMutableArray*      newKeys      = [[self.keys      mutableCopy] autorelease];
     NSMutableDictionary* newHashtable = [[self.hashtable mutableCopy] autorelease];
@@ -127,7 +127,7 @@
     self.keys = newKeys;
 }
 
--(DisplayContainer*)insertObject:(id)object withKey:(id)key beforeKey:(id)target 
+-(void)insertObject:(id)object withKey:(id)key beforeKey:(id)target 
 {
     if(![self.keys containsObject:target]) { return self; }
 
@@ -147,7 +147,7 @@
     self.keys = newKeys;
 }
 
--(DisplayContainer*)insertObject:(id)object withKey:(id)key afterKey:(id)target 
+-(void)insertObject:(id)object withKey:(id)key afterKey:(id)target 
 {
     if(![self.keys containsObject:target]) { return self; }
 
@@ -167,7 +167,7 @@
     self.keys = newKeys;
 }
 
--(DisplayContainer*)moveKeyToFirst:(id)key 
+-(void)moveKeyToFirst:(id)key 
 {
     if(![self.keys containsObject:key]) { return self; }
 
@@ -179,7 +179,7 @@
     self.keys = newKeys;
 }
 
--(DisplayContainer*)moveKeyToLast:(id)key 
+-(void)moveKeyToLast:(id)key 
 {
     if(![self.keys containsObject:key]) { return self; }
 
@@ -191,7 +191,7 @@
     self.keys = newKeys;
 }
 
--(DisplayContainer*)moveKey:(id)key toIndex:(int)index 
+-(void)moveKey:(id)key toIndex:(int)index 
 {
     if(![self.keys containsObject:key]) { return self; }
 
@@ -203,7 +203,7 @@
     self.keys = newKeys;
 }
 
--(DisplayContainer*)moveKey:(id)key beforeKey:(id)target 
+-(void)moveKey:(id)key beforeKey:(id)target 
 {
     if(![self.keys containsObject:key]) { return self; }
     if(![self.keys containsObject:target]) { return self; }
@@ -216,7 +216,7 @@
     self.keys = newKeys;
 }
 
--(DisplayContainer*)moveKey:(id)key afterKey:(id)target 
+-(void)moveKey:(id)key afterKey:(id)target 
 {
     if(![self.keys containsObject:key]) { return self; }
     if(![self.keys containsObject:target]) { return self; }
@@ -229,7 +229,7 @@
     self.keys = newKeys;
 }
 
--(DisplayContainer*)prune
+-(void)prune
 {
     return [DisplayContainer containerWithPredicate:self.predicate hashtable:self.hashtable keys:self.keys];
 }
