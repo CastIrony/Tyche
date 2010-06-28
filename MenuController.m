@@ -35,9 +35,7 @@
     {
         self.renderer = renderer;
         
-//        self.liveMenuKeys = [[[NSMutableArray alloc] init] autorelease];
-//        self.allMenuKeys = [[[NSMutableArray alloc] init] autorelease];
-        self.menus = [DisplayContainer container];
+        self.menus = [DisplayContainer containerWithFormat:@"isDead == NO"];
         self.offset = [AnimatedFloat withValue:0];
         
         self.hidden = [AnimatedFloat withValue:0];
