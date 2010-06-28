@@ -243,7 +243,7 @@
     
     int index = [self.keys indexOfObject:target];
     
-    if(index == NSNotFound || index = self.keys.count - 1)
+    if(index == NSNotFound || index == self.keys.count - 1)
     {
         return [self.keys lastObject];
     }
