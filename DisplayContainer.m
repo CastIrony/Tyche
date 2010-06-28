@@ -222,20 +222,6 @@
     return [DisplayContainer containerWithKeys:newKeys hashtable:self.hashtable];
 }
 
--(DisplayContainer*)pruneObjectsForKey:(id)key
-{
-    if(![self.keys containsObject:key]) { return self; }
-    
-    NSMutableDictionary* newHashtable = [[self.hashtable mutableCopy] autorelease];
-    NSMutableArray* newArray = [[[newHashtable objectForKey:key] mutableCopy] autorelease];
-
-    [newArray filterUsingPredicate:[NSPredicate predicateWithFormat:self.format]];
-    
-    [newHashtable setValue:newArray forKey:key];
-    
-    return [DisplayContainer containerWithKeys:self.keys hashtable:newHashtable]; 
-}
-
 -(id)keyBefore:(id)target
 {
     if(self.keys.count == 0) { return nil; }
