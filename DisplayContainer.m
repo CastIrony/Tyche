@@ -22,6 +22,15 @@
 @synthesize objects;
 @synthesize liveObjects;
 
++(DisplayContainer*)containerWithPredicate:(NSPredicate *)predicate
+{
+    DisplayContainer* container = [[[DisplayContainer alloc] init] autorelease];
+    
+    container.predicate = predicate;
+    
+    return container;
+}
+
 +(DisplayContainer*)containerWithPredicate:(NSPredicate*)predicate hashtable:(NSMutableDictionary*)hashtable keys:(NSMutableArray*)keys liveKeys:(NSMutableArray*)liveKeys
 {
     DisplayContainer* container = [[[DisplayContainer alloc] init] autorelease];
