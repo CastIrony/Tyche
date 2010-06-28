@@ -109,7 +109,7 @@
       
     for(NSString* key in self.menus.keys)
     {
-        GLMenu* menu = [self.menus topObjectForKey:key];
+        GLMenu* menu = [self.menus liveObjectForKey:key];
         
         BOOL visible = !collapsed || key == self.currentKey;
         
