@@ -9,7 +9,7 @@
 @property (nonatomic, retain) NSMutableArray*      objects;
 @property (nonatomic, retain) NSMutableArray*      liveObjects;
 
-+(DisplayContainer*)containerWithPredicate:(NSPredicate*)predicate hashtable:(NSMutableDictionary*)hashtable keys:(NSMutableArray*)keys liveKeys(NSMutableArray*)liveKeys;
++(DisplayContainer*)containerWithPredicate:(NSPredicate*)predicate hashtable:(NSMutableDictionary*)hashtable keys:(NSMutableArray*)keys liveKeys:(NSMutableArray*)liveKeys;
 
 @end
 
