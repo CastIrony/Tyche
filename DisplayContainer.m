@@ -29,22 +29,41 @@
     return [[[DisplayContainer alloc] init] autorelease];
 }
 
-+(DisplayContainer*)containerWithKeys:(NSMutableArray*)keys hashtable:(NSMutableDictionary*)hashtable
++(DisplayContainer*)containerWithFormat:(NSString*)format hashtable:(NSMutableDictionary*)oldHashtable keys:(NSMutableArray*)oldKeys
 {
     DisplayContainer* container = [DisplayContainer container];
     
-    NSMutableArray* liveKeys    = [NSMutableArray array];
-    NSMutableArray* objects     = [NSMutableArray array];
-    NSMutableArray* liveObjects = [NSMutableArray array];
+    NSPredicate*    predicate   = [NSPredicate predicateWithFormat:format];
     
-    for(id key in keys)
+    NSMutableDictionary* hashTable   = [hashtable mutableCopy];
+    NSMutableArray*      keys        = [keys mutableCopy];
+    NSMutableArray*      liveKeys    = [NSMutableArray array];
+    NSMutableArray*      objects     = [NSMutableArray array];
+    NSMutableArray*      liveObjects = [NSMutableArray array];
+    
+    for(id key in oldKeys)
     {
+        BOOL live = NO;
+        
         for(id object in [hashtable objectForKey:key]) 
         {
-            [objects addObject:object];
+            if([predicate evaluateWithObject:object])
+            {
+                [objects addObject:object];
+                live = YES;
+            }
         }
         
-        [liveObjects addObject:[[hashtable objectForKey:key] lastObject]];
+        if(live)
+        {
+            [liveKeys addObject:key];
+            [liveObjects addObject:[[hashtable objectForKey:key] lastObject]];
+        }
+        else 
+        {
+            [hashtable removeObjectForKey:key];
+            [keys removeObject:key];
+        }
     }
     
     container.hashtable   = hashtable;
