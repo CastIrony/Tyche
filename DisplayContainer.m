@@ -29,13 +29,13 @@
     return [[[DisplayContainer alloc] init] autorelease];
 }
 
-+(DisplayContainer*)containerWithFormat:(NSString*)format hashtable:(NSMutableDictionary*)oldHashtable keys:(NSMutableArray*)oldKeys
++(DisplayContainer*)containerWithFormat:(NSString*)format hashtable:(NSMutableDictionary*)hashtable keys:(NSMutableArray*)keys
 {
     DisplayContainer* container = [DisplayContainer container];
     
     container.predicate   = [NSPredicate predicateWithFormat:format];
-    container.hashtable   = [oldHashtable mutableCopy];
-    container.keys        = [oldKeys mutableCopy];
+    container.hashtable   = [hashtable mutableCopy];
+    container.keys        = [keys mutableCopy];
     container.liveKeys    = [NSMutableArray array];
     container.objects     = [NSMutableArray array];
     container.liveObjects = [NSMutableArray array];
