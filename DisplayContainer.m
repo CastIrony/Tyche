@@ -2,14 +2,14 @@
 
 @interface DisplayContainer () 
 
-@property (nonatomic, retain) NSPredicate*         predicate;
-@property (nonatomic, retain) NSMutableDictionary* hashtable;
-@property (nonatomic, retain) NSMutableArray*      keys;
-@property (nonatomic, retain) NSMutableArray*      liveKeys;
-@property (nonatomic, retain) NSMutableArray*      objects;
-@property (nonatomic, retain) NSMutableArray*      liveObjects;
+@property (nonatomic, retain) NSPredicate*         alive;
+@property (nonatomic, retain) NSPredicate*         dead;
 
-+(DisplayContainer*)containerWithPredicate:(NSPredicate*)predicate hashtable:(NSMutableDictionary*)hashtable keys:(NSMutableArray*)keys liveKeys:(NSMutableArray*)liveKeys;
+@property (nonatomic, retain) NSMutableDictionary* hashtable;    // live dying dead?
+@property (nonatomic, retain) NSMutableArray*      keys;         // live dying dead?
+@property (nonatomic, retain) NSMutableArray*      objects;      // live dying dead?
+@property (nonatomic, retain) NSMutableArray*      liveKeys;     // live 
+@property (nonatomic, retain) NSMutableArray*      liveObjects;  // live 
 
 @end
 
@@ -18,64 +18,60 @@
 @synthesize predicate;
 @synthesize hashtable;
 @synthesize keys;
-@synthesize liveKeys;
 @synthesize objects;
+@synthesize liveKeys;
 @synthesize liveObjects;
 
-+(DisplayContainer*)containerWithPredicate:(NSPredicate *)predicate
++(DisplayContainer*)container
 {
-    DisplayContainer* container = [[[DisplayContainer alloc] init] autorelease];
-    
-    container.predicate = predicate;
-    
-    return container;
+    return [[[DisplayContainer alloc] init] autorelease];
 }
 
-+(DisplayContainer*)containerWithPredicate:(NSPredicate*)predicate hashtable:(NSMutableDictionary*)hashtable keys:(NSMutableArray*)keys liveKeys:(NSMutableArray*)liveKeys
-{
-    DisplayContainer* container = [[[DisplayContainer alloc] init] autorelease];
-
-    container.predicate = predicate;
-    
-    container.hashtable   = hashtable;
-    container.keys        = keys;
-    container.liveKeys    = liveKeys;
-    container.objects     = [NSMutableArray array];
-    container.liveObjects = [NSMutableArray array];
-    
-    for(id key in keys)
-    {
-        BOOL allDead = YES;
-        
-        for(id object in [container.hashtable objectForKey:key]) 
-        {
-            if([container.predicate evaluateWithObject:object])
-            {
-                [container.objects addObject:object];
-                allDead = NO;
-            }
-            else 
-            {
-                [[container.hashtable objectForKey:key] removeObject:object];
-            }
-        }
-        
-        if(allDead)
-        {
-            [container.hashtable removeObjectForKey:key];
-            [container.keys removeObject:key];
-        }
-        else 
-        {
-            if([liveKeys containsObject:key])
-            {
-                [container.liveObjects addObject:[[container.hashtable objectForKey:key] lastObject]];
-            }
-        }
-    }
-    
-    return container;
-}
+//+(DisplayContainer*)containerWithPredicate:(NSPredicate*)predicate hashtable:(NSMutableDictionary*)hashtable keys:(NSMutableArray*)keys liveKeys:(NSMutableArray*)liveKeys
+//{
+//    DisplayContainer* container = [[[DisplayContainer alloc] init] autorelease];
+//
+//    container.predicate = predicate;
+//    
+//    container.hashtable   = hashtable;
+//    container.keys        = keys;
+//    container.liveKeys    = liveKeys;
+//    container.objects     = [NSMutableArray array];
+//    container.liveObjects = [NSMutableArray array];
+//    
+//    for(id key in keys)
+//    {
+//        BOOL allDead = YES;
+//        
+//        for(id object in [container.hashtable objectForKey:key]) 
+//        {
+//            if([container.predicate evaluateWithObject:object])
+//            {
+//                [container.objects addObject:object];
+//                allDead = NO;
+//            }
+//            else 
+//            {
+//                [[container.hashtable objectForKey:key] removeObject:object];
+//            }
+//        }
+//        
+//        if(allDead)
+//        {
+//            [container.hashtable removeObjectForKey:key];
+//            [container.keys removeObject:key];
+//        }
+//        else 
+//        {
+//            if([liveKeys containsObject:key])
+//            {
+//                [container.liveObjects addObject:[[container.hashtable objectForKey:key] lastObject]];
+//            }
+//        }
+//    }
+//    
+//    return container;
+//}
 
 -(DisplayContainer*)insertObject:(id)object asFirstWithKey:(id)key 
 {
@@ -91,7 +87,8 @@
     
     [newHashtable setValue:newArray forKey:key];
     
-    return [DisplayContainer containerWithPredicate:self.predicate hashtable:newHashtable keys:newKeys liveKeys:self.liveKeys];
+    self.hashtable = newHashtable;
+    self.keys = newKeys;
 }
 
 -(DisplayContainer*)insertObject:(id)object asLastWithKey:(id)key 
@@ -108,7 +105,7 @@
     
     [newHashtable setValue:newArray forKey:key];
     
-    return [DisplayContainer containerWithPredicate:self.predicate hashtable:newHashtable keys:newKeys];
+    self.keys = newKeys;
 }
 
 -(DisplayContainer*)insertObject:(id)object withKey:(id)key atIndex:(int)index 
