@@ -250,9 +250,9 @@
 
 -(void)pruneDeadForKey:(id)key
 {
-    NSMutableDictionary* hashtable = [[self.hashtable mutableCopy] autorelease];
-    NSMutableArray*      keys      = [[self.keys      mutableCopy] autorelease];
-    NSMutableArray*      objects   = [[self.objects   mutableCopy] autorelease];
+    NSMutableDictionary* newHashtable = [[self.hashtable mutableCopy] autorelease];
+    NSMutableArray*      newKeys      = [[self.keys      mutableCopy] autorelease];
+    NSMutableArray*      newObjects   = [[self.objects   mutableCopy] autorelease];
     
     BOOL allDead = YES;
     
@@ -260,7 +260,7 @@
     {
         if([self.dead evaluateWithObject:object])
         {
-            [[hashtable objectForKey:key] removeObject:object];
+            [[newHashtable objectForKey:key] removeObject:object];
         }
         else 
         {
@@ -271,13 +271,13 @@
     
     if(allDead)
     {
-        [hashtable removeObjectForKey:key];
-        [keys removeObject:key];
+        [newHashtable removeObjectForKey:key];
+        [newKeys removeObject:key];
     }
     
-    self.hashtable = hashtable;
-    self.keys = keys;
-    self.objects = objects;
+    self.hashtable = newHashtable;
+    self.keys = newKeys;
+    self.objects = newObjects;
 }
 
 -(id)keyBefore:(id)target
