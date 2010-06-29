@@ -23,6 +23,23 @@
 @synthesize liveKeys;
 @synthesize liveObjects;
 
+-(id)init
+{
+    self = [super init];
+    
+    if(self) 
+    {
+        self.hashtable   = [NSMutableDictionary* dictionary];
+        
+        self.objects     = [NSMutableArray* array];
+        self.keys        = [NSMutableArray* array];
+        self.liveObjects = [NSMutableArray* array];
+        self.liveKeys    = [NSMutableArray* array];
+    }
+    
+    return self;
+}
+
 +(DisplayContainer*)container
 {
     return [[[DisplayContainer alloc] init] autorelease];
