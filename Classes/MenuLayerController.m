@@ -33,16 +33,16 @@
     return self;
 }
 
--(void)pushMenu:(MenuController*)menu forKey:(NSString*)key
+-(void)pushMenuLayer:(MenuController*)menuLayer forKey:(NSString*)key
 {
-    menu.owner = self;
+    menuLayer.owner = self;
     
-    menu.death = [AnimatedFloat withStartValue:1 endValue:0 speed:1];
-    menu.death.curve = AnimationEaseInOut;
+    //menuLayer.death = [AnimatedFloat withStartValue:menuLayer.death endValue:0 speed:1];
+    //menuLayer.death.curve = AnimationEaseInOut;
 
-    //self.currentLayer.collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:1 speed:1];
+    //menuLayer.collapsed = [AnimatedFloat withStartValue:menuLayer.collapsed.value endValue:1 speed:1];
     
-    [self.menuLayers insertObject:menu asLastWithKey:key];
+    [self.menuLayers insertObject:menuLayer asLastWithKey:key];
 }
 
 -(void)popUntilKey:(NSString*)target

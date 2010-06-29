@@ -494,7 +494,7 @@
 {
     MenuControllerMain* menu = [MenuControllerMain withRenderer:self.renderer];
     
-    [self.renderer.menuLayerController pushMenu:menu forKey:[NSString stringWithFormat:@"%X", menu]];
+    [self.renderer.menuLayerController pushMenuLayer:menu forKey:[NSString stringWithFormat:@"%X", menu]];
 }
 
 -(void)chipTouchedUpWithKey:(NSString*)key

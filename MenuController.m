@@ -21,7 +21,7 @@
 @synthesize initialOffset = _initialOffset;
 @synthesize currentKey    = _currentKey;
 @synthesize collapsed     = _collapsed;
-@synthesize death        = _hidden;
+@synthesize death         = _death;
 @synthesize owner         = _owner;
 
 -(id)initWithRenderer:(GameRenderer*)renderer
