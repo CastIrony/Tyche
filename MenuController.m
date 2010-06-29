@@ -215,10 +215,6 @@
         {
             self.currentKey = [self.menus keyAfter:self.currentKey];
         }
-        else 
-        {
-            [self deleteMenuForKey:self.currentKey]; 
-        }
 
         [self updateOffset];
     }

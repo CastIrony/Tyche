@@ -508,6 +508,10 @@
     {
         [self.renderer.menuLayerController cancelMenuLayer];
     }
+    else if([key isEqualToString:@"new_multiplayer"])
+    {
+        [self.renderer.menuLayerController.currentLayer deleteMenuForKey:self.renderer.menuLayerController.currentLayer.currentKey]; 
+    }
 }
 
 -(void)chipTouchedUpWithKey:(NSString*)key
