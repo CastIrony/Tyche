@@ -295,8 +295,8 @@
     }
     
     self.hashtable = newHashtable;
-    self.keys = newKeys;
-    self.objects = newObjects;
+    self.keys      = newKeys;
+    self.objects   = newObjects;
 }
 
 -(id)keyBefore:(id)target
