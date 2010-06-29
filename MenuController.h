@@ -31,7 +31,7 @@
 //@property (nonatomic, assign) int                  currentIndex;
 @property (nonatomic, retain) NSString*            currentKey;
 @property (nonatomic, retain) AnimatedFloat*       collapsed;
-@property (nonatomic, retain) AnimatedFloat*       hidden;
+@property (nonatomic, retain) AnimatedFloat*       death;
 @property (nonatomic, assign) id                   owner;
 
 -(id)initWithRenderer:(GameRenderer*)renderer;

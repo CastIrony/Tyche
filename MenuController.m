@@ -21,7 +21,7 @@
 @synthesize initialOffset = _initialOffset;
 @synthesize currentKey    = _currentKey;
 @synthesize collapsed     = _collapsed;
-@synthesize hidden        = _hidden;
+@synthesize death        = _hidden;
 @synthesize owner         = _owner;
 
 -(id)initWithRenderer:(GameRenderer*)renderer
@@ -38,7 +38,7 @@
         
         self.offset = [AnimatedFloat withValue:0];
         
-        self.hidden = [AnimatedFloat withValue:0];
+        self.death = [AnimatedFloat withValue:0];
         self.collapsed = [AnimatedFloat withValue:0];
     }
     
@@ -139,7 +139,7 @@
 {    
     TRANSACTION_BEGIN
     {   
-        GLfloat offset = (1 - self.hidden.value) * (self.offset.value * 4) + (self.hidden.value * -15);
+        GLfloat offset = (1 - self.death.value) * (self.offset.value * 4) + (self.death.value * -15);
         
         glTranslatef(offset, 0, 0);
                 

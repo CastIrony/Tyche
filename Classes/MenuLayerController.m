@@ -37,32 +37,33 @@
 {
     menu.owner = self;
     
-    menu.hidden = [AnimatedFloat withStartValue:1 endValue:0 speed:1];
-    menu.hidden.curve = AnimationEaseInOut;
-    
-    [self.menuLayers setObject:menu forKey:key];
-    [self.menuLayerKeys addObject:key];
+    menu.death = [AnimatedFloat withStartValue:1 endValue:0 speed:1];
+    menu.death.curve = AnimationEaseInOut;
 
-    self.currentLayer.collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:0 speed:1];
+    //self.currentLayer.collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:1 speed:1];
+    
+    [self.menuLayers insertObject:menu asLastWithKey:key];
 }
 
--(void)popUntilKey:(NSString*)key
+-(void)popUntilKey:(NSString*)target
 {
-    if(![self.menuLayerKeys containsObject:key]) { return; }
+    if(![self.menuLayers.liveKeys containsObject:key]) { return; }
     
-    self.currentLayer.collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:1 speed:1];
+    //self.currentLayer.collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:1 speed:1];
     
-    while(![[self.menuLayerKeys lastObject] isEqualToString:key])
+    for(NSString* key in self.menuLayers.liveKeys.reverseObjectEnumerator)
     {
-        MenuController* menu = [self.menuLayers objectForKey:[self.menuLayerKeys lastObject]];
+        if([key isEqualToString:target]) { break; }
+                
         
-        menu.hidden = [AnimatedFloat withStartValue:menu.hidden.value endValue:1 speed:1];
-        menu.hidden.curve = AnimationEaseInOut;
-//        menu.hidden.onEnd = 
-//        ^{
-            [self.menuLayers removeObjectForKey:[self.menuLayerKeys lastObject]];
-            [self.menuLayerKeys removeLastObject];
-//        };
+        MenuController* menu = [self.menus liveObjectForKey:key];
+        
+        menu.death = [AnimatedFloat withStartValue:menu.death.value endValue:1 speed:1];
+        
+        menu.death.onStart = ^{ [self.menus pruneLiveForKey:key]; };    
+        menu.death.onEnd   = ^{ [self.menus pruneDeadForKey:key]; };
+        
+        menu.death.curve = AnimationEaseInOut;
     }
 }
 
