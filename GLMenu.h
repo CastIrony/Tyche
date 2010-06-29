@@ -31,7 +31,8 @@
 
 @property (nonatomic, assign) GLfloat           lightness;
 @property (nonatomic, retain) AnimatedFloat*    opacity;
-@property (nonatomic, retain) AnimatedVector3D* location;
+@property (nonatomic, retain) AnimatedFloat*    death;
+@property (nonatomic, retain) AnimatedFloat*    location;
 @property (nonatomic, assign) id owner;
 
 

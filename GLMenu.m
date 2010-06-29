@@ -24,6 +24,7 @@
 @synthesize lightness       = _lightness;
 @synthesize opacity        = _opacity;
 @synthesize location       = _location;
+@synthesize death          = _death;
 @synthesize owner          = _owner;
 
 -(void)dealloc
