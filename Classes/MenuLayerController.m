@@ -5,11 +5,11 @@
 #import "MenuController.h"
 #import "MenuLayerController.h"
 #import "GameRenderer.h"
+#import "DisplayContainer.h"
 
 @implementation MenuLayerController
 
 @synthesize renderer = _renderer;
-@synthesize menuLayerKeys = _menuLayerKeys;
 @synthesize menuLayers = _menuLayers;
 @synthesize hidden = _hidden;
 

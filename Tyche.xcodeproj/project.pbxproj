@@ -214,8 +214,8 @@
 		C55AA0E0116590A10013BF3D /* MenuControllerJoinGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuControllerJoinGame.m; sourceTree = "<group>"; };
 		C55AA1161165B8370013BF3D /* TextureController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureController.h; sourceTree = "<group>"; };
 		C55AA1171165B8370013BF3D /* TextureController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextureController.m; sourceTree = "<group>"; };
-		C55AA3E911684A000013BF3D /* MenuLayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuLayerController.h; sourceTree = "<group>"; };
-		C55AA3EA11684A000013BF3D /* MenuLayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuLayerController.m; sourceTree = "<group>"; };
+		C55AA3E911684A000013BF3D /* MenuLayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuLayerController.h; path = Classes/MenuLayerController.h; sourceTree = "<group>"; };
+		C55AA3EA11684A000013BF3D /* MenuLayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuLayerController.m; path = Classes/MenuLayerController.m; sourceTree = "<group>"; };
 		C55F7178115852AD0096E96C /* MenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuController.h; sourceTree = "<group>"; };
 		C55F7179115852AD0096E96C /* MenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuController.m; sourceTree = "<group>"; };
 		C566160B110C0B9F00D6D5FE /* GLChipGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLChipGroup.h; sourceTree = "<group>"; };
@@ -282,8 +282,6 @@
 		080E96DDFE201D6D7F000001 /* Other Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				C55AA3E911684A000013BF3D /* MenuLayerController.h */,
-				C55AA3EA11684A000013BF3D /* MenuLayerController.m */,
 				1D3623240D0F684500981E51 /* AppController.h */,
 				1D3623250D0F684500981E51 /* AppController.m */,
 				C5C023A910D2394700CD2F8B /* CameraController.h */,
@@ -522,6 +520,8 @@
 		C55AA0D8116590410013BF3D /* Menu Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				C55AA3E911684A000013BF3D /* MenuLayerController.h */,
+				C55AA3EA11684A000013BF3D /* MenuLayerController.m */,
 				C55F7178115852AD0096E96C /* MenuController.h */,
 				C55F7179115852AD0096E96C /* MenuController.m */,
 				C55AA0DC1165907F0013BF3D /* MenuControllerMain.h */,

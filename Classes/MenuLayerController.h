@@ -1,21 +1,13 @@
 #import "Touchable.h"
 
 @class MenuController;
+@class DisplayContainer;
 @class AnimatedFloat;
 
 @interface MenuLayerController : NSObject 
-{
-    GameRenderer* _renderer;
-    
-    NSString* _currentKey;
-    NSMutableArray* _menuLayerKeys;
-    NSMutableDictionary* _menuLayers;
-    AnimatedFloat* _hidden;
-}
 
 @property (nonatomic, assign) GameRenderer* renderer;
-@property (nonatomic, retain) NSMutableArray* menuLayerKeys;
-@property (nonatomic, retain) NSMutableDictionary* menuLayers;
+@property (nonatomic, retain) DisplayContainer* menuLayers;
 @property (nonatomic, retain) AnimatedFloat* hidden;
 @property (nonatomic, readonly) MenuController* currentLayer;
 
