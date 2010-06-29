@@ -29,12 +29,12 @@
     
     if(self) 
     {
-        self.hashtable   = [NSMutableDictionary* dictionary];
+        self.hashtable   = [NSMutableDictionary dictionary];
         
-        self.objects     = [NSMutableArray* array];
-        self.keys        = [NSMutableArray* array];
-        self.liveObjects = [NSMutableArray* array];
-        self.liveKeys    = [NSMutableArray* array];
+        self.objects     = [NSMutableArray array];
+        self.keys        = [NSMutableArray array];
+        self.liveObjects = [NSMutableArray array];
+        self.liveKeys    = [NSMutableArray array];
     }
     
     return self;
