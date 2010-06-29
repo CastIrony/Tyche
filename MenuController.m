@@ -116,7 +116,7 @@
     
     for(NSString* key in self.menus.liveObjects)
     {   
-        GLMenu* menu = [self.menus liveObjectForKey:keys];
+        GLMenu* menu = [self.menus liveObjectForKey:key];
         
         if(self.renderer.animated)
         {
@@ -129,7 +129,7 @@
         else 
         {   
             menu.location = [AnimatedFloat withValue:-4.0 * counter];
-            menu.opacity = [AnimatedFloat withValue:(menu == currentMenu || !collapsed)];
+            menu.opacity = [AnimatedFloat withValue:(key == self.currentKey || !collapsed)];
         }
 
         [menu.dots setDots:liveMenus.count current:counter];
