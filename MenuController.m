@@ -88,18 +88,33 @@
 
 -(void)updateOffset
 {
-    int currentIndex = [self.menus.keys indexOfObject:self.currentKey];
-    
-    if(currentIndex != NSNotFound)
+    if(self.currentKey)
+    {
+        int currentIndex = [self.menus.keys indexOfObject:self.currentKey];
+        
+        if(currentIndex != NSNotFound)
+        {
+            if(self.renderer.animated)
+            {
+                self.offset = [AnimatedFloat withStartValue:self.offset.value endValue:currentIndex speed:2.0];
+                self.offset.curve = AnimationEaseInOut;
+            }
+            else
+            {
+                self.offset = [AnimatedFloat withValue:currentIndex];
+            }
+        }
+    }
+    else 
     {
         if(self.renderer.animated)
         {
-            self.offset = [AnimatedFloat withStartValue:self.offset.value endValue:currentIndex speed:2.0];
+            self.offset = [AnimatedFloat withStartValue:self.offset.value endValue:0 speed:2.0];
             self.offset.curve = AnimationEaseInOut;
         }
         else
         {
-            self.offset = [AnimatedFloat withValue:currentIndex];
+            self.offset = [AnimatedFloat withValue:0];
         }
     }
 }
@@ -204,11 +219,9 @@
     {
         if(pointTo.x - pointFrom.x > 10)
         {
-            NSLog(@"[%@ %@]", self.currentKey, [self.menus.keys objectAtIndex:0]);
-            
             if([self.currentKey isEqualToString:[self.menus.keys objectAtIndex:0]])
             {
-                
+                self.currentKey = nil;
             }
             else 
             {
