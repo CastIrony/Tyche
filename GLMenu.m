@@ -49,7 +49,7 @@
         _arrayMesh        = malloc(6 * sizeof(GLushort));
         
         self.opacity  = [AnimatedFloat withValue:1];
-        self.location = [AnimatedVector3D withValue:Vector3DMake(0, 0, 0)];
+        self.location = [AnimatedFloat withValue:0];
                 
         self.dots = [[[GLDots alloc] init] autorelease];
         
