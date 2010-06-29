@@ -156,7 +156,7 @@
 
     TRANSACTION_BEGIN
     {
-        glTranslatef(self.location.value.x, self.location.value.y, self.location.value.z);
+        glTranslatef(self.location.value, 0, self.death.value * -20);
         
         glRotatef(/*self.angleJitter + */self.angleSin, 0, 1, 0);
 

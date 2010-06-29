@@ -115,14 +115,14 @@
             menu.opacity = [AnimatedFloat withStartValue:menu.opacity.value endValue:visible forTime:1.0];
             menu.opacity.curve = AnimationEaseInOut;
 
-            menu.location = [AnimatedVector3D withStartValue:menu.location.value endValue:Vector3DMake(-4 * counter, 0, 0) forTime:1.0];
+            menu.location = [AnimatedFloat withStartValue:menu.location.value endValue:-4.0 * counter forTime:1.0];
             menu.location.curve = AnimationEaseInOut;
         }
         else 
         {
             menu.opacity = [AnimatedFloat withValue:visible];
             
-            menu.location = [AnimatedVector3D withValue:Vector3DMake(-4 * counter, 0, 0)];
+            menu.location = [AnimatedFloat withValue:-4.0 * counter];
         }
 
         [menu.dots setDots:liveMenus.count current:counter];
