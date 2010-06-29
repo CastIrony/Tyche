@@ -2,9 +2,6 @@
 
 @interface DisplayContainer () 
 
-@property (nonatomic, retain) NSPredicate*         alive;
-@property (nonatomic, retain) NSPredicate*         dead;
-
 @property (nonatomic, retain) NSMutableDictionary* hashtable;    // live dying dead?
 
 @property (nonatomic, retain) NSMutableArray*      keys;         // live dying dead?
