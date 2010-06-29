@@ -146,7 +146,7 @@
             
             menu.lightness = 1 - self.collapsed.value * 0.5;
             
-            menu.opacity = [AnimatedFloat withValue:1.0 - self.collapsed.value];
+            menu.opacity = menu == [self.menus liveObjectForKey:self.currentKey] ? 1 : [AnimatedFloat withValue:1.0 - self.collapsed.value];
                         
             [menu reset];
             [menu draw];

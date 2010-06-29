@@ -103,7 +103,6 @@
     if(self.opacity.value < (0.001)) { return; }
     
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-
     
     TRANSACTION_BEGIN
     {
