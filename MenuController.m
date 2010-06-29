@@ -204,7 +204,14 @@
     {
         if(pointTo.x - pointFrom.x > 10)
         {
-            self.currentKey = [self.menus keyBefore:self.currentKey];
+            if(self.currentKey isEqualToString:[self.menus.liveKeys objectAtIndex:0])
+            {
+                
+            }
+            else 
+            {
+                self.currentKey = [self.menus keyBefore:self.currentKey];
+            }
         }
         else if(pointTo.x - pointFrom.x < -10)
         {
