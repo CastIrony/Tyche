@@ -114,7 +114,7 @@
           
     BOOL collapsed = self.collapsed.endValue > 0.5;
     
-    for(NSString* key in self.menus.liveObjects)
+    for(NSString* key in self.menus.liveKeys)
     {   
         GLMenu* menu = [self.menus liveObjectForKey:key];
         
