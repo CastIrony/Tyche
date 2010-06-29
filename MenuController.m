@@ -145,9 +145,7 @@
             menu.angleSin = 7.5 * sin(2 * self.offset.value + 2 * menu.angleJitter);
             
             menu.lightness = 1 - self.collapsed.value * 0.5;
-            
-            menu.opacity = menu == [self.menus liveObjectForKey:self.currentKey] ? [AnimatedFloat withValue:1.0 ] : [AnimatedFloat withValue:1.0 - self.collapsed.value];
-                        
+                                    
             [menu reset];
             [menu draw];
         }
