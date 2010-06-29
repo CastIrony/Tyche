@@ -107,7 +107,7 @@
     
     TRANSACTION_BEGIN
     {
-        glTranslatef(self.location.value, 0, self.death.value * -20);
+        glTranslatef(self.location.value, 0, self.death.value * -5);
 
         glRotatef(self.angleSin, 0, 1, 0);
         
@@ -170,7 +170,7 @@
 
     TRANSACTION_BEGIN
     {
-        glTranslatef(self.location.value, 0, -self.death.value);
+        glTranslatef(self.location.value, 0, self.death.value * -5);
         
         glRotatef(self.angleSin, 0, 1, 0);
 
