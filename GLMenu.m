@@ -170,9 +170,9 @@
 
     TRANSACTION_BEGIN
     {
-        glTranslatef(self.location.value, 0, self.death.value * -5);
+        glTranslatef(self.location.value, 0, -self.death.value);
         
-        glRotatef(/*self.angleJitter + */self.angleSin, 0, 1, 0);
+        glRotatef(self.angleSin, 0, 1, 0);
 
         id<Touchable> touchedLabel = [self.textController testTouch:touch withPreviousObject:object];
         
