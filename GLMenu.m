@@ -93,10 +93,9 @@
     
     TRANSACTION_BEGIN
     {
-        glTranslatef(self.location.value.x, self.location.value.y, self.location.value.z);
+        glTranslatef(self.location.value, 0, self.death.value * -20);
 
         glRotatef(self.angleSin, 0, 1, 0);
-        
         
         glColor4f(self.opacity.value * self.lightness, self.opacity.value * self.lightness, self.opacity.value * self.lightness, self.opacity.value);
         
