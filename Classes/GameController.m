@@ -492,9 +492,22 @@
 
 -(void)labelTouchedWithKey:(NSString*)key;
 {
-    MenuControllerMain* menu = [MenuControllerMain withRenderer:self.renderer];
+    //[label setObject:@"logo" forKey:@"key"]; 
+//    [label setObject:@"join_multiplayer" forKey:@"key"]; 
+//    [label setObject:@"new_multiplayer" forKey:@"key"]; 
+//    [label setObject:@"new_game"            forKey:@"key"]; 
+//    
+//    
+    if([key isEqualToString:@"logo"])
+    {
+        MenuControllerMain* menu = [MenuControllerMain withRenderer:self.renderer];
     
-    [self.renderer.menuLayerController pushMenuLayer:menu forKey:[NSString stringWithFormat:@"%X", menu]];
+        [self.renderer.menuLayerController pushMenuLayer:menu forKey:[NSString stringWithFormat:@"%X", menu]];
+    }
+    else if([key isEqualToString:@"join_multiplayer"])
+    {
+        [self.renderer.menuLayerController cancelMenuLayer];
+    }
 }
 
 -(void)chipTouchedUpWithKey:(NSString*)key
