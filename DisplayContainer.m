@@ -67,7 +67,7 @@
         }
     }
     
-    self.objects = newLiveObjects;
+    self.objects = newObjects;
     self.liveObjects = newLiveObjects;
     self.liveKeys = newLiveKeys;
 }
