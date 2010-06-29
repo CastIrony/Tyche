@@ -111,19 +111,19 @@
     if(liveMenus.count == 0) { return; }
     
     int counter = 0;
-      
-    GLMenu* currentMenu = [self.menus liveObjectForKey:self.currentKey];
-    
+          
     BOOL collapsed = self.collapsed.endValue > 0.5;
     
-    for(GLMenu* menu in self.menus.liveObjects)
-    {                
+    for(NSString* key in self.menus.liveObjects)
+    {   
+        GLMenu* menu = [self.menus liveObjectForKey:keys];
+        
         if(self.renderer.animated)
         {
             menu.location = [AnimatedFloat withStartValue:menu.location.value endValue:-4.0 * counter forTime:1.0];
             menu.location.curve = AnimationEaseInOut;
         
-            menu.opacity = [AnimatedFloat withStartValue:menu.opacity.value endValue:(menu == currentMenu || !collapsed) forTime:1.0];
+            menu.opacity = [AnimatedFloat withStartValue:menu.opacity.value endValue:(key == self.currentKey || !collapsed) forTime:1.0];
             menu.opacity.curve = AnimationEaseInOut;
         }
         else 
