@@ -30,7 +30,29 @@
 
 -(void)generateObjectLists
 {
+    newObjects     = [self.objects     mutableCopy];
+    newLiveObjects = [self.liveObjects mutableCopy];
+    newLiveKeys    = [self.liveKeys    mutableCopy];
     
+    for(id key in self.keys)
+    {
+        for(id object in [self.hashtable objectForKey:key])
+        {
+            [newObjects addObject:object];
+        }
+        
+        id topObject = [[self.hashtable objectForKey:key] lastObject];
+        
+        if([self.alive evaluateWithObject:topObject])
+        {
+            [newLiveObjects addObject:topObject];
+            [newLiveKeys addObject:key];
+        }
+    }
+    
+    self.objects = newLiveObjects;
+    self.liveObjects = newLiveObjects;
+    self.liveKeys = newLiveKeys;
 }
 
 -(void)insertObject:(id)object asFirstWithKey:(id)key 
