@@ -115,21 +115,14 @@
     int counter = 0;
       
     for(GLMenu* menu in self.menus.liveObjects)
-    {        
-        BOOL visible = !collapsed;
-        
+    {                
         if(self.renderer.animated)
         {
-            menu.opacity = [AnimatedFloat withStartValue:menu.opacity.value endValue:visible forTime:1.0];
-            menu.opacity.curve = AnimationEaseInOut;
-
             menu.location = [AnimatedFloat withStartValue:menu.location.value endValue:-4.0 * counter forTime:1.0];
             menu.location.curve = AnimationEaseInOut;
         }
         else 
-        {
-            menu.opacity = [AnimatedFloat withValue:visible];
-            
+        {   
             menu.location = [AnimatedFloat withValue:-4.0 * counter];
         }
 
@@ -154,6 +147,8 @@
             menu.angleSin = 7.5 * sin(2 * self.offset.value + 2 * menu.angleJitter);
             
             menu.lightness = 1 - self.collapsed.value * 0.5;
+            
+            menu.opacity = [AnimatedFloat withValue:self.collapsed.value];
                         
             [menu reset];
             [menu draw];
