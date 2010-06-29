@@ -43,7 +43,7 @@
     menuLayer.hidden = [AnimatedFloat withStartValue:1 endValue:0 speed:1];
     menuLayer.hidden.curve = AnimationEaseInOut;
 
-    MenuController* currentLayer = [self.menuLayers liveObjectForKey:target];
+    MenuController* currentLayer = [self.menuLayers liveObjectForKey:key];
 
     currentLayer.collapsed = [AnimatedFloat withStartValue:currentLayer.collapsed.value endValue:1 speed:1];
     [currentLayer layoutMenus];
