@@ -145,7 +145,8 @@
             menu.angleSin = 7.5 * sin(2 * self.offset.value + 2 * menu.angleJitter);
             
             menu.lightness = 1 - self.collapsed.value * 0.5;
-                                    
+            
+            
             [menu reset];
             [menu draw];
         }
