@@ -30,9 +30,9 @@
 
 -(void)generateObjectLists
 {
-    NSMutableArray* newObjects     = [self.objects     mutableCopy];
-    NSMutableArray* newLiveObjects = [self.liveObjects mutableCopy];
-    NSMutableArray* newLiveKeys    = [self.liveKeys    mutableCopy];
+    NSMutableArray* newObjects     = [[self.objects     mutableCopy] autorelease];
+    NSMutableArray* newLiveObjects = [[self.liveObjects mutableCopy] autorelease];
+    NSMutableArray* newLiveKeys    = [[self.liveKeys    mutableCopy] autorelease];
     
     for(id key in self.keys)
     {
