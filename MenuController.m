@@ -114,7 +114,7 @@
     
     int counter = 0;
       
-    for(NSString* key in self.menus.keys)
+    for(NSString* key in self.menus.liveKeys)
     {
         GLMenu* menu = [self.menus liveObjectForKey:key];
         
