@@ -20,8 +20,11 @@
 @synthesize currentKey    = _currentKey;
 @synthesize collapsed     = _collapsed;
 @synthesize death         = _death;
-@synthesize death         = _hidden;
+@synthesize hidden        = _hidden;
 @synthesize owner         = _owner;
+
+@dynamic isDead;
+@dynamic isAlive;
 
 -(id)initWithRenderer:(GameRenderer*)renderer
 {
@@ -37,7 +40,8 @@
         
         self.offset = [AnimatedFloat withValue:0];
         
-        self.death = [AnimatedFloat withValue:0];
+        self.hidden    = [AnimatedFloat withValue:0];
+        self.death     = [AnimatedFloat withValue:0];
         self.collapsed = [AnimatedFloat withValue:0];
     }
     
@@ -47,6 +51,16 @@
 +(MenuController*)withRenderer:(GameRenderer *)renderer
 {
     return [[[self alloc] initWithRenderer:renderer] autorelease];
+}
+
+-(BOOL)isAlive
+{
+    return within(self.death.value, 0, 0.001) && self.death.endTime < CFAbsoluteTimeGetCurrent();
+}
+
+-(BOOL)isDead
+{
+    return within(self.death.value, 1, 0.001) && self.death.endTime < CFAbsoluteTimeGetCurrent();
 }
 
 -(void)addMenu:(GLMenu*)menu forKey:(NSString*)key
@@ -138,7 +152,7 @@
 {    
     TRANSACTION_BEGIN
     {   
-        GLfloat offset = (1 - self.death.value) * (self.offset.value * 4) + (self.death.value * -15);
+        GLfloat offset = (1 - (self.death.value + self.hidden.value)) * (self.offset.value * 4) + ((self.death.value + self.hidden.value) * -15);
         
         glTranslatef(offset, 0, 0);
                 
