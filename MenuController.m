@@ -173,7 +173,9 @@
 {
     TRANSACTION_BEGIN
     {
-        glTranslatef(self.offset.value * 4, 0, 0);
+        GLfloat offset = (1 - (self.death.value + self.hidden.value)) * (self.offset.value * 4) + ((self.death.value + self.hidden.value) * -15);
+        
+        glTranslatef(offset, 0, 0);
         
         for(GLMenu* menu in self.menus.liveObjects)
         {
