@@ -37,10 +37,10 @@
 {
     menuLayer.owner = self;
     
-    //menuLayer.death = [AnimatedFloat withStartValue:menuLayer.death endValue:0 speed:1];
-    //menuLayer.death.curve = AnimationEaseInOut;
+    menuLayer.hidden = [AnimatedFloat withStartValue:1 endValue:0 speed:1];
+    menuLayer.hidden.curve = AnimationEaseInOut;
 
-    //menuLayer.collapsed = [AnimatedFloat withStartValue:menuLayer.collapsed.value endValue:1 speed:1];
+    menuLayer.collapsed = [AnimatedFloat withStartValue:menuLayer.collapsed.value endValue:1 speed:1];
     
     [self.menuLayers insertObject:menuLayer asLastWithKey:key];
 }
@@ -68,11 +68,7 @@
 
 -(void)cancelMenuLayer
 {
-    NSString* key = [self.menuLayerKeys objectBefore:[self.menuLayerKeys lastObject]];
-    
-    if([key isEqualToString:[self.menuLayerKeys lastObject]]) { return; }
-    
-    [self popUntilKey:key];
+    [self popUntilKey:[self.menuLayers liveKeyBefore:[self.menuLayers.liveKeys lastObject]]];
 }
 
 -(void)draw
@@ -83,10 +79,8 @@
     {    
         glTranslatef(self.hidden.value * -15 , 0, 0);
         
-        for(NSString* key in self.menuLayerKeys)
-        {
-            MenuController* layer = [self.menuLayers objectForKey:key];
-            
+        for(MenuController* layer in self.menuLayers.objects)
+        {            
             [layer draw];
         }
     }
@@ -103,10 +97,8 @@
     {    
         glTranslatef(self.hidden.value * -15, 0, 0);
             
-        for(NSString* key in self.menuLayerKeys)
+        for(MenuController* layer in self.menuLayers.liveObjects)
         {
-            MenuController* layer = [self.menuLayers objectForKey:key];
-            
             if(layer && within(layer.hidden.value, 0, 0.001) && within(layer.collapsed.value, 0, 0.001))
             {
                 object = [layer testTouch:touch withPreviousObject:object];
