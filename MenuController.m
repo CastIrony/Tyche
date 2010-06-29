@@ -69,7 +69,7 @@
     
     [self.menus insertObject:menu asLastWithKey:key];
     
-    if(!self.currentKey) { currentKey = key; }
+    if(!self.currentKey) { self.currentKey = key; }
     
     [self layoutMenus];
 }
