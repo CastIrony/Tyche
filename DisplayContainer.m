@@ -29,52 +29,6 @@
     return [[[DisplayContainer alloc] init] autorelease];
 }
 
-//+(DisplayContainer*)containerWithPredicate:(NSPredicate*)predicate hashtable:(NSMutableDictionary*)hashtable keys:(NSMutableArray*)keys liveKeys:(NSMutableArray*)liveKeys
-//{
-//    DisplayContainer* container = [[[DisplayContainer alloc] init] autorelease];
-//
-//    container.predicate = predicate;
-//    
-//    container.hashtable   = hashtable;
-//    container.keys        = keys;
-//    container.liveKeys    = liveKeys;
-//    container.objects     = [NSMutableArray array];
-//    container.liveObjects = [NSMutableArray array];
-//    
-//    for(id key in keys)
-//    {
-//        BOOL allDead = YES;
-//        
-//        for(id object in [container.hashtable objectForKey:key]) 
-//        {
-//            if([container.predicate evaluateWithObject:object])
-//            {
-//                [container.objects addObject:object];
-//                allDead = NO;
-//            }
-//            else 
-//            {
-//                [[container.hashtable objectForKey:key] removeObject:object];
-//            }
-//        }
-//        
-//        if(allDead)
-//        {
-//            [container.hashtable removeObjectForKey:key];
-//            [container.keys removeObject:key];
-//        }
-//        else 
-//        {
-//            if([liveKeys containsObject:key])
-//            {
-//                [container.liveObjects addObject:[[container.hashtable objectForKey:key] lastObject]];
-//            }
-//        }
-//    }
-//    
-//    return container;
-//}
-
 -(void)insertObject:(id)object asFirstWithKey:(id)key 
 {
     NSMutableArray*      newKeys      = [[self.keys      mutableCopy] autorelease];
@@ -304,12 +258,24 @@
 
 -(id)liveKeyBefore:(id)target
 {
-    return nil;
+    if(self.liveKeys.count == 0) { return nil; }
+    
+    uint index = [self.liveKeys indexOfObject:target];
+    
+    if(index == NSNotFound || index == 0) { return [self.liveKeys objectAtIndex:0]; }
+    
+    return [self.liveKeys objectAtIndex:index - 1];
 }
 
 -(id)liveKeyAfter:(id)target
 {
-    return nil;
+    if(self.liveKeys.count == 0) { return nil; }
+    
+    uint index = [self.liveKeys indexOfObject:target];
+    
+    if(index == NSNotFound || index == self.liveKeys.count - 1) { return [self.liveKeys lastObject]; }
+    
+    return [self.liveKeys objectAtIndex:index + 1];   
 }
 
 -(NSArray*)objectsForKey:(id)key 
