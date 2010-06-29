@@ -40,7 +40,7 @@
     menuLayer.hidden = [AnimatedFloat withStartValue:1 endValue:0 speed:1];
     menuLayer.hidden.curve = AnimationEaseInOut;
 
-    menuLayer.collapsed = [AnimatedFloat withStartValue:menuLayer.collapsed.value endValue:1 speed:1];
+    //menuLayer.collapsed = [AnimatedFloat withStartValue:menuLayer.collapsed.value endValue:1 speed:1];
     
     [self.menuLayers insertObject:menuLayer asLastWithKey:key];
 }
