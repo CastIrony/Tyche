@@ -103,7 +103,7 @@
     
     NSArray* liveMenus = self.menus.liveObjects;
         
-    NSLog(@"%@", self.menus.liveObjects)
+    NSLog(@"%@", self.menus.liveObjects);
     
     if(liveMenus.count == 0) { return; }
     
