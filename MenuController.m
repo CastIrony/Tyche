@@ -109,13 +109,15 @@
     {
         if(self.renderer.animated)
         {
-            self.offset = [AnimatedFloat withStartValue:self.offset.value endValue:-2 speed:2.0];
+            self.offset = [AnimatedFloat withStartValue:self.offset.value endValue:-1 speed:2.0];
             self.offset.curve = AnimationEaseInOut;
         }
         else
         {
-            self.offset = [AnimatedFloat withValue:-2];
+            self.offset = [AnimatedFloat withValue:-1];
         }
+        
+        [self.owner cancelMenuLayer];
     }
 }
 
