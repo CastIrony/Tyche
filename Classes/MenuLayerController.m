@@ -17,7 +17,7 @@
 
 -(MenuController*)currentLayer
 {
-    return [self.menuLayers objectForKey:[self.menuLayerKeys lastObject]];
+    return [self.menuLayers.liveObjects lastObject];
 }
 
 -(id)init
@@ -26,8 +26,7 @@
     
     if(self) 
     {
-        self.menuLayerKeys = [[[NSMutableArray alloc] init] autorelease];
-        self.menuLayers = [[[NSMutableDictionary alloc] init] autorelease];
+        self.menuLayers = [DisplayContainer container];
         self.hidden = [AnimatedFloat withValue:0];
     }
     
