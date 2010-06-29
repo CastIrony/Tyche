@@ -61,16 +61,16 @@
 
 -(void)deleteMenuForKey:(NSString*)key
 {
-//    GLMenu* menu = [self.menus liveObjectForKey:key];
-//    
-//    menu.death = [AnimatedFloat withStartValue:menu.death.value endValue:1 speed:1];
-//    
-//    menu.death.onStart = ^{ [self.menus pruneLiveForKey:key]; };    
-//    menu.death.onEnd   = ^{ [self.menus pruneDeadForKey:key]; };
-//
-//    menu.death.curve = AnimationEaseInOut;
-//    
-//    [self layoutMenus];
+    GLMenu* menu = [self.menus liveObjectForKey:key];
+    
+    menu.death = [AnimatedFloat withStartValue:menu.death.value endValue:1 speed:1];
+    
+    menu.death.onStart = ^{ [self.menus pruneLiveForKey:key]; };    
+    menu.death.onEnd   = ^{ [self.menus pruneDeadForKey:key]; };
+
+    menu.death.curve = AnimationEaseInOut;
+    
+    [self layoutMenus];
 }
 
 -(void)updateOffset
@@ -199,6 +199,10 @@
         else if(pointTo.x - pointFrom.x < -10)
         {
             self.currentKey = [self.menus keyAfter:self.currentKey];
+        }
+        else 
+        {
+            [self deleteMenuForKey:self.currentKey]; 
         }
 
         [self updateOffset];
