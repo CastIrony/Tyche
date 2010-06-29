@@ -27,6 +27,9 @@
 @synthesize death          = _death;
 @synthesize owner          = _owner;
 
+@dynamic isDead;
+@dynamic isAlive;
+
 -(void)dealloc
 {
     free(_arrayVertex);
@@ -61,6 +64,16 @@
     }
     
     return self;
+}
+
+-(BOOL)isAlive
+{
+    return within(self.death.value, 0, 0.001);
+}
+
+-(BOOL)isDead
+{
+    return within(self.death.value, 1, 0.001);
 }
 
 -(void)reset

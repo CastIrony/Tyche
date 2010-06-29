@@ -35,6 +35,8 @@
 @property (nonatomic, retain) AnimatedFloat*    location;
 @property (nonatomic, assign) id owner;
 
+@property (nonatomic, readonly) BOOL isDead;
+@property (nonatomic, readonly) BOOL isAlive;
 
 -(void)reset;
 

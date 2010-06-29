@@ -33,6 +33,9 @@
         self.renderer = renderer;
         
         self.menus = [DisplayContainer container];
+        self.menus.alive = [NSPredicate predicateWithFormat:@"isAlive = YES"];
+        self.menus.dead  = [NSPredicate predicateWithFormat:@"isDead  = YES"];
+        
         self.offset = [AnimatedFloat withValue:0];
         
         self.hidden = [AnimatedFloat withValue:0];
