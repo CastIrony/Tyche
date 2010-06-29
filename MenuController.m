@@ -204,7 +204,7 @@
     {
         if(pointTo.x - pointFrom.x > 10)
         {
-            if([self.currentKey isEqualToString:[self.menus.liveKeys objectAtIndex:0]])
+            if([self.currentKey isEqualToString:[self.menus.keys objectAtIndex:0]])
             {
                 
             }
