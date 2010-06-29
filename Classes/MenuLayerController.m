@@ -47,7 +47,7 @@
 
 -(void)popUntilKey:(NSString*)target
 {
-    if(![self.menuLayers.liveKeys containsObject:key]) { return; }
+    if(![self.menuLayers.liveKeys containsObject:target]) { return; }
     
     //self.currentLayer.collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:1 speed:1];
     
