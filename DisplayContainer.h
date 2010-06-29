@@ -3,11 +3,11 @@
 @property (nonatomic, retain) NSPredicate* alive;
 @property (nonatomic, retain) NSPredicate* dead;
 
-@property (nonatomic, readonly) NSMutableDictionary* hashtable;
-@property (nonatomic, readonly) NSMutableArray* keys;
-@property (nonatomic, readonly) NSMutableArray* liveKeys;
-@property (nonatomic, readonly) NSMutableArray* objects;
-@property (nonatomic, readonly) NSMutableArray* liveObjects;
+@property (nonatomic, retain, readonly) NSMutableDictionary* hashtable;
+@property (nonatomic, retain, readonly) NSMutableArray* keys;
+@property (nonatomic, retain, readonly) NSMutableArray* liveKeys;
+@property (nonatomic, retain, readonly) NSMutableArray* objects;
+@property (nonatomic, retain, readonly) NSMutableArray* liveObjects;
 
 +(DisplayContainer*)container;
 
