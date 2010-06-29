@@ -114,11 +114,9 @@
     
     int counter = 0;
       
-    for(NSString* key in self.menus.liveKeys)
-    {
-        GLMenu* menu = [self.menus liveObjectForKey:key];
-        
-        BOOL visible = /*!collapsed ||*/ [key isEqualToString:self.currentKey];
+    for(GLMenu* menu in self.menus.liveObjects)
+    {        
+        BOOL visible = !collapsed;
         
         if(self.renderer.animated)
         {
@@ -137,10 +135,7 @@
 
         [menu.dots setDots:liveMenus.count current:counter];
         
-        if(!collapsed) 
-        { 
-            counter++; 
-        } 
+        counter++;
     }
         
     [self updateOffset];
