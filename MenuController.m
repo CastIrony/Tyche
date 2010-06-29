@@ -114,7 +114,7 @@
     
     if(liveMenus.count == 0) { return; }
     
-    int counter = collapsed ?  : 0;
+    int counter = 0;
       
     for(NSString* key in self.menus.keys)
     {
