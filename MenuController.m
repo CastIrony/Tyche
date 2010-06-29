@@ -14,14 +14,13 @@
 @implementation MenuController
 
 @synthesize renderer      = _renderer;
-
 @synthesize menus         = _menus;
-
 @synthesize offset        = _offset;
 @synthesize initialOffset = _initialOffset;
 @synthesize currentKey    = _currentKey;
 @synthesize collapsed     = _collapsed;
 @synthesize death         = _death;
+@synthesize death         = _hidden;
 @synthesize owner         = _owner;
 
 -(id)initWithRenderer:(GameRenderer*)renderer
