@@ -54,16 +54,15 @@
     for(NSString* key in self.menuLayers.liveKeys.reverseObjectEnumerator)
     {
         if([key isEqualToString:target]) { break; }
-                
         
-        MenuController* menu = [self.menus liveObjectForKey:key];
+        MenuController* menuLayer = [self.menuLayers liveObjectForKey:key];
         
-        menu.death = [AnimatedFloat withStartValue:menu.death.value endValue:1 speed:1];
+        menuLayer.death = [AnimatedFloat withStartValue:menuLayer.death.value endValue:1 speed:1];
         
-        menu.death.onStart = ^{ [self.menus pruneLiveForKey:key]; };    
-        menu.death.onEnd   = ^{ [self.menus pruneDeadForKey:key]; };
+        menuLayer.death.onStart = ^{ [self.menuLayers pruneLiveForKey:key]; };    
+        menuLayer.death.onEnd   = ^{ [self.menuLayers pruneDeadForKey:key]; };
         
-        menu.death.curve = AnimationEaseInOut;
+        menuLayer.death.curve = AnimationEaseInOut;
     }
 }
 
