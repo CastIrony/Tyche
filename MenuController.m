@@ -146,7 +146,7 @@
 {    
     TRANSACTION_BEGIN
     {   
-        GLfloat offset = (1 - (self.death.value + self.hidden.value)) * (self.offset.value * 4) + ((self.death.value + self.hidden.value) * -15);
+        GLfloat offset = (1 - (self.death.value + self.hidden.value)) * (self.offset.value * 4) + ((self.death.value + self.hidden.value) * -5);
         
         glTranslatef(offset, 0, 0);
                 
