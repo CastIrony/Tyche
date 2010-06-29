@@ -78,12 +78,10 @@
     
     menu.death = [AnimatedFloat withStartValue:menu.death.value endValue:1 speed:1];
     
-    menu.death.onStart = ^{ [self.menus pruneLiveForKey:key]; };    
-    menu.death.onEnd   = ^{ [self.menus pruneDeadForKey:key]; };
+    menu.death.onStart = ^{ [self.menus pruneLiveForKey:key]; [self layoutMenus]; };    
+    menu.death.onEnd   = ^{ [self.menus pruneDeadForKey:key]; [self layoutMenus]; };
 
     menu.death.curve = AnimationEaseInOut;
-    
-    [self layoutMenus];
 }
 
 -(void)updateOffset
