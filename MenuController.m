@@ -123,13 +123,13 @@
             menu.location = [AnimatedFloat withStartValue:menu.location.value endValue:-4.0 * counter forTime:1.0];
             menu.location.curve = AnimationEaseInOut;
         
-            menu.opacity = [AnimatedFloat withStartValue:menu.opacity.value endValue:(key == self.currentKey || !collapsed) forTime:1.0];
+            menu.opacity = [AnimatedFloat withStartValue:menu.opacity.value endValue:([key isEqualToString:self.currentKey] || !collapsed) forTime:1.0];
             menu.opacity.curve = AnimationEaseInOut;
         }
         else 
         {   
             menu.location = [AnimatedFloat withValue:-4.0 * counter];
-            menu.opacity = [AnimatedFloat withValue:(key == self.currentKey || !collapsed)];
+            menu.opacity = [AnimatedFloat withValue:([key isEqualToString:self.currentKey] || !collapsed)];
         }
 
         [menu.dots setDots:liveMenus.count current:counter];
