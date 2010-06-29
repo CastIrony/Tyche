@@ -99,7 +99,7 @@
             
         for(MenuController* layer in self.menuLayers.liveObjects)
         {
-            if(layer && within(layer.hidden.value, 0, 0.001) && within(layer.collapsed.value, 0, 0.001))
+            if(layer && within(layer.collapsed.value, 0, 0.001))
             {
                 object = [layer testTouch:touch withPreviousObject:object];
             }
