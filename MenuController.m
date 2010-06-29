@@ -76,7 +76,7 @@
 {
     GLMenu* menu = [self.menus liveObjectForKey:key];
     
-    menu.death = [AnimatedFloat withStartValue:menu.death.value endValue:1 forTime:0.25];
+    menu.death = [AnimatedFloat withStartValue:menu.death.value endValue:1 forTime:0.5];
     
     menu.death.onStart = ^{ [self.menus pruneLiveForKey:key]; [self layoutMenus]; };    
     menu.death.onEnd   = ^{ [self.menus pruneDeadForKey:key]; [self layoutMenus]; };
