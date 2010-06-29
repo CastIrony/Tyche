@@ -118,7 +118,7 @@
     {
         GLMenu* menu = [self.menus liveObjectForKey:key];
         
-        BOOL visible = /*!collapsed ||*/ key == self.currentKey;
+        BOOL visible = /*!collapsed ||*/ [key isEqualToString:self.currentKey];
         
         if(self.renderer.animated)
         {
