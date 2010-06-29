@@ -66,6 +66,8 @@
         menuLayer.death.curve = AnimationEaseInOut;
     }
     
+    NSLog(@"currentLayer %@", self.currentLayer);
+    
     self.currentLayer.collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:0 speed:1];
 }
 
