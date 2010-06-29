@@ -204,6 +204,8 @@
     {
         if(pointTo.x - pointFrom.x > 10)
         {
+            NSLog(@"[%@ %@]", self.currentKey, [self.menus.keys objectAtIndex:0]);
+            
             if([self.currentKey isEqualToString:[self.menus.keys objectAtIndex:0]])
             {
                 
