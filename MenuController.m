@@ -112,16 +112,24 @@
     
     int counter = 0;
       
+    GLMenu* currentMenu = [self.menus liveObjectForKey:self.currentKey];
+    
+    BOOL collapsed = self.collapsed.endValue > 0.5;
+    
     for(GLMenu* menu in self.menus.liveObjects)
     {                
         if(self.renderer.animated)
         {
             menu.location = [AnimatedFloat withStartValue:menu.location.value endValue:-4.0 * counter forTime:1.0];
             menu.location.curve = AnimationEaseInOut;
+        
+            menu.opacity = [AnimatedFloat withStartValue:menu.opacity.value endValue:(menu == currentMenu || !collapsed) forTime:1.0];
+            menu.opacity.curve = AnimationEaseInOut;
         }
         else 
         {   
             menu.location = [AnimatedFloat withValue:-4.0 * counter];
+            menu.opacity = [AnimatedFloat withValue:(menu == currentMenu || !collapsed)];
         }
 
         [menu.dots setDots:liveMenus.count current:counter];
