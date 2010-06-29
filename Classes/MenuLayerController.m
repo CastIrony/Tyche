@@ -66,7 +66,7 @@
         menuLayer.death.curve = AnimationEaseInOut;
     }
         
-    [self.menuLayers liveObjectForKey:target].collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:0 speed:1];
+    [[self.menuLayers liveObjectForKey:target] setCollapsed:[AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:0 speed:1]];
 }
 
 -(void)cancelMenuLayer
