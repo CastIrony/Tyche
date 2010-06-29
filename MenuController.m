@@ -196,20 +196,16 @@
 
 -(void)handleTouchUp:(UITouch*)touch fromPoint:(CGPoint)pointFrom toPoint:(CGPoint)pointTo
 {
-    // TODO: fix this:
-    
     if(within(self.collapsed.value, 0, 0.001))
     {
         if(pointTo.x - pointFrom.x > 10)
         {
-            
+            self.currentKey = [self.menus keyBefore:self.currentKey];
         }
         else if(pointTo.x - pointFrom.x < -10)
         {
-
+            self.currentKey = [self.menus keyAfter:self.currentKey];
         }
-
-        //self.currentKey = (self.currentIndex == -1) ? nil : [self.liveMenuKeys objectAtIndex:self.currentIndex];
 
         [self updateOffset];
     }
