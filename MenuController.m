@@ -15,13 +15,10 @@
 
 @synthesize renderer      = _renderer;
 
-//@synthesize liveMenuKeys  = _liveMenuKeys;
-//@synthesize allMenuKeys   = _allMenuKeys;
 @synthesize menus         = _menus;
 
 @synthesize offset        = _offset;
 @synthesize initialOffset = _initialOffset;
-//@synthesize currentIndex  = _currentIndex;
 @synthesize currentKey    = _currentKey;
 @synthesize collapsed     = _collapsed;
 @synthesize hidden        = _hidden;
