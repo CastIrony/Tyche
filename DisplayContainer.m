@@ -9,6 +9,8 @@
 @property (nonatomic, retain) NSMutableArray*      liveKeys;     // live 
 @property (nonatomic, retain) NSMutableArray*      liveObjects;  // live 
 
+-(void)generateObjectLists;
+
 @end
 
 @implementation DisplayContainer
@@ -24,6 +26,11 @@
 +(DisplayContainer*)container
 {
     return [[[DisplayContainer alloc] init] autorelease];
+}
+
+-(void)generateObjectLists
+{
+    
 }
 
 -(void)insertObject:(id)object asFirstWithKey:(id)key 
