@@ -6,6 +6,7 @@
 @property (nonatomic, retain) NSPredicate*         dead;
 
 @property (nonatomic, retain) NSMutableDictionary* hashtable;    // live dying dead?
+
 @property (nonatomic, retain) NSMutableArray*      keys;         // live dying dead?
 @property (nonatomic, retain) NSMutableArray*      objects;      // live dying dead?
 @property (nonatomic, retain) NSMutableArray*      liveKeys;     // live 
@@ -230,9 +231,53 @@
     self.keys = newKeys;
 }
 
--(void)prune
+-(void)pruneLiveForKey:(id)key
 {
-    //return [DisplayContainer containerWithPredicate:self.predicate hashtable:self.hashtable keys:self.keys];
+    NSMutableArray* liveObjects = [[self.liveObjects mutableCopy] autorelease];
+    NSMutableArray* liveKeys    = [[self.liveKeys    mutableCopy] autorelease];
+        
+    id topObject = [[self.hashtable objectForKey:key] lastObject];
+    
+    if(![self.alive evaluateWithObject:topObject])
+    {
+        [liveObjects removeObject:topObject];
+        [liveKeys    removeObject:key];
+    }
+    
+    self.liveObjects = liveObjects;
+    self.liveKeys    = liveKeys;
+}
+
+-(void)pruneDeadForKey:(id)key
+{
+    NSMutableDictionary* hashtable = [[self.hashtable mutableCopy] autorelease];
+    NSMutableArray*      keys      = [[self.keys      mutableCopy] autorelease];
+    NSMutableArray*      objects   = [[self.objects   mutableCopy] autorelease];
+    
+    BOOL allDead = YES;
+    
+    for(id object in [self.hashtable objectForKey:key]) 
+    {
+        if([self.dead evaluateWithObject:object])
+        {
+            [[hashtable objectForKey:key] removeObject:object];
+        }
+        else 
+        {
+            allDead = NO;
+        }
+
+    }
+    
+    if(allDead)
+    {
+        [hashtable removeObjectForKey:key];
+        [keys removeObject:key];
+    }
+    
+    self.hashtable = hashtable;
+    self.keys = keys;
+    self.objects = objects;
 }
 
 -(id)keyBefore:(id)target

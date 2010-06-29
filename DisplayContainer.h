@@ -23,7 +23,8 @@
 -(void)moveKey:(id)key beforeKey:(id)target;
 -(void)moveKey:(id)key afterKey:(id)target;
 
--(void)prune;
+-(void)pruneLiveForKey:(id)key;
+-(void)pruneDeadForKey:(id)key;
 
 -(id)keyBefore:(id)target;
 -(id)keyAfter:(id)target;
