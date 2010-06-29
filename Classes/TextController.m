@@ -8,9 +8,11 @@
 @implementation TextController
 
 @synthesize styles      = _styles;
+
 @synthesize liveKeys    = _liveKeys;
 @synthesize liveItems   = _liveItems;
 @synthesize deadItems   = _deadItems;
+
 @synthesize renderer    = _renderer;
 @synthesize location    = _location;
 @synthesize padding     = _padding;

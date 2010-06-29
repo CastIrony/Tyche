@@ -308,7 +308,7 @@ static GLTexturePixelFormat defaultAlphaPixelFormat = kGLTexturePixelFormat_Defa
                 GLfloat y = 2 * spacing * i;
                 
                 CGRect position = CGRectMake(x + spacing - radius, y + spacing - radius, 2 * radius, 2 * radius);
-                                
+                                 
                 CGContextAddEllipseInRect(context, position);
                 
                 CGContextDrawPath(context, kCGPathEOFillStroke);
