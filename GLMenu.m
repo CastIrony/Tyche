@@ -69,12 +69,12 @@
 
 -(BOOL)isAlive
 {
-    return within(self.death.value, 0, 0.001);
+    return within(self.death.value, 0, 0.001) && self.death.hasEnded;
 }
 
 -(BOOL)isDead
 {
-    return within(self.death.value, 1, 0.001);
+    return within(self.death.value, 1, 0.001) && self.death.hasEnded;
 }
 
 -(void)reset

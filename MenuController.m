@@ -61,22 +61,16 @@
 
 -(void)deleteMenuForKey:(NSString*)key
 {
-//    TODO: fix this method
-//
-//    GLMenu* menu = [self.menus objectForKey:key];
-//    
-//    if(menu)
-//    {
-//        [self.liveMenuKeys removeObject:key];
-//
-//        if(self.renderer.animated)
-//        {
-//            menu.location = [AnimatedVector3D withStartValue:menu.location.value endValue:Vector3DMake(menu.location.value.x, menu.location.value.y, menu.location.value.z - 20) forTime:1.0];
-//            menu.location.curve = AnimationEaseInOut;
-//        }
-//        
-//        [self layoutMenus];
-//    }
+    GLMenu* menu = [self.menus liveObjectForKey:key];
+    
+    menu.death = [AnimatedFloat withStartValue:menu.death.value endValue:1 speed:1];
+    
+    menu.death.onStart = ^{ [self.menus pruneLiveForKey:key]; }    
+    menu.death.onEnd   = ^{ [self.menus pruneDeadForKey:key]; }
+
+    menu.death.curve = AnimationEaseInOut;
+    
+    [self layoutMenus];
 }
 
 -(void)updateOffset
