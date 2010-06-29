@@ -104,8 +104,6 @@
 
 -(void)layoutMenus
 {
-    BOOL collapsed = _collapsed.endValue > 0.5;
-    
     NSArray* liveMenus = self.menus.liveObjects;
         
     NSLog(@"%@", self.menus.liveObjects);
@@ -148,7 +146,7 @@
             
             menu.lightness = 1 - self.collapsed.value * 0.5;
             
-            menu.opacity = [AnimatedFloat withValue:self.collapsed.value];
+            menu.opacity = [AnimatedFloat withValue:1.0 - self.collapsed.value];
                         
             [menu reset];
             [menu draw];
