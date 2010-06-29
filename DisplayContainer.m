@@ -233,19 +233,19 @@
 
 -(void)pruneLiveForKey:(id)key
 {
-    NSMutableArray* liveObjects = [[self.liveObjects mutableCopy] autorelease];
-    NSMutableArray* liveKeys    = [[self.liveKeys    mutableCopy] autorelease];
+    NSMutableArray* newLiveObjects = [[self.liveObjects mutableCopy] autorelease];
+    NSMutableArray* newLiveKeys    = [[self.liveKeys    mutableCopy] autorelease];
         
     id topObject = [[self.hashtable objectForKey:key] lastObject];
     
     if(![self.alive evaluateWithObject:topObject])
     {
-        [liveObjects removeObject:topObject];
-        [liveKeys    removeObject:key];
+        [newLiveObjects removeObject:topObject];
+        [newLiveKeys    removeObject:key];
     }
     
-    self.liveObjects = liveObjects;
-    self.liveKeys    = liveKeys;
+    self.liveObjects = newLiveObjects;
+    self.liveKeys    = newLiveKeys;
 }
 
 -(void)pruneDeadForKey:(id)key
