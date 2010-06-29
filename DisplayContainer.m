@@ -49,6 +49,8 @@
     
     self.hashtable = newHashtable;
     self.keys = newKeys;
+    
+    [self generateObjectLists];
 }
 
 -(void)insertObject:(id)object asLastWithKey:(id)key
@@ -67,6 +69,8 @@
     
     self.hashtable = newHashtable;
     self.keys = newKeys;
+    
+    [self generateObjectLists];
 }
 
 -(void)insertObject:(id)object withKey:(id)key atIndex:(int)index 
@@ -85,6 +89,8 @@
     
     self.hashtable = newHashtable;
     self.keys = newKeys;
+
+    [self generateObjectLists];
 }
 
 -(void)insertObject:(id)object withKey:(id)key beforeKey:(id)target 
@@ -105,6 +111,8 @@
     
     self.hashtable = newHashtable;
     self.keys = newKeys;
+    
+    [self generateObjectLists];
 }
 
 -(void)insertObject:(id)object withKey:(id)key afterKey:(id)target 
@@ -125,6 +133,8 @@
     
     self.hashtable = newHashtable;
     self.keys = newKeys;
+    
+    [self generateObjectLists];
 }
 
 -(void)moveKeyToFirst:(id)key 
@@ -137,6 +147,8 @@
     [newKeys insertObject:key atIndex:0];
         
     self.keys = newKeys;
+    
+    [self generateObjectLists];
 }
 
 -(void)moveKeyToLast:(id)key 
@@ -149,6 +161,8 @@
     [newKeys addObject:key];
     
     self.keys = newKeys;
+    
+    [self generateObjectLists];
 }
 
 -(void)moveKey:(id)key toIndex:(int)index 
@@ -161,6 +175,8 @@
     [newKeys insertObject:key atIndex:index];
     
     self.keys = newKeys;
+    
+    [self generateObjectLists];
 }
 
 -(void)moveKey:(id)key beforeKey:(id)target 
@@ -174,6 +190,8 @@
     [newKeys insertObject:key atIndex:[newKeys indexOfObject:target]];
     
     self.keys = newKeys;
+    
+    [self generateObjectLists];
 }
 
 -(void)moveKey:(id)key afterKey:(id)target 
@@ -187,6 +205,8 @@
     [newKeys insertObject:key atIndex:[newKeys indexOfObject:target] + 1];
     
     self.keys = newKeys;
+    
+    [self generateObjectLists];
 }
 
 -(void)pruneLiveForKey:(id)key
@@ -204,6 +224,8 @@
     
     self.liveObjects = newLiveObjects;
     self.liveKeys    = newLiveKeys;
+    
+    [self generateObjectLists];
 }
 
 -(void)pruneDeadForKey:(id)key
