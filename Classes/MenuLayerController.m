@@ -43,7 +43,7 @@
     menuLayer.hidden = [AnimatedFloat withStartValue:1 endValue:0 speed:1];
     menuLayer.hidden.curve = AnimationEaseInOut;
 
-    //menuLayer.collapsed = [AnimatedFloat withStartValue:menuLayer.collapsed.value endValue:1 speed:1];
+    self.currentLayer.collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:1 speed:1];
     
     [self.menuLayers insertObject:menuLayer asLastWithKey:key];
 }
@@ -51,9 +51,7 @@
 -(void)popUntilKey:(NSString*)target
 {
     if(![self.menuLayers.liveKeys containsObject:target]) { return; }
-    
-    //self.currentLayer.collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:1 speed:1];
-    
+        
     for(NSString* key in self.menuLayers.liveKeys.reverseObjectEnumerator)
     {
         if([key isEqualToString:target]) { break; }
@@ -67,6 +65,8 @@
         
         menuLayer.death.curve = AnimationEaseInOut;
     }
+    
+    self.currentLayer.collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:0 speed:1];
 }
 
 -(void)cancelMenuLayer
