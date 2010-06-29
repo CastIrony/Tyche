@@ -92,7 +92,7 @@
     self.keys = newKeys;
 }
 
--(void)insertObject:(id)object asLastWithKey:(id)key 
+-(void)insertObject:(id)object asLastWithKey:(id)key
 {
     NSMutableArray*      newKeys      = [[self.keys      mutableCopy] autorelease];
     NSMutableDictionary* newHashtable = [[self.hashtable mutableCopy] autorelease];
