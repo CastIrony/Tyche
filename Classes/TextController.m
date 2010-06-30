@@ -52,11 +52,11 @@
 -(void)fillWithDictionaries:(NSArray*)dictionaries
 {
     
-    NSMutableArray*      liveKeys  = [[self.liveKeys  retain] autorelease];
-    NSMutableDictionary* liveItems = [[self.liveItems retain] autorelease];
-    
-    self.liveKeys  = [[[NSMutableArray      alloc] init] autorelease];
-    self.liveItems = [[[NSMutableDictionary alloc] init] autorelease];
+//    NSMutableArray*      liveKeys  = [[self.liveKeys  retain] autorelease];
+//    NSMutableDictionary* liveItems = [[self.liveItems retain] autorelease];
+//    
+//    self.liveKeys  = [[[NSMutableArray      alloc] init] autorelease];
+//    self.liveItems = [[[NSMutableDictionary alloc] init] autorelease];
     
     for(NSMutableDictionary* dictionary in dictionaries)
     {
