@@ -7,20 +7,20 @@
 
 @implementation TextController
 
-@synthesize styles      = _styles;
+@synthesize styles;
 
 @synthesize items;
 
-@synthesize renderer    = _renderer;
-@synthesize location    = _location;
-@synthesize padding     = _padding;
-@synthesize lightness   = _lightness;
-@synthesize opacity     = _opacity;
-@synthesize anglePitch  = _anglePitch;
-@synthesize angleJitter = _angleJitter;
-@synthesize angleSin    = _angleSin;
-@synthesize center      = _center;
-@synthesize owner       = _owner;
+@synthesize renderer;
+@synthesize location;
+@synthesize padding;
+@synthesize lightness;
+@synthesize opacity;
+@synthesize anglePitch;
+@synthesize angleJitter;
+@synthesize angleSin;
+@synthesize center;
+@synthesize owner;
 
 -(id)init
 {
