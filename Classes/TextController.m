@@ -2,6 +2,7 @@
 #import "GameRenderer.h"
 #import "AnimatedFloat.h"
 #import "AnimatedVector3D.h"
+#import "DisplayContainer.h"
 
 #import "TextController.h"
 
