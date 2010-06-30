@@ -28,14 +28,14 @@
     
     if(self)
     {   
-        _liveKeys  = [[NSMutableArray      alloc] init];
-        _liveItems = [[NSMutableDictionary alloc] init];
-        _deadItems = [[NSMutableDictionary alloc] init];
-                
-        _center = YES;
+        self.center = YES;
         
-        _opacity = 1;
+        self.opacity = 1;
     
+        self.items = [DisplayContainer container];
+        self.items.alive = [NSPredicate predicateWithFormat:@"isAlive = YES"];
+        self.items.dead  = [NSPredicate predicateWithFormat:@"isDead  = YES"];
+        
         self.styles = [[[NSMutableDictionary alloc] init] autorelease];
         self.lightness = 1;
     }
