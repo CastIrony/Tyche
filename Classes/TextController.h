@@ -11,9 +11,7 @@
 @property (nonatomic, assign) GameRenderer*        renderer;
 @property (nonatomic, retain) NSMutableDictionary* styles;
 
-@property (nonatomic, retain) NSMutableArray*      liveKeys;
-@property (nonatomic, retain) NSMutableDictionary* liveItems;
-@property (nonatomic, retain) NSMutableDictionary* deadItems;
+@property (nonatomic, retain) DisplayContainer* items;
 
 @property (nonatomic, assign) Vector3D location;
 @property (nonatomic, assign) GLfloat  padding;
@@ -33,7 +31,6 @@
 -(void)layoutItems;
 
 -(void)draw;
-
 
 @end
 

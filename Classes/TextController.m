@@ -9,9 +9,7 @@
 
 @synthesize styles      = _styles;
 
-@synthesize liveKeys    = _liveKeys;
-@synthesize liveItems   = _liveItems;
-@synthesize deadItems   = _deadItems;
+@synthesize items;
 
 @synthesize renderer    = _renderer;
 @synthesize location    = _location;
