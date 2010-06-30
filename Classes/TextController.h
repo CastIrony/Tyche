@@ -5,6 +5,7 @@
 @class AnimatedFloat;
 @class AnimatedVector3D;
 @class GLLabel;
+@class DisplayContainer;
 
 @interface TextController : NSObject
 
