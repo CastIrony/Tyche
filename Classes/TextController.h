@@ -7,26 +7,6 @@
 @class GLLabel;
 
 @interface TextController : NSObject
-{
-    GameRenderer* _renderer;
-    
-    NSMutableDictionary* _styles;
-    
-    NSMutableArray*      _liveKeys;
-    NSMutableDictionary* _liveItems;
-    NSMutableDictionary* _deadItems;
-    
-    Vector3D _location;
-    GLfloat  _padding;
-    GLfloat  _lightness;
-    GLfloat  _opacity;
-    GLfloat  _anglePitch;
-    GLfloat  _angleJitter;
-    GLfloat  _angleSin;
-    BOOL     _center;
-    
-    id _owner;
-}
 
 @property (nonatomic, assign) GameRenderer*        renderer;
 @property (nonatomic, retain) NSMutableDictionary* styles;
