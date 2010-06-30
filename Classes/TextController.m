@@ -168,11 +168,6 @@
     }
 }
 
--(void)clearDeadItem:(NSString*)key
-{
-    [self.deadItems removeObjectForKey:key];   
-}
-
 -(void)draw
 {
     TRANSACTION_BEGIN
@@ -181,18 +176,11 @@
                 
         glTranslatef(self.location.x, self.location.y, self.location.z);
         
-        for(GLLabel* deadItem in self.deadItems.objectEnumerator)
+        for(GLLabel* item in self.items.objects)
         {
-            deadItem.lightness = self.lightness;
+            item.lightness = self.lightness;
             
-            [deadItem draw];
-        }
-        
-        for(GLLabel* liveItem in self.liveItems.objectEnumerator)
-        {                                      
-            liveItem.lightness = self.lightness;
-            
-            [liveItem draw];
+            [item draw];
         }
     }
     TRANSACTION_END
@@ -217,7 +205,7 @@
                 
         glTranslatef(self.location.x, self.location.y, self.location.z);
         
-        for(GLLabel* item in self.liveItems.objectEnumerator)
+        for(GLLabel* item in self.items.liveObjects)
         {
             returnObject = [item testTouch:touch withPreviousObject:returnObject];
         }
