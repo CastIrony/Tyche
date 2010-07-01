@@ -2,6 +2,7 @@
 #import "Common.h"
 #import "Geometry.h"
 #import "Touchable.h"
+#import "Killable.h"
 
 @class AnimatedFloat;
 @class AnimatedVector3D;
@@ -91,9 +92,9 @@ LabelStatus;
 
 @interface GLLabel (Killable) <Killable>
 
--(id<Touchable>)testTouch:(UITouch*)touch withPreviousObject:(id<Touchable>)object;
--(void)handleTouchDown:(UITouch*)touch fromPoint:(CGPoint)point;
--(void)handleTouchMoved:(UITouch*)touch fromPoint:(CGPoint)pointFrom toPoint:(CGPoint)pointTo;
--(void)handleTouchUp:(UITouch*)touch fromPoint:(CGPoint)pointFrom toPoint:(CGPoint)pointTo;
+@property (nonatomic, readonly) BOOL isDead;
+@property (nonatomic, readonly) BOOL isAlive;
+
+-(void)die;
 
 @end
