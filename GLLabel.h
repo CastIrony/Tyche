@@ -88,3 +88,12 @@ LabelStatus;
 -(void)handleTouchUp:(UITouch*)touch fromPoint:(CGPoint)pointFrom toPoint:(CGPoint)pointTo;
 
 @end
+
+@interface GLLabel (Killable) <Killable>
+
+-(id<Touchable>)testTouch:(UITouch*)touch withPreviousObject:(id<Touchable>)object;
+-(void)handleTouchDown:(UITouch*)touch fromPoint:(CGPoint)point;
+-(void)handleTouchMoved:(UITouch*)touch fromPoint:(CGPoint)pointFrom toPoint:(CGPoint)pointTo;
+-(void)handleTouchUp:(UITouch*)touch fromPoint:(CGPoint)pointFrom toPoint:(CGPoint)pointTo;
+
+@end
