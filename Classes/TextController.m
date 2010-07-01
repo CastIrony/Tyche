@@ -105,46 +105,18 @@
         
         if(self.renderer.animated)
         {
-            if(deadItem.layoutLocation) 
-            {
-                liveItem.layoutLocation = [AnimatedVector3D withStartValue:deadItem.layoutLocation.value endValue:targetLocation forTime:0.3];
-                deadItem.layoutLocation = [AnimatedVector3D withStartValue:deadItem.layoutLocation.value endValue:targetLocation forTime:0.3];
-            }
-            else if(liveItem.layoutLocation)
-            {
-                liveItem.layoutLocation = [AnimatedVector3D withStartValue:liveItem.layoutLocation.value endValue:targetLocation forTime:0.3];
-                deadItem.layoutLocation = [AnimatedVector3D withStartValue:liveItem.layoutLocation.value endValue:targetLocation forTime:0.3];
-            }
-            else
-            {
-                liveItem.layoutLocation = [AnimatedVector3D withStartValue:targetLocation endValue:targetLocation forTime:0.3];
-                deadItem.layoutLocation = [AnimatedVector3D withStartValue:targetLocation endValue:targetLocation forTime:0.3];
-            }
+            liveItem.layoutLocation = [AnimatedVector3D withStartValue:liveItem.layoutLocation.value endValue:targetLocation forTime:0.3];
             
             liveItem.layoutOpacity = [AnimatedFloat withStartValue:liveItem.layoutOpacity.value endValue:1.0 forTime:0.3];
         }
         else 
         {
             liveItem.layoutLocation = [AnimatedVector3D withValue:targetLocation];
-            deadItem.layoutLocation = [AnimatedVector3D withValue:targetLocation];
             
             liveItem.layoutOpacity = [AnimatedFloat withValue:1.0];
         }
         
         position += liveItem.layoutSize.height + self.padding;
-    }
-    
-    for(GLLabel* deadItem in self.deadItems.objectEnumerator)
-    {
-        if(self.renderer.animated)
-        {
-            deadItem.layoutOpacity = [AnimatedFloat withStartValue:deadItem.layoutOpacity.value endValue:0.0 forTime:0.4];
-        }
-        else 
-        {
-            deadItem.layoutOpacity = [AnimatedFloat withValue:0.0];
-        }
-        
     }
 }
 
