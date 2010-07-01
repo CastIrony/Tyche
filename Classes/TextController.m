@@ -56,9 +56,12 @@
     for(NSMutableDictionary* dictionary in dictionaries)
     {
         GLLabel* newLabel = [GLLabel withDictionaries:[NSArray arrayWithObjects:self.styles, dictionary, nil]];
-        GLLabel* oldLabel = [self.items liveObjectForKey:newLabel.key];
         
-        [liveKeys addObject:newLabel.key];
+        NSString* key = newLabel.key;
+        
+        GLLabel* oldLabel = [self.items liveObjectForKey:key];
+        
+        [liveKeys addObject:key];
         
         if([newLabel isEqual:oldLabel]) { continue; }
                  
@@ -66,7 +69,7 @@
         newLabel.owner = self;
         
         [self.items insertObject:newLabel asLastWithKey:key];
-        [liveKeys addObject:newLabel.key];
+        [liveKeys addObject:key];
     }   
     
     for(NSString* key in self.items.liveKeys)
