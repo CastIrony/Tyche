@@ -2,12 +2,12 @@
 
 @interface DisplayContainer () 
 
-@property (nonatomic, retain) NSMutableDictionary* hashtable;    // live dying dead?
+@property (nonatomic, retain) NSMutableDictionary* hashtable;  
 
-@property (nonatomic, retain) NSMutableArray*      keys;         // live dying dead?
-@property (nonatomic, retain) NSMutableArray*      objects;      // live dying dead?
-@property (nonatomic, retain) NSMutableArray*      liveKeys;     // live 
-@property (nonatomic, retain) NSMutableArray*      liveObjects;  // live 
+@property (nonatomic, retain) NSMutableArray*      keys;       
+@property (nonatomic, retain) NSMutableArray*      objects;    
+@property (nonatomic, retain) NSMutableArray*      liveKeys;   
+@property (nonatomic, retain) NSMutableArray*      liveObjects;
 
 -(void)generateObjectLists;
 

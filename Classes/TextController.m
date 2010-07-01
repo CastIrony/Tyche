@@ -101,9 +101,6 @@
     
     for(GLLabel* liveItem in self.items.liveObjects)
     {
-        GLLabel* liveItem = [self.liveItems objectForKey:key];
-        GLLabel* deadItem = [self.deadItems objectForKey:key];
-        
         Vector3D targetLocation = Vector3DMake(0, 0, position + (liveItem.layoutSize.height / 2));
         
         if(self.renderer.animated)
