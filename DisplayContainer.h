@@ -1,3 +1,5 @@
+#import "Killable.h"
+
 @interface DisplayContainer : NSObject 
 
 @property (nonatomic, retain) NSPredicate* alive;
@@ -11,11 +13,11 @@
 
 +(DisplayContainer*)container;
 
--(void)insertObject:(id)object asFirstWithKey:(id)key;
--(void)insertObject:(id)object asLastWithKey:(id)key;
--(void)insertObject:(id)object withKey:(id)key atIndex:(int)index;
--(void)insertObject:(id)object withKey:(id)key beforeKey:(id)target;
--(void)insertObject:(id)object withKey:(id)key afterKey:(id)target;
+-(void)insertObject:(id<Killable>)object asFirstWithKey:(id<NSCopying>)key;
+-(void)insertObject:(id<Killable>)object asLastWithKey:(id<NSCopying>)key;
+-(void)insertObject:(id<Killable>)object withKey:(id<NSCopying>)key atIndex:(int)index;
+-(void)insertObject:(id<Killable>)object withKey:(id<NSCopying>)key beforeKey:(id)target;
+-(void)insertObject:(id<Killable>)object withKey:(id<NSCopying>)key afterKey:(id)target;
 
 -(void)moveKeyToFirst:(id)key;
 -(void)moveKeyToLast:(id)key;

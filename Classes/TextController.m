@@ -44,11 +44,6 @@
     return self;
 }
 
--(void)update
-{
-    
-}
-
 -(void)fillWithDictionaries:(NSArray*)dictionaries
 {
     NSMutableArray* liveKeys = [NSMutableArray array];
@@ -59,14 +54,18 @@
         
         NSString* key = newLabel.key;
         
-        GLLabel* oldLabel = [self.items liveObjectForKey:key];
+        if(!key) { continue; }
         
         [liveKeys addObject:key];
+        
+        GLLabel* oldLabel = [self.items liveObjectForKey:key];
         
         if([newLabel isEqual:oldLabel]) { continue; }
                  
         newLabel.textController = self;
         newLabel.owner = self;
+        
+        if(oldLabel.layoutLocation) { newLabel.layoutLocation = [AnimatedVector3D withValue:oldLabel.layoutLocation.value]; }
         
         [self.items insertObject:newLabel asLastWithKey:key];
         [liveKeys addObject:key];
@@ -93,16 +92,14 @@
     GLfloat totalHeight = -self.padding;
     GLfloat position;
     
-    for(NSString* key in self.liveKeys)
-    {
-        GLLabel* liveItem = [self.liveItems objectForKey:key];
-        
+    for(GLLabel* liveItem in self.items.liveObjects)
+    {        
         totalHeight += liveItem.layoutSize.height + self.padding;
     }
     
     position = self.center ? -totalHeight / 2.0: 0;
     
-    for(NSString* key in self.liveKeys)
+    for(GLLabel* liveItem in self.items.liveObjects)
     {
         GLLabel* liveItem = [self.liveItems objectForKey:key];
         GLLabel* deadItem = [self.deadItems objectForKey:key];

@@ -141,6 +141,7 @@
 		C50F907B10E1C58700F179EB /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		C513EBB011C71F260077703B /* MenuControllerHostGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuControllerHostGame.h; sourceTree = "<group>"; };
 		C513EBB111C71F260077703B /* MenuControllerHostGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuControllerHostGame.m; sourceTree = "<group>"; };
+		C516F38A11DCEB900090A7E5 /* Killable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Killable.h; sourceTree = "<group>"; };
 		C52529341191425700160B7F /* GLTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLTexture.h; sourceTree = "<group>"; };
 		C52529351191425700160B7F /* GLTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLTexture.m; sourceTree = "<group>"; };
 		C535BD2711D54822009D539B /* DisplayContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayContainer.h; sourceTree = "<group>"; };
@@ -475,6 +476,7 @@
 				C54152761084165100D4E1A9 /* AnimatedVector3D.m */,
 				C535BD2711D54822009D539B /* DisplayContainer.h */,
 				C535BD2811D54822009D539B /* DisplayContainer.m */,
+				C516F38A11DCEB900090A7E5 /* Killable.h */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
