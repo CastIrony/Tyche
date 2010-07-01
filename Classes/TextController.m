@@ -51,29 +51,17 @@
 
 -(void)fillWithDictionaries:(NSArray*)dictionaries
 {
-    
-//    NSMutableArray*      liveKeys  = [[self.liveKeys  retain] autorelease];
-//    NSMutableDictionary* liveItems = [[self.liveItems retain] autorelease];
-//    
-//    self.liveKeys  = [[[NSMutableArray      alloc] init] autorelease];
-//    self.liveItems = [[[NSMutableDictionary alloc] init] autorelease];
+    NSMutableArray* liveKeys = [NSMutableArray array];
     
     for(NSMutableDictionary* dictionary in dictionaries)
     {
         GLLabel* newLabel = [GLLabel withDictionaries:[NSArray arrayWithObjects:self.styles, dictionary, nil]];
-        GLLabel* oldLabel = [liveItems objectForKey:newLabel.key];
+        GLLabel* oldLabel = [self.items liveObjectForKey:newLabel.key];
         
-        if([newLabel isEqual:oldLabel])
-        {
-            newLabel = oldLabel;
-            oldLabel = nil;
-        }
+        [liveKeys addObject:newLabel.key];
         
-        if(oldLabel) 
-        {             
-            [self.deadItems setObject:oldLabel forKey:newLabel.key]; 
-        }
-        
+        if([newLabel isEqual:oldLabel]) { continue; }
+                 
         newLabel.textController = self;
         newLabel.owner = self;
         
