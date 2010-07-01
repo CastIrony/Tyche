@@ -65,20 +65,15 @@
         newLabel.textController = self;
         newLabel.owner = self;
         
-        [self.liveItems setObject:newLabel forKey:newLabel.key];
-        [self.liveKeys  addObject:newLabel.key];
+        [self.items insertObject:newLabel asLastWithKey:key];
+        [liveKeys addObject:newLabel.key];
     }   
     
-    for(NSString* key in liveKeys)
+    for(NSString* key in self.items.liveKeys)
     {
-        if(![self.liveKeys containsObject:key])
+        if(![liveKeys containsObject:key])
         {        
-            GLLabel* oldLabel = [liveItems objectForKey:key];
-            
-            if(oldLabel) 
-            { 
-                [self.deadItems setObject:oldLabel forKey:key]; 
-            }
+            // kill live item for key
         }
     }
     
