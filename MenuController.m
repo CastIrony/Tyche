@@ -63,11 +63,6 @@
     return within(self.death.value, 1, 0.001) && self.death.endTime < CFAbsoluteTimeGetCurrent();
 }
 
--(void)update
-{
-    
-}
-
 -(void)addMenu:(GLMenu*)menu forKey:(NSString*)key
 {
     menu.owner = self;
