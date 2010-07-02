@@ -90,7 +90,7 @@ LabelStatus;
 
 @end
 
-@interface GLMenu (Killable) <Killable>
+@interface GLLabel (Killable) <Killable>
 
 @property (nonatomic, readonly) BOOL isDead;
 @property (nonatomic, readonly) BOOL isAlive;
