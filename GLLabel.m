@@ -569,6 +569,9 @@
 
 @implementation GLMenu (Killable) <Killable>
 
+@dynamic isDead;
+@dynamic isAlive;
+
 -(BOOL)isAlive { return within(self.death.value, 0, 0.001) && self.death.endTime < CFAbsoluteTimeGetCurrent(); }
 -(BOOL)isDead  { return within(self.death.value, 1, 0.001) && self.death.endTime < CFAbsoluteTimeGetCurrent(); }
 
