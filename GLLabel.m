@@ -567,7 +567,7 @@
 
 @end
 
-@implementation GLMenu (Killable) <Killable>
+@implementation GLMenu (Killable)
 
 @dynamic isDead;
 @dynamic isAlive;

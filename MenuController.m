@@ -237,7 +237,7 @@
 
 @end
 
-@implementation MenuController (Killable) <Killable>
+@implementation MenuController (Killable)
 
 @dynamic isDead;
 @dynamic isAlive;

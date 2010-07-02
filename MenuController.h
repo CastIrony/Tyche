@@ -36,7 +36,7 @@
 
 @end
 
-@interface GLMenu (Killable) <Killable>
+@interface MenuController (Killable) <Killable>
 
 @property (nonatomic, readonly) BOOL isDead;
 @property (nonatomic, readonly) BOOL isAlive;
