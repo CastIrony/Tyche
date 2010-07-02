@@ -2,9 +2,6 @@
 
 @interface DisplayContainer : NSObject 
 
-@property (nonatomic, retain) NSPredicate* alive;
-@property (nonatomic, retain) NSPredicate* dead;
-
 @property (nonatomic, retain, readonly) NSMutableDictionary* hashtable;
 @property (nonatomic, retain, readonly) NSMutableArray* keys;
 @property (nonatomic, retain, readonly) NSMutableArray* liveKeys;

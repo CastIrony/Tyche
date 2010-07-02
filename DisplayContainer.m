@@ -15,8 +15,6 @@
 
 @implementation DisplayContainer
 
-@synthesize alive;
-@synthesize dead;
 @synthesize hashtable;
 @synthesize keys;
 @synthesize objects;
@@ -58,9 +56,9 @@
             [newObjects addObject:object];
         }
         
-        id topObject = [[self.hashtable objectForKey:key] lastObject];
+        id<Killable> topObject = [[self.hashtable objectForKey:key] lastObject];
         
-        if([self.alive evaluateWithObject:topObject])
+        if(topObject.isAlive)
         {
             [newLiveObjects addObject:topObject];
             [newLiveKeys addObject:key];
@@ -253,9 +251,9 @@
     NSMutableArray* newLiveObjects = [[self.liveObjects mutableCopy] autorelease];
     NSMutableArray* newLiveKeys    = [[self.liveKeys    mutableCopy] autorelease];
         
-    id topObject = [[self.hashtable objectForKey:key] lastObject];
+    id<Killable> topObject = [[self.hashtable objectForKey:key] lastObject];
     
-    if(![self.alive evaluateWithObject:topObject])
+    if(!topObject.isAlive])
     {
         [newLiveObjects removeObject:topObject];
         [newLiveKeys    removeObject:key];
@@ -275,9 +273,9 @@
     
     BOOL allDead = YES;
     
-    for(id object in [self.hashtable objectForKey:key]) 
+    for(id<Killable> object in [self.hashtable objectForKey:key]) 
     {
-        if([self.dead evaluateWithObject:object])
+        if(object.isDead)
         {
             [[newHashtable objectForKey:key] removeObject:object];
         }
