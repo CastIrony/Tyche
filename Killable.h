@@ -1,3 +1,5 @@
+@class DisplayContainer
+
 @protocol Killable
 
 @property (nonatomic, readonly) BOOL isDead;
