@@ -10,6 +10,7 @@
 #import "TextController.h"
 #import "TextControllerMainMenu.h"
 #import "TextureController.h"
+#import "DisplayContainer.h"
 
 #import "GLMenu.h"
 
