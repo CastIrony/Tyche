@@ -16,8 +16,6 @@
 @property (nonatomic, retain) AnimatedFloat*       hidden;
 @property (nonatomic, retain) AnimatedFloat*       death;
 @property (nonatomic, assign) id                   owner;
-@property (nonatomic, readonly) BOOL isDead;
-@property (nonatomic, readonly) BOOL isAlive;
 
 -(id)initWithRenderer:(GameRenderer*)renderer;
 +(id)withRenderer:(GameRenderer*)renderer;
@@ -38,11 +36,11 @@
 
 @end
 
-@interface MenuController (Killable) <Killable>
+@interface GLMenu (Killable) <Killable>
 
 @property (nonatomic, readonly) BOOL isDead;
 @property (nonatomic, readonly) BOOL isAlive;
 
--(void)die;
+-(void)killWithDisplayContainer:(DisplayContainer*)container andKey:(id)key;
 
 @end

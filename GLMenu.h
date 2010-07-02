@@ -36,9 +36,6 @@
 @property (nonatomic, retain) AnimatedFloat*    location;
 @property (nonatomic, assign) id owner;
 
-@property (nonatomic, readonly) BOOL isDead;
-@property (nonatomic, readonly) BOOL isAlive;
-
 -(void)reset;
 
 -(void)draw;
@@ -63,6 +60,6 @@
 @property (nonatomic, readonly) BOOL isDead;
 @property (nonatomic, readonly) BOOL isAlive;
 
--(void)die;
+-(void)killWithDisplayContainer:(DisplayContainer*)container andKey:(id)key;
 
 @end

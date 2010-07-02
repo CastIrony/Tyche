@@ -566,3 +566,20 @@
 }
 
 @end
+
+@implementation GLMenu (Killable) <Killable>
+
+-(BOOL)isAlive { return within(self.death.value, 0, 0.001) && self.death.endTime < CFAbsoluteTimeGetCurrent(); }
+-(BOOL)isDead  { return within(self.death.value, 1, 0.001) && self.death.endTime < CFAbsoluteTimeGetCurrent(); }
+
+-(void)killWithDisplayContainer:(DisplayContainer*)container andKey:(id)key
+{
+    self.death = [AnimatedFloat withStartValue:self.death.value endValue:1 forTime:1];
+    
+    self.death.onStart = ^{ [container pruneLiveForKey:key]; [self layoutMenus]; };    
+    self.death.onEnd   = ^{ [container pruneDeadForKey:key]; [self layoutMenus]; };
+    
+    self.death.curve = AnimationEaseInOut;
+}
+
+@end
