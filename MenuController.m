@@ -23,9 +23,6 @@
 @synthesize hidden        = _hidden;
 @synthesize owner         = _owner;
 
-@dynamic isDead;
-@dynamic isAlive;
-
 -(id)initWithRenderer:(GameRenderer*)renderer
 {
     self = [super init];
