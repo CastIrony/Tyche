@@ -1,4 +1,4 @@
-@class DisplayContainer
+@class DisplayContainer;
 
 @protocol Killable
 
