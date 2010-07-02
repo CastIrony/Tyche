@@ -253,7 +253,7 @@
         
     id<Killable> topObject = [[self.hashtable objectForKey:key] lastObject];
     
-    if(!topObject.isAlive])
+    if(!topObject.isAlive)
     {
         [newLiveObjects removeObject:topObject];
         [newLiveKeys    removeObject:key];

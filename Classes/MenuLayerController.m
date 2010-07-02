@@ -27,8 +27,6 @@
     if(self) 
     {
         self.menuLayers = [DisplayContainer container];
-        self.menuLayers.alive = [NSPredicate predicateWithFormat:@"isAlive = YES"];
-        self.menuLayers.dead  = [NSPredicate predicateWithFormat:@"isDead  = YES"];
         
         self.hidden = [AnimatedFloat withValue:0];
     }

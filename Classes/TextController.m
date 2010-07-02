@@ -34,8 +34,6 @@
         self.opacity = 1;
     
         self.items = [DisplayContainer container];
-        self.items.alive = [NSPredicate predicateWithFormat:@"isAlive = YES"];
-        self.items.dead  = [NSPredicate predicateWithFormat:@"isDead  = YES"];
         
         self.styles = [[[NSMutableDictionary alloc] init] autorelease];
         self.lightness = 1;
