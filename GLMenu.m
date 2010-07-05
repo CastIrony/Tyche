@@ -45,10 +45,10 @@
     
     if(self)
     {           
-        _arrayVertex      = malloc(4 * sizeof(Vector3D));
-        _arrayNormal      = malloc(4 * sizeof(Vector3D));
-        _arrayTexture     = malloc(4 * sizeof(Vector2D));
-        _arrayMesh        = malloc(6 * sizeof(GLushort));
+        _arrayVertex  = malloc(4 * sizeof(Vector3D));
+        _arrayNormal  = malloc(4 * sizeof(Vector3D));
+        _arrayTexture = malloc(4 * sizeof(Vector2D));
+        _arrayMesh    = malloc(6 * sizeof(GLushort));
         
         self.opacity  = [AnimatedFloat withValue:1];
         self.death    = [AnimatedFloat withValue:0];
