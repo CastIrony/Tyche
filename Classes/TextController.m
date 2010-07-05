@@ -81,7 +81,7 @@
         {    
             id<Killable> deadItem = [self.items liveObjectForKey:key];
             
-            [deadItem killWithDisplayContainer:self andKey:key];
+            [deadItem killWithDisplayContainer:self.items andKey:key];
         }
     }
     
