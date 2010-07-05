@@ -44,6 +44,8 @@
     self.currentLayer.collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:1 speed:1];
     [self.currentLayer layoutMenus];
     
+    menuLayer.first = (self.menuLayers.liveObjects.count == 0);
+    
     [self.menuLayers insertObject:menuLayer asLastWithKey:key];
 }
 

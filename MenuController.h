@@ -16,6 +16,7 @@
 @property (nonatomic, retain) AnimatedFloat*       hidden;
 @property (nonatomic, retain) AnimatedFloat*       death;
 @property (nonatomic, assign) id                   owner;
+@property (nonatomic, assign) BOOL                 first;
 
 -(id)initWithRenderer:(GameRenderer*)renderer;
 +(id)withRenderer:(GameRenderer*)renderer;

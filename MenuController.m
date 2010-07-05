@@ -22,6 +22,7 @@
 @synthesize death         = _death;
 @synthesize hidden        = _hidden;
 @synthesize owner         = _owner;
+@synthesize first         = _first;
 
 -(id)initWithRenderer:(GameRenderer*)renderer
 {
@@ -214,7 +215,7 @@
     {
         if(pointTo.x - pointFrom.x > 10)
         {
-            if([self.currentKey isEqualToString:[self.menus.keys objectAtIndex:0]])
+            if(!first && [self.currentKey isEqualToString:[self.menus.keys objectAtIndex:0]])
             {
                 self.currentKey = nil;
             }
