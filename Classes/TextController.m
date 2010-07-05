@@ -78,10 +78,8 @@
     for(NSString* key in self.items.liveKeys)
     {
         if(![liveKeys containsObject:key])
-        {    
-            id<Killable> deadItem = [self.items liveObjectForKey:key];
-            
-            [deadItem killWithDisplayContainer:self.items andKey:key];
+        {                
+            [[self.items liveObjectForKey:key] killWithDisplayContainer:self.items andKey:key];
         }
     }
     
@@ -121,7 +119,6 @@
                 {
                     label.layoutLocation = [AnimatedVector3D withValue:targetLocation];
                 }
-
             }
                         
             liveItem.layoutOpacity = [AnimatedFloat withStartValue:liveItem.layoutOpacity.value endValue:1.0 forTime:0.3];
