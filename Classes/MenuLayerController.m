@@ -64,7 +64,7 @@
      
     MenuController* currentLayer = [self.menuLayers liveObjectForKey:target];
     
-    currentLayer.collapsed = [AnimatedFloat withStartValue:currentLayer.collapsed.value endValue:0 speed:1];
+    currentLayer.collapsed = [AnimatedFloat withStartValue:currentLayer.collapsed.value endValue:0 forTime:0.5];
     [currentLayer layoutMenus];
 
 }
