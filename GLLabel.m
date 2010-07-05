@@ -10,6 +10,7 @@
 #import "TextController.h"
 #import "TextureController.h"
 #import "GameRenderer.h"
+#import "DisplayContainer.h"
 
 #import "GLLabel.h"
 
