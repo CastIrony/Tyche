@@ -113,7 +113,15 @@
         {
             for(GLLabel* label in [self.items objectsForKey:liveItem.key])
             {
-                label.layoutLocation = [AnimatedVector3D withStartValue:label.layoutLocation.value endValue:targetLocation forTime:0.3];
+                if(label.layoutLocation)
+                {
+                    label.layoutLocation = [AnimatedVector3D withStartValue:label.layoutLocation.value endValue:targetLocation forTime:0.3];
+                }
+                else 
+                {
+                    label.layoutLocation = [AnimatedVector3D withValue:targetLocation];
+                }
+
             }
                         
             liveItem.layoutOpacity = [AnimatedFloat withStartValue:liveItem.layoutOpacity.value endValue:1.0 forTime:0.3];
