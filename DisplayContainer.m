@@ -76,8 +76,8 @@
     NSMutableDictionary* newHashtable = [[self.hashtable mutableCopy] autorelease];
     NSMutableArray*      newArray     = [newKeys containsObject:key] ? [[[newHashtable objectForKey:key] mutableCopy] autorelease] : [NSMutableArray array];
 
-    if([[newArray lastObject] isAlive]) { [[newArray lastObject] killWithDisplayContainer:self andKey:key]; }
-    
+    id<Killable> previousObject = [self liveObjectForKey:key];
+        
     [newArray removeObject:object];
     [newArray addObject:object];
     
@@ -90,6 +90,8 @@
     self.keys = newKeys;
     
     [self generateObjectLists];
+
+    if([previousObject isAlive]) { [previousObject killWithDisplayContainer:self andKey:key]; }
 }
 
 -(void)insertObject:(id<Killable>)object asLastWithKey:(id<NSCopying>)key
@@ -98,7 +100,7 @@
     NSMutableDictionary* newHashtable = [[self.hashtable mutableCopy] autorelease];
     NSMutableArray*      newArray     = [newKeys containsObject:key] ? [[[newHashtable objectForKey:key] mutableCopy] autorelease] : [NSMutableArray array];
     
-    if([[newArray lastObject] isAlive]) { [[newArray lastObject] killWithDisplayContainer:self andKey:key]; }
+    id<Killable> previousObject = [self liveObjectForKey:key];
     
     [newArray removeObject:object];
     [newArray addObject:object];
@@ -112,6 +114,8 @@
     self.keys = newKeys;
     
     [self generateObjectLists];
+    
+    if([previousObject isAlive]) { [previousObject killWithDisplayContainer:self andKey:key]; }
 }
 
 -(void)insertObject:(id<Killable>)object withKey:(id<NSCopying>)key atIndex:(int)index 
@@ -120,7 +124,7 @@
     NSMutableDictionary* newHashtable = [[self.hashtable mutableCopy] autorelease];
     NSMutableArray*      newArray     = [newKeys containsObject:key] ? [[[newHashtable objectForKey:key] mutableCopy] autorelease] : [NSMutableArray array];
     
-    if([[newArray lastObject] isAlive]) { [[newArray lastObject] killWithDisplayContainer:self andKey:key]; }
+    id<Killable> previousObject = [self liveObjectForKey:key];
     
     [newArray removeObject:object];
     [newArray addObject:object];
@@ -134,6 +138,8 @@
     self.keys = newKeys;
 
     [self generateObjectLists];
+    
+    if([previousObject isAlive]) { [previousObject killWithDisplayContainer:self andKey:key]; }
 }
 
 -(void)insertObject:(id<Killable>)object withKey:(id<NSCopying>)key beforeKey:(id)target 
@@ -144,7 +150,7 @@
     NSMutableDictionary* newHashtable = [[self.hashtable mutableCopy] autorelease];
     NSMutableArray*      newArray     = [newKeys containsObject:key] ? [[[newHashtable objectForKey:key] mutableCopy] autorelease] : [NSMutableArray array];
     
-    if([[newArray lastObject] isAlive]) { [[newArray lastObject] killWithDisplayContainer:self andKey:key]; }
+    id<Killable> previousObject = [self liveObjectForKey:key];
     
     [newArray removeObject:object];
     [newArray addObject:object];
@@ -158,6 +164,8 @@
     self.keys = newKeys;
     
     [self generateObjectLists];
+    
+    if([previousObject isAlive]) { [previousObject killWithDisplayContainer:self andKey:key]; }
 }
 
 -(void)insertObject:(id<Killable>)object withKey:(id<NSCopying>)key afterKey:(id)target 
@@ -168,7 +176,7 @@
     NSMutableDictionary* newHashtable = [[self.hashtable mutableCopy] autorelease];
     NSMutableArray*      newArray     = [newKeys containsObject:key] ? [[[newHashtable objectForKey:key] mutableCopy] autorelease] : [NSMutableArray array];
     
-    if([[newArray lastObject] isAlive]) { [[newArray lastObject] killWithDisplayContainer:self andKey:key]; }
+    id<Killable> previousObject = [self liveObjectForKey:key];
     
     [newArray removeObject:object];
     [newArray addObject:object];
@@ -182,6 +190,8 @@
     self.keys = newKeys;
     
     [self generateObjectLists];
+    
+    if([previousObject isAlive]) { [previousObject killWithDisplayContainer:self andKey:key]; }
 }
 
 -(void)moveKeyToFirst:(id)key 
