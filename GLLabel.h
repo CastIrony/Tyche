@@ -47,6 +47,7 @@ LabelStatus;
 
 @property (nonatomic, retain)   AnimatedVector3D* layoutLocation;
 @property (nonatomic, retain)   AnimatedFloat*    layoutOpacity;
+@property (nonatomic, retain)   AnimatedFloat*    death;
 
 @property (nonatomic, retain)   NSString*         textString;
 @property (nonatomic, retain)   NSString*         bulletLeftString;

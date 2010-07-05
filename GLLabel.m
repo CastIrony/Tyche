@@ -17,7 +17,7 @@
 
 @synthesize textController       = _textController;
 
-@synthesize labelStatus       = _labelStatus;
+@synthesize labelStatus          = _labelStatus;
 
 @synthesize textureText          = _textureText;
 @synthesize textureBulletLeft    = _textureBulletLeft;
@@ -25,10 +25,11 @@
 
 @synthesize key                  = _key;
 
-@synthesize lightness             = _lightness;
+@synthesize lightness            = _lightness;
 
 @synthesize layoutLocation       = _layoutLocation;
 @synthesize layoutOpacity        = _layoutOpacity;
+@synthesize death                = _death;
 
 @synthesize textString           = _textString;
 @synthesize bulletLeftString     = _bulletLeftString;
@@ -40,19 +41,19 @@
 @synthesize colorTouched         = _colorTouched;
 @synthesize textAlignment        = _textAlignment;
 
-@synthesize isLabelTouched        = _isLabelTouched;
+@synthesize isLabelTouched       = _isLabelTouched;
 
-@synthesize scrollBase            = _scrollBase;
-@synthesize scrollAmplitude       = _scrollAmplitude;
+@synthesize scrollBase           = _scrollBase;
+@synthesize scrollAmplitude      = _scrollAmplitude;
 
 @synthesize hasBorder            = _hasBorder;
 @synthesize hasShadow            = _hasShadow;
 
-@synthesize textSize           = _textSize;
-@synthesize bulletLeftSize     = _bulletLeftSize;
-@synthesize bulletRightSize    = _bulletRightSize;
+@synthesize textSize             = _textSize;
+@synthesize bulletLeftSize       = _bulletLeftSize;
+@synthesize bulletRightSize      = _bulletRightSize;
 
-@synthesize owner              = _owner;
+@synthesize owner                = _owner;
 
 @dynamic layoutSize;
 @dynamic borderSize;
@@ -143,8 +144,9 @@
         _textAlignment = UITextAlignmentCenter;
         _hasShadow = NO;
         
-        self.layoutOpacity  = [AnimatedFloat withValue:0.0];
-        self.fadeMargin = 0;
+        self.layoutOpacity = [AnimatedFloat withValue:0.0];
+        self.death         = [AnimatedFloat withValue:0.0];
+        self.fadeMargin    = 0;
         
         arrayTextVertex          = malloc( 8 * sizeof(Vector3D));
         arrayBulletRightVertex   = malloc( 4 * sizeof(Vector3D));
@@ -358,7 +360,7 @@
             }
             else 
             {
-                colorLabelOpaque       = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * self.layoutOpacity.value * self.textController.opacity);
+                colorLabelOpaque       = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * (1 - self.death.value) * self.layoutOpacity.value * self.textController.opacity);
                 colorLabelTransparent  = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, 0);    
             }
                     
@@ -383,7 +385,7 @@
             }
             else 
             {
-                colorLabelOpaque       = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * self.layoutOpacity.value * self.textController.opacity);
+                colorLabelOpaque       = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * (1 - self.death.value) * self.layoutOpacity.value * self.textController.opacity);
                 colorLabelTransparent  = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, 0);    
             }
                     
@@ -436,7 +438,7 @@
             }
             else 
             {
-                colorLabelOpaque = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * self.layoutOpacity.value * self.textController.opacity);
+                colorLabelOpaque = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * (1 - self.death.value) * self.layoutOpacity.value * self.textController.opacity);
             }
             
             glBindTexture(GL_TEXTURE_2D, self.textureBulletRight.name);
@@ -459,7 +461,7 @@
             }
             else 
             {
-                colorLabelOpaque = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * self.layoutOpacity.value * self.textController.opacity);
+                colorLabelOpaque = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * (1 - self.death.value) * self.layoutOpacity.value * self.textController.opacity);
             }
                     
             glBindTexture(GL_TEXTURE_2D, self.textureBulletLeft.name);
