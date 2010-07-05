@@ -78,8 +78,10 @@
     for(NSString* key in self.items.liveKeys)
     {
         if(![liveKeys containsObject:key])
-        {        
-            // kill live item for key
+        {    
+            id<Killable> deadItem = [self.items liveObjectForKey:key];
+            
+            [deadItem killWithDisplayContainer:self andKey:key];
         }
     }
     
