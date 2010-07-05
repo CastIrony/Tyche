@@ -11,6 +11,7 @@
 #import "TextControllerMainMenu.h"
 #import "TextureController.h"
 #import "DisplayContainer.h"
+#import "MenuController.h"
 
 #import "GLMenu.h"
 
