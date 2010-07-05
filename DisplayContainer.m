@@ -78,7 +78,7 @@
 
     id<Killable> previousObject = [self liveObjectForKey:key];
         
-    [newArray removeObject:object];
+    [newArray removeObjectIdenticalTo:object];
     [newArray addObject:object];
     
     [newKeys removeObject:key];
@@ -102,7 +102,7 @@
     
     id<Killable> previousObject = [self liveObjectForKey:key];
     
-    [newArray removeObject:object];
+    [newArray removeObjectIdenticalTo:object];
     [newArray addObject:object];
     
     [newKeys removeObject:key];
@@ -126,7 +126,7 @@
     
     id<Killable> previousObject = [self liveObjectForKey:key];
     
-    [newArray removeObject:object];
+    [newArray removeObjectIdenticalTo:object];
     [newArray addObject:object];
     
     [newKeys removeObject:key];
@@ -152,7 +152,7 @@
     
     id<Killable> previousObject = [self liveObjectForKey:key];
     
-    [newArray removeObject:object];
+    [newArray removeObjectIdenticalTo:object];
     [newArray addObject:object];
     
     [newKeys removeObject:key];
@@ -178,7 +178,7 @@
     
     id<Killable> previousObject = [self liveObjectForKey:key];
     
-    [newArray removeObject:object];
+    [newArray removeObjectIdenticalTo:object];
     [newArray addObject:object];
     
     [newKeys removeObject:key];
@@ -275,7 +275,7 @@
     
     if(!topObject.isAlive)
     {
-        [newLiveObjects removeObject:topObject];
+        [newLiveObjects removeObjectIdenticalTo:topObject];
         [newLiveKeys    removeObject:key];
     }
     
@@ -299,7 +299,7 @@
     {
         if(object.isDead)
         {
-            [[newHashtable objectForKey:key] removeObject:object];
+            [[newHashtable objectForKey:key] removeObjectIdenticalTo:object];
         }
         else 
         {
