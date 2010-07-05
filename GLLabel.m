@@ -579,8 +579,8 @@
 {
     self.death = [AnimatedFloat withStartValue:self.death.value endValue:1 forTime:1];
     
-    self.death.onStart = ^{ [container pruneLiveForKey:key]; [self layoutMenus]; };    
-    self.death.onEnd   = ^{ [container pruneDeadForKey:key]; [self layoutMenus]; };
+    self.death.onStart = ^{ [container pruneLiveForKey:key]; [self.owner layoutItems]; };    
+    self.death.onEnd   = ^{ [container pruneDeadForKey:key]; [self.owner layoutItems]; };
     
     self.death.curve = AnimationEaseInOut;
 }
