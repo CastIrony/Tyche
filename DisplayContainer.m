@@ -286,14 +286,16 @@
 }
 
 -(void)pruneDeadForKey:(id)key
-{
+{    
     NSMutableDictionary* newHashtable = [[self.hashtable mutableCopy] autorelease];
     NSMutableArray*      newKeys      = [[self.keys      mutableCopy] autorelease];
     NSMutableArray*      newObjects   = [[self.objects   mutableCopy] autorelease];
+ 
+    NSMutableArray* array = [[hashtable objectForKey:key] copy];
     
     BOOL allDead = YES;
     
-    for(id<Killable> object in [self.hashtable objectForKey:key]) 
+    for(id<Killable> object in array) 
     {
         if(object.isDead)
         {
