@@ -75,7 +75,9 @@
     NSMutableArray*      newKeys      = [[self.keys      mutableCopy] autorelease];
     NSMutableDictionary* newHashtable = [[self.hashtable mutableCopy] autorelease];
     NSMutableArray*      newArray     = [newKeys containsObject:key] ? [[[newHashtable objectForKey:key] mutableCopy] autorelease] : [NSMutableArray array];
-        
+
+    if([[newArray lastObject] isAlive]) { [[newArray lastObject] killWithDisplayContainer:self andKey:key]; }
+    
     [newArray removeObject:object];
     [newArray addObject:object];
     
@@ -96,6 +98,8 @@
     NSMutableDictionary* newHashtable = [[self.hashtable mutableCopy] autorelease];
     NSMutableArray*      newArray     = [newKeys containsObject:key] ? [[[newHashtable objectForKey:key] mutableCopy] autorelease] : [NSMutableArray array];
     
+    if([[newArray lastObject] isAlive]) { [[newArray lastObject] killWithDisplayContainer:self andKey:key]; }
+    
     [newArray removeObject:object];
     [newArray addObject:object];
     
@@ -115,6 +119,8 @@
     NSMutableArray*      newKeys      = [[self.keys      mutableCopy] autorelease];
     NSMutableDictionary* newHashtable = [[self.hashtable mutableCopy] autorelease];
     NSMutableArray*      newArray     = [newKeys containsObject:key] ? [[[newHashtable objectForKey:key] mutableCopy] autorelease] : [NSMutableArray array];
+    
+    if([[newArray lastObject] isAlive]) { [[newArray lastObject] killWithDisplayContainer:self andKey:key]; }
     
     [newArray removeObject:object];
     [newArray addObject:object];
@@ -138,6 +144,8 @@
     NSMutableDictionary* newHashtable = [[self.hashtable mutableCopy] autorelease];
     NSMutableArray*      newArray     = [newKeys containsObject:key] ? [[[newHashtable objectForKey:key] mutableCopy] autorelease] : [NSMutableArray array];
     
+    if([[newArray lastObject] isAlive]) { [[newArray lastObject] killWithDisplayContainer:self andKey:key]; }
+    
     [newArray removeObject:object];
     [newArray addObject:object];
     
@@ -159,6 +167,8 @@
     NSMutableArray*      newKeys      = [[self.keys      mutableCopy] autorelease];
     NSMutableDictionary* newHashtable = [[self.hashtable mutableCopy] autorelease];
     NSMutableArray*      newArray     = [newKeys containsObject:key] ? [[[newHashtable objectForKey:key] mutableCopy] autorelease] : [NSMutableArray array];
+    
+    if([[newArray lastObject] isAlive]) { [[newArray lastObject] killWithDisplayContainer:self andKey:key]; }
     
     [newArray removeObject:object];
     [newArray addObject:object];
@@ -283,7 +293,6 @@
         {
             allDead = NO;
         }
-
     }
     
     if(allDead)
