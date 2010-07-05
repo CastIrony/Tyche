@@ -101,7 +101,7 @@
             }
         }
     }
-    else 
+    else if(self.isAlive) 
     {
         if(self.renderer.animated)
         {
