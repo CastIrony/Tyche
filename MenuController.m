@@ -252,7 +252,7 @@
 
 -(void)killWithDisplayContainer:(DisplayContainer*)container andKey:(id)key
 {
-    self.death = [AnimatedFloat withStartValue:self.death.value endValue:1 forTime:1];
+    self.death = [AnimatedFloat withStartValue:self.death.value endValue:1 forTime:0.5];
     
     self.death.onStart = ^{ [container pruneLiveForKey:key]; [self layoutMenus]; };    
     self.death.onEnd   = ^{ [container pruneDeadForKey:key]; [self layoutMenus]; };
