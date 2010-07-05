@@ -291,7 +291,7 @@
     NSMutableArray*      newKeys      = [[self.keys      mutableCopy] autorelease];
     NSMutableArray*      newObjects   = [[self.objects   mutableCopy] autorelease];
  
-    NSMutableArray* array = [[hashtable objectForKey:key] copy];
+    NSMutableArray* array = [[[hashtable objectForKey:key] copy] autorelease];
     
     BOOL allDead = YES;
     
