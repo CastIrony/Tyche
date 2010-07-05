@@ -133,9 +133,16 @@
         
         if(self.renderer.animated)
         {
-            menu.location = [AnimatedFloat withStartValue:menu.location.value endValue:-4.0 * counter forTime:1.0];
-            menu.location.curve = AnimationEaseInOut;
-        
+            if(menu.location)
+            {
+                menu.location = [AnimatedFloat withStartValue:menu.location.value endValue:-4.0 * counter forTime:1.0];
+                menu.location.curve = AnimationEaseInOut;
+            }
+            else 
+            {
+                menu.location = [AnimatedFloat withValue:-4.0 * counter];
+            }
+                
             menu.opacity = [AnimatedFloat withStartValue:menu.opacity.value endValue:([key isEqualToString:self.currentKey] || !collapsed) forTime:1.0];
             menu.opacity.curve = AnimationEaseInOut;
         }
