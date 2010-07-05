@@ -38,10 +38,10 @@
 {
     menuLayer.owner = self;
     
-    menuLayer.hidden = [AnimatedFloat withStartValue:1 endValue:0 speed:1];
+    menuLayer.hidden = [AnimatedFloat withStartValue:1 endValue:0 forTime:0.5];
     menuLayer.hidden.curve = AnimationEaseInOut;
 
-    self.currentLayer.collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:1 speed:1];
+    self.currentLayer.collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:1 forTime:0.5];
     [self.currentLayer layoutMenus];
     
     menuLayer.first = (self.menuLayers.liveObjects.count == 0);
@@ -59,12 +59,7 @@
         
         MenuController* menuLayer = [self.menuLayers liveObjectForKey:key];
         
-        menuLayer.death = [AnimatedFloat withStartValue:menuLayer.death.value endValue:1 speed:1];
-        
-        menuLayer.death.onStart = ^{ [self.menuLayers pruneLiveForKey:key]; };    
-        menuLayer.death.onEnd   = ^{ [self.menuLayers pruneDeadForKey:key]; };
-        
-        menuLayer.death.curve = AnimationEaseInOut;
+        [menuLayer killWithDisplayContainer:self.menuLayers andKey:key];
     }
      
     MenuController* currentLayer = [self.menuLayers liveObjectForKey:target];
