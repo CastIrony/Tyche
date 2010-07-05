@@ -215,7 +215,7 @@
     {
         if(pointTo.x - pointFrom.x > 10)
         {
-            if(!first && [self.currentKey isEqualToString:[self.menus.keys objectAtIndex:0]])
+            if(!self.first && [self.currentKey isEqualToString:[self.menus.keys objectAtIndex:0]])
             {
                 self.currentKey = nil;
             }
