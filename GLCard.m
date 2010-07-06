@@ -267,7 +267,7 @@
     
     GLfloat held = self.isHeld.value * 0.5 + 0.5;
     
-    glColor4f(1, 1, 1, held * self.bendFactor.value);    
+    glColor4f(1, 1, 1, held);    
         
     glVertexPointer  (3, GL_FLOAT, 0, arrayVertexShadow);
     glNormalPointer  (   GL_FLOAT, 0, arrayNormalShadow);
