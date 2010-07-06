@@ -35,17 +35,22 @@
 {
     free(arrayVertexFront);
     free(arrayVertexBack);
+    free(arrayVertexBackSimple);
     free(arrayVertexShadow);
     free(arrayNormalFront);
     free(arrayNormalBack);
+    free(arrayNormalBackSimple);
     free(arrayNormalShadow);
     free(arrayTexture0Front);
     free(arrayTexture0Back);
+    free(arrayTexture0BackSimple);
     free(arrayTexture0Shadow);
     free(arrayTexture1Front);
     free(arrayTexture1Back);
+    free(arrayTexture1BackSimple);
     free(arrayMeshFront);
     free(arrayMeshBack);
+    free(arrayMeshBackSimple);
     free(arrayMeshShadow);
     
     [super dealloc];
@@ -77,24 +82,29 @@
         meshWidthShadow  = 5;
         meshHeightShadow = 2;
         
-        arrayVertexFront    = malloc(meshWidthFront  * meshHeightFront  * sizeof(Vector3D));
-        arrayVertexBack     = malloc(meshWidthBack   * meshHeightBack   * sizeof(Vector3D));
-        arrayVertexShadow   = malloc(meshWidthShadow * meshHeightShadow * sizeof(Vector3D));
+        arrayVertexFront      = malloc(meshWidthFront  * meshHeightFront  * sizeof(Vector3D));
+        arrayVertexBack       = malloc(meshWidthBack   * meshHeightBack   * sizeof(Vector3D));
+        arrayVertexShadow     = malloc(meshWidthShadow * meshHeightShadow * sizeof(Vector3D));
+        arrayVertexBackSimple = malloc(4 * sizeof(Vector3D));
         
-        arrayNormalFront    = malloc(meshWidthFront  * meshHeightFront  * sizeof(Vector3D));
-        arrayNormalBack     = malloc(meshWidthBack   * meshHeightBack   * sizeof(Vector3D));
-        arrayNormalShadow   = malloc(meshWidthShadow * meshHeightShadow * sizeof(Vector3D));
+        arrayNormalFront      = malloc(meshWidthFront  * meshHeightFront  * sizeof(Vector3D));
+        arrayNormalBack       = malloc(meshWidthBack   * meshHeightBack   * sizeof(Vector3D));
+        arrayNormalShadow     = malloc(meshWidthShadow * meshHeightShadow * sizeof(Vector3D));
+        arrayNormalBackSimple = malloc(4 * sizeof(Vector3D));
         
-        arrayTexture0Front  = malloc(meshWidthFront  * meshHeightFront  * sizeof(Vector2D));
-        arrayTexture0Back   = malloc(meshWidthBack   * meshHeightBack   * sizeof(Vector2D));
-        arrayTexture0Shadow = malloc(meshWidthShadow * meshHeightShadow * sizeof(Vector2D));
+        arrayTexture0Front      = malloc(meshWidthFront  * meshHeightFront  * sizeof(Vector2D));
+        arrayTexture0Back       = malloc(meshWidthBack   * meshHeightBack   * sizeof(Vector2D));
+        arrayTexture0Shadow     = malloc(meshWidthShadow * meshHeightShadow * sizeof(Vector2D));
+        arrayTexture0BackSimple = malloc(4 * sizeof(Vector2D));
         
-        arrayTexture1Front  = malloc(meshWidthFront  * meshHeightFront  * sizeof(Vector2D));
-        arrayTexture1Back   = malloc(meshWidthBack   * meshHeightBack   * sizeof(Vector2D));
+        arrayTexture1Front      = malloc(meshWidthFront  * meshHeightFront  * sizeof(Vector2D));
+        arrayTexture1Back       = malloc(meshWidthBack   * meshHeightBack   * sizeof(Vector2D));
+        arrayTexture1BackSimple = malloc(4 * sizeof(Vector2D));
         
         arrayMeshFront      = malloc((meshWidthFront  - 1) * (meshHeightFront  - 1) * 6 * sizeof(GLushort));
         arrayMeshBack       = malloc((meshWidthBack   - 1) * (meshHeightBack   - 1) * 6 * sizeof(GLushort));
         arrayMeshShadow     = malloc((meshWidthShadow - 1) * (meshHeightShadow - 1) * 6 * sizeof(GLushort));
+        arrayMeshBackSimple = malloc(6 * sizeof(GLushort));
         
         textureSizeCard     = Vector2DMake(172.0 / 1024.0, 252.0 / 1024.0);
         textureSizeLabel    = Vector2DMake(116.0 / 1024.0,  62.0 / 1024.0);
@@ -120,10 +130,14 @@
         GenerateBezierTextures(arrayTexture0Shadow, meshWidthShadow, meshHeightShadow, textureSizeCard, textureOffsetCard[0]);
         GenerateBezierTextures(arrayTexture1Front,  meshWidthFront,  meshHeightFront,  textureSizeCard, textureOffsetCard[self.numeral]);
         GenerateBezierTextures(arrayTexture1Back,   meshWidthBack,   meshHeightBack,   textureSizeCard, textureOffsetCard[14]); 
+        
+        GenerateBezierTextures(arrayTexture0BackSimple, 2, 2, Vector2DMake(1, 1), Vector2DMake(0, 0)); 
+        GenerateBezierTextures(arrayTexture1BackSimple, 2, 2, textureSizeCard, textureOffsetCard[14]); 
 
-        GenerateBezierMesh(arrayMeshFront,  meshWidthFront,  meshHeightFront);
-        GenerateBezierMesh(arrayMeshBack,   meshWidthBack,   meshHeightBack);                                         
-        GenerateBezierMesh(arrayMeshShadow, meshWidthShadow, meshHeightShadow);
+        GenerateBezierMesh(arrayMeshFront,      meshWidthFront,  meshHeightFront);
+        GenerateBezierMesh(arrayMeshBack,       meshWidthBack,   meshHeightBack);                                         
+        GenerateBezierMesh(arrayMeshShadow,     meshWidthShadow, meshHeightShadow);
+        GenerateBezierMesh(arrayMeshBackSimple, 2, 2);                                         
 
         self.isHeld     = [AnimatedFloat withValue:0];
         self.isSelected = [AnimatedFloat withValue:0];
@@ -378,10 +392,12 @@
     GenerateBezierVertices(arrayVertexFront,  meshWidthFront,  meshHeightFront,  controlPointsFront);
     GenerateBezierVertices(arrayVertexBack,   meshWidthBack,   meshHeightBack,   controlPointsBack);                             
     GenerateBezierVertices(arrayVertexShadow, meshWidthShadow, meshHeightShadow, controlPointsShadow);
+    GenerateBezierVertices(arrayVertexBackSimple, 2, 2, controlPointsBack);                             
 
-    GenerateBezierNormals (arrayNormalFront,  meshWidthFront,  meshHeightFront,  controlPointsFront);
-    GenerateBezierNormals (arrayNormalBack,   meshWidthBack,   meshHeightBack,   controlPointsBack);                      
-    GenerateBezierNormals (arrayNormalShadow, meshWidthShadow, meshHeightShadow, controlPointsShadow);
+    GenerateBezierNormals(arrayNormalFront,  meshWidthFront,  meshHeightFront,  controlPointsFront);
+    GenerateBezierNormals(arrayNormalBack,   meshWidthBack,   meshHeightBack,   controlPointsBack);                      
+    GenerateBezierNormals(arrayNormalShadow, meshWidthShadow, meshHeightShadow, controlPointsShadow);
+    GenerateBezierNormals(arrayNormalBackSimple, 2, 2, controlPointsBack);                      
 }
 
 -(void)rotateWithAngle:(GLfloat)angle aroundPoint:(Vector3D)point andAxis:(Vector3D)axis

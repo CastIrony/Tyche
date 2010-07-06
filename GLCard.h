@@ -27,21 +27,26 @@
     
     Vector3D* arrayVertexFront;
     Vector3D* arrayVertexBack;
+    Vector3D* arrayVertexBackSimple;
     Vector3D* arrayVertexShadow;
     
     Vector3D* arrayNormalFront;
     Vector3D* arrayNormalBack;
+    Vector3D* arrayNormalBackSimple;
     Vector3D* arrayNormalShadow;
     
     Vector2D* arrayTexture0Front;
     Vector2D* arrayTexture0Back;
+    Vector2D* arrayTexture0BackSimple;
     Vector2D* arrayTexture0Shadow;
     
     Vector2D* arrayTexture1Front;
     Vector2D* arrayTexture1Back;
+    Vector2D* arrayTexture1BackSimple;
     
     GLushort* arrayMeshFront;
     GLushort* arrayMeshBack;
+    GLushort* arrayMeshBackSimple;
     GLushort* arrayMeshShadow;
 }
 
