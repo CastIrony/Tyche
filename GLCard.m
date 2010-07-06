@@ -222,6 +222,39 @@
         glClientActiveTexture(GL_TEXTURE0); 
         glActiveTexture(GL_TEXTURE0); 
     }
+    else 
+    {
+        GLfloat held = self.isHeld.value     * 0.5 + 0.5;
+        
+        GLfloat lightness = self.renderer.lightness.value;
+        
+        glColor4f(lightness, lightness, lightness, held);
+            
+        glVertexPointer  (3, GL_FLOAT, 0, arrayVertexBack);                                                                             
+        glNormalPointer  (   GL_FLOAT, 0, arrayNormalBack);                                                                             
+            
+        glClientActiveTexture(GL_TEXTURE0); 
+        glActiveTexture(GL_TEXTURE0); 
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"cards"]);
+        glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture0Back);      
+        
+        glClientActiveTexture(GL_TEXTURE1); 
+        glActiveTexture(GL_TEXTURE1); 
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"suit0"]);
+        glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture1Back);      
+            
+        glDrawElements(GL_TRIANGLES, (meshWidthBack - 1) * (meshHeightBack - 1) * 6, GL_UNSIGNED_SHORT, arrayMeshBack);
+        
+        glClientActiveTexture(GL_TEXTURE1); 
+        glActiveTexture(GL_TEXTURE1); 
+        glBindTexture(GL_TEXTURE_2D, 0);
+        glClientActiveTexture(GL_TEXTURE0); 
+        glActiveTexture(GL_TEXTURE0); 
+    }
 }
 
 -(void)drawShadow
