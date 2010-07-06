@@ -214,7 +214,7 @@
         glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"suit0"]);
         glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture1BackSimple);      
         
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, arrayMeshBack);
+        glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_SHORT, arrayMeshBack);
         
         glClientActiveTexture(GL_TEXTURE1); 
         glActiveTexture(GL_TEXTURE1); 
