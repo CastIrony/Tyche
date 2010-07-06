@@ -264,9 +264,6 @@ static GLTexturePixelFormat defaultAlphaPixelFormat = kGLTexturePixelFormat_Defa
 
 -(id)initWithDots:(int)dots current:(int)current
 {    
-//    dots = 10;
-//    current = 4;
-    
     GLfloat spacing = 16;
     GLfloat radius =  5;
     
