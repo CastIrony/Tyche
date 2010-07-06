@@ -189,7 +189,7 @@
 
 -(void)drawBack
 {
-    NSLog(@"%f5", self.bendFactor);
+    NSLog(@"%f5", self.bendFactor.value);
     
     GLfloat held = self.isHeld.value     * 0.5 + 0.5;
     
