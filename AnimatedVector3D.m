@@ -34,7 +34,7 @@
         _endTime     = startTime + TIMESCALE * (endTime - startTime);
         _hasStarted  = NO;
         _hasEnded    = NO;
-        _curve       = AnimationLinear;
+        _curve       = AnimationEaseInOut;
         
         self.onStart = onStart;      
         self.onEnd   = onEnd;  
@@ -120,17 +120,5 @@
     
     return Vector3DInterpolate(self.startValue, self.endValue, proportion);
 }
-
-//-(void)setValue:(Vector3D)value
-//{
-//    NSTimeInterval now = CFAbsoluteTimeGetCurrent();
-//    
-//    self.startTime  = now;
-//    self.endTime    = now;
-//    self.startValue = value;
-//    self.endValue   = value;
-//    self.hasStarted = YES;
-//    self.hasEnded   = YES;
-//}
 
 @end

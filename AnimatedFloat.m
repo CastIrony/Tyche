@@ -28,7 +28,7 @@
         _endTime     = startTime + TIMESCALE * (endTime - startTime);
         _hasStarted  = NO;
         _hasEnded    = NO;
-        _curve       = AnimationLinear;
+        _curve       = AnimationEaseInOut;
 
         self.onStart = onStart;      
         self.onEnd   = onEnd;  
