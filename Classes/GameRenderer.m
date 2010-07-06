@@ -407,10 +407,8 @@
     if(self.animated) 
     {
         self.menuLayerController.hidden = [AnimatedFloat withStartValue:self.menuLayerController.hidden.value endValue:0 speed: 1];
-        self.menuLayerController.hidden.curve = AnimationEaseInOut;
         
         self.lightness = [AnimatedFloat withStartValue:self.lightness.value endValue:0.4 forTime:1];
-        self.lightness.curve = AnimationEaseInOut;
     }
     else 
     {
@@ -426,10 +424,8 @@
     if(self.animated) 
     {
         self.menuLayerController.hidden = [AnimatedFloat withStartValue:self.menuLayerController.hidden.value endValue:1 speed: 1]; 
-        self.menuLayerController.hidden.curve = AnimationEaseInOut;
         
         self.lightness = [AnimatedFloat withStartValue:self.lightness.value endValue:1 forTime:1];
-        self.lightness.curve = AnimationEaseInOut;
     }
     else 
     {
@@ -450,10 +446,7 @@
         
         card.location  = [AnimatedVector3D withStartValue:card.location.value  endValue:Vector3DMake(-4 * i + 8,   0,   0) forTime:1];
         card.angleFlip = [AnimatedFloat    withStartValue:card.angleFlip.value endValue:180                                forTime:1];
-        
-        card.location.curve = AnimationEaseInOut;
-        card.angleFlip.curve = AnimationEaseInOut;
-        
+                
         if(i == 0) { card.angleFlip.onEnd = work; }
     }
 }
@@ -470,10 +463,7 @@
         
         card.location  = [AnimatedVector3D withStartValue:card.location.value  endValue:Vector3DMake(0,   0,   0) forTime:1];
         card.angleFlip = [AnimatedFloat    withStartValue:card.angleFlip.value endValue:0                         forTime:1];
-        
-        card.location.curve = AnimationEaseInOut;
-        card.angleFlip.curve = AnimationEaseInOut;
-        
+                
         if(i == 0) { card.angleFlip.onEnd = work; }
     }
 }

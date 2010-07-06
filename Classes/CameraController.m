@@ -69,11 +69,11 @@
     {
         if(self.renderer.animated)
         {
-            self.pitchFactor = [AnimatedFloat    withStartValue:self.pitchFactor.value endValue:0                         forTime:1]; self.pitchFactor.curve = AnimationEaseInOut;
-            self.pitchAngle  = [AnimatedFloat    withStartValue:self.pitchAngle.value  endValue:0                         forTime:1]; self.pitchAngle.curve  = AnimationEaseInOut;
-            self.rollAngle   = [AnimatedFloat    withStartValue:self.rollAngle.value   endValue:0                         forTime:1]; self.rollAngle.curve   = AnimationEaseInOut;
-            self.position    = [AnimatedVector3D withStartValue:self.position.value    endValue:Vector3DMake(0, 0.0, -9) forTime:1]; self.position.curve    = AnimationEaseInOut;
-            self.lookAt      = [AnimatedVector3D withStartValue:self.lookAt.value      endValue:Vector3DMake(0, 0.0,   0) forTime:1]; self.lookAt.curve      = AnimationEaseInOut;
+            self.pitchFactor = [AnimatedFloat    withStartValue:self.pitchFactor.value endValue:0                         forTime:1]; 
+            self.pitchAngle  = [AnimatedFloat    withStartValue:self.pitchAngle.value  endValue:0                         forTime:1]; 
+            self.rollAngle   = [AnimatedFloat    withStartValue:self.rollAngle.value   endValue:0                         forTime:1]; 
+            self.position    = [AnimatedVector3D withStartValue:self.position.value    endValue:Vector3DMake(0, 0.0, -9) forTime:1];  
+            self.lookAt      = [AnimatedVector3D withStartValue:self.lookAt.value      endValue:Vector3DMake(0, 0.0,   0) forTime:1]; 
         }
         else 
         {
@@ -90,12 +90,12 @@
         {
             if(self.renderer.animated)
             {
-                self.pitchFactor = [AnimatedFloat    withStartValue:self.pitchFactor.value endValue:1                         forTime:1]; self.pitchFactor.curve = AnimationEaseInOut;
+                self.pitchFactor = [AnimatedFloat    withStartValue:self.pitchFactor.value endValue:1                         forTime:1]; 
 
-                self.pitchAngle  = [AnimatedFloat    withStartValue:self.pitchAngle.value  endValue:  0                       forTime:1]; self.pitchAngle.curve  = AnimationEaseInOut;
-                self.rollAngle   = [AnimatedFloat    withStartValue:self.rollAngle.value   endValue:-90                       forTime:1]; self.rollAngle.curve   = AnimationEaseInOut;
-                self.position    = [AnimatedVector3D withStartValue:self.position.value    endValue:Vector3DMake(0, 2.3, -25) forTime:1]; self.position.curve    = AnimationEaseInOut;
-                self.lookAt      = [AnimatedVector3D withStartValue:self.lookAt.value      endValue:Vector3DMake(0, 2.3,   0) forTime:1]; self.lookAt.curve      = AnimationEaseInOut;
+                self.pitchAngle  = [AnimatedFloat    withStartValue:self.pitchAngle.value  endValue:  0                       forTime:1]; 
+                self.rollAngle   = [AnimatedFloat    withStartValue:self.rollAngle.value   endValue:-90                       forTime:1]; 
+                self.position    = [AnimatedVector3D withStartValue:self.position.value    endValue:Vector3DMake(0, 2.3, -25) forTime:1]; 
+                self.lookAt      = [AnimatedVector3D withStartValue:self.lookAt.value      endValue:Vector3DMake(0, 2.3,   0) forTime:1]; 
             }
             else 
             {
@@ -111,12 +111,12 @@
         {
             if(self.renderer.animated)
             {
-                self.pitchFactor = [AnimatedFloat    withStartValue:self.pitchFactor.value endValue:1                         forTime:1]; self.pitchFactor.curve = AnimationEaseInOut;
+                self.pitchFactor = [AnimatedFloat    withStartValue:self.pitchFactor.value endValue:1                         forTime:1]; 
 
-                self.pitchAngle  = [AnimatedFloat    withStartValue:self.pitchAngle.value  endValue:  0                       forTime:1]; self.pitchAngle.curve  = AnimationEaseInOut;
-                self.rollAngle   = [AnimatedFloat    withStartValue:self.rollAngle.value   endValue:-90                       forTime:1]; self.rollAngle.curve   = AnimationEaseInOut;
-                self.position    = [AnimatedVector3D withStartValue:self.position.value    endValue:Vector3DMake(0, 2.3, -21) forTime:1]; self.position.curve    = AnimationEaseInOut; 
-                self.lookAt      = [AnimatedVector3D withStartValue:self.lookAt.value      endValue:Vector3DMake(0, 2.3,   0) forTime:1]; self.lookAt.curve      = AnimationEaseInOut; 
+                self.pitchAngle  = [AnimatedFloat    withStartValue:self.pitchAngle.value  endValue:  0                       forTime:1]; 
+                self.rollAngle   = [AnimatedFloat    withStartValue:self.rollAngle.value   endValue:-90                       forTime:1]; 
+                self.position    = [AnimatedVector3D withStartValue:self.position.value    endValue:Vector3DMake(0, 2.3, -21) forTime:1];  
+                self.lookAt      = [AnimatedVector3D withStartValue:self.lookAt.value      endValue:Vector3DMake(0, 2.3,   0) forTime:1];  
             }
             else 
             {
@@ -135,7 +135,6 @@
 {
     self.pitchFactor = [AnimatedFloat withStartValue:self.pitchFactor.value endValue:1 forTime:(self.pitchAngle.value / 45.0)]; 
     
-    self.pitchFactor.curve = AnimationEaseInOut;
     self.pitchFactor.onEnd = work;
 }
 
@@ -143,7 +142,6 @@
 {
     self.pitchFactor = [AnimatedFloat withStartValue:self.pitchFactor.value endValue:1 forTime:(self.pitchAngle.value / 45.0)]; 
     
-    self.pitchFactor.curve = AnimationEaseInOut;
     self.pitchFactor.onEnd = work;
 }
 

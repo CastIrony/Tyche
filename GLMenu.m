@@ -219,8 +219,6 @@
     
     self.death.onStart = ^{ [container pruneLiveForKey:key]; [self.owner layoutMenus]; };    
     self.death.onEnd   = ^{ [container pruneDeadForKey:key]; [self.owner layoutMenus]; };
-    
-    self.death.curve = AnimationEaseInOut;
 }
 
 @end

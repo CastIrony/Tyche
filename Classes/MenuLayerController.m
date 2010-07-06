@@ -39,7 +39,6 @@
     menuLayer.owner = self;
     
     menuLayer.hidden = [AnimatedFloat withStartValue:1 endValue:0 forTime:0.5];
-    menuLayer.hidden.curve = AnimationEaseInOut;
 
     self.currentLayer.collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:1 forTime:0.5];
     [self.currentLayer layoutMenus];

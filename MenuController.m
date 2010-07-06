@@ -78,8 +78,6 @@
     
     menu.death.onStart = ^{ [self.menus pruneLiveForKey:key]; [self layoutMenus]; };    
     menu.death.onEnd   = ^{ [self.menus pruneDeadForKey:key]; [self layoutMenus]; };
-
-    menu.death.curve = AnimationEaseInOut;
 }
 
 -(void)updateOffset
@@ -93,7 +91,6 @@
             if(self.renderer.animated)
             {
                 self.offset = [AnimatedFloat withStartValue:self.offset.value endValue:currentIndex speed:2.0];
-                self.offset.curve = AnimationEaseInOut;
             }
             else
             {
@@ -106,7 +103,6 @@
         if(self.renderer.animated)
         {
             self.offset = [AnimatedFloat withStartValue:self.offset.value endValue:-1 speed:2.0];
-            self.offset.curve = AnimationEaseInOut;
         }
         else
         {
@@ -136,7 +132,6 @@
             if(menu.location)
             {
                 menu.location = [AnimatedFloat withStartValue:menu.location.value endValue:-4.0 * counter forTime:1.0];
-                menu.location.curve = AnimationEaseInOut;
             }
             else 
             {
@@ -144,7 +139,6 @@
             }
                 
             menu.opacity = [AnimatedFloat withStartValue:menu.opacity.value endValue:([key isEqualToString:self.currentKey] || !collapsed) forTime:1.0];
-            menu.opacity.curve = AnimationEaseInOut;
         }
         else 
         {   
@@ -256,8 +250,6 @@
     
     self.death.onStart = ^{ [container pruneLiveForKey:key]; [self layoutMenus]; };    
     self.death.onEnd   = ^{ [container pruneDeadForKey:key]; [self layoutMenus]; };
-    
-    self.death.curve = AnimationEaseInOut;
 }
 
 @end

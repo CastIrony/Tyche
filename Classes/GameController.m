@@ -280,7 +280,6 @@
     if(self.renderer.animated)
     {        
         self.renderer.chipGroup.offset = [AnimatedFloat withStartValue:self.renderer.chipGroup.offset.value endValue:offset forTime:1];
-        self.renderer.chipGroup.offset.curve = AnimationEaseInOut;
 
         //GLChip* lastToFinish = nil;
         
@@ -563,7 +562,6 @@
     if(self.renderer.camera.pitchAngle.value < 60 && !self.renderer.camera.isAutomatic)
     {
         self.renderer.camera.pitchAngle = [AnimatedFloat  withStartValue:self.renderer.camera.pitchAngle.value endValue:90 forTime:1.0];
-        self.renderer.camera.pitchAngle.curve = AnimationEaseInOut;
     }    
 }
 
@@ -575,7 +573,6 @@
         if(self.renderer.camera.pitchAngle.value > 60)
         {
             self.renderer.camera.pitchAngle = [AnimatedFloat withStartValue:self.renderer.camera.pitchAngle.value endValue:0 forTime:1.0];
-            self.renderer.camera.pitchAngle.curve = AnimationEaseInOut;
         }
         else 
         {

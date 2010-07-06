@@ -134,7 +134,6 @@
                 card.isDead = YES;
                 card.location = [AnimatedVector3D withStartValue:card.location.value endValue:Vector3DMake(0, 0, -30) speed:30];
                 card.location.onEnd = ^{ [self performSelector:@selector(clearDeadCard:) withObject:card afterDelay:TIMESCALE * 0.00]; runLater(work); };
-                card.location.curve = AnimationEaseInOut;
             }
         }
 
@@ -157,7 +156,6 @@
         card.isHeld         = [AnimatedFloat withValue:isHeld];
         card.location       = self.renderer.animated ? [AnimatedVector3D withStartValue:Vector3DMake(0, 0, -30) endValue:Vector3DMake(0, 0, 0) speed:30] : [AnimatedVector3D withValue:Vector3DMake(0, 0, 0)];
         card.location.onEnd = work; 
-        card.location.curve = AnimationEaseInOut;
 
         [self layoutCards];
     });
