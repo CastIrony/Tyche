@@ -189,6 +189,8 @@
 
 -(void)drawBack
 {
+    NSLog(@"%f5", self.bendFactor);
+    
     GLfloat held = self.isHeld.value     * 0.5 + 0.5;
     
     GLfloat lightness = self.renderer.lightness.value;
