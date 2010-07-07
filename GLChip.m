@@ -7,6 +7,7 @@
 #import "AnimatedVector3D.h"
 #import "GameRenderer.h"
 #import "TextureController.h"
+#import "GLChipGroup.h"
 
 #import "GLChip.h"
 
