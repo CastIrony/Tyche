@@ -37,7 +37,7 @@
     if(self) 
     {
         self.chips = [DisplayContainer container];
-        self.offset = [AnimatedFloat withValue:0];
+        self.offset = [AnimatedFloat withValue:1];
     }
      
     return self;
