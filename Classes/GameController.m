@@ -297,15 +297,15 @@
     {
         self.renderer.chipGroup.offset = [AnimatedFloat withValue:offset];
 
-        { GLChip* chip = [self.renderer.chipGroup.chips objectForKey:@"1"    ]; chip.maxCount = [[self.player.chips objectForKey:@"1"    ] chipCount]; chip.count = [AnimatedFloat withValue:[[self.player.chips objectForKey:@"1"    ] displayCount]]; }
-        { GLChip* chip = [self.renderer.chipGroup.chips objectForKey:@"5"    ]; chip.maxCount = [[self.player.chips objectForKey:@"5"    ] chipCount]; chip.count = [AnimatedFloat withValue:[[self.player.chips objectForKey:@"5"    ] displayCount]]; }
-        { GLChip* chip = [self.renderer.chipGroup.chips objectForKey:@"10"   ]; chip.maxCount = [[self.player.chips objectForKey:@"10"   ] chipCount]; chip.count = [AnimatedFloat withValue:[[self.player.chips objectForKey:@"10"   ] displayCount]]; }
-        { GLChip* chip = [self.renderer.chipGroup.chips objectForKey:@"25"   ]; chip.maxCount = [[self.player.chips objectForKey:@"25"   ] chipCount]; chip.count = [AnimatedFloat withValue:[[self.player.chips objectForKey:@"25"   ] displayCount]]; }
-        { GLChip* chip = [self.renderer.chipGroup.chips objectForKey:@"100"  ]; chip.maxCount = [[self.player.chips objectForKey:@"100"  ] chipCount]; chip.count = [AnimatedFloat withValue:[[self.player.chips objectForKey:@"100"  ] displayCount]]; }
-        { GLChip* chip = [self.renderer.chipGroup.chips objectForKey:@"500"  ]; chip.maxCount = [[self.player.chips objectForKey:@"500"  ] chipCount]; chip.count = [AnimatedFloat withValue:[[self.player.chips objectForKey:@"500"  ] displayCount]]; }
-        { GLChip* chip = [self.renderer.chipGroup.chips objectForKey:@"1000" ]; chip.maxCount = [[self.player.chips objectForKey:@"1000" ] chipCount]; chip.count = [AnimatedFloat withValue:[[self.player.chips objectForKey:@"1000" ] displayCount]]; }
-        { GLChip* chip = [self.renderer.chipGroup.chips objectForKey:@"2500" ]; chip.maxCount = [[self.player.chips objectForKey:@"2500" ] chipCount]; chip.count = [AnimatedFloat withValue:[[self.player.chips objectForKey:@"2500" ] displayCount]]; }
-        { GLChip* chip = [self.renderer.chipGroup.chips objectForKey:@"10000"]; chip.maxCount = [[self.player.chips objectForKey:@"10000"] chipCount]; chip.count = [AnimatedFloat withValue:[[self.player.chips objectForKey:@"10000"] displayCount]]; }
+        { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"1"    ]; chip.maxCount = [[self.player.chips objectForKey:@"1"    ] chipCount]; chip.count = [AnimatedFloat withValue:[[self.player.chips objectForKey:@"1"    ] displayCount]]; }
+        { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"5"    ]; chip.maxCount = [[self.player.chips objectForKey:@"5"    ] chipCount]; chip.count = [AnimatedFloat withValue:[[self.player.chips objectForKey:@"5"    ] displayCount]]; }
+        { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"10"   ]; chip.maxCount = [[self.player.chips objectForKey:@"10"   ] chipCount]; chip.count = [AnimatedFloat withValue:[[self.player.chips objectForKey:@"10"   ] displayCount]]; }
+        { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"25"   ]; chip.maxCount = [[self.player.chips objectForKey:@"25"   ] chipCount]; chip.count = [AnimatedFloat withValue:[[self.player.chips objectForKey:@"25"   ] displayCount]]; }
+        { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"100"  ]; chip.maxCount = [[self.player.chips objectForKey:@"100"  ] chipCount]; chip.count = [AnimatedFloat withValue:[[self.player.chips objectForKey:@"100"  ] displayCount]]; }
+        { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"500"  ]; chip.maxCount = [[self.player.chips objectForKey:@"500"  ] chipCount]; chip.count = [AnimatedFloat withValue:[[self.player.chips objectForKey:@"500"  ] displayCount]]; }
+        { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"1000" ]; chip.maxCount = [[self.player.chips objectForKey:@"1000" ] chipCount]; chip.count = [AnimatedFloat withValue:[[self.player.chips objectForKey:@"1000" ] displayCount]]; }
+        { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"2500" ]; chip.maxCount = [[self.player.chips objectForKey:@"2500" ] chipCount]; chip.count = [AnimatedFloat withValue:[[self.player.chips objectForKey:@"2500" ] displayCount]]; }
+        { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"10000"]; chip.maxCount = [[self.player.chips objectForKey:@"10000"] chipCount]; chip.count = [AnimatedFloat withValue:[[self.player.chips objectForKey:@"10000"] displayCount]]; }
     }
 }
 
