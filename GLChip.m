@@ -168,6 +168,8 @@
             stackColors[offsetColors++] = Color3DMake(self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness);
             stackColors[offsetColors++] = Color3DMake(self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness);
             
+            NSLog(@"%f5, %f5", self.chipGroup.opacity, lightness);
+            
             stackMesh[offsetMesh++] = offsetSprite * 4 + 0;
             stackMesh[offsetMesh++] = offsetSprite * 4 + 1;
             stackMesh[offsetMesh++] = offsetSprite * 4 + 2;
