@@ -114,7 +114,7 @@
     
     GLfloat distance = sqrt(self.location.x * self.location.x + self.location.z * self.location.z);
     
-    GLfloat lightness = clipFloat(1.0 - 0.06 * distance, 0.3, 1.0) * self.renderer.lightness.value;
+    GLfloat lightness = clipFloat(1.0 - 0.06 * distance, 0.3, 1.0) * self.chipGroup.renderer.lightness.value;
         
     for(int chipCounter = 0; chipCounter <= stackCount; chipCounter++) 
     {
@@ -418,27 +418,27 @@
     
     if(deltaX > 0) 
     { 
-        if(self.chipNumber == 0) { [self.renderer.gameController chipTouchedUpWithKey:@"1"]; }
-        if(self.chipNumber == 1) { [self.renderer.gameController chipTouchedUpWithKey:@"5"]; }
-        if(self.chipNumber == 2) { [self.renderer.gameController chipTouchedUpWithKey:@"10"]; }
-        if(self.chipNumber == 3) { [self.renderer.gameController chipTouchedUpWithKey:@"25"]; }
-        if(self.chipNumber == 4) { [self.renderer.gameController chipTouchedUpWithKey:@"100"]; }
-        if(self.chipNumber == 5) { [self.renderer.gameController chipTouchedUpWithKey:@"500"]; }
-        if(self.chipNumber == 6) { [self.renderer.gameController chipTouchedUpWithKey:@"1000"]; }
-        if(self.chipNumber == 7) { [self.renderer.gameController chipTouchedUpWithKey:@"2500"]; }
-        if(self.chipNumber == 8) { [self.renderer.gameController chipTouchedUpWithKey:@"10000"]; }
+        if(self.chipNumber == 0) { [self.chipGroup.renderer.gameController chipTouchedUpWithKey:@"1"]; }
+        if(self.chipNumber == 1) { [self.chipGroup.renderer.gameController chipTouchedUpWithKey:@"5"]; }
+        if(self.chipNumber == 2) { [self.chipGroup.renderer.gameController chipTouchedUpWithKey:@"10"]; }
+        if(self.chipNumber == 3) { [self.chipGroup.renderer.gameController chipTouchedUpWithKey:@"25"]; }
+        if(self.chipNumber == 4) { [self.chipGroup.renderer.gameController chipTouchedUpWithKey:@"100"]; }
+        if(self.chipNumber == 5) { [self.chipGroup.renderer.gameController chipTouchedUpWithKey:@"500"]; }
+        if(self.chipNumber == 6) { [self.chipGroup.renderer.gameController chipTouchedUpWithKey:@"1000"]; }
+        if(self.chipNumber == 7) { [self.chipGroup.renderer.gameController chipTouchedUpWithKey:@"2500"]; }
+        if(self.chipNumber == 8) { [self.chipGroup.renderer.gameController chipTouchedUpWithKey:@"10000"]; }
     }
     else if(deltaX <= 0) 
     { 
-        if(self.chipNumber == 0) { [self.renderer.gameController chipTouchedDownWithKey:@"1"]; }
-        if(self.chipNumber == 1) { [self.renderer.gameController chipTouchedDownWithKey:@"5"]; }
-        if(self.chipNumber == 2) { [self.renderer.gameController chipTouchedDownWithKey:@"10"]; }
-        if(self.chipNumber == 3) { [self.renderer.gameController chipTouchedDownWithKey:@"25"]; }
-        if(self.chipNumber == 4) { [self.renderer.gameController chipTouchedDownWithKey:@"100"]; }
-        if(self.chipNumber == 5) { [self.renderer.gameController chipTouchedDownWithKey:@"500"]; }
-        if(self.chipNumber == 6) { [self.renderer.gameController chipTouchedDownWithKey:@"1000"]; }
-        if(self.chipNumber == 7) { [self.renderer.gameController chipTouchedDownWithKey:@"2500"]; }
-        if(self.chipNumber == 8) { [self.renderer.gameController chipTouchedDownWithKey:@"10000"]; }
+        if(self.chipNumber == 0) { [self.chipGroup.renderer.gameController chipTouchedDownWithKey:@"1"]; }
+        if(self.chipNumber == 1) { [self.chipGroup.renderer.gameController chipTouchedDownWithKey:@"5"]; }
+        if(self.chipNumber == 2) { [self.chipGroup.renderer.gameController chipTouchedDownWithKey:@"10"]; }
+        if(self.chipNumber == 3) { [self.chipGroup.renderer.gameController chipTouchedDownWithKey:@"25"]; }
+        if(self.chipNumber == 4) { [self.chipGroup.renderer.gameController chipTouchedDownWithKey:@"100"]; }
+        if(self.chipNumber == 5) { [self.chipGroup.renderer.gameController chipTouchedDownWithKey:@"500"]; }
+        if(self.chipNumber == 6) { [self.chipGroup.renderer.gameController chipTouchedDownWithKey:@"1000"]; }
+        if(self.chipNumber == 7) { [self.chipGroup.renderer.gameController chipTouchedDownWithKey:@"2500"]; }
+        if(self.chipNumber == 8) { [self.chipGroup.renderer.gameController chipTouchedDownWithKey:@"10000"]; }
     }
 }
 
