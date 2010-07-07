@@ -1,5 +1,6 @@
 #import "GLChip.h"
 #import "AnimatedFloat.h"
+#import "DisplayContainer.h"
 #import "GLChipGroup.h"
 
 @implementation GLChipGroup
