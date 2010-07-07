@@ -19,7 +19,7 @@
 @synthesize count         = _count;
 @synthesize initialCount  = _initialCount;
 @synthesize markerOpacity = _markerOpacity;
-@synthesize opacity       = _opacity;
+@synthesize chipGroup     = _chipGroup;
 
 #pragma mark -
 #pragma mark INIT

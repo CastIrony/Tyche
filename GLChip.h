@@ -32,8 +32,8 @@
 @property (nonatomic, assign) int             chipNumber;
 @property (nonatomic, assign) int             maxCount;
 @property (nonatomic, assign) GLfloat         initialCount;
-@property (nonatomic, assign) GLfloat         markerOpacity;
-@property (nonatomic, assign) GLfloat         opacity;
+
+@property (nonatomic, assign) GLChipGroup*    chipGroup;
 
 +(GLChip*)chip;
 
