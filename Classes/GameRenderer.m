@@ -528,6 +528,8 @@
 
 -(void)touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event
 {   
+    runLater(^{
+        
     TRANSACTION_BEGIN
     {
         glRotatef(self.camera.rollAngle.value, 0.0f, 0.0f, 1.0f);   
@@ -575,11 +577,14 @@
             }
         }
     }
-    TRANSACTION_END
+        TRANSACTION_END
+    });
 }
 
 -(void)touchesMoved:(NSSet*)touches withEvent:(UIEvent*)event
 {    
+    runLater(^{
+        
     for(UITouch* touch in touches) 
     {
         NSValue* key = [NSValue valueWithPointer:touch];
@@ -596,10 +601,14 @@
             [object handleTouchMoved:touch fromPoint:pointFrom toPoint:pointTo];
         }
     }   
+        
+    });
 }
 
 -(void)touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event
 {   
+    runLater(^{
+        
     for(UITouch* touch in touches) 
     {
         NSValue* key = [NSValue valueWithPointer:touch];
@@ -619,6 +628,8 @@
             [self.touchedObjects removeObjectForKey:key];
         }
     }
+        
+    });
 }
 
 -(void)dealloc
