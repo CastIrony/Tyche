@@ -548,7 +548,7 @@
             {
                 for(TextController* textController in self.textControllers.objectEnumerator) { object = [textController testTouch:touch withPreviousObject:object]; }
 
-                for(GLChip* chip in self.chipGroup.chips.objectEnumerator) { object = [chip testTouch:touch withPreviousObject:object]; }
+                for(GLChip* chip in self.chipGroup.chips.liveObjects) { object = [chip testTouch:touch withPreviousObject:object]; }
                 
                 for(GLCard* card in self.cardGroup.cards.reverseObjectEnumerator) { object = [card testTouch:touch withPreviousObject:object]; }
             
