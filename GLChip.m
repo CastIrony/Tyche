@@ -188,6 +188,8 @@
     stackVectors[offsetVector - 2].z -= 3 * (1 - fade);
     stackVectors[offsetVector - 1].z -= 3 * (1 - fade);
     
+    NSLog(@"%X - %X - %f5", self, self.chipGroup, self.chipGroup.opacity);
+    
     stackColors[offsetColors - 8] = Color3DMake(lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity,             fade * self.chipGroup.opacity);
     stackColors[offsetColors - 7] = Color3DMake(lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity,             fade * self.chipGroup.opacity);
     stackColors[offsetColors - 6] = Color3DMake(lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity,             fade * self.chipGroup.opacity);
