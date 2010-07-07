@@ -339,12 +339,11 @@
         { TextController* textController = [self.textControllers objectForKey:@"status1"]; textController.opacity = 1.0/* - (cameraPitch / 90.0)*/; [textController draw]; }
         
         TinyProfilerStop(6);
-        TinyProfilerStart(7);
+        //TinyProfilerStart(7);
         
-        self.chipGroup.markerOpacity = clipFloat(1.0 - cameraPitch / 90.0,  0, 1); 
-        [self.chipGroup drawMarkers];         
+        //[self.chipGroup drawMarkers];         
         
-        TinyProfilerStop(7);
+        //TinyProfilerStop(7);
         TinyProfilerStart(8);
         
         // !
