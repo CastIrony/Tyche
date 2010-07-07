@@ -385,6 +385,23 @@
 
     [_context presentRenderbuffer:GL_RENDERBUFFER_OES];
     
+    for(NSValue* key in self.touchedObjects.allKeys) 
+    {
+        //NSValue* key = [NSValue valueWithPointer:touch];
+        
+        id<Touchable> object = [self.touchedObjects objectForKey:key];
+        
+        if(object)
+        {
+            NSValue* location = [self.touchedLocations objectForKey:key];
+            
+            CGPoint pointFrom = [location CGPointValue];
+            CGPoint pointTo   = [touch locationInView:touch.view];
+            
+            [object handleTouchMoved:touch fromPoint:pointFrom toPoint:pointTo];
+        }
+    }   
+    
     TinyProfilerLog();
 }
 
@@ -575,29 +592,29 @@
     TRANSACTION_END
 }
 
--(void)touchesMoved:(NSSet*)touches withEvent:(UIEvent*)event
-{   
-    TinyProfilerStart(7);
-    
-    for(UITouch* touch in touches) 
-    {
-        NSValue* key = [NSValue valueWithPointer:touch];
-        
-        id<Touchable> object = [self.touchedObjects objectForKey:key];
-        
-        if(object)
-        {
-            NSValue* location = [self.touchedLocations objectForKey:key];
-
-            CGPoint pointFrom = [location CGPointValue];
-            CGPoint pointTo   = [touch locationInView:touch.view];
-            
-            [object handleTouchMoved:touch fromPoint:pointFrom toPoint:pointTo];
-        }
-    }   
-    
-    TinyProfilerStop(7);
-}
+//-(void)touchesMoved:(NSSet*)touches withEvent:(UIEvent*)event
+//{   
+//    TinyProfilerStart(7);
+//    
+//    for(UITouch* touch in touches) 
+//    {
+//        NSValue* key = [NSValue valueWithPointer:touch];
+//        
+//        id<Touchable> object = [self.touchedObjects objectForKey:key];
+//        
+//        if(object)
+//        {
+//            NSValue* location = [self.touchedLocations objectForKey:key];
+//
+//            CGPoint pointFrom = [location CGPointValue];
+//            CGPoint pointTo   = [touch locationInView:touch.view];
+//            
+//            [object handleTouchMoved:touch fromPoint:pointFrom toPoint:pointTo];
+//        }
+//    }   
+//    
+//    TinyProfilerStop(7);
+//}
 
 -(void)touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event
 {           
