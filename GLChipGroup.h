@@ -8,6 +8,8 @@
 @property (nonatomic, assign) GLfloat markerOpacity;
 @property (nonatomic, assign) GameRenderer* renderer;
 
++(GLChipGroup*)chipGroupWithRenderer:(GameRenderer*)renderer;
+
 -(void)drawShadows;
 -(void)drawMarkers;
 -(void)drawChips;
