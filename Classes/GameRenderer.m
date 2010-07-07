@@ -601,7 +601,7 @@
                 [object handleTouchMoved:touch fromPoint:pointFrom toPoint:pointTo];
             }
         }   
-    });
+    };
 }
 
 -(void)touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event
