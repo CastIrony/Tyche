@@ -1,3 +1,5 @@
+@class DisplayContainer;
+
 @interface GLChipGroup : NSObject 
 
 @property (nonatomic, retain) DisplayContainer* chips;
