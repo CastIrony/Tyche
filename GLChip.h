@@ -4,6 +4,7 @@
 
 @class AnimatedFloat;
 @class AnimatedVector3D;
+@class GLChipGroup;
 
 @interface GLChip : NSObject
 {
