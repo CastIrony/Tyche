@@ -607,7 +607,7 @@
 
 -(void)touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event
 {   
-    runLater(^{
+//    runLater(^{
         
     for(UITouch* touch in touches) 
     {
@@ -629,7 +629,7 @@
         }
     }
         
-    });
+//    });
 }
 
 -(void)dealloc
