@@ -37,7 +37,7 @@
     if(self) 
     {
         self.chips = [DisplayContainer container];
-        self.offset = [AnimatedFloat withValue:1];
+        self.offset = [AnimatedFloat withValue:0];
     }
      
     return self;
@@ -61,6 +61,8 @@
 
 -(void)drawChips
 { 
+    self.offset = [AnimatedFloat withValue:1];
+    
     for(GLChip* chip in self.chips.objects) 
     {   
         chip.location = Vector3DMake(6 - 3 * (chip.chipNumber - self.offset.value), 0, -4.3);
