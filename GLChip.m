@@ -24,14 +24,17 @@
 #pragma mark -
 #pragma mark INIT
 
--(id)initWithChipNumber:(int)chipNumber
++(GLChip*)chip
+{
+    return [[[GLChip alloc] init] autorelease];
+}
+
+-(id)init
 {
     self = [super init];
     
     if(self) 
-    {
-        _chipNumber = chipNumber;
-        
+    {        
         chipSize = Vector2DMake(131.0 / 1024.0, 131.0 / 1024.0);
         
         chipOffsets[0]   = Vector2DMake(  0.0 / 1024.0,   0.0 / 1024.0); // 1

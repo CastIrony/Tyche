@@ -35,7 +35,8 @@
 @property (nonatomic, assign) GLfloat         markerOpacity;
 @property (nonatomic, assign) GLfloat         opacity;
 
--(id)initWithChipNumber:(int)chipNumber;
++(GLChip*)chip;
+
 -(void)generateMesh;
 -(void)draw;
 -(void)drawShadow;

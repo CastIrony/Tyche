@@ -201,17 +201,7 @@
     //[self.menuLayerController pushMenu:menu forKey:@"main"];
     
     [self.menuLayerController pushMenuLayer:[MenuControllerMain withRenderer:self] forKey:@"main"];
-    
-    { GLChip* chip = [[[GLChip alloc] initWithChipNumber:0] autorelease]; chip.renderer = self; [self.chipGroup.chips setObject:chip forKey:@"1"]; }
-    { GLChip* chip = [[[GLChip alloc] initWithChipNumber:1] autorelease]; chip.renderer = self; [self.chipGroup.chips setObject:chip forKey:@"5"]; }
-    { GLChip* chip = [[[GLChip alloc] initWithChipNumber:2] autorelease]; chip.renderer = self; [self.chipGroup.chips setObject:chip forKey:@"10"]; }
-    { GLChip* chip = [[[GLChip alloc] initWithChipNumber:3] autorelease]; chip.renderer = self; [self.chipGroup.chips setObject:chip forKey:@"25"]; }
-    { GLChip* chip = [[[GLChip alloc] initWithChipNumber:4] autorelease]; chip.renderer = self; [self.chipGroup.chips setObject:chip forKey:@"100"]; }
-    { GLChip* chip = [[[GLChip alloc] initWithChipNumber:5] autorelease]; chip.renderer = self; [self.chipGroup.chips setObject:chip forKey:@"500"]; }
-    { GLChip* chip = [[[GLChip alloc] initWithChipNumber:6] autorelease]; chip.renderer = self; [self.chipGroup.chips setObject:chip forKey:@"1000"]; }
-    { GLChip* chip = [[[GLChip alloc] initWithChipNumber:7] autorelease]; chip.renderer = self; [self.chipGroup.chips setObject:chip forKey:@"2500"]; }
-    { GLChip* chip = [[[GLChip alloc] initWithChipNumber:8] autorelease]; chip.renderer = self; [self.chipGroup.chips setObject:chip forKey:@"10000"]; }
-    
+
     {
         TextControllerCredits* textController = [[[TextControllerCredits alloc] init] autorelease];
         
