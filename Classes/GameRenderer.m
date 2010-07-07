@@ -388,6 +388,8 @@
     for(NSValue* key in self.touchedObjects.allKeys) 
     {
         //NSValue* key = [NSValue valueWithPointer:touch];
+
+        UITouch* touch = [key pointerValue];
         
         id<Touchable> object = [self.touchedObjects objectForKey:key];
         
