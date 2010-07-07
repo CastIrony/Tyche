@@ -35,6 +35,7 @@
 #import "TextureController.h"
 #import "MenuControllerJoinGame.h"
 #import "MenuControllerMain.h"
+#import "DisplayContainer.h"
 
 @implementation GameRenderer
 
