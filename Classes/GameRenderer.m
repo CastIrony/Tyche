@@ -57,6 +57,7 @@
 @synthesize betLabel            = _betLabel;
 @synthesize betItems            = _betItems;
 @synthesize lightness           = _lightness;
+@synthesize work                = _work;
 
 -(id)init
 {
@@ -388,6 +389,8 @@
 
     [_context presentRenderbuffer:GL_RENDERBUFFER_OES];
 
+    if(self.work) { self.work(); self.work = nil; }
+    
     TinyProfilerLog();
 }
 
@@ -528,8 +531,6 @@
 
 -(void)touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event
 {   
-    runLater(^{
-        
     TRANSACTION_BEGIN
     {
         glRotatef(self.camera.rollAngle.value, 0.0f, 0.0f, 1.0f);   
@@ -577,38 +578,34 @@
             }
         }
     }
-        TRANSACTION_END
-    });
+    TRANSACTION_END
 }
 
 -(void)touchesMoved:(NSSet*)touches withEvent:(UIEvent*)event
 {    
-    runLater(^{
-        
-    for(UITouch* touch in touches) 
-    {
-        NSValue* key = [NSValue valueWithPointer:touch];
-        
-        NSValue* location = [self.touchedLocations objectForKey:key];
-        
-        id<Touchable> object = [self.touchedObjects objectForKey:key];
-        
-        if(object)
+    self.work = 
+    ^{
+        for(UITouch* touch in touches) 
         {
-            CGPoint pointFrom = [location CGPointValue];
-            CGPoint pointTo   = [touch locationInView:touch.view];
+            NSValue* key = [NSValue valueWithPointer:touch];
             
-            [object handleTouchMoved:touch fromPoint:pointFrom toPoint:pointTo];
-        }
-    }   
-        
+            NSValue* location = [self.touchedLocations objectForKey:key];
+            
+            id<Touchable> object = [self.touchedObjects objectForKey:key];
+            
+            if(object)
+            {
+                CGPoint pointFrom = [location CGPointValue];
+                CGPoint pointTo   = [touch locationInView:touch.view];
+                
+                [object handleTouchMoved:touch fromPoint:pointFrom toPoint:pointTo];
+            }
+        }   
     });
 }
 
 -(void)touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event
-{   
-//    runLater(^{
-        
+{           
     for(UITouch* touch in touches) 
     {
         NSValue* key = [NSValue valueWithPointer:touch];
@@ -628,8 +625,6 @@
             [self.touchedObjects removeObjectForKey:key];
         }
     }
-        
-//    });
 }
 
 -(void)dealloc

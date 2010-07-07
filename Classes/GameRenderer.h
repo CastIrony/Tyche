@@ -50,6 +50,8 @@
 @property (nonatomic, retain) NSMutableDictionary* betItems;
 @property (nonatomic, retain) AnimatedFloat*       lightness;
 
+@property (nonatomic, copy) simpleBlock work;
+
 -(BOOL)resizeFromLayer:(CAEAGLLayer*)layer;
 -(void)load;
 -(void)draw;
