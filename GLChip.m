@@ -117,7 +117,7 @@
     
     GLfloat lightness = clipFloat(1.0 - 0.06 * distance, 0.3, 1.0) * self.renderer.lightness.value;
     
-    NSLog(@"%f5", self.renderer.lightness.value);
+    NSLog(@"%X %X %X", (uint)self, (uint)self.renderer, (uint)self.renderer.lightness);
     
     for(int chipCounter = 0; chipCounter <= stackCount; chipCounter++) 
     {
