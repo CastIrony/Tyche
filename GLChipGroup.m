@@ -61,7 +61,7 @@
 
 -(void)drawChips
 { 
-    self.offset = [AnimatedFloat withValue:1];
+    self.offset = [AnimatedFloat withValue:0.5];
     
     for(GLChip* chip in self.chips.objects) 
     {   
