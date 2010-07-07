@@ -198,7 +198,7 @@
 {    
     if(within(self.collapsed.value, 0, 0.001))
     {
-        self.offset = [AnimatedFloat withValue:self.initialOffset + (pointTo.x - pointFrom.x) / -320.0];
+        self.offset = [AnimatedFloat withStartValue:self.offset.value endValue:self.initialOffset + (pointTo.x - pointFrom.x) / -320.0 forTime:0.1];
     }
 }
 
