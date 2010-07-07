@@ -444,3 +444,18 @@
 }
 
 @end
+
+@implementation GLChip (Killable)
+
+@dynamic isDead;
+@dynamic isAlive;
+
+-(BOOL)isAlive { return YES; }
+-(BOOL)isDead  { return NO; }
+
+-(void)killWithDisplayContainer:(DisplayContainer*)container andKey:(id)key
+{
+    return;
+}
+
+@end
