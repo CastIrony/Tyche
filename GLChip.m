@@ -163,10 +163,10 @@
             stackTexture[offsetTexture++] = Vector2DMake(1.0 * chipSize.u + shadingOffset.u, 1.0 * chipSize.v + shadingOffset.v);
             stackTexture[offsetTexture++] = Vector2DMake(0.0 * chipSize.u + shadingOffset.u, 1.0 * chipSize.v + shadingOffset.v);
             
-            stackColors[offsetColors++] = Color3DMake(self.opacity * lightness, self.opacity * lightness, self.opacity * lightness, self.opacity * lightness);
-            stackColors[offsetColors++] = Color3DMake(self.opacity * lightness, self.opacity * lightness, self.opacity * lightness, self.opacity * lightness);
-            stackColors[offsetColors++] = Color3DMake(self.opacity * lightness, self.opacity * lightness, self.opacity * lightness, self.opacity * lightness);
-            stackColors[offsetColors++] = Color3DMake(self.opacity * lightness, self.opacity * lightness, self.opacity * lightness, self.opacity * lightness);
+            stackColors[offsetColors++] = Color3DMake(self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness);
+            stackColors[offsetColors++] = Color3DMake(self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness);
+            stackColors[offsetColors++] = Color3DMake(self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness);
+            stackColors[offsetColors++] = Color3DMake(self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness);
             
             stackMesh[offsetMesh++] = offsetSprite * 4 + 0;
             stackMesh[offsetMesh++] = offsetSprite * 4 + 1;
@@ -188,14 +188,14 @@
     stackVectors[offsetVector - 2].z -= 3 * (1 - fade);
     stackVectors[offsetVector - 1].z -= 3 * (1 - fade);
     
-    stackColors[offsetColors - 8] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity,             fade * self.opacity);
-    stackColors[offsetColors - 7] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity,             fade * self.opacity);
-    stackColors[offsetColors - 6] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity,             fade * self.opacity);
-    stackColors[offsetColors - 5] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity,             fade * self.opacity);
-    stackColors[offsetColors - 4] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity);
-    stackColors[offsetColors - 3] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity);
-    stackColors[offsetColors - 2] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity);
-    stackColors[offsetColors - 1] = Color3DMake(lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity, lightness * fade * self.opacity);
+    stackColors[offsetColors - 8] = Color3DMake(lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity,             fade * self.chipGroup.opacity);
+    stackColors[offsetColors - 7] = Color3DMake(lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity,             fade * self.chipGroup.opacity);
+    stackColors[offsetColors - 6] = Color3DMake(lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity,             fade * self.chipGroup.opacity);
+    stackColors[offsetColors - 5] = Color3DMake(lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity,             fade * self.chipGroup.opacity);
+    stackColors[offsetColors - 4] = Color3DMake(lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity);
+    stackColors[offsetColors - 3] = Color3DMake(lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity);
+    stackColors[offsetColors - 2] = Color3DMake(lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity);
+    stackColors[offsetColors - 1] = Color3DMake(lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity);
     
     _meshSize = offsetMesh;
 
@@ -204,7 +204,7 @@
 
 -(void)draw
 {
-    if(self.opacity < 0.0001) { return; }
+    if(self.chipGroup.opacity < 0.0001) { return; }
         
     glDisableClientState(GL_NORMAL_ARRAY);
     glEnableClientState(GL_COLOR_ARRAY);
@@ -300,7 +300,7 @@
     
     glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"chips"]);
     
-    glColor4f(self.markerOpacity, self.markerOpacity, self.markerOpacity, self.markerOpacity);
+    glColor4f(1,1,1,1);
     
     Vector3D vertexArray[4];
     
@@ -338,7 +338,7 @@
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, meshArray);    
     }
 
-    GLfloat opacity = clipFloat(countValue, 0, 1) * self.markerOpacity;
+    GLfloat opacity = clipFloat(countValue, 0, 1);
     
     GLfloat displacement = -0.15 * (countValue + 1);
     
