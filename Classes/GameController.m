@@ -517,7 +517,7 @@
 -(void)chipTouchedUpWithKey:(NSString*)key
 {
     ChipModel* chipModel = [self.player.chips objectForKey:key];
-    GLChip* chip = [self.renderer.chipGroup.chips objectForKey:key];
+    GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:key];
     
     chipModel.betCount += 1;
     
@@ -532,7 +532,7 @@
 -(void)chipTouchedDownWithKey:(NSString*)key
 {
     ChipModel* chipModel = [self.player.chips objectForKey:key];
-    GLChip* chip = [self.renderer.chipGroup.chips objectForKey:key];
+    GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:key];
     
     chipModel.betCount -= 1;
     
