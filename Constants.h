@@ -4,6 +4,7 @@
 //
 
 #define TIMESCALE                          1
+#define ZOOMSCALE                          1
 
 #define kRenderingFrequency             60.0
 #define kInactiveRenderingFrequency     10.0
