@@ -44,7 +44,7 @@
                 
 		animating = FALSE;
 		displayLinkSupported = FALSE;
-		animationFrameInterval = 3;
+		animationFrameInterval = 2;
 		displayLink = nil;
 		
 		// A system version of 3.1 or greater is required to use CADisplayLink. The NSTimer
