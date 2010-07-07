@@ -5,7 +5,6 @@
 @property (nonatomic, retain) DisplayContainer* chips;
 @property (nonatomic, retain) AnimatedFloat* offset;
 @property (nonatomic, assign) GLfloat opacity;
-@property (nonatomic, assign) GLfloat markerOpacity;
 @property (nonatomic, assign) GameRenderer* renderer;
 
 +(GLChipGroup*)chipGroupWithRenderer:(GameRenderer*)renderer;

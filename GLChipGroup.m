@@ -8,7 +8,6 @@
 @synthesize chips = _chips;
 @synthesize offset = _offset;
 @synthesize opacity = _opacity;
-@synthesize markerOpacity = _markerOpacity;
 @synthesize renderer = _renderer;
 
 +(GLChipGroup*)chipGroupWithRenderer:(GameRenderer*)renderer
@@ -60,9 +59,7 @@
 }
 
 -(void)drawChips
-{ 
-    self.offset = [AnimatedFloat withValue:0.5];
-    
+{     
     for(GLChip* chip in self.chips.objects) 
     {   
         chip.location = Vector3DMake(6 - 3 * (chip.chipNumber - self.offset.value), 0, -4.3);
