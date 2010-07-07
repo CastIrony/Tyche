@@ -340,11 +340,7 @@
         { TextController* textController = [self.textControllers objectForKey:@"status1"]; textController.opacity = 1.0/* - (cameraPitch / 90.0)*/; [textController draw]; }
         
         TinyProfilerStop(6);
-        //TinyProfilerStart(7);
-        
-        //[self.chipGroup drawMarkers];         
-        
-        //TinyProfilerStop(7);
+
         TinyProfilerStart(8);
         
         // !
@@ -388,8 +384,6 @@
     hasRendered = YES;
 
     [_context presentRenderbuffer:GL_RENDERBUFFER_OES];
-
-    if(self.work) { self.work(); self.work = nil; }
     
     TinyProfilerLog();
 }
@@ -582,26 +576,27 @@
 }
 
 -(void)touchesMoved:(NSSet*)touches withEvent:(UIEvent*)event
-{    
-    self.work = 
-    ^{
-        for(UITouch* touch in touches) 
+{   
+    TinyProfilerStart(7);
+    
+    for(UITouch* touch in touches) 
+    {
+        NSValue* key = [NSValue valueWithPointer:touch];
+        
+        id<Touchable> object = [self.touchedObjects objectForKey:key];
+        
+        if(object)
         {
-            NSValue* key = [NSValue valueWithPointer:touch];
-            
             NSValue* location = [self.touchedLocations objectForKey:key];
+
+            CGPoint pointFrom = [location CGPointValue];
+            CGPoint pointTo   = [touch locationInView:touch.view];
             
-            id<Touchable> object = [self.touchedObjects objectForKey:key];
-            
-            if(object)
-            {
-                CGPoint pointFrom = [location CGPointValue];
-                CGPoint pointTo   = [touch locationInView:touch.view];
-                
-                [object handleTouchMoved:touch fromPoint:pointFrom toPoint:pointTo];
-            }
-        }   
-    };
+            [object handleTouchMoved:touch fromPoint:pointFrom toPoint:pointTo];
+        }
+    }   
+    
+    TinyProfilerStop(7);
 }
 
 -(void)touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event
