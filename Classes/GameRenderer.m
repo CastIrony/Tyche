@@ -139,10 +139,11 @@
     
     glClearColor(0.0, 0.0, 0.0, 1.0);
     
+    self.chipGroup        = [GLChipGroup chipGroupWithRenderer:self];
+    
     self.cardGroup        = [[[GLCardGroup         alloc] init] autorelease]; 
     self.splash           = [[[GLSplash            alloc] init] autorelease]; 
     self.table            = [[[GLTable             alloc] init] autorelease]; 
-    self.chipGroup        = [[[GLChipGroup         alloc] init] autorelease];
     self.touchedObjects   = [[[NSMutableDictionary alloc] init] autorelease];
     self.touchedLocations = [[[NSMutableDictionary alloc] init] autorelease];
     self.textControllers  = [[[NSMutableDictionary alloc] init] autorelease];
