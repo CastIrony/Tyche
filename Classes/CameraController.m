@@ -113,7 +113,7 @@
 
                 self.pitchAngle  = [AnimatedFloat    withStartValue:self.pitchAngle.value  endValue:  0                       forTime:1]; 
                 self.rollAngle   = [AnimatedFloat    withStartValue:self.rollAngle.value   endValue:-90                       forTime:1]; 
-                self.position    = [AnimatedVector3D withStartValue:self.position.value    endValue:Vector3DMake(0, 2.3, -21) forTime:1];  
+                self.position    = [AnimatedVector3D withStartValue:self.position.value    endValue:Vector3DMake(0, 2.3, -210) forTime:1];  
                 self.lookAt      = [AnimatedVector3D withStartValue:self.lookAt.value      endValue:Vector3DMake(0, 2.3,   0) forTime:1];  
             }
             else 
@@ -122,7 +122,7 @@
 
                 self.pitchAngle  = [AnimatedFloat    withValue:  0];
                 self.rollAngle   = [AnimatedFloat    withValue:-90];
-                self.position    = [AnimatedVector3D withValue:Vector3DMake(0, 2.3, -21)];  
+                self.position    = [AnimatedVector3D withValue:Vector3DMake(0, 2.3, -210)];  
                 self.lookAt      = [AnimatedVector3D withValue:Vector3DMake(0, 2.3,   0)];  
             }
         }
