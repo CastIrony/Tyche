@@ -117,6 +117,8 @@
     
     GLfloat lightness = clipFloat(1.0 - 0.06 * distance, 0.3, 1.0) * self.renderer.lightness.value;
     
+    NSLog(@"%f5", self.renderer.lightness.value);
+    
     for(int chipCounter = 0; chipCounter <= stackCount; chipCounter++) 
     {
         GLfloat displacement = -0.15 * (chipCounter + 1);
@@ -167,9 +169,7 @@
             stackColors[offsetColors++] = Color3DMake(self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness);
             stackColors[offsetColors++] = Color3DMake(self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness);
             stackColors[offsetColors++] = Color3DMake(self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness);
-            
-            NSLog(@"%f5, %f5", self.chipGroup.opacity, lightness);
-            
+                        
             stackMesh[offsetMesh++] = offsetSprite * 4 + 0;
             stackMesh[offsetMesh++] = offsetSprite * 4 + 1;
             stackMesh[offsetMesh++] = offsetSprite * 4 + 2;
