@@ -45,7 +45,7 @@
 
 -(void)drawShadows
 {
-    for(GLChip* chip in self.chips.liveObjects) 
+    for(GLChip* chip in self.chips.objects) 
     { 
         [chip drawShadow]; 
     }
@@ -53,7 +53,7 @@
 
 -(void)drawMarkers
 {
-    for(GLChip* chip in self.chips.liveObjects) 
+    for(GLChip* chip in self.chips.objects) 
     {         
         [chip drawMarker]; 
     }    
@@ -61,7 +61,7 @@
 
 -(void)drawChips
 { 
-    for(GLChip* chip in self.chips.liveObjects) 
+    for(GLChip* chip in self.chips.objects) 
     {         
         [chip draw]; 
     }   
