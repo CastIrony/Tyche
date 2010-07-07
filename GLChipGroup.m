@@ -63,7 +63,7 @@
 { 
     for(GLChip* chip in self.chips.objects) 
     {   
-        chip.location = Vector3DMake(  6 - 3 * chip.chipNumber, 0, -4.3);
+        chip.location = Vector3DMake(6 - 3 * (chip.chipNumber - self.offset.value), 0, -4.3);
         
         [chip draw];
     }   
