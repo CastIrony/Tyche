@@ -18,7 +18,6 @@
 @synthesize maxCount      = _maxCount;
 @synthesize count         = _count;
 @synthesize initialCount  = _initialCount;
-@synthesize markerOpacity = _markerOpacity;
 @synthesize chipGroup     = _chipGroup;
 
 #pragma mark -
@@ -137,10 +136,10 @@
         stackTexture[offsetTexture++] = Vector2DMake(1.0 * chipSize.u + chipOffsets[self.chipNumber].u, 1.0 * chipSize.v + chipOffsets[self.chipNumber].v);
         stackTexture[offsetTexture++] = Vector2DMake(0.0 * chipSize.u + chipOffsets[self.chipNumber].u, 1.0 * chipSize.v + chipOffsets[self.chipNumber].v);
         
-        stackColors[offsetColors++] = Color3DMake(lightness * self.opacity, lightness * self.opacity, lightness * self.opacity, self.opacity);
-        stackColors[offsetColors++] = Color3DMake(lightness * self.opacity, lightness * self.opacity, lightness * self.opacity, self.opacity);
-        stackColors[offsetColors++] = Color3DMake(lightness * self.opacity, lightness * self.opacity, lightness * self.opacity, self.opacity);
-        stackColors[offsetColors++] = Color3DMake(lightness * self.opacity, lightness * self.opacity, lightness * self.opacity, self.opacity);
+        stackColors[offsetColors++] = Color3DMake(lightness * self.chipGroup.opacity, lightness * self.chipGroup.opacity, lightness * self.chipGroup.opacity, self.chipGroup.opacity);
+        stackColors[offsetColors++] = Color3DMake(lightness * self.chipGroup.opacity, lightness * self.chipGroup.opacity, lightness * self.chipGroup.opacity, self.chipGroup.opacity);
+        stackColors[offsetColors++] = Color3DMake(lightness * self.chipGroup.opacity, lightness * self.chipGroup.opacity, lightness * self.chipGroup.opacity, self.chipGroup.opacity);
+        stackColors[offsetColors++] = Color3DMake(lightness * self.chipGroup.opacity, lightness * self.chipGroup.opacity, lightness * self.chipGroup.opacity, self.chipGroup.opacity);
         
         stackMesh[offsetMesh++] = offsetSprite * 4 + 0;
         stackMesh[offsetMesh++] = offsetSprite * 4 + 1;
