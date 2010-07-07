@@ -28,7 +28,6 @@
     int _meshSize;
 }
 
-@property (nonatomic, assign) GameRenderer*   renderer;
 @property (nonatomic, assign) Vector3D        location;
 @property (nonatomic, retain) AnimatedFloat*  count;
 @property (nonatomic, assign) int             chipNumber;
