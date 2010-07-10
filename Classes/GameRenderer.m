@@ -356,7 +356,7 @@
         TinyProfilerStop(9);
         TinyProfilerStart(10);
         
-        [self.cardGroup drawFronts];
+        if(cameraPitch > 45) { [self.cardGroup drawFronts]; }
         
         TinyProfilerStop(10);
         TinyProfilerStart(11);
