@@ -3,7 +3,7 @@
 //  Particles
 //
 
-#define TIMESCALE                          1
+#define TIMESCALE                          3
 #define ZOOMSCALE                          1
 
 
