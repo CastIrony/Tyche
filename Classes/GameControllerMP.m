@@ -43,7 +43,7 @@
         
         [gameController update];
         
-        [gameController.renderer hideMenus];
+        [gameController.renderer.menuLayerController hideMenus];
                 
         return gameController;
     }

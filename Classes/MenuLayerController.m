@@ -36,35 +36,35 @@
 
 -(void)showMenus
 {   
-    [self.camera setMenuVisible:YES];
+    [self.renderer.camera setMenuVisible:YES];
     
-    if(self.animated) 
+    if(self.renderer.animated) 
     {
-        self.menuLayerController.hidden = [AnimatedFloat withStartValue:self.menuLayerController.hidden.value endValue:0 speed: 1];
+        self.hidden = [AnimatedFloat withStartValue:self.menuLayerController.hidden.value endValue:0 speed: 1];
         
-        self.lightness = [AnimatedFloat withStartValue:self.lightness.value endValue:0.4 forTime:1];
+        self.renderer.lightness = [AnimatedFloat withStartValue:self.lightness.value endValue:0.4 forTime:1];
     }
     else 
     {
-        self.menuLayerController.hidden = [AnimatedFloat withValue:0]; 
-        self.lightness = [AnimatedFloat withValue:0.4];
+        self.hidden = [AnimatedFloat withValue:0]; 
+        self.renderer.lightness = [AnimatedFloat withValue:0.4];
     }
 }
 
 -(void)hideMenus
 {    
-    [self.camera setMenuVisible:NO];
+    [self.renderer.camera setMenuVisible:NO];
     
-    if(self.animated) 
+    if(self.renderer.animated) 
     {
-        self.menuLayerController.hidden = [AnimatedFloat withStartValue:self.menuLayerController.hidden.value endValue:1 speed: 1]; 
+        self.hidden = [AnimatedFloat withStartValue:self.menuLayerController.hidden.value endValue:1 speed: 1]; 
         
-        self.lightness = [AnimatedFloat withStartValue:self.lightness.value endValue:1 forTime:1];
+        self.renderer.lightness = [AnimatedFloat withStartValue:self.lightness.value endValue:1 forTime:1];
     }
     else 
     {
-        self.menuLayerController.hidden = [AnimatedFloat withValue:1]; 
-        self.lightness = [AnimatedFloat withValue:1];
+        self.hidden = [AnimatedFloat withValue:1]; 
+        self.renderer.lightness = [AnimatedFloat withValue:1];
     }    
 }
 

@@ -579,11 +579,11 @@
         {
             if(self.renderer.camera.menuVisible) 
             {
-                [self.renderer hideMenus];
+                [self.renderer.menuLayerController hideMenus];
             }
             else 
             {
-                [self.renderer showMenus];
+                [self.renderer.menuLayerController showMenus];
             }
         }
 

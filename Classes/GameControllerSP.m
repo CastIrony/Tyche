@@ -42,7 +42,7 @@
         }];
 
         //TODO: refactor this into updateRendererAnimated
-        [gameController.renderer hideMenus];
+        [gameController.renderer.menuLayerController hideMenus];
         
         [gameController update];
                     
@@ -81,7 +81,7 @@
     [super newGameAndThen:nil];
     
     //TODO: refactor this into updateRendererAnimated
-    [self.renderer hideMenus];
+    [self.renderer.menuLayerController hideMenus];
     
     [self.renderer.cardGroup clearCards];
     
@@ -297,7 +297,7 @@
     {
         self.player.status = PlayerStatusShowingCards;
         
-        [self.renderer flipCardsAndThen:^{ self.player.status = PlayerStatusShownCards; [self update]; }];
+        [self.renderer.cardGroup flipCardsAndThen:^{ self.player.status = PlayerStatusShownCards; [self update]; }];
     }
     else if(self.player.status == PlayerStatusShowingCards)
     {
@@ -311,7 +311,7 @@
     {
         self.player.status = PlayerStatusReturningCards;
         
-        [self.renderer unflipCardsAndThen:
+        [self.renderer.cardGroup unflipCardsAndThen:
         ^{ 
             [self discardCards:[[self.player.cards mutableCopy] autorelease] andThen:
             ^{
