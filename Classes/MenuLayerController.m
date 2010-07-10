@@ -34,6 +34,40 @@
     return self;
 }
 
+-(void)showMenus
+{   
+    [self.camera setMenuVisible:YES];
+    
+    if(self.animated) 
+    {
+        self.menuLayerController.hidden = [AnimatedFloat withStartValue:self.menuLayerController.hidden.value endValue:0 speed: 1];
+        
+        self.lightness = [AnimatedFloat withStartValue:self.lightness.value endValue:0.4 forTime:1];
+    }
+    else 
+    {
+        self.menuLayerController.hidden = [AnimatedFloat withValue:0]; 
+        self.lightness = [AnimatedFloat withValue:0.4];
+    }
+}
+
+-(void)hideMenus
+{    
+    [self.camera setMenuVisible:NO];
+    
+    if(self.animated) 
+    {
+        self.menuLayerController.hidden = [AnimatedFloat withStartValue:self.menuLayerController.hidden.value endValue:1 speed: 1]; 
+        
+        self.lightness = [AnimatedFloat withStartValue:self.lightness.value endValue:1 forTime:1];
+    }
+    else 
+    {
+        self.menuLayerController.hidden = [AnimatedFloat withValue:1]; 
+        self.lightness = [AnimatedFloat withValue:1];
+    }    
+}
+
 -(void)pushMenuLayer:(MenuController*)menuLayer forKey:(NSString*)key
 {
     menuLayer.owner = self;

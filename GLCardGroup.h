@@ -19,6 +19,9 @@
 -(void)drawShadows;
 -(void)drawLabels;
 
+-(void)flipCardsAndThen:(simpleBlock)work;
+-(void)unflipCardsAndThen:(simpleBlock)work;
+
 -(void)layoutCards;
 -(void)makeControlPoints;
 
