@@ -331,7 +331,7 @@
 
 -(void)makeControlPoints
 {
-    //if(!self.isMeshAnimating) { return; }
+    if(!self.isMeshAnimating) { return; }
     
     Vector3D baseCorners[] = 
     {
