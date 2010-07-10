@@ -276,7 +276,7 @@
     
     self.gameController = [GameController loadWithRenderer:self];
     
-    if(!self.gameController) { [self showMenus]; }
+    if(!self.gameController) { [self.menuLayerController showMenus]; }
     
     self.animated = YES;
 }
@@ -428,7 +428,7 @@
         {
             isUpright = YES;
             
-            [self showMenus];
+            [self.menuLayerController showMenus];
             
             //NSLog(@"Orientation Upright!");
         }
@@ -443,7 +443,7 @@
         {
             isUpright = NO;
             
-            if(self.gameController) { [self hideMenus]; }
+            if(self.gameController) { [self.menuLayerController hideMenus]; }
             
             //NSLog(@"Orientation Not Upright!");
         }

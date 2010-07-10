@@ -51,13 +51,13 @@
 
 -(void)flipCardsAndThen:(simpleBlock)work
 {
-    int cardCount = self.cardGroup.cards.count;
+    int cardCount = self.cards.count;
     
-    self.camera.status = CameraStatusCardsFlipped;
+    self.renderer.camera.status = CameraStatusCardsFlipped;
     
     for(int i = 0; i < cardCount; i++)
     {
-        GLCard* card = [self.cardGroup.cards objectAtIndex:i];
+        GLCard* card = [self.cards objectAtIndex:i];
         
         card.location  = [AnimatedVector3D withStartValue:card.location.value  endValue:Vector3DMake(-4 * i + 8,   0,   0) forTime:1];
         card.angleFlip = [AnimatedFloat    withStartValue:card.angleFlip.value endValue:180                                forTime:1];
@@ -68,13 +68,13 @@
 
 -(void)unflipCardsAndThen:(simpleBlock)work
 {
-    int cardCount = self.cardGroup.cards.count;
+    int cardCount = self.cards.count;
     
-    self.camera.status = CameraStatusNormal;
+    self.renderer.camera.status = CameraStatusNormal;
     
     for(int i = 0; i < cardCount; i++)
     {
-        GLCard* card = [self.cardGroup.cards objectAtIndex:i];
+        GLCard* card = [self.cards objectAtIndex:i];
         
         card.location  = [AnimatedVector3D withStartValue:card.location.value  endValue:Vector3DMake(0,   0,   0) forTime:1];
         card.angleFlip = [AnimatedFloat    withStartValue:card.angleFlip.value endValue:0                         forTime:1];
