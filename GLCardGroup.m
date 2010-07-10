@@ -4,6 +4,7 @@
 #import "AnimatedFloat.h"
 #import "AnimatedVector3D.h"
 #import "GLCardGroup.h"
+#import "CameraController.h"
 #import "GameRenderer.h"
 
 @implementation GLCardGroup

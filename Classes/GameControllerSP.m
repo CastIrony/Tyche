@@ -14,6 +14,7 @@
 #import "AnimatedFloat.h"
 #import "AnimatedVector3D.h"
 #import "CameraController.h"
+#import "MenuLayerController.h"
 
 #import "GameControllerSP.h"
 
