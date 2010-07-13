@@ -446,7 +446,7 @@
     [self scaleWithFactor:Vector3DMake(1.0, 1.2, 1.0) fromPoint:Vector3DMake(0.0, 0.0, 0.0)];
     
     [self translateWithVector:Vector3DMake(0, -1.0 * sin(DEGREES_TO_RADIANS(self.angleFlip.value)), 0)];
-    [self translateWithVector:Vector3DMake(self.location.value, 0, -30 * (self.death.value - self.dealt.value)];
+    [self translateWithVector:Vector3DMake(self.location.value, 0, -30 * (self.death.value - self.dealt.value))];
     
     [self flattenShadow];
 
