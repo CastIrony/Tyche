@@ -8,6 +8,7 @@
 
 @dynamic numeralHigh;
 @dynamic numeralLow;
+@dynamic key;
 
 -(int)numeralHigh
 {
@@ -17,6 +18,11 @@
 -(int)numeralLow
 {
     return _numeral;
+}
+
+-(NSString*)key
+{    
+    return [NSString stringWithFormat:@"%X-%X", self.suit, self.numeral];
 }
 
 -(id)initWithSuit:(int)suit numeral:(int)numeral held:(BOOL)isHeld

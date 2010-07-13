@@ -154,6 +154,11 @@
     }
 }
 
+-(void)updateCardsWithKeys(NSArray*)keys
+{
+    
+}
+
 -(void)discardCardWithSuit:(int)suit numeral:(int)numeral afterDelay:(NSTimeInterval)delay andThen:(simpleBlock)work
 {
 //    runAfterDelay(self.renderer.animated ? delay : 0, 
@@ -192,10 +197,10 @@
 //    });
 }
 
--(void)clearCards
-{
-    self.cards = [[[NSMutableArray alloc] init] autorelease];
-}
+//-(void)clearCards
+//{
+//    self.cards = [[[NSMutableArray alloc] init] autorelease];
+//}
 
 -(void)startDragForCard:(GLCard*)card
 {

@@ -30,6 +30,7 @@
 @synthesize location   = _location;
 
 @dynamic isMeshAnimating;
+@dynamic key;
 
 -(void)dealloc
 {
@@ -59,6 +60,11 @@
 -(BOOL)isMeshAnimating
 {    
     return !self.bendFactor.hasEnded || !self.angleFlip.hasEnded || !self.angleFan.hasEnded || !self.location.hasEnded;
+}
+
+-(NSString*)key
+{    
+    return [NSString stringWithFormat:@"%X-%X", self.suit, self.numeral];
 }
 
 -(NSString*)description

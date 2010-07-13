@@ -10,6 +10,7 @@
 @property (nonatomic, readonly) int  numeralHigh;
 @property (nonatomic, readonly) int  numeralLow;
 @property (nonatomic, assign) BOOL isHeld;
+@property (nonatomic, assign) NSString* key;
 
 -(id)initWithSuit:(int)suit numeral:(int)numeral held:(BOOL)isHeld;
 

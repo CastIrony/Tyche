@@ -64,6 +64,7 @@
 @property (nonatomic, retain)   AnimatedFloat*      bendFactor;
 @property (nonatomic, retain)   AnimatedVector3D*   location;
 @property (nonatomic, readonly) BOOL                isMeshAnimating;
+@property (nonatomic, readonly) NSString*           key;
 
 -(id)initWithSuit:(int)suit numeral:(int)numeral;
 
