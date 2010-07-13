@@ -1,4 +1,5 @@
 #import "Touchable.h"
+#import "Killable.h"
 #import "GameController.h"
 
 @class GLCardGroup;
