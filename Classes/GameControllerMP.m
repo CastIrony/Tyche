@@ -54,9 +54,8 @@
     }
 }
 
--(void)newGame
+-(void)joinGameAndThen:(simpleBlock)work
 {
-    
 }
 
 @end
