@@ -156,20 +156,20 @@
 
 -(void)discardCardWithSuit:(int)suit numeral:(int)numeral afterDelay:(NSTimeInterval)delay andThen:(simpleBlock)work
 {
-    runAfterDelay(self.renderer.animated ? delay : 0, 
-    ^{
-        for(GLCard* card in self.cards)
-        {
-            if(card.suit == suit && card.numeral == numeral)
-            {
-                card.isDead = YES;
-                card.location = [AnimatedVector3D withStartValue:card.location.value endValue:Vector3DMake(0, 0, -30) speed:30];
-                card.location.onEnd = ^{ [self performSelector:@selector(clearDeadCard:) withObject:card afterDelay:TIMESCALE * 0.00]; runLater(work); };
-            }
-        }
-
-                 [self layoutCards];
-    });
+//    runAfterDelay(self.renderer.animated ? delay : 0, 
+//    ^{
+//        for(GLCard* card in self.cards.o)
+//        {
+//            if(card.suit == suit && card.numeral == numeral)
+//            {
+//                card.isDead = YES;
+//                card.location = [AnimatedVector3D withStartValue:card.location.value endValue:Vector3DMake(0, 0, -30) speed:30];
+//                card.location.onEnd = ^{ [self performSelector:@selector(clearDeadCard:) withObject:card afterDelay:TIMESCALE * 0.00]; runLater(work); };
+//            }
+//        }
+//
+//                 [self layoutCards];
+//    });
 }
 
 -(void)dealCardWithSuit:(int)suit numeral:(int)numeral held:(BOOL)isHeld afterDelay:(NSTimeInterval)delay andThen:(simpleBlock)work
