@@ -86,7 +86,12 @@
     }
 }
 
--(void)layoutCardsWithKeys:(NSArray*)keys andThen:(simpleBlock)work
+-(void)layoutCards
+{
+    
+}
+
+-(void)updateCardsWithKeys:(NSArray*)keys andThen:(simpleBlock)work
 {
     NSArray* liveKeys = [[self.cards.liveKeys copy] autorelease];
     
@@ -114,7 +119,7 @@
         }
     }
     
-    
+    [self layoutCards];
 }
 
 -(void)makeControlPoints
