@@ -94,3 +94,12 @@
 -(void)handleTouchUp:(UITouch*)touch fromPoint:(CGPoint)pointFrom toPoint:(CGPoint)pointTo;
 
 @end
+
+@interface GLMenu (Killable) <Killable>
+
+@property (nonatomic, readonly) BOOL isDead;
+@property (nonatomic, readonly) BOOL isAlive;
+
+-(void)killWithDisplayContainer:(DisplayContainer*)container andKey:(id)key;
+
+@end
