@@ -26,7 +26,7 @@
 
 -(void)setBendFactor:(GLfloat)bendFactor
 {
-    for(GLCard* card in self.cards)
+    for(GLCard* card in self.cards.liveObjects)
     {
         if(within(card.bendFactor.value, bendFactor, 0.001)) { continue; }
            
