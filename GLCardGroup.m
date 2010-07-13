@@ -6,6 +6,7 @@
 #import "GLCardGroup.h"
 #import "CameraController.h"
 #import "DisplayContainer.h"
+#import "Killable.h"
 #import "GameRenderer.h"
 
 @implementation GLCardGroup
