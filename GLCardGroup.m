@@ -211,15 +211,15 @@
 {
     if(self.draggedCard) 
     {
-        [self.cards removeObjectIdenticalTo:self.draggedCard];
-        
-        [self.cards insertObject:self.draggedCard atIndex:target];
-        
-        [self layoutCards];
-        
-        self.finalIndex = target;
-        
-        self.draggedCard.angleFan = [AnimatedFloat withValue:self.initialAngle - delta * 25 / 480];
+//        [self.cards removeObjectIdenticalTo:self.draggedCard];
+//        
+//        [self.cards insertObject:self.draggedCard atIndex:target];
+//        
+//        [self layoutCards];
+//        
+//        self.finalIndex = target;
+//        
+//        self.draggedCard.angleFan = [AnimatedFloat withValue:self.initialAngle - delta * 25 / 480];
     }
 }
 
