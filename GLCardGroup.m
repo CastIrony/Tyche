@@ -21,7 +21,7 @@
 
 -(GLfloat)bendFactor
 {
-    return [[[self.cards objectAtIndex:0] bendFactor] value];
+    return [[[self.cards.liveObjects objectAtIndex:0] bendFactor] value];
 }
 
 -(void)setBendFactor:(GLfloat)bendFactor
