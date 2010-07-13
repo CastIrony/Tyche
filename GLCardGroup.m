@@ -56,10 +56,8 @@
     
     int i = 0;
     
-    for(GLCard card in self.cards.liveObjects)
+    for(GLCard* card in self.cards.liveObjects)
     {
-        GLCard* card = [self.cards objectAtIndex:i];
-        
         card.location  = [AnimatedVector3D withStartValue:card.location.value  endValue:Vector3DMake(-4 * i + 8,   0,   0) forTime:1];
         card.angleFlip = [AnimatedFloat    withStartValue:card.angleFlip.value endValue:180                                forTime:1];
         
@@ -77,8 +75,6 @@
     
     for(GLCard card in self.cards.liveObjects)
     {
-        GLCard* card = [self.cards objectAtIndex:i];
-        
         card.location  = [AnimatedVector3D withStartValue:card.location.value  endValue:Vector3DMake(0,   0,   0) forTime:1];
         card.angleFlip = [AnimatedFloat    withStartValue:card.angleFlip.value endValue:0                         forTime:1];
         
