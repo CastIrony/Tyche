@@ -3,6 +3,7 @@
 
 @class GLCardGroup;
 @class AnimatedFloat;
+@class DisplayContainer;
 @class AnimatedVector3D;
 
 @interface GLCard : NSObject
