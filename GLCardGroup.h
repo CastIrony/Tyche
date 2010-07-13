@@ -1,5 +1,6 @@
 #import "GameController.h"
 
+@class DisplayContainer;
 @class GLCard;
 
 @interface GLCardGroup : NSObject 
