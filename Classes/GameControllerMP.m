@@ -35,13 +35,13 @@
         
         gameController.game = [GameModel withDictionary:[archive JSONValue]];
         
-        GLfloat delay = 0;
-        
-        for(CardModel* card in gameController.player.cards.reverseObjectEnumerator) 
-        {
-            [gameController.renderer.cardGroup dealCardWithSuit:card.suit numeral:card.numeral held:card.isHeld afterDelay:delay += 0.2 andThen:nil];
-        }
-        
+//        GLfloat delay = 0;
+//        
+//        for(CardModel* card in gameController.player.cards.reverseObjectEnumerator) 
+//        {
+//            [gameController.renderer.cardGroup dealCardWithSuit:card.suit numeral:card.numeral held:card.isHeld afterDelay:delay += 0.2 andThen:nil];
+//        }
+//        
         [gameController update];
         
         [gameController.renderer.menuLayerController hideMenus];

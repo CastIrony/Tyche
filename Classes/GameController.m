@@ -146,7 +146,7 @@
 -(void)newHandAndThen:(simpleBlock)work
 {
     //TODO: refactor this into updateRendererAnimated
-    [self.renderer.cardGroup clearCards];
+//    [self.renderer.cardGroup clearCards];
     
     [self.game.discard addObjectsFromArray:self.player.cards];
     
@@ -186,7 +186,7 @@
     
     for(CardModel* card in cards.reverseObjectEnumerator)
     {
-        [self.renderer.cardGroup dealCardWithSuit:card.suit numeral:card.numeral held:card.isHeld afterDelay:0.2 * i andThen:(card == lastCard ? work : nil)];
+//        [self.renderer.cardGroup dealCardWithSuit:card.suit numeral:card.numeral held:card.isHeld afterDelay:0.2 * i andThen:(card == lastCard ? work : nil)];
     
         i++;
     }
@@ -202,7 +202,7 @@
     {        
         [self.player.cards removeObject:card];
         
-        [self.renderer.cardGroup discardCardWithSuit:card.suit numeral:card.numeral afterDelay:0.2 * i andThen:(card == lastCard ? work : nil)];
+//        [self.renderer.cardGroup discardCardWithSuit:card.suit numeral:card.numeral afterDelay:0.2 * i andThen:(card == lastCard ? work : nil)];
 
         i++;
     }
