@@ -11,9 +11,6 @@
 
 @property (nonatomic, retain) SessionController* sessionController;
 
--(void)joinGameAndThen:(simpleBlock)work
-{
-    
-}
+-(void)joinGameAndThen:(simpleBlock)work;
 
 @end
