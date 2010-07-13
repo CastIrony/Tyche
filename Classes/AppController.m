@@ -46,7 +46,7 @@
 
 -(void)labelTouchedWithKey:(NSString*)key
 {
-    if([key isEqual:@"new_game"])
+    if([key isEqualToString:@"new_game"])
     {
         self.renderer.gameController = [[[GameControllerSP alloc] init] autorelease];
         
@@ -55,13 +55,22 @@
         [self.renderer.gameController newGameAndThen:nil];
     }
 
-    if([key isEqual:@"new_multiplayer"])
+    if([key isEqualToString:@"new_multiplayer"])
     {
         self.renderer.gameController = [[[GameControllerMP alloc] init] autorelease];
         
         self.renderer.gameController.renderer = self.renderer;
         
         [self.renderer.gameController newGameAndThen:nil];
+    }
+    
+    if([key isEqualToString:@"join_multiplayer"])
+    {
+        self.renderer.gameController = [[[GameControllerMP alloc] init] autorelease];
+        
+        self.renderer.gameController.renderer = self.renderer;
+        
+        [self.renderer.gameController joinGameAndThen:nil];
     }
 }
 

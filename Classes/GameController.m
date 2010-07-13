@@ -44,7 +44,7 @@
     GameController* gameController = nil;
     
     if(!gameController) { gameController = [GameControllerSP loadWithRenderer:renderer]; }
-    //if(!gameController) { gameController = [GameControllerMP loadWithRenderer:renderer]; }
+    if(!gameController) { gameController = [GameControllerMP loadWithRenderer:renderer]; }
         
     return gameController;
 }

@@ -280,7 +280,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		080E96DDFE201D6D7F000001 /* Other Controllers */ = {
+		080E96DDFE201D6D7F000001 /* Misc Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				1D3623240D0F684500981E51 /* AppController.h */,
@@ -292,7 +292,7 @@
 				C55AA1161165B8370013BF3D /* TextureController.h */,
 				C55AA1171165B8370013BF3D /* TextureController.m */,
 			);
-			name = "Other Controllers";
+			name = "Misc Controllers";
 			path = Classes;
 			sourceTree = "<group>";
 		};
@@ -308,14 +308,14 @@
 			isa = PBXGroup;
 			children = (
 				C5415255108415B800D4E1A9 /* Libraries */,
-				C5415254108415AD00D4E1A9 /* Models */,
+				080E96DDFE201D6D7F000001 /* Misc Controllers */,
 				C555DA2210E9BE1300E3D448 /* Game Controllers */,
 				C5A70226114DFA2C001F67F2 /* Session Controllers */,
 				C555DA2310E9BE3500E3D448 /* Text Controllers */,
 				C55AA0D8116590410013BF3D /* Menu Controllers */,
-				080E96DDFE201D6D7F000001 /* Other Controllers */,
 				C5C3755610C8B030009F1F22 /* Views */,
 				C54152531084157C00D4E1A9 /* OpenGL Objects */,
+				C5415254108415AD00D4E1A9 /* Models */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,

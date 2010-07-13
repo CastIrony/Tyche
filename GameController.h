@@ -6,8 +6,6 @@
 
 @interface GameController : NSObject
 {
-    GameRenderer* _renderer;
-    GameModel*    _game;
     NSDictionary* _cardLongNames;
     NSDictionary* _cardShortNames;
     NSArray*      _rankLevels;
@@ -23,8 +21,8 @@
 
 -(void)saveData;
 
--(void)newDeckAndThen:(simpleBlock)work;
 -(void)newGameAndThen:(simpleBlock)work;
+-(void)newDeckAndThen:(simpleBlock)work;
 -(void)newHandAndThen:(simpleBlock)work;
 -(void)drawCardsAndThen:(simpleBlock)work;
 
@@ -45,7 +43,6 @@
 -(void)chipTouchedDownWithKey:(NSString*)key;
 -(void)cardFrontTouched:(int)card;
 -(void)cardBackTouched:(int)card;
-
 -(void)emptySpaceTouched;
 
 @end

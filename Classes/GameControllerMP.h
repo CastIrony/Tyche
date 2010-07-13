@@ -8,10 +8,12 @@
 @class SessionController;
 
 @interface GameControllerMP : GameController
-{
-    SessionController* _sessionController;
-}
 
 @property (nonatomic, retain) SessionController* sessionController;
+
+-(void)joinGameAndThen:(simpleBlock)work
+{
+    
+}
 
 @end
