@@ -70,7 +70,7 @@
         
         self.renderer.gameController.renderer = self.renderer;
         
-        [self.renderer.gameController joinGameAndThen:nil];
+        //[self.renderer.gameController joinGameAndThen:nil];
     }
 }
 
