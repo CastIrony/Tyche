@@ -546,15 +546,15 @@
 
 -(void)cardFrontTouched:(int)card
 { 
-    CardModel* cardModel = [self.player.cards             objectAtIndex:card];
-    GLCard*    cardView  = [self.renderer.cardGroup.cards objectAtIndex:card];
-    
-    cardModel.isHeld = !cardModel.isHeld;
-    
-    //TODO: refactor this into updateRendererAnimated
-    cardView.isHeld = [AnimatedFloat withStartValue:cardView.isHeld.value endValue:cardModel.isHeld speed:4.0];
-    
-    [self saveData];
+//    CardModel* cardModel = [self.player.cards             objectAtIndex:card];
+//    GLCard*    cardView  = [self.renderer.cardGroup.cards objectAtIndex:card];
+//    
+//    cardModel.isHeld = !cardModel.isHeld;
+//    
+//    //TODO: refactor this into updateRendererAnimated
+//    cardView.isHeld = [AnimatedFloat withStartValue:cardView.isHeld.value endValue:cardModel.isHeld speed:4.0];
+//    
+//    [self saveData];
 }
 
 -(void)cardBackTouched:(int)card 
