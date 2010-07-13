@@ -17,17 +17,17 @@
 @synthesize renderer    = _renderer;
 @synthesize cardGroup   = _cardGroup;
 @synthesize angleJitter = _angleJitter;
-@synthesize isDead      = _isDead;
 @synthesize suit        = _suit;
 @synthesize numeral     = _numeral;
 @synthesize position    = _position;
-
+@synthesize location   = _location;
+@synthesize dealt      = _dealt;
+@synthesize death      = _death;
 @synthesize isHeld     = _isHeld;
 @synthesize isSelected = _isSelected;
 @synthesize bendFactor = _bendFactor;
 @synthesize angleFlip  = _angleFlip;
 @synthesize angleFan   = _angleFan;
-@synthesize location   = _location;
 
 @dynamic isMeshAnimating;
 @dynamic key;
@@ -72,6 +72,16 @@
     return [NSString stringWithFormat:@"Card with suit:%d numeral:%d", self.suit, self.numeral];
 }
 
++(GLCard*)cardWithKey:(NSString*)keys
+{
+    NSArray* components = [key componentsSeparatedByString:@"-"];
+    
+    int suit    = [[components objectAtIndex:0] intValue];    
+    int numeral = [[components objectAtIndex:1] intValue];
+    
+    return [GLCard initWithSuit:suit numeral:numeral];
+}
+    
 -(id)initWithSuit:(int)suit numeral:(int)numeral
 {
     self = [super init];
@@ -157,12 +167,21 @@
     return self;
 }
 
+-(BOOL)isEqual:(id)object
+{
+    GLCard* card = (GLCard*)object;
+    
+    if(card.suit    != self.suit)    { return NO; }
+    if(card.numeral != self.numeral) { return NO; }
+    
+    return YES;
+}
+
 -(void)drawFront
 {    
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         
-    GLfloat held = self.isHeld.value     * 0.5 + 0.5;
-        
+    GLfloat held = self.isHeld.value * 0.5 + 0.5;
     GLfloat lightness = self.renderer.lightness.value;
     
     glColor4f(lightness, lightness, lightness, held);

@@ -56,15 +56,18 @@
 @property (nonatomic, assign)   int                 numeral;
 @property (nonatomic, assign)   int                 position;
 @property (nonatomic, assign)   GLfloat             angleJitter;
-@property (nonatomic, assign)   BOOL                isDead;
+@property (nonatomic, retain)   AnimatedFloat*      location;
+@property (nonatomic, retain)   AnimatedFloat*      dealt;
+@property (nonatomic, retain)   AnimatedFloat*      death;
 @property (nonatomic, retain)   AnimatedFloat*      isHeld;
 @property (nonatomic, retain)   AnimatedFloat*      isSelected;
 @property (nonatomic, retain)   AnimatedFloat*      angleFlip;
 @property (nonatomic, retain)   AnimatedFloat*      angleFan;
 @property (nonatomic, retain)   AnimatedFloat*      bendFactor;
-@property (nonatomic, retain)   AnimatedVector3D*   location;
 @property (nonatomic, readonly) BOOL                isMeshAnimating;
 @property (nonatomic, readonly) NSString*           key;
+
++(GLCard*)cardWithKey:(NSString*)keys;
 
 -(id)initWithSuit:(int)suit numeral:(int)numeral;
 

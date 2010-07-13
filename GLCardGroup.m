@@ -85,33 +85,35 @@
     }
 }
 
--(void)layoutCards
+-(void)layoutCardsWithKeys:(NSArray*)keys andThen:(simpleBlock)work
 {
-    int cardCount = 0;
+    NSArray* liveKeys = [[self.menus.liveKeys copy] autorelease];
     
-    for(GLCard* card in self.cards) 
-    {   
-        if(card.isDead) { continue; }
+    int i = 0;
+    
+    for(NSString* key in keys)
+    {
+        if([self.cards.liveKeys containsObject:key])
+        {
+            [self.menus moveKey:key toIndex:i];
+        }
+        else
+        {
+            [self.menus insertObject:[GLCard cardWithKey:key] withKey:key atIndex:i];
+        }
         
-        cardCount++;
+        i++;
     }
     
-    GLfloat fan = -15 + 5 * cardCount;
-    
-    GLfloat position = 0;
-    
-    for(GLCard* card in self.cards) 
-    {   
-        if(card.isDead) { continue; }
-        
-        card.position = position;
-        
-        card.angleFan = [AnimatedFloat withStartValue:card.angleFan.value endValue:fan forTime:0.15];
-        
-        position++;
-        
-        fan -= 5;
+    for(NSString* key in liveKeys)
+    {
+        if(!keys containsObject:key)
+        {
+            [self.menus liveObjectForKey:key killWithDisplayContainer:self.menus andKey:key];
+        }
     }
+    
+    
 }
 
 -(void)makeControlPoints
@@ -152,11 +154,6 @@
     { 
         [card drawLabel]; 
     }
-}
-
--(void)updateCardsWithKeys:(NSArray*)keys
-{
-    
 }
 
 -(void)discardCardWithSuit:(int)suit numeral:(int)numeral afterDelay:(NSTimeInterval)delay andThen:(simpleBlock)work
