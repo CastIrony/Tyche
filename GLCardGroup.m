@@ -59,8 +59,8 @@
     
     for(GLCard* card in self.cards.liveObjects)
     {
-        card.location  = [AnimatedVector3D withStartValue:card.location.value  endValue:Vector3DMake(-4 * i + 8,   0,   0) forTime:1];
-        card.angleFlip = [AnimatedFloat    withStartValue:card.angleFlip.value endValue:180                                forTime:1];
+        card.location  = [AnimatedFloat withStartValue:card.location.value  endValue:(-4 * i + 8) forTime:1];
+        card.angleFlip = [AnimatedFloat withStartValue:card.angleFlip.value endValue:180          forTime:1];
         
         if(i == 0) { card.angleFlip.onEnd = work; }
         
@@ -76,8 +76,8 @@
     
     for(GLCard* card in self.cards.liveObjects)
     {
-        card.location  = [AnimatedVector3D withStartValue:card.location.value  endValue:Vector3DMake(0,   0,   0) forTime:1];
-        card.angleFlip = [AnimatedFloat    withStartValue:card.angleFlip.value endValue:0                         forTime:1];
+        card.location  = [AnimatedFloat withStartValue:card.location.value  endValue:0 forTime:1];
+        card.angleFlip = [AnimatedFloat withStartValue:card.angleFlip.value endValue:0 forTime:1];
         
         if(i == 0) { card.angleFlip.onEnd = work; }
         
@@ -87,7 +87,7 @@
 
 -(void)layoutCardsWithKeys:(NSArray*)keys andThen:(simpleBlock)work
 {
-    NSArray* liveKeys = [[self.menus.liveKeys copy] autorelease];
+    NSArray* liveKeys = [[self.cards.liveKeys copy] autorelease];
     
     int i = 0;
     
@@ -95,11 +95,11 @@
     {
         if([self.cards.liveKeys containsObject:key])
         {
-            [self.menus moveKey:key toIndex:i];
+            [self.cards moveKey:key toIndex:i];
         }
         else
         {
-            [self.menus insertObject:[GLCard cardWithKey:key] withKey:key atIndex:i];
+            [self.cards insertObject:[GLCard cardWithKey:key] withKey:key atIndex:i];
         }
         
         i++;
@@ -107,9 +107,9 @@
     
     for(NSString* key in liveKeys)
     {
-        if(!keys containsObject:key)
+        if(![keys containsObject:key])
         {
-            [self.menus liveObjectForKey:key killWithDisplayContainer:self.menus andKey:key];
+            [self.cards liveObjectForKey:key killWithDisplayContainer:self.menus andKey:key];
         }
     }
     
