@@ -85,7 +85,7 @@
     //TODO: refactor this into updateRendererAnimated
     [self.renderer.menuLayerController hideMenus];
     
-    [self.renderer.cardGroup clearCards];
+//    [self.renderer.cardGroup clearCards];
     
     self.game = [[[GameModel alloc] init] autorelease];
     
