@@ -95,7 +95,7 @@
 
 @end
 
-@interface GLMenu (Killable) <Killable>
+@interface GLCard (Killable) <Killable>
 
 @property (nonatomic, readonly) BOOL isDead;
 @property (nonatomic, readonly) BOOL isAlive;
