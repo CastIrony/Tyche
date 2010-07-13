@@ -7,6 +7,7 @@
 #import "AnimatedFloat.h"
 #import "AnimatedVector3D.h"
 #import "GameRenderer.h"
+#import "DisplayContainer.h"
 #import "TextureController.h"
 #import "CameraController.h"
 
