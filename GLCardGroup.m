@@ -110,7 +110,7 @@
     {
         if(![keys containsObject:key])
         {
-            [self.cards liveObjectForKey:key killWithDisplayContainer:self.cards andKey:key];
+            [[self.cards liveObjectForKey:key] killWithDisplayContainer:self.cards andKey:key];
         }
     }
     
