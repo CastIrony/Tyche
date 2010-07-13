@@ -116,7 +116,7 @@
 
 -(void)makeControlPoints
 {
-    for(GLCard* card in self.cards) 
+    for(GLCard* card in self.cards.objects) 
     {         
         [card makeControlPoints]; 
     }
@@ -124,7 +124,7 @@
 
 -(void)drawFronts
 {
-    for(GLCard* card in self.cards) 
+    for(GLCard* card in self.cards.objects) 
     { 
         [card drawFront]; 
     }
