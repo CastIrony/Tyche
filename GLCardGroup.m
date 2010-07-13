@@ -122,11 +122,6 @@
     }
 }
 
--(void)clearDeadCard:(GLCard*)item
-{
-    [self.cards removeObject:item];   
-}
-
 -(void)drawFronts
 {
     for(GLCard* card in self.cards) 
