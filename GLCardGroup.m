@@ -5,6 +5,7 @@
 #import "AnimatedVector3D.h"
 #import "GLCardGroup.h"
 #import "CameraController.h"
+#import "DisplayContainer.h"
 #import "GameRenderer.h"
 
 @implementation GLCardGroup
