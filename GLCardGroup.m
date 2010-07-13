@@ -52,11 +52,11 @@
 
 -(void)flipCardsAndThen:(simpleBlock)work
 {
-    int cardCount = self.cards.count;
-    
     self.renderer.camera.status = CameraStatusCardsFlipped;
     
-    for(int i = 0; i < cardCount; i++)
+    int i = 0;
+    
+    for(GLCard card in self.cards.liveObjects)
     {
         GLCard* card = [self.cards objectAtIndex:i];
         
@@ -64,16 +64,18 @@
         card.angleFlip = [AnimatedFloat    withStartValue:card.angleFlip.value endValue:180                                forTime:1];
         
         if(i == 0) { card.angleFlip.onEnd = work; }
+        
+        i++;
     }
 }
 
 -(void)unflipCardsAndThen:(simpleBlock)work
-{
-    int cardCount = self.cards.count;
-    
+{    
     self.renderer.camera.status = CameraStatusNormal;
     
-    for(int i = 0; i < cardCount; i++)
+    int i = 0;
+    
+    for(GLCard card in self.cards.liveObjects)
     {
         GLCard* card = [self.cards objectAtIndex:i];
         
@@ -81,6 +83,8 @@
         card.angleFlip = [AnimatedFloat    withStartValue:card.angleFlip.value endValue:0                         forTime:1];
         
         if(i == 0) { card.angleFlip.onEnd = work; }
+        
+        i++;
     }
 }
 
@@ -136,7 +140,7 @@
 
 -(void)drawBacks
 {
-    for(GLCard* card in self.cards.reverseObjectEnumerator) 
+    for(GLCard* card in self.cards.objects.reverseObjectEnumerator) 
     { 
         [card drawBack]; 
     }
@@ -144,7 +148,7 @@
 
 -(void)drawShadows
 {
-    for(GLCard* card in self.cards) 
+    for(GLCard* card in self.cards.objects) 
     { 
         [card drawShadow]; 
     }
@@ -152,7 +156,7 @@
 
 -(void)drawLabels
 {
-    for(GLCard* card in self.cards) 
+    for(GLCard* card in self.cards.objects) 
     { 
         [card drawLabel]; 
     }
@@ -172,28 +176,28 @@
             }
         }
 
-        [self layoutCards];
+                 [self layoutCards];
     });
 }
 
 -(void)dealCardWithSuit:(int)suit numeral:(int)numeral held:(BOOL)isHeld afterDelay:(NSTimeInterval)delay andThen:(simpleBlock)work
 {
-    runAfterDelay(self.renderer.animated ? delay : 0, 
-    ^{
-        GLCard* card = [[[GLCard alloc] initWithSuit:suit numeral:numeral] autorelease];
-        
-        [self.cards insertObject:card atIndex:0];
-        
-        card.renderer       = self.renderer;
-        card.cardGroup      = self;
-        card.position       = self.cards.count;
-        card.angleJitter    = randomFloat(-3.0, 3.0);
-        card.isHeld         = [AnimatedFloat withValue:isHeld];
-        card.location       = self.renderer.animated ? [AnimatedVector3D withStartValue:Vector3DMake(0, 0, -30) endValue:Vector3DMake(0, 0, 0) speed:30] : [AnimatedVector3D withValue:Vector3DMake(0, 0, 0)];
-        card.location.onEnd = work; 
-
-        [self layoutCards];
-    });
+//    runAfterDelay(self.renderer.animated ? delay : 0, 
+//    ^{
+//        GLCard* card = [[[GLCard alloc] initWithSuit:suit numeral:numeral] autorelease];
+//        
+//        [self.cards insertObject:card atIndex:0];
+//        
+//        card.renderer       = self.renderer;
+//        card.cardGroup      = self;
+//        card.position       = self.cards.count;
+//        card.angleJitter    = randomFloat(-3.0, 3.0);
+//        card.isHeld         = [AnimatedFloat withValue:isHeld];
+//        card.location       = self.renderer.animated ? [AnimatedVector3D withStartValue:Vector3DMake(0, 0, -30) endValue:Vector3DMake(0, 0, 0) speed:30] : [AnimatedVector3D withValue:Vector3DMake(0, 0, 0)];
+//        card.location.onEnd = work; 
+//
+//        [self layoutCards];
+//    });
 }
 
 -(void)clearCards
