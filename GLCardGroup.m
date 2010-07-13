@@ -40,7 +40,7 @@
     
     if(self)
     {   
-        _cards = [[NSMutableArray alloc] init];
+        _cards = [[DisplayContainer alloc] init];
         
         _initialIndex = -1;
         _finalIndex   = -1;
