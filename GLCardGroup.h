@@ -3,16 +3,16 @@
 @class GLCard;
 
 @interface GLCardGroup : NSObject 
-{
-}
 
-@property (nonatomic, assign) GameRenderer*   renderer;
-@property (nonatomic, retain) NSMutableArray* cards;
-@property (nonatomic, retain) GLCard*         draggedCard;
-@property (nonatomic, assign) GLfloat         initialAngle;
-@property (nonatomic, assign) int             initialIndex;
-@property (nonatomic, assign) int             finalIndex;
-@property (nonatomic, assign) GLfloat         bendFactor;
+@property (nonatomic, assign) GameRenderer*     renderer;
+@property (nonatomic, assign) GLfloat           bendFactor;
+
+@property (nonatomic, retain) DisplayContainer* cards;
+
+@property (nonatomic, retain) GLCard*           draggedCard;
+@property (nonatomic, assign) GLfloat           initialAngle;
+@property (nonatomic, assign) int               initialIndex;
+@property (nonatomic, assign) int               finalIndex;
 
 -(void)drawFronts;
 -(void)drawBacks;
