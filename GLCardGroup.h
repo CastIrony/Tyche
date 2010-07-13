@@ -23,13 +23,10 @@
 -(void)flipCardsAndThen:(simpleBlock)work;
 -(void)unflipCardsAndThen:(simpleBlock)work;
 
+
+
 -(void)layoutCards;
 -(void)makeControlPoints;
-
--(void)discardCardWithSuit:(int)suit numeral:(int)numeral                   afterDelay:(NSTimeInterval)delay andThen:(simpleBlock)work;
--(void)dealCardWithSuit:   (int)suit numeral:(int)numeral held:(BOOL)isHeld afterDelay:(NSTimeInterval)delay andThen:(simpleBlock)work;
-
--(void)clearCards;
 
 -(void)startDragForCard:(GLCard*)card;
 -(void)dragCardToTarget:(int)target withDelta:(GLfloat)delta;
