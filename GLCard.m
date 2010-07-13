@@ -628,8 +628,8 @@
 {
     self.death = [AnimatedFloat withStartValue:self.death.value endValue:1 forTime:1];
     
-    self.death.onStart = ^{ [container pruneLiveForKey:key]; [self.owner layoutCards]; };    
-    self.death.onEnd   = ^{ [container pruneDeadForKey:key]; [self.owner layoutCards]; };
+    self.death.onStart = ^{ [container pruneLiveForKey:key]; [self.cardGroup layoutCards]; };    
+    self.death.onEnd   = ^{ [container pruneDeadForKey:key]; [self.cardGroup layoutCards]; };
 }
 
 @end
