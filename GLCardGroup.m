@@ -176,49 +176,6 @@
     }
 }
 
--(void)discardCardWithSuit:(int)suit numeral:(int)numeral afterDelay:(NSTimeInterval)delay andThen:(simpleBlock)work
-{
-//    runAfterDelay(self.renderer.animated ? delay : 0, 
-//    ^{
-//        for(GLCard* card in self.cards.o)
-//        {
-//            if(card.suit == suit && card.numeral == numeral)
-//            {
-//                card.isDead = YES;
-//                card.location = [AnimatedVector3D withStartValue:card.location.value endValue:Vector3DMake(0, 0, -30) speed:30];
-//                card.location.onEnd = ^{ [self performSelector:@selector(clearDeadCard:) withObject:card afterDelay:TIMESCALE * 0.00]; runLater(work); };
-//            }
-//        }
-//
-//                 [self layoutCards];
-//    });
-}
-
--(void)dealCardWithSuit:(int)suit numeral:(int)numeral held:(BOOL)isHeld afterDelay:(NSTimeInterval)delay andThen:(simpleBlock)work
-{
-//    runAfterDelay(self.renderer.animated ? delay : 0, 
-//    ^{
-//        GLCard* card = [[[GLCard alloc] initWithSuit:suit numeral:numeral] autorelease];
-//        
-//        [self.cards insertObject:card atIndex:0];
-//        
-//        card.renderer       = self.renderer;
-//        card.cardGroup      = self;
-//        card.position       = self.cards.count;
-//        card.angleJitter    = randomFloat(-3.0, 3.0);
-//        card.isHeld         = [AnimatedFloat withValue:isHeld];
-//        card.location       = self.renderer.animated ? [AnimatedVector3D withStartValue:Vector3DMake(0, 0, -30) endValue:Vector3DMake(0, 0, 0) speed:30] : [AnimatedVector3D withValue:Vector3DMake(0, 0, 0)];
-//        card.location.onEnd = work; 
-//
-//        [self layoutCards];
-//    });
-}
-
-//-(void)clearCards
-//{
-//    self.cards = [[[NSMutableArray alloc] init] autorelease];
-//}
-
 -(void)startDragForCard:(GLCard*)card
 {
     if(self.draggedCard) { return; }
