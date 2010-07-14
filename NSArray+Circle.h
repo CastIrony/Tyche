@@ -7,4 +7,6 @@
 -(id)objectBefore:(id)object commonWithArray:(NSArray*)array;
 -(id)objectAfter:(id)object commonWithArray:(NSArray*)array;
 
+-(NSArray*)map:(id(^)(id obj))block;
+
 @end
