@@ -88,14 +88,16 @@
 
 -(void)layoutCards
 {
-    GLfloat fan = -15 + 5 * cardCount;
+    
+    
+    GLfloat fan = -15 + 5 * self.cards.liveObjects.count;
     
     GLfloat position = 0;
     
     for(GLCard* card in self.cards.liveObjects)
     {
         card.position = position;
-        card.angleFan = fan;
+        card.angleFan = self.renderer.animated ? [AnimatedFloat withValue:fan] : [AnimatedFloat withStartValue:card.angleFan.value endValue:fan speed0.5];
         
         position++;
         
