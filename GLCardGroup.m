@@ -88,8 +88,6 @@
 
 -(void)layoutCards
 {
-    
-    
     GLfloat fan = -15 + 5 * self.cards.liveObjects.count;
     
     GLfloat position = 0;

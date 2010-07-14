@@ -182,7 +182,7 @@
     [self.player.cards insertObject:card atIndex:0];
     [cards removeObject:card];
     
-    [self.renderer.cardGroup updateCardsWithKeys:self.player.cards andThen:(cards.count == 1) ? work : nil];
+    [self.renderer.cardGroup updateCardsWithKeys:[self.player.cards map:^(CardModel* card) { return card.key; }] andThen:(cards.count == 1) ? work : nil];
     
     runAfterDelay(0.2, ^{ [self dealCards:cards andThen:work]; });
 }
@@ -196,7 +196,7 @@
     [self.player.cards removeObject:card];
     [cards removeObject:card];
 
-    [self.renderer.cardGroup updateCardsWithKeys:self.player.cards andThen:(cards.count == 1) ? work : nil];
+    [self.renderer.cardGroup updateCardsWithKeys:[self.player.cards map:^(CardModel* card) { return card.key; }] andThen:(cards.count == 1) ? work : nil];
     
     runAfterDelay(0.2, ^{ [self discardCards:cards andThen:work]; });
 }
