@@ -175,21 +175,16 @@
 
 -(void)dealCards:(NSMutableArray*)cards andThen:(simpleBlock)work
 {    
-    CardModel* lastCard = [cards objectAtIndex:0];
+    if(cards.count == 0) { return; }
     
-    int i = 0;
-
-    for(CardModel* card in cards.reverseObjectEnumerator)
-    {
-        if(![self.player.cards containsObject:card]) { [self.player.cards insertObject:card atIndex:0]; }
-    }
+    CardModel* card = [cards lastObject];
     
-    for(CardModel* card in cards.reverseObjectEnumerator)
-    {
-//        [self.renderer.cardGroup dealCardWithSuit:card.suit numeral:card.numeral held:card.isHeld afterDelay:0.2 * i andThen:(card == lastCard ? work : nil)];
+    [self.player.cards insertObject:card atIndex:0];
+    [cards removeObject:card];
     
-        i++;
-    }
+    [self.renderer.cardGroup updateCardsWithKeys:self.player.cards andThen:(cards.count == 1) ? work : nil];
+    
+    runAfterDelay(0.2, ^{ [self dealCards:cards andThen:work]; });
 }
 
 -(void)discardCards:(NSMutableArray*)cards andThen:(simpleBlock)work
@@ -201,13 +196,9 @@
     [self.player.cards removeObject:card];
     [cards removeObject:card];
 
-    [self saveData];
     [self.renderer.cardGroup updateCardsWithKeys:self.player.cards andThen:(cards.count == 1) ? work : nil];
     
-    runAfterDelay(0.2, 
-    ^{
-        [self discardCards:cards andThen:work];              
-    });
+    runAfterDelay(0.2, ^{ [self discardCards:cards andThen:work]; });
 }
 
 -(void)drawCardsAndThen:(simpleBlock)work

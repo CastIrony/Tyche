@@ -23,7 +23,7 @@
 -(void)flipCardsAndThen:(simpleBlock)work;
 -(void)unflipCardsAndThen:(simpleBlock)work;
 
-
+-(void)updateCardsWithKeys:(NSArray*)keys andThen:(simpleBlock)work;
 
 -(void)layoutCards;
 -(void)makeControlPoints;
