@@ -88,7 +88,19 @@
 
 -(void)layoutCards
 {
+    GLfloat fan = -15 + 5 * cardCount;
     
+    GLfloat position = 0;
+    
+    for(GLCard* card in self.cards.liveObjects)
+    {
+        card.position = position;
+        card.angleFan = fan;
+        
+        position++;
+        
+        fan -= 5;
+    }
 }
 
 -(void)updateCardsWithKeys:(NSArray*)keys andThen:(simpleBlock)work
