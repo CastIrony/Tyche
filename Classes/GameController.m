@@ -198,7 +198,7 @@
     
     CardModel* card = [cards objectAtIndex:0];
     
-    [self.player.cards: removeObject:card];
+    [self.player.cards removeObject:card];
     [cards removeObject:card];
 
     [self saveData];
