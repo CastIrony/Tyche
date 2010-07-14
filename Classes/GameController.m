@@ -1,4 +1,5 @@
 #import "GameRenderer.h"
+#import "NSArray+Circle.h"
 #import "PlayerModel.h"
 #import "CardModel.h"
 #import "ChipModel.h"
