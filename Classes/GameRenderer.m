@@ -318,7 +318,7 @@
         TinyProfilerStop(2);
         TinyProfilerStart(3);
         
-        //[self.cardGroup drawShadows];
+        [self.cardGroup drawShadows];
         
         TinyProfilerStop(3);
         TinyProfilerStart(4);
