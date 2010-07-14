@@ -206,7 +206,7 @@
     
     runAfterDelay(0.2, 
     ^{
-        [self discardCards:newCards andThen:work];              
+        [self discardCards:cards andThen:work];              
     });
 }
 
