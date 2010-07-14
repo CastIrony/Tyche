@@ -194,18 +194,20 @@
 
 -(void)discardCards:(NSMutableArray*)cards andThen:(simpleBlock)work
 {
-    CardModel* lastCard = [cards lastObject];
-        
-    int i = 0;
+    if(cards.count == 0) { return; }
     
-    for(CardModel* card in cards)
-    {        
-        [self.player.cards removeObject:card];
-        
-//        [self.renderer.cardGroup discardCardWithSuit:card.suit numeral:card.numeral afterDelay:0.2 * i andThen:(card == lastCard ? work : nil)];
+    CardModel* card = [cards objectAtIndex:0];
+    
+    [self.player.cards: removeObject:card];
+    [cards removeObject:card];
 
-        i++;
-    }
+    [self saveData];
+    [self.renderer.cardGroup updateCardsWithKeys:self.player.cards andThen:(cards.count == 1) ? work : nil];
+    
+    runAfterDelay(0.2, 
+    ^{
+        [self discardCards:newCards andThen:work];              
+    });
 }
 
 -(void)drawCardsAndThen:(simpleBlock)work
