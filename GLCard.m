@@ -161,8 +161,9 @@
         self.angleFlip  = [AnimatedFloat withValue:0];
         self.angleFan   = [AnimatedFloat withValue:0];
         self.bendFactor = [AnimatedFloat withValue:0];
-        
-        self.location   = [AnimatedVector3D withValue:Vector3DMake(0, 0, 0)];
+        self.dealt      = [AnimatedFloat withValue:0];
+        self.death      = [AnimatedFloat withValue:0];
+        self.location   = [AnimatedFloat withValue:0];
     }
     
     return self;
