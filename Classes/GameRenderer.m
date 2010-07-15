@@ -351,7 +351,7 @@
         TinyProfilerStop(8);
         TinyProfilerStart(9);
         
-        //[self.cardGroup drawBacks]; 
+        [self.cardGroup drawBacks]; 
         
         TinyProfilerStop(9);
         TinyProfilerStart(10);
