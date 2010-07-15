@@ -184,9 +184,6 @@
     {    
         glTranslatef(self.location.value, -1.0 * sin(DEGREES_TO_RADIANS(self.angleFlip.value)), -30 * (self.death.value - self.dealt.value));
     
-        [self translateWithVector:Vector3DMake()];
-        
-        
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             
         GLfloat held = self.isHeld.value * 0.5 + 0.5;
