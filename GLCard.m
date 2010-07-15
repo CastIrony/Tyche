@@ -224,7 +224,7 @@
 {
     TRANSACTION_BEGIN
     {    
-        glTranslatef(self.location.value, -1.0 * sin(DEGREES_TO_RADIANS(self.angleFlip.value)), -30 * (self.death.value - self.dealt.value));
+        glTranslatef(self.location.value, -1.0 * sin(DEGREES_TO_RADIANS(self.angleFlip.value)), -30 * (1 + self.death.value - self.dealt.value));
         
         if(within(self.bendFactor.value, 0, 0.001))
         {
@@ -301,7 +301,7 @@
 {
     TRANSACTION_BEGIN
     {    
-        glTranslatef(self.location.value, -1.0 * sin(DEGREES_TO_RADIANS(self.angleFlip.value)), -30 * (self.death.value - self.dealt.value));
+        glTranslatef(self.location.value, -1.0 * sin(DEGREES_TO_RADIANS(self.angleFlip.value)), -30 * (1 + self.death.value - self.dealt.value));
         
         glDisable(GL_CULL_FACE);
         
@@ -328,7 +328,7 @@
 {
     TRANSACTION_BEGIN
     {    
-        glTranslatef(self.location.value, -1.0 * sin(DEGREES_TO_RADIANS(self.angleFlip.value)), -30 * (self.death.value - self.dealt.value));
+        glTranslatef(self.location.value, -1.0 * sin(DEGREES_TO_RADIANS(self.angleFlip.value)), -30 * (1 + self.death.value - self.dealt.value));
     
         //TODO: FIX THIS STUFF LATER
         
@@ -573,7 +573,7 @@
 {
     TRANSACTION_BEGIN
     {    
-        glTranslatef(self.location.value, -1.0 * sin(DEGREES_TO_RADIANS(self.angleFlip.value)), -30 * (self.death.value - self.dealt.value));
+        glTranslatef(self.location.value, -1.0 * sin(DEGREES_TO_RADIANS(self.angleFlip.value)), -30 * (1 + self.death.value - self.dealt.value));
         
         GLfloat model_view[16];
         glGetFloatv(GL_MODELVIEW_MATRIX, model_view);
