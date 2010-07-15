@@ -204,17 +204,13 @@
 {
     if(self.draggedCard) 
     {
+        [self.cards moveKey:self.draggedCard.key toIndex:target];
         
+        [self layoutCards];
         
-//        [self.cards removeObjectIdenticalTo:self.draggedCard];
-//        
-//        [self.cards insertObject:self.draggedCard atIndex:target];
-//        
-//        [self layoutCards];
-//        
-//        self.finalIndex = target;
-//        
-//        self.draggedCard.angleFan = [AnimatedFloat withValue:self.initialAngle - delta * 25 / 480];
+        self.finalIndex = target;
+        
+        self.draggedCard.angleFan = [AnimatedFloat withValue:self.initialAngle - delta * 25 / 480];
     }
 }
 
