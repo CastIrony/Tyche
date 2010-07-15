@@ -231,6 +231,8 @@
     
     [self.player.cards insertObject:card atIndex:finalIndex];
     
+    NSLog(self.player.cards.liveObjects);
+    
     [self saveData];
 }
 
