@@ -394,9 +394,9 @@ gluUnProject4(GLfloat winx, GLfloat winy, GLfloat winz, GLfloat clipw,
 }
 #endif
 
-static void ProjectVectors(Vector3D* vectors, Vector2D* output, int vectorCount, const GLfloat model[16], const GLfloat proj[16], const GLint viewport[4])
+static void ProjectVectors(Vector3D* vectors, Vector2D* output, int vectorCount, GLfloat model[16], GLfloat proj[16], GLint viewport[4])
 {
-    if ([UIScreen mainScreen].currentMode.size.width == 640) 
+    if([UIScreen mainScreen].currentMode.size.width == 640) 
     { 
         viewport[2] = viewport[2] / 2;        
         viewport[3] = viewport[3] / 2;
