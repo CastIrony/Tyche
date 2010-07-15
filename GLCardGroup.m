@@ -95,8 +95,12 @@
     for(GLCard* card in self.cards.liveObjects)
     {
         card.position = position;
-        card.angleFan = self.renderer.animated ? [AnimatedFloat withStartValue:card.angleFan.value endValue:fan forTime:0.1] : [AnimatedFloat withValue:fan];
-                   
+        
+        if(!(within(card.angleFan.value, fan, 0.001)))
+        {
+            card.angleFan = self.renderer.animated ? [AnimatedFloat withStartValue:card.angleFan.value endValue:fan forTime:0.1] : [AnimatedFloat withValue:fan];
+        }
+        
         position++;
         
         fan -= 5;
