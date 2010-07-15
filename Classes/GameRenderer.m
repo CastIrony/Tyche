@@ -499,7 +499,10 @@
 
                 for(GLChip* chip in self.chipGroup.chips.liveObjects) { object = [chip testTouch:touch withPreviousObject:object]; }
                 
-                for(GLCard* card in self.cardGroup.cards.liveObjects.reverseObjectEnumerator) { object = [card testTouch:touch withPreviousObject:object]; }
+                for(GLCard* card in self.cardGroup.cards.liveObjects.reverseObjectEnumerator) 
+                {
+                    object = [card testTouch:touch withPreviousObject:object]; 
+                }
             
                 object = [self.menuLayerController testTouch:touch withPreviousObject:object]; 
             }
