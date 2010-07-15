@@ -103,7 +103,7 @@
     }
 }
 
--(void)updateCardsWithKeys:(NSArray*)keys andThen:(simpleBlock)work
+-(void)updateCardsWithKeys:(NSArray*)keys held:(NSArray*)heldKeys andThen:(simpleBlock)work
 {
     //TODO: execute 'work'!
     
@@ -116,6 +116,10 @@
         if([self.cards.liveKeys containsObject:key])
         {
             [self.cards moveKey:key toIndex:i];
+            
+            GLCard* card = [self.cards liveObjectForKey:key];
+            
+            card.isHeld = [AnimatedFloat withStartValue:card.isHeld.value endValue:[heldKeys containsObject:key] forTime:1];
         }
         else
         {
@@ -127,6 +131,8 @@
             card.angleJitter    = randomFloat(-3.0, 3.0);
             card.isHeld         = [AnimatedFloat withValue:0];
             
+            card.isHeld = [AnimatedFloat withValue:[heldKeys containsObject:key]];
+
             [self.cards insertObject:card withKey:key atIndex:i];
         }
         
