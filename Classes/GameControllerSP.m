@@ -208,10 +208,10 @@
     if(self.player.status == PlayerStatusNoCards)
     {
         if(self.player.cards.count)
-        {            
-            [self discardCards:[[self.player.cards mutableCopy] autorelease] andThen:nil];
-            
+        {                        
             [self.player.cards removeAllObjects];
+            
+            [self.renderer.cardGroup updateCardsWithKeys:[self.player.cards map:^(CardModel* cardModel) { return cardModel.key; }] andThen:nil];
         }
                 
         NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
