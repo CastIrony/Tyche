@@ -96,7 +96,7 @@
     {
         card.position = position;
         
-        if(!within(card.angleFan.value, fan, 0.001);
+        if(!within(card.angleFan.value, fan, 0.001))
         {
             card.angleFan = self.renderer.animated ? [AnimatedFloat withValue:fan] : [AnimatedFloat withStartValue:card.angleFan.value endValue:fan forTime:0.5];
         
