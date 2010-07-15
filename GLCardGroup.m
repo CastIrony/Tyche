@@ -117,7 +117,11 @@
         }
         else
         {
-            [self.cards insertObject:[GLCard cardWithKey:key] withKey:key atIndex:i];
+            GLCard* card = [GLCard cardWithKey:key];
+            
+            card.cardGroup = self;
+            
+            [self.cards insertObject:card withKey:key atIndex:i];
         }
         
         i++;
