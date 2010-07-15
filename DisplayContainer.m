@@ -43,6 +43,11 @@
     return [[[DisplayContainer alloc] init] autorelease];
 }
 
+-(NSString*)description
+{
+    return [NSString stringWithFormat:@"DisplayContainer with objects:%@ keys:%@ liveObjects:%@ liveKeys:%@", self.objects, self.keys, self.liveObjects, self.liveKeys];
+}
+
 -(void)generateObjectLists
 {
     NSMutableArray* newObjects     = [NSMutableArray array];
