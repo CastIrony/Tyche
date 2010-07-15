@@ -301,7 +301,7 @@
 {
     TRANSACTION_BEGIN
     {    
-        glTranslatef(self.location.value, -1.0 * sin(DEGREES_TO_RADIANS(self.angleFlip.value)), -30 * (1 + self.death.value - self.dealt.value));
+        glTranslatef(self.location.value, -1.0 * sin(DEGREES_TO_RADIANS(self.angleFlip.value)), -30 * (1 + self.death.value - self.dealt.value) + 0.5);
         
         glDisable(GL_CULL_FACE);
         
