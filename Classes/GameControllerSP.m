@@ -84,6 +84,8 @@
     [super newGameAndThen:nil];
     
     //TODO: refactor this into updateRendererAnimated
+    self.renderer.animated = NO;
+    
     [self.renderer.menuLayerController hideMenus];
     
     [self.renderer.cardGroup updateCardsWithKeys:nil held:nil andThen:nil];
