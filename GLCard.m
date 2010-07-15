@@ -182,7 +182,7 @@
 {   
     TRANSACTION_BEGIN
     {    
-        glTranslatef(self.location.value, -1.0 * sin(DEGREES_TO_RADIANS(self.angleFlip.value)), -30 * (self.death.value - self.dealt.value));
+        glTranslatef(self.location.value, -1.0 * sin(DEGREES_TO_RADIANS(self.angleFlip.value)), -30 * (1 + self.death.value - self.dealt.value));
     
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             
