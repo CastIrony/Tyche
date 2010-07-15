@@ -53,6 +53,12 @@
 		NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
 		if ([currSysVer compare:reqSysVer options:NSNumericSearch] != NSOrderedAscending)
 			displayLinkSupported = TRUE;
+        
+        UIScreen* mainscr = [UIScreen mainScreen];
+        
+        w = mainscr.currentMode.size.width;
+        
+        if (w == 640) { self.contentScaleFactor = 2.0; }
     }
 	
     return self;
