@@ -158,7 +158,7 @@
     return marked;
 }
 
--(int)cardKeys
+-(NSArray*)cardKeys
 {
     NSMutableArray* keys = [NSMutableArray array];
     
@@ -170,7 +170,7 @@
     return keys;
 }
 
--(int)heldKeys
+-(NSArray*)heldKeys
 {
     NSMutableArray* keys = [NSMutableArray array];
     
