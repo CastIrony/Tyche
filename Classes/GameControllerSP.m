@@ -212,7 +212,7 @@
         {                        
             [self.player.cards removeAllObjects];
             
-            [self.renderer.cardGroup updateCardsWithKeys:[self.player.cards map:^(CardModel* cardModel) { return cardModel.key; }] andThen:nil];
+            [self.renderer.cardGroup updateCardsWithKeys:self.player.cardKeys held:self.player.heldKeys andThen:nil];
         }
                 
         NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 

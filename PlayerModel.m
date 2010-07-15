@@ -11,6 +11,8 @@
 @dynamic chipTotal;
 @dynamic betTotal;
 @dynamic cardsMarked;
+@dynamic cardKeys;
+@dynamic heldKeys;
 
 -(int)chipTotal 
 {  
@@ -154,7 +156,30 @@
     }
     
     return marked;
+}
+
+-(int)cardKeys
+{
+    NSMutableArray* keys = [NSMutableArray array];
     
+    for(CardModel* card in self.cards) 
+    {
+        [keys addObject:card.key];
+    }
+    
+    return keys;
+}
+
+-(int)heldKeys
+{
+    NSMutableArray* keys = [NSMutableArray array];
+    
+    for(CardModel* card in self.cards) 
+    {
+        if(card.isHeld) { [keys addObject:card.key]; }
+    }
+    
+    return keys;
 }
 
 -(id)init

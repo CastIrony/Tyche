@@ -35,6 +35,8 @@ PlayerStatus;
 @property (nonatomic, readonly) int betTotal;
 
 @property (nonatomic, readonly) int cardsMarked;
+@property (nonatomic, readonly) NSArray* cardKeys;
+@property (nonatomic, readonly) NSArray* heldKeys;
 
 -(id)init;
 -(id)proxyForJson;
