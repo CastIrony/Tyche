@@ -52,7 +52,6 @@
     GLushort* arrayMeshShadow;
 }
 
-@property (nonatomic, assign)   GameRenderer*       renderer;
 @property (nonatomic, assign)   GLCardGroup*        cardGroup;
 @property (nonatomic, assign)   int                 suit;
 @property (nonatomic, assign)   int                 numeral;

@@ -220,7 +220,7 @@
     {
         GLfloat held = self.isHeld.value     * 0.5 + 0.5;
         
-        GLfloat lightness = self.renderer.lightness.value;
+        GLfloat lightness = self.cardGroup.renderer.lightness.value;
         
         glColor4f(lightness, lightness, lightness, held);
         
