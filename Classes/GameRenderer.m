@@ -508,7 +508,10 @@
             }
             else
             {
-                for(GLCard* card in self.cardGroup.cards.liveObjects) { object = [card testTouch:touch withPreviousObject:object]; }
+                for(GLCard* card in self.cardGroup.cards.liveObjects) 
+                { 
+                    object = [card testTouch:touch withPreviousObject:object]; 
+                }
             }
             
             if(object)
