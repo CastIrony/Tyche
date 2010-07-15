@@ -56,9 +56,7 @@
         
         UIScreen* mainscr = [UIScreen mainScreen];
         
-        GLFloat w = mainscr.currentMode.size.width;
-        
-        if (w == 640) { self.contentScaleFactor = 2.0; }
+        if (mainscr.currentMode.size.width == 640) { self.contentScaleFactor = 2.0; }
     }
 	
     return self;
