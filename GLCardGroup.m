@@ -105,6 +105,8 @@
 
 -(void)updateCardsWithKeys:(NSArray*)keys andThen:(simpleBlock)work
 {
+    //TODO: execute 'work'!
+    
     NSArray* liveKeys = [[self.cards.liveKeys copy] autorelease];
     
     int i = 0;
@@ -121,6 +123,9 @@
             
             card.cardGroup = self;
             card.dealt = [AnimatedFloat withStartValue:0 endValue:1 forTime:2];
+            
+            card.angleJitter    = randomFloat(-3.0, 3.0);
+            card.isHeld         = [AnimatedFloat withValue:0];
             
             [self.cards insertObject:card withKey:key atIndex:i];
         }
