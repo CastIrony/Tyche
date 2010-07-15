@@ -126,7 +126,7 @@
             GLCard* card = [GLCard cardWithKey:key];
             
             card.cardGroup = self;
-            card.dealt = [AnimatedFloat withStartValue:0 endValue:1 forTime:2];
+            card.dealt = [AnimatedFloat withStartValue:0 endValue:1 forTime:1];
             
             card.angleJitter    = randomFloat(-3.0, 3.0);
             card.isHeld         = [AnimatedFloat withValue:0];
