@@ -499,7 +499,7 @@
 
                 for(GLChip* chip in self.chipGroup.chips.liveObjects) { object = [chip testTouch:touch withPreviousObject:object]; }
                 
-                for(GLCard* card in self.cardGroup.cards.liveObjects.reverseObjectEnumerator) 
+                for(GLCard* card in self.cardGroup.cards.objects.reverseObjectEnumerator) 
                 {
                     object = [card testTouch:touch withPreviousObject:object]; 
                 }
