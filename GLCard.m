@@ -15,7 +15,6 @@
 
 @implementation GLCard
 
-@synthesize renderer    = _renderer;
 @synthesize cardGroup   = _cardGroup;
 @synthesize angleJitter = _angleJitter;
 @synthesize suit        = _suit;
@@ -184,7 +183,7 @@
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         
     GLfloat held = self.isHeld.value * 0.5 + 0.5;
-    GLfloat lightness = self.renderer.lightness.value;
+    GLfloat lightness = self.cardGroup.renderer.lightness.value;
     
     glColor4f(lightness, lightness, lightness, held);
     
@@ -253,7 +252,7 @@
     {
         GLfloat held = self.isHeld.value     * 0.5 + 0.5;
         
-        GLfloat lightness = self.renderer.lightness.value;
+        GLfloat lightness = self.cardGroup.renderer.lightness.value;
         
         glColor4f(lightness, lightness, lightness, held);
             
@@ -573,7 +572,7 @@
 
 -(void)handleTouchDown:(UITouch*)touch fromPoint:(CGPoint)point
 {
-    GLfloat angle = self.renderer.camera.pitchAngle.value * self.renderer.camera.pitchFactor.value;
+    GLfloat angle = self.cardGroup.renderer.camera.pitchAngle.value * self.cardGroup.renderer.camera.pitchFactor.value;
     
     if(angle > 60)
     {
@@ -596,7 +595,7 @@
 
 -(void)handleTouchUp:(UITouch*)touch fromPoint:(CGPoint)pointFrom toPoint:(CGPoint)pointTo
 {
-    GLfloat angle = self.renderer.camera.pitchAngle.value * self.renderer.camera.pitchFactor.value;
+    GLfloat angle = self.cardGroup.renderer.camera.pitchAngle.value * self.cardGroup.renderer.camera.pitchFactor.value;
     
     [self.cardGroup stopDrag];
 
@@ -606,11 +605,11 @@
     {
         if(angle > 60)
         {
-            [self.renderer.gameController cardFrontTouched:self.position];
+            [self.cardGroup.renderer.gameController cardFrontTouched:self.position];
         }
         else
         {            
-            [self.renderer.gameController cardBackTouched:self.position];
+            [self.cardGroup.renderer.gameController cardBackTouched:self.position];
         }
     }
 }
