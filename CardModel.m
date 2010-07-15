@@ -22,7 +22,7 @@
 
 -(NSString*)key
 {    
-    return [NSString stringWithFormat:@"%X-%X", self.suit, self.numeral];
+    return [NSString stringWithFormat:@"%d-%d", self.suit, self.numeral];
 }
 
 -(id)initWithSuit:(int)suit numeral:(int)numeral held:(BOOL)isHeld

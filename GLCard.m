@@ -64,7 +64,7 @@
 
 -(NSString*)key
 {    
-    return [NSString stringWithFormat:@"%X-%X", self.suit, self.numeral];
+    return [NSString stringWithFormat:@"%d-%d", self.suit, self.numeral];
 }
 
 -(NSString*)description
