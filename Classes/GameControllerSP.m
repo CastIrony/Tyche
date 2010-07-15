@@ -84,7 +84,6 @@
     [super newGameAndThen:nil];
     
     //TODO: refactor this into updateRendererAnimated
-    self.renderer.animated = NO;
     
     [self.renderer.menuLayerController hideMenus];
     

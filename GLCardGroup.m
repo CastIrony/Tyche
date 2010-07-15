@@ -204,6 +204,8 @@
 {
     if(self.draggedCard) 
     {
+        
+        
 //        [self.cards removeObjectIdenticalTo:self.draggedCard];
 //        
 //        [self.cards insertObject:self.draggedCard atIndex:target];
