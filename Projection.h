@@ -396,6 +396,8 @@ gluUnProject4(GLfloat winx, GLfloat winy, GLfloat winz, GLfloat clipw,
 
 static void ProjectVectors(Vector3D* vectors, Vector2D* output, int vectorCount, const GLfloat model[16], const GLfloat proj[16], const GLint viewport[4])
 {
+    if()
+    
     for(int vectorCounter = 0; vectorCounter < vectorCount; vectorCounter++)
     {
         GLfloat x;

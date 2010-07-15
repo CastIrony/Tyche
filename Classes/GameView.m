@@ -56,7 +56,7 @@
         
         UIScreen* mainscr = [UIScreen mainScreen];
         
-        if (mainscr.currentMode.size.width == 640) { self.contentScaleFactor = 2.0; }
+        if ([UIScreen mainScreen].currentMode.size.width == 640) { self.contentScaleFactor = 2.0; }
     }
 	
     return self;
