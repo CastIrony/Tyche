@@ -67,7 +67,7 @@
 
 -(NSString*)description
 {
-    return [NSString stringWithFormat:@"[%f5] -> [%f5]", _startValue, _endValue];
+    return [NSString stringWithFormat:@"[%f5] -> [%f5] (Duration:%f5)", _startValue, _endValue, _endTime - _startTime];
 }
 
 -(void)dealloc

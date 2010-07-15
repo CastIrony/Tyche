@@ -97,6 +97,8 @@
         card.position = position;
         card.angleFan = self.renderer.animated ? [AnimatedFloat withValue:fan] : [AnimatedFloat withStartValue:card.angleFan.value endValue:fan speed:0.5];
         
+        NSLog(@"%@", card.angleFan);
+        
         position++;
         
         fan -= 5;
