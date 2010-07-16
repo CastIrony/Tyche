@@ -58,11 +58,6 @@
         
         shadingOffset    = Vector2DMake(524.0 / 1024.0,   0.0 / 1024.0); // Shading
         shadowOffset     = Vector2DMake(655.0 / 1024.0,   0.0 / 1024.0); // Shadow
-
-        stackVectors = malloc( 8 * (100 + 1) * sizeof(Vector3D));
-        stackTexture = malloc( 8 * (100 + 1) * sizeof(Vector2D));
-        stackMesh    = malloc(12 * (100 + 1) * sizeof(GLushort));
-        stackColors  = malloc( 8 * (100 + 1) * sizeof(Color3D));
         
         // TODO: Make these numbers more reasonable:
         
