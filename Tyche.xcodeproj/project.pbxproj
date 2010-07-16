@@ -626,7 +626,14 @@
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Tyche" */;
 			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -764,10 +771,11 @@
 					"\"$(SRCROOT)\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Tyche_Prefix.pch;
-				"GCC_THUMB_SUPPORT[arch=*]" = "";
+				"GCC_THUMB_SUPPORT[arch=*]" = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Tyche-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
@@ -778,6 +786,7 @@
 				PRODUCT_NAME = Tyche;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "82AFA77F-1119-47E9-8A8D-D29A7C9EEA65";
 				RUN_CLANG_STATIC_ANALYZER = YES;
+				SDKROOT = iphoneos4.1;
 				VALID_ARCHS = "armv6 armv7";
 			};
 			name = Debug;
@@ -794,9 +803,11 @@
 					"\"$(SRCROOT)\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Tyche_Prefix.pch;
-				"GCC_THUMB_SUPPORT[arch=*]" = "";
+				"GCC_THUMB_SUPPORT[arch=*]" = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Tyche-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
@@ -807,6 +818,7 @@
 				PRODUCT_NAME = Tyche;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "82AFA77F-1119-47E9-8A8D-D29A7C9EEA65";
 				RUN_CLANG_STATIC_ANALYZER = YES;
+				SDKROOT = iphoneos4.1;
 				VALID_ARCHS = "armv6 armv7";
 			};
 			name = Release;
@@ -897,9 +909,11 @@
 					"\"$(SRCROOT)\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Tyche_Prefix.pch;
-				"GCC_THUMB_SUPPORT[arch=*]" = "";
+				"GCC_THUMB_SUPPORT[arch=*]" = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Tyche-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
@@ -910,6 +924,7 @@
 				PRODUCT_NAME = Tyche;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "82AFA77F-1119-47E9-8A8D-D29A7C9EEA65";
 				RUN_CLANG_STATIC_ANALYZER = YES;
+				SDKROOT = iphoneos4.1;
 				VALID_ARCHS = "armv6 armv7";
 			};
 			name = "Ad Hoc";
