@@ -115,6 +115,8 @@
     
     int i = 0;
     
+    if(keys.count == 0) { runLater(work); }
+    
     for(NSString* key in keys)
     {
         if([self.cards.liveKeys containsObject:key])
@@ -124,6 +126,7 @@
             GLCard* card = [self.cards liveObjectForKey:key];
             
             card.isHeld = [AnimatedFloat withStartValue:card.isHeld.value endValue:[heldKeys containsObject:key] forTime:1];
+            card.isHeld.onEnd = work;
         }
         else
         {
@@ -133,9 +136,9 @@
             card.dealt = [AnimatedFloat withStartValue:0 endValue:1 forTime:1];
             
             card.angleJitter    = randomFloat(-3.0, 3.0);
-            card.isHeld         = [AnimatedFloat withValue:0];
             
             card.isHeld = [AnimatedFloat withValue:[heldKeys containsObject:key]];
+            card.isHeld.onEnd = work;
 
             [self.cards insertObject:card withKey:key atIndex:i];
         }
