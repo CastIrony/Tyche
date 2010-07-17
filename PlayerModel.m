@@ -232,7 +232,7 @@
     NSMutableArray*      cardsToRemove = [dictionary objectForKey:@"cardsToRemove"];
     NSMutableDictionary* chips         = [dictionary objectForKey:@"chips"];
     
-    player.status = (PlayerStatus)[status intValue];
+    player.status = [status intValue];
     
     for(NSDictionary* card in cards) 
     { 
