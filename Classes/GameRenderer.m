@@ -74,7 +74,7 @@
 		glBindRenderbufferOES(GL_RENDERBUFFER_OES, _colorRenderbuffer);
 		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, _colorRenderbuffer);
         
-        self.animated = YES;
+        animate = YES;
         self.lightness = [AnimatedFloat withValue:1];
     }
 	
@@ -102,7 +102,7 @@
 
 -(void)load
 {
-    self.animated = NO;
+    animate = NO;
     
     //setup code:
         
@@ -276,7 +276,7 @@
     
     if(!self.gameController) { [self.menuLayerController showMenus]; }
     
-    self.animated = YES;
+    animate = YES;
 }
 
 -(void)draw

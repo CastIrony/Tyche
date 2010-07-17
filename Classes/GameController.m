@@ -248,18 +248,6 @@
 
 -(void)updateCardsAndThen:(simpleBlock)work
 {
-    if(!self.renderer.animated) 
-    {
-        [self.player.cards removeObjectsInArray:self.player.cardsToRemove];
-        [self.player.cards addObjectsFromArray:self.player.cardsToAdd];
-
-        [self.renderer.cardGroup updateCardsWithKeys:self.player.cardKeys held:self.player.heldKeys andThen:nil];
-    
-        runLater(work);
-        
-        return;
-    }
-    
     if(self.player.cardsToRemove.count > 0)
     {
         CardModel* card = [self.player.cardsToRemove objectAtIndex:0];
@@ -321,36 +309,19 @@
         offset = 4; 
     }
 
-    if(self.renderer.animated)
-    {        
-        self.renderer.chipGroup.offset = [AnimatedFloat withStartValue:self.renderer.chipGroup.offset.value endValue:offset forTime:1];
+    self.renderer.chipGroup.offset = [AnimatedFloat withStartValue:self.renderer.chipGroup.offset.value endValue:offset forTime:1];
 
-        //GLChip* lastToFinish = nil;
-        
-        { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"1"    ]; chip.maxCount = [[self.player.chips objectForKey:@"1"    ] chipCount]; chip.count = [AnimatedFloat withStartValue:chip.count.value endValue:[[self.player.chips objectForKey:@"1"    ] displayCount] speed:6]; /* if(chip.count.endTime > lastToFinish.count.endTime) { lastToFinish = chip; } */ }
-        { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"5"    ]; chip.maxCount = [[self.player.chips objectForKey:@"5"    ] chipCount]; chip.count = [AnimatedFloat withStartValue:chip.count.value endValue:[[self.player.chips objectForKey:@"5"    ] displayCount] speed:6]; /* if(chip.count.endTime > lastToFinish.count.endTime) { lastToFinish = chip; } */ }
-        { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"10"   ]; chip.maxCount = [[self.player.chips objectForKey:@"10"   ] chipCount]; chip.count = [AnimatedFloat withStartValue:chip.count.value endValue:[[self.player.chips objectForKey:@"10"   ] displayCount] speed:6]; /* if(chip.count.endTime > lastToFinish.count.endTime) { lastToFinish = chip; } */ }
-        { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"25"   ]; chip.maxCount = [[self.player.chips objectForKey:@"25"   ] chipCount]; chip.count = [AnimatedFloat withStartValue:chip.count.value endValue:[[self.player.chips objectForKey:@"25"   ] displayCount] speed:6]; /* if(chip.count.endTime > lastToFinish.count.endTime) { lastToFinish = chip; } */ }
-        { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"100"  ]; chip.maxCount = [[self.player.chips objectForKey:@"100"  ] chipCount]; chip.count = [AnimatedFloat withStartValue:chip.count.value endValue:[[self.player.chips objectForKey:@"100"  ] displayCount] speed:6]; /* if(chip.count.endTime > lastToFinish.count.endTime) { lastToFinish = chip; } */ }    
-        { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"500"  ]; chip.maxCount = [[self.player.chips objectForKey:@"500"  ] chipCount]; chip.count = [AnimatedFloat withStartValue:chip.count.value endValue:[[self.player.chips objectForKey:@"500"  ] displayCount] speed:6]; /* if(chip.count.endTime > lastToFinish.count.endTime) { lastToFinish = chip; } */ }    
-        { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"1000" ]; chip.maxCount = [[self.player.chips objectForKey:@"1000" ] chipCount]; chip.count = [AnimatedFloat withStartValue:chip.count.value endValue:[[self.player.chips objectForKey:@"1000" ] displayCount] speed:6]; /* if(chip.count.endTime > lastToFinish.count.endTime) { lastToFinish = chip; } */ }    
-        { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"2500" ]; chip.maxCount = [[self.player.chips objectForKey:@"2500" ] chipCount]; chip.count = [AnimatedFloat withStartValue:chip.count.value endValue:[[self.player.chips objectForKey:@"2500" ] displayCount] speed:6]; /* if(chip.count.endTime > lastToFinish.count.endTime) { lastToFinish = chip; } */ }    
-        { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"10000"]; chip.maxCount = [[self.player.chips objectForKey:@"10000"] chipCount]; chip.count = [AnimatedFloat withStartValue:chip.count.value endValue:[[self.player.chips objectForKey:@"10000"] displayCount] speed:6]; /* if(chip.count.endTime > lastToFinish.count.endTime) { lastToFinish = chip; } */ }
-    }
-    else 
-    {
-        self.renderer.chipGroup.offset = [AnimatedFloat withValue:offset];
-
-        { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"1"    ]; chip.maxCount = [[self.player.chips objectForKey:@"1"    ] chipCount]; chip.count = [AnimatedFloat withValue:[[self.player.chips objectForKey:@"1"    ] displayCount]]; }
-        { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"5"    ]; chip.maxCount = [[self.player.chips objectForKey:@"5"    ] chipCount]; chip.count = [AnimatedFloat withValue:[[self.player.chips objectForKey:@"5"    ] displayCount]]; }
-        { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"10"   ]; chip.maxCount = [[self.player.chips objectForKey:@"10"   ] chipCount]; chip.count = [AnimatedFloat withValue:[[self.player.chips objectForKey:@"10"   ] displayCount]]; }
-        { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"25"   ]; chip.maxCount = [[self.player.chips objectForKey:@"25"   ] chipCount]; chip.count = [AnimatedFloat withValue:[[self.player.chips objectForKey:@"25"   ] displayCount]]; }
-        { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"100"  ]; chip.maxCount = [[self.player.chips objectForKey:@"100"  ] chipCount]; chip.count = [AnimatedFloat withValue:[[self.player.chips objectForKey:@"100"  ] displayCount]]; }
-        { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"500"  ]; chip.maxCount = [[self.player.chips objectForKey:@"500"  ] chipCount]; chip.count = [AnimatedFloat withValue:[[self.player.chips objectForKey:@"500"  ] displayCount]]; }
-        { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"1000" ]; chip.maxCount = [[self.player.chips objectForKey:@"1000" ] chipCount]; chip.count = [AnimatedFloat withValue:[[self.player.chips objectForKey:@"1000" ] displayCount]]; }
-        { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"2500" ]; chip.maxCount = [[self.player.chips objectForKey:@"2500" ] chipCount]; chip.count = [AnimatedFloat withValue:[[self.player.chips objectForKey:@"2500" ] displayCount]]; }
-        { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"10000"]; chip.maxCount = [[self.player.chips objectForKey:@"10000"] chipCount]; chip.count = [AnimatedFloat withValue:[[self.player.chips objectForKey:@"10000"] displayCount]]; }
-    }
+    //GLChip* lastToFinish = nil;
+    
+    { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"1"    ]; chip.maxCount = [[self.player.chips objectForKey:@"1"    ] chipCount]; chip.count = [AnimatedFloat withStartValue:chip.count.value endValue:[[self.player.chips objectForKey:@"1"    ] displayCount] speed:6]; /* if(chip.count.endTime > lastToFinish.count.endTime) { lastToFinish = chip; } */ }
+    { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"5"    ]; chip.maxCount = [[self.player.chips objectForKey:@"5"    ] chipCount]; chip.count = [AnimatedFloat withStartValue:chip.count.value endValue:[[self.player.chips objectForKey:@"5"    ] displayCount] speed:6]; /* if(chip.count.endTime > lastToFinish.count.endTime) { lastToFinish = chip; } */ }
+    { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"10"   ]; chip.maxCount = [[self.player.chips objectForKey:@"10"   ] chipCount]; chip.count = [AnimatedFloat withStartValue:chip.count.value endValue:[[self.player.chips objectForKey:@"10"   ] displayCount] speed:6]; /* if(chip.count.endTime > lastToFinish.count.endTime) { lastToFinish = chip; } */ }
+    { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"25"   ]; chip.maxCount = [[self.player.chips objectForKey:@"25"   ] chipCount]; chip.count = [AnimatedFloat withStartValue:chip.count.value endValue:[[self.player.chips objectForKey:@"25"   ] displayCount] speed:6]; /* if(chip.count.endTime > lastToFinish.count.endTime) { lastToFinish = chip; } */ }
+    { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"100"  ]; chip.maxCount = [[self.player.chips objectForKey:@"100"  ] chipCount]; chip.count = [AnimatedFloat withStartValue:chip.count.value endValue:[[self.player.chips objectForKey:@"100"  ] displayCount] speed:6]; /* if(chip.count.endTime > lastToFinish.count.endTime) { lastToFinish = chip; } */ }    
+    { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"500"  ]; chip.maxCount = [[self.player.chips objectForKey:@"500"  ] chipCount]; chip.count = [AnimatedFloat withStartValue:chip.count.value endValue:[[self.player.chips objectForKey:@"500"  ] displayCount] speed:6]; /* if(chip.count.endTime > lastToFinish.count.endTime) { lastToFinish = chip; } */ }    
+    { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"1000" ]; chip.maxCount = [[self.player.chips objectForKey:@"1000" ] chipCount]; chip.count = [AnimatedFloat withStartValue:chip.count.value endValue:[[self.player.chips objectForKey:@"1000" ] displayCount] speed:6]; /* if(chip.count.endTime > lastToFinish.count.endTime) { lastToFinish = chip; } */ }    
+    { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"2500" ]; chip.maxCount = [[self.player.chips objectForKey:@"2500" ] chipCount]; chip.count = [AnimatedFloat withStartValue:chip.count.value endValue:[[self.player.chips objectForKey:@"2500" ] displayCount] speed:6]; /* if(chip.count.endTime > lastToFinish.count.endTime) { lastToFinish = chip; } */ }    
+    { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"10000"]; chip.maxCount = [[self.player.chips objectForKey:@"10000"] chipCount]; chip.count = [AnimatedFloat withStartValue:chip.count.value endValue:[[self.player.chips objectForKey:@"10000"] displayCount] speed:6]; /* if(chip.count.endTime > lastToFinish.count.endTime) { lastToFinish = chip; } */ }
 }
 
 -(NSString*)scoreHand
