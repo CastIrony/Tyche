@@ -275,10 +275,10 @@
     }
     else if(self.player.cardsToAdd.count > 0)
     {
-        CardModel* card = [self.player.cardsToRemove objectAtIndex:0];
+        CardModel* card = [self.player.cardsToAdd objectAtIndex:0];
         
         [self.player.cards insertObject:card atIndex:0];
-        [cards removeObject:card];
+        [self.player.cardsToAdd removeObject:card];
         
         BOOL isLastCard = self.player.cardsToRemove.count == 0 && self.player.cardsToAdd.count == 0;
         
