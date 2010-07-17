@@ -19,6 +19,26 @@
 
 #import "GameControllerSP.h"
 
+typedef enum 
+{    
+    PlayerStatusShouldDealCards,
+    PlayerStatusDealingCards,
+    PlayerStatusDealtCards,
+    
+    PlayerStatusShouldDrawCards,
+    PlayerStatusDrawingCards,
+    PlayerStatusDrawnCards,
+    
+    PlayerStatusShouldShowCards,
+    PlayerStatusShowingCards,
+    PlayerStatusShownCards,
+    
+    PlayerStatusShouldReturnCards,
+    PlayerStatusReturningCards,
+    PlayerStatusNoCards
+} 
+PlayerStatusSP;
+
 @implementation GameControllerSP
 
 +(GameController*)loadWithRenderer:(GameRenderer*)renderer
@@ -217,19 +237,11 @@
     else if(self.player.status == PlayerStatusShouldDealCards)
     {
         self.player.status = PlayerStatusDealingCards;
+
+        self.player.cardsToRemove = [self.player.cards mutableCopy];
+        self.player.cardsToAdd = [self.game getCards:5];
         
-        [self.renderer.camera flattenAndThen:
-        ^{         
-            [self dealCards:[self.game getCards:5] andThen:
-            ^{
-                [self.renderer.camera unflattenAndThen:
-                ^{
-                    self.player.status = PlayerStatusDealtCards;
-                        
-                    [self updateStatus];
-                }];
-            }];
-        }];
+        [self updateCardsAndThen:^{ self.player.status = PlayerStatusDealtCards; [self updateStatusAndThen:nil]; }];
     }
     else if(self.player.status == PlayerStatusDealingCards)
     {        

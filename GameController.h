@@ -21,6 +21,10 @@
 
 -(void)saveData;
 
+-(void)updateStatusAndThen:(simpleBlock)work;
+-(void)updateCardsAndThen:(simpleBlock)work;
+-(void)updateChipsAndThen:(simpleBlock)work;
+
 -(void)newGameAndThen:(simpleBlock)work;
 -(void)newDeckAndThen:(simpleBlock)work;
 -(void)newHandAndThen:(simpleBlock)work;
@@ -30,13 +34,7 @@
 -(NSString*)scoreHandHigh;
 -(NSString*)scoreHandLow;
 
--(void)givePrize;
--(void)updateStatusAndThen:(simpleBlock)work;
--(void)updateCardsAndThen:(simpleBlock)work;
--(void)updateChipsAndThen:(simpleBlock)work;
-
 -(void)moveCardIndex:(int)initialIndex toIndex:(int)finalIndex;
-
 -(void)labelTouchedWithKey:(NSString*)key;
 -(void)chipTouchedUpWithKey:(NSString*)key;
 -(void)chipTouchedDownWithKey:(NSString*)key;

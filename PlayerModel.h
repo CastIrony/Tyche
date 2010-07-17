@@ -1,29 +1,9 @@
 #import "Geometry.h"
 #import "CardModel.h"
 
-typedef enum 
-{    
-    PlayerStatusShouldDealCards,
-    PlayerStatusDealingCards,
-    PlayerStatusDealtCards,
-    
-    PlayerStatusShouldDrawCards,
-    PlayerStatusDrawingCards,
-    PlayerStatusDrawnCards,
-    
-    PlayerStatusShouldShowCards,
-    PlayerStatusShowingCards,
-    PlayerStatusShownCards,
-    
-    PlayerStatusShouldReturnCards,
-    PlayerStatusReturningCards,
-    PlayerStatusNoCards
-} 
-PlayerStatus;
-
 @interface PlayerModel : NSObject 
 
-@property (nonatomic, assign) PlayerStatus status;
+@property (nonatomic, assign) int status; // context of status depends on the specific game controller
 
 @property (nonatomic, retain) NSMutableArray*      cards;
 @property (nonatomic, retain) NSMutableArray*      cardsToAdd;
