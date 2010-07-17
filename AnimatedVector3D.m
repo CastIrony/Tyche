@@ -31,7 +31,7 @@
         _startValue  = startValue;
         _startTime   = startTime;
         _endValue    = endValue;
-        _endTime     = startTime + TIMESCALE * (endTime - startTime);
+        _endTime     = startTime + TIMESCALE * animate * (endTime - startTime);
         _hasStarted  = NO;
         _hasEnded    = NO;
         _curve       = AnimationEaseInOut;

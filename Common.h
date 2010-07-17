@@ -9,7 +9,7 @@ typedef void(^simpleBlock)(void);
 
 static inline void runAfterDelay(NSTimeInterval delay, simpleBlock work)
 {
-    [[[work copy] autorelease] performSelector:@selector(my_callBlock) withObject:nil afterDelay:delay * TIMESCALE];
+    [[[work copy] autorelease] performSelector:@selector(my_callBlock) withObject:nil afterDelay:delay * TIMESCALE * animate];
 }
 
 static inline void runLater(simpleBlock work)

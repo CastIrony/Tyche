@@ -3,8 +3,9 @@
 //  Particles
 //
 
-static GLfloat TIMESCALE = 1;
+static int animate = 1;
 
+#define TIMESCALE 1
 #define ZOOMSCALE 1
 
 
