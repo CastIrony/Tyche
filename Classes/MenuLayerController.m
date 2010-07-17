@@ -38,34 +38,18 @@
 {   
     [self.renderer.camera setMenuVisible:YES];
     
-    if(self.renderer.animated) 
-    {
-        self.hidden = [AnimatedFloat withStartValue:self.hidden.value endValue:0 forTime:1];
-        
-        self.renderer.lightness = [AnimatedFloat withStartValue:self.renderer.lightness.value endValue:0.4 forTime:1];
-    }
-    else 
-    {
-        self.hidden = [AnimatedFloat withValue:0]; 
-        self.renderer.lightness = [AnimatedFloat withValue:0.4];
-    }
+    self.hidden = [AnimatedFloat withStartValue:self.hidden.value endValue:0 forTime:1];
+    
+    self.renderer.lightness = [AnimatedFloat withStartValue:self.renderer.lightness.value endValue:0.4 forTime:1];
 }
 
 -(void)hideMenus
 {    
     [self.renderer.camera setMenuVisible:NO];
     
-    if(self.renderer.animated) 
-    {
-        self.hidden = [AnimatedFloat withStartValue:self.hidden.value endValue:1 forTime:1]; 
-        
-        self.renderer.lightness = [AnimatedFloat withStartValue:self.renderer.lightness.value endValue:1 forTime:1];
-    }
-    else 
-    {
-        self.hidden = [AnimatedFloat withValue:1]; 
-        self.renderer.lightness = [AnimatedFloat withValue:1];
-    }    
+    self.hidden = [AnimatedFloat withStartValue:self.hidden.value endValue:1 forTime:1]; 
+    
+    self.renderer.lightness = [AnimatedFloat withStartValue:self.renderer.lightness.value endValue:1 forTime:1];
 }
 
 -(void)pushMenuLayer:(MenuController*)menuLayer forKey:(NSString*)key

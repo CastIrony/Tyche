@@ -88,26 +88,12 @@
         
         if(currentIndex != NSNotFound)
         {
-            if(self.renderer.animated)
-            {
-                self.offset = [AnimatedFloat withStartValue:self.offset.value endValue:currentIndex forTime:0.5];
-            }
-            else
-            {
-                self.offset = [AnimatedFloat withValue:currentIndex];
-            }
+            self.offset = [AnimatedFloat withStartValue:self.offset.value endValue:currentIndex forTime:0.5];
         }
     }
     else if(self.isAlive) 
     {
-        if(self.renderer.animated)
-        {
-            self.offset = [AnimatedFloat withStartValue:self.offset.value endValue:-1 forTime:0.5];
-        }
-        else
-        {
-            self.offset = [AnimatedFloat withValue:-1];
-        }
+        self.offset = [AnimatedFloat withStartValue:self.offset.value endValue:-1 forTime:0.5];
         
         [self.owner cancelMenuLayer];
     }
@@ -127,25 +113,17 @@
     {   
         GLMenu* menu = [self.menus liveObjectForKey:key];
         
-        if(self.renderer.animated)
+        if(menu.location)
         {
-            if(menu.location)
-            {
-                menu.location = [AnimatedFloat withStartValue:menu.location.value endValue:-4.0 * counter forTime:1.0];
-            }
-            else 
-            {
-                menu.location = [AnimatedFloat withValue:-4.0 * counter];
-            }
-                
-            menu.opacity = [AnimatedFloat withStartValue:menu.opacity.value endValue:([key isEqualToString:self.currentKey] || !collapsed) forTime:1.0];
+            menu.location = [AnimatedFloat withStartValue:menu.location.value endValue:-4.0 * counter forTime:1.0];
         }
         else 
-        {   
+        {
             menu.location = [AnimatedFloat withValue:-4.0 * counter];
-            menu.opacity = [AnimatedFloat withValue:([key isEqualToString:self.currentKey] || !collapsed)];
         }
-
+            
+        menu.opacity = [AnimatedFloat withStartValue:menu.opacity.value endValue:([key isEqualToString:self.currentKey] || !collapsed) forTime:1.0];
+        
         [menu.dots setDots:liveMenus.count current:counter];
         
         counter++;

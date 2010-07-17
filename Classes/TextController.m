@@ -107,28 +107,19 @@
     {
         Vector3D targetLocation = Vector3DMake(0, 0, position + (liveItem.layoutSize.height / 2));
         
-        if(self.renderer.animated)
+        for(GLLabel* label in [self.items objectsForKey:liveItem.key])
         {
-            for(GLLabel* label in [self.items objectsForKey:liveItem.key])
+            if(label.layoutLocation)
             {
-                if(label.layoutLocation)
-                {
-                    label.layoutLocation = [AnimatedVector3D withStartValue:label.layoutLocation.value endValue:targetLocation forTime:0.3];
-                }
-                else 
-                {
-                    label.layoutLocation = [AnimatedVector3D withValue:targetLocation];
-                }
+                label.layoutLocation = [AnimatedVector3D withStartValue:label.layoutLocation.value endValue:targetLocation forTime:0.3];
             }
-                        
-            liveItem.layoutOpacity = [AnimatedFloat withStartValue:liveItem.layoutOpacity.value endValue:1.0 forTime:0.3];
+            else 
+            {
+                label.layoutLocation = [AnimatedVector3D withValue:targetLocation];
+            }
         }
-        else 
-        {
-            liveItem.layoutLocation = [AnimatedVector3D withValue:targetLocation];
-            
-            liveItem.layoutOpacity = [AnimatedFloat withValue:1.0];
-        }
+                    
+        liveItem.layoutOpacity = [AnimatedFloat withStartValue:liveItem.layoutOpacity.value endValue:1.0 forTime:0.3];
         
         position += liveItem.layoutSize.height + self.padding;
     }
