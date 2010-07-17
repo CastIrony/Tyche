@@ -155,7 +155,7 @@
     
     self.player.chipTotal -= 1;
 
-    [self updateStatus]; 
+    [self updateStatusAndThen:nil]; 
     
     [self.renderer.camera flattenAndThen:
     ^{
@@ -566,7 +566,7 @@
     
     [self saveData];
     
-    [self updateStatus];
+    [self updateStatusAndThen:nil];
     
     //TODO: refactor this into updateRendererAnimated
     chip.count = [AnimatedFloat withStartValue:chip.count.value endValue:chipModel.displayCount speed:3];
