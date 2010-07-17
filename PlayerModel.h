@@ -16,7 +16,7 @@ typedef enum
     PlayerStatusShownCards,
     
     PlayerStatusShouldReturnCards,
-    PlayerStatusReturningCards
+    PlayerStatusReturningCards,
     PlayerStatusNoCards
 } 
 PlayerStatus;
