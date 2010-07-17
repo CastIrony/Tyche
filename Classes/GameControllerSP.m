@@ -239,7 +239,7 @@
     {
         NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
         
-        if(self.player.cardsMarked)
+        if(self.player.numberOfCardsMarked)
         {
             [label setObject: @"draw" forKey:@"key"]; 
             [label setObject: @"DRAW" forKey:@"textString"]; 

@@ -38,8 +38,7 @@ PlayerStatus;
 
 @property (nonatomic, assign)   int chipTotal;
 @property (nonatomic, readonly) int betTotal;
-
-@property (nonatomic, readonly) int cardsMarked;
+@property (nonatomic, readonly) int numberOfCardsMarked;
 @property (nonatomic, readonly) NSArray* cardKeys;
 @property (nonatomic, readonly) NSArray* heldKeys;
 
