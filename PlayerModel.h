@@ -2,19 +2,22 @@
 #import "CardModel.h"
 
 typedef enum 
-{
-    PlayerStatusNoCards,
+{    
     PlayerStatusShouldDealCards,
     PlayerStatusDealingCards,
     PlayerStatusDealtCards,
+    
     PlayerStatusShouldDrawCards,
     PlayerStatusDrawingCards,
     PlayerStatusDrawnCards,
+    
     PlayerStatusShouldShowCards,
     PlayerStatusShowingCards,
     PlayerStatusShownCards,
+    
     PlayerStatusShouldReturnCards,
     PlayerStatusReturningCards
+    PlayerStatusNoCards
 } 
 PlayerStatus;
 
@@ -29,6 +32,8 @@ PlayerStatus;
 @property (nonatomic, assign) PlayerStatus status;
 
 @property (nonatomic, retain) NSMutableArray*      cards;
+@property (nonatomic, retain) NSMutableArray*      cardsToAdd;
+@property (nonatomic, retain) NSMutableArray*      cardsToRemove;
 @property (nonatomic, retain) NSMutableDictionary* chips;
 
 @property (nonatomic, assign)   int chipTotal;
