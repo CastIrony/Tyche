@@ -42,7 +42,7 @@
 //            [gameController.renderer.cardGroup dealCardWithSuit:card.suit numeral:card.numeral held:card.isHeld afterDelay:delay += 0.2 andThen:nil];
 //        }
 //        
-        [gameController updateStatus];
+        [gameController updateStatusAndThen:nil];
         
         [gameController.renderer.menuLayerController hideMenus];
                 
