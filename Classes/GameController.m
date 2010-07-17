@@ -282,7 +282,7 @@
     
     textController.creditTotal = self.player.chipTotal;
     textController.betTotal    = self.player.betTotal;
-    textController.showButton  = self.player.status == PlayerStatusDealtCards;
+    textController.showButton  = YES;
 
     [textController update];
     
