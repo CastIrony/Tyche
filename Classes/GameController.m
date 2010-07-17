@@ -144,28 +144,6 @@
 
 }
 
--(void)newHandAndThen:(simpleBlock)work
-{
-    //TODO: refactor this into updateRendererAnimated
-    [self.renderer.cardGroup updateCardsWithKeys:nil held:nil andThen:nil];
-    
-    [self.game.discard addObjectsFromArray:self.player.cards];
-    
-    [self.player.cards removeAllObjects];
-    
-    self.player.chipTotal -= 1;
-
-    [self updateStatusAndThen:nil]; 
-    
-    [self.renderer.camera flattenAndThen:
-    ^{
-        [self dealCards:[self.game getCards:5] andThen:
-        ^{ 
-            [self.renderer.camera unflattenAndThen:work];
-        }];
-    }];
-}
-
 -(void)saveData
 {    
     NSString* file = [NSString stringWithFormat:@"%@.json", NSStringFromClass([self class])];
@@ -202,26 +180,26 @@
     runAfterDelay(0.2, ^{ [self discardCards:cards andThen:work]; });
 }
 
--(void)drawCardsAndThen:(simpleBlock)work
-{
-    NSMutableArray* playerCards = self.player.cards;
-    
-    NSArray* filteredCards = [playerCards filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isHeld == NO"]];
-    
-    NSMutableArray* cardsToDiscard = [[filteredCards mutableCopy] autorelease]; 
-    NSMutableArray* newCards = [self.game getCards:cardsToDiscard.count];
-    
-    [self.renderer.camera flattenAndThen:
-    ^{
-         [self discardCards:cardsToDiscard andThen:
-         ^{ 
-              [self dealCards:newCards andThen:
-              ^{ 
-                  [self.renderer.camera unflattenAndThen:work];
-              }];
-         }];    
-    }];
-}
+//-(void)drawCardsAndThen:(simpleBlock)work
+//{
+//    NSMutableArray* playerCards = self.player.cards;
+//    
+//    NSArray* filteredCards = [playerCards filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isHeld == NO"]];
+//    
+//    NSMutableArray* cardsToDiscard = [[filteredCards mutableCopy] autorelease]; 
+//    NSMutableArray* newCards = [self.game getCards:cardsToDiscard.count];
+//    
+//    [self.renderer.camera flattenAndThen:
+//    ^{
+//         [self discardCards:cardsToDiscard andThen:
+//         ^{ 
+//              [self dealCards:newCards andThen:
+//              ^{ 
+//                  [self.renderer.camera unflattenAndThen:work];
+//              }];
+//         }];    
+//    }];
+//}
 
 -(void)moveCardIndex:(int)initialIndex toIndex:(int)finalIndex
 {
