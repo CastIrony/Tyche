@@ -155,7 +155,7 @@
     
     self.player.chipTotal -= 1;
 
-    [self update]; 
+    [self updateStatus]; 
     
     [self.renderer.camera flattenAndThen:
     ^{
@@ -241,7 +241,7 @@
     
 }
 
--(void)update
+-(void)updateStatus
 {
     TextControllerCredits* textController = [self.renderer.textControllers objectForKey:@"credits"];
     
@@ -519,7 +519,7 @@
     
     [self saveData];
     
-    [self update];
+    [self updateStatus];
     
     //TODO: refactor this into updateRendererAnimated
     chip.count = [AnimatedFloat withStartValue:chip.count.value endValue:chipModel.displayCount speed:3];
@@ -534,7 +534,7 @@
     
     [self saveData];
     
-    [self update];
+    [self updateStatus];
     
     //TODO: refactor this into updateRendererAnimated
     chip.count = [AnimatedFloat withStartValue:chip.count.value endValue:chipModel.displayCount speed:3];

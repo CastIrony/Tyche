@@ -38,7 +38,7 @@
         
         gameController.game = [GameModel withDictionary:[archive JSONValue]];
         
-        [gameController update];
+        [gameController updateStatus];
                     
         return gameController;
     }
@@ -91,7 +91,7 @@
     
     self.player.status = PlayerStatusNoCards;
     
-    [self update];
+    [self updateStatus];
 }
 
 -(void)labelTouchedWithKey:(NSString*)key
@@ -102,7 +102,7 @@
     { 
         self.player.status = PlayerStatusShouldShowCards;
         
-        [self update];
+        [self updateStatus];
     }
     
     if([key isEqual:@"draw"]) 
@@ -111,13 +111,13 @@
         {
             self.player.status = PlayerStatusShouldDrawCards;
             
-            [self update];
+            [self updateStatus];
         }
         else
         {
             self.player.status = PlayerStatusShouldDealCards;
 
-            [self update];
+            [self updateStatus];
         }
     }
     
@@ -150,7 +150,7 @@
 
         [self saveData];
 
-        [self update];
+        [self updateStatus];
     }   
 }
 
@@ -189,10 +189,10 @@
     
     self.player.chipTotal = self.player.chipTotal - self.player.betTotal + prize;
     
-    [self update];
+    [self updateStatus];
 }
 
--(void)update
+-(void)updateStatus
 {
     TextController* actions = [self.renderer.textControllers objectForKey:@"actions"];
     
@@ -226,7 +226,7 @@
                 ^{
                     self.player.status = PlayerStatusDealtCards;
                         
-                    [self update];
+                    [self updateStatus];
                 }];
             }];
         }];
@@ -272,7 +272,7 @@
         ^{
             self.player.status = PlayerStatusDrawnCards;
              
-            [self update];
+            [self updateStatus];
         }];
     }
     else if(self.player.status == PlayerStatusDrawingCards)
@@ -292,7 +292,7 @@
     {
         self.player.status = PlayerStatusShowingCards;
         
-        [self.renderer.cardGroup flipCardsAndThen:^{ self.player.status = PlayerStatusShownCards; [self update]; }];
+        [self.renderer.cardGroup flipCardsAndThen:^{ self.player.status = PlayerStatusShownCards; [self updateStatus]; }];
     }
     else if(self.player.status == PlayerStatusShowingCards)
     {
@@ -311,7 +311,7 @@
             [self discardCards:[[self.player.cards mutableCopy] autorelease] andThen:
             ^{
                 self.player.status = PlayerStatusNoCards; 
-                [self update]; 
+                [self updateStatus]; 
             }]; 
         }];
     }
@@ -326,14 +326,14 @@
 
     [actions fillWithDictionaries:labels];
     
-    [super update];
+    [super updateStatus];
 }
 
 -(void)cardFrontTouched:(int)card
 { 
     [super cardFrontTouched:card];
     
-    [self update];
+    [self updateStatus];
 }
 
 -(void)cardBackTouched:(int)card 
@@ -342,7 +342,7 @@
     {
         self.player.status = PlayerStatusShouldReturnCards;
         
-        [self update];
+        [self updateStatus];
     }
     else 
     {
