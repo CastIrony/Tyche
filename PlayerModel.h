@@ -22,12 +22,6 @@ typedef enum
 PlayerStatus;
 
 @interface PlayerModel : NSObject 
-{
-    PlayerStatus         _status;
-    
-    NSMutableArray*      _cards;
-    NSMutableDictionary* _chips;
-}
 
 @property (nonatomic, assign) PlayerStatus status;
 
