@@ -90,7 +90,7 @@
         {
             if(self.renderer.animated)
             {
-                self.offset = [AnimatedFloat withStartValue:self.offset.value endValue:currentIndex speed:2.0];
+                self.offset = [AnimatedFloat withStartValue:self.offset.value endValue:currentIndex forTime:0.5];
             }
             else
             {
@@ -102,7 +102,7 @@
     {
         if(self.renderer.animated)
         {
-            self.offset = [AnimatedFloat withStartValue:self.offset.value endValue:-1 speed:2.0];
+            self.offset = [AnimatedFloat withStartValue:self.offset.value endValue:-1 forTime:0.5];
         }
         else
         {

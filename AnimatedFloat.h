@@ -33,7 +33,7 @@
 
 +(id)withValue:(GLfloat)value;
 +(id)withStartValue:(GLfloat)startValue endValue:(GLfloat)endValue forTime:(NSTimeInterval)time;
-//+(id)withStartValue:(GLfloat)startValue endValue:(GLfloat)endValue speed:(GLfloat)speed;
++(id)withStartValue:(GLfloat)startValue endValue:(GLfloat)endValue speed:(GLfloat)speed;
 
 -(NSString*)description;
 

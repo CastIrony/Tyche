@@ -31,10 +31,10 @@
 
 @property (nonatomic, readonly)   Vector3D        value;
 
-+(id)withValue:(Vector3D)value;
-
-+(id)withStartValue:(Vector3D)startValue endValue:(Vector3D)endValue speed:(GLfloat)speed;
-+(id)withStartValue:(Vector3D)startValue endValue:(Vector3D)endValue forTime:(NSTimeInterval)time;
+//+(id)withValue:(Vector3D)value;
+//
+//+(id)withStartValue:(Vector3D)startValue endValue:(Vector3D)endValue speed:(GLfloat)speed;
+//+(id)withStartValue:(Vector3D)startValue endValue:(Vector3D)endValue forTime:(NSTimeInterval)time;
 
 -(NSString*)description;
 

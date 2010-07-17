@@ -40,7 +40,7 @@
     
     if(self.renderer.animated) 
     {
-        self.hidden = [AnimatedFloat withStartValue:self.hidden.value endValue:0 speed: 1];
+        self.hidden = [AnimatedFloat withStartValue:self.hidden.value endValue:0 forTime:1];
         
         self.renderer.lightness = [AnimatedFloat withStartValue:self.renderer.lightness.value endValue:0.4 forTime:1];
     }
@@ -57,7 +57,7 @@
     
     if(self.renderer.animated) 
     {
-        self.hidden = [AnimatedFloat withStartValue:self.hidden.value endValue:1 speed: 1]; 
+        self.hidden = [AnimatedFloat withStartValue:self.hidden.value endValue:1 forTime:1]; 
         
         self.renderer.lightness = [AnimatedFloat withStartValue:self.renderer.lightness.value endValue:1 forTime:1];
     }
