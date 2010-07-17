@@ -38,7 +38,7 @@
         
         gameController.game = [GameModel withDictionary:[archive JSONValue]];
         
-        [gameController updateStatus];
+        [gameController updateStatusAndThen:nil];
                     
         return gameController;
     }
@@ -91,7 +91,7 @@
     
     self.player.status = PlayerStatusNoCards;
     
-    [self updateStatus];
+    [self updateStatusAndThen:nil];
 }
 
 -(void)labelTouchedWithKey:(NSString*)key
@@ -102,7 +102,7 @@
     { 
         self.player.status = PlayerStatusShouldShowCards;
         
-        [self updateStatus];
+        [self updateStatusAndThen:nil];
     }
     
     if([key isEqual:@"draw"]) 
@@ -111,13 +111,13 @@
         {
             self.player.status = PlayerStatusShouldDrawCards;
             
-            [self updateStatus];
+            [self updateStatusAndThen:nil];
         }
         else
         {
             self.player.status = PlayerStatusShouldDealCards;
 
-            [self updateStatus];
+            [self updateStatusAndThen:nil];
         }
     }
     
@@ -150,7 +150,7 @@
 
         [self saveData];
 
-        [self updateStatus];
+        [self updateStatusAndThen:nil];
     }   
 }
 
@@ -189,7 +189,7 @@
     
     self.player.chipTotal = self.player.chipTotal - self.player.betTotal + prize;
     
-    [self updateStatus];
+    [self updateStatusAndThen:nil];
 }
 
 -(void)updateStatus
@@ -326,7 +326,7 @@
 
     [actions fillWithDictionaries:labels];
     
-    [super updateStatus];
+    [super updateStatusAndThen:nil];
 }
 
 -(void)cardFrontTouched:(int)card
