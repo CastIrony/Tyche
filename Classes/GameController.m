@@ -243,7 +243,7 @@
 
 -(void)updateStatusAndThen:(simpleBlock)work
 {
-    
+    [self updateChipsAndThen:work];
 }
 
 -(void)updateCardsAndThen:(simpleBlock)work
