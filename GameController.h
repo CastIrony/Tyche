@@ -26,9 +26,6 @@
 -(void)newHandAndThen:(simpleBlock)work;
 -(void)drawCardsAndThen:(simpleBlock)work;
 
--(void)dealCards:(NSMutableArray*)cards andThen:(simpleBlock)work;
--(void)discardCards:(NSMutableArray*)cards andThen:(simpleBlock)work;
-
 -(NSString*)scoreHand;
 -(NSString*)scoreHandHigh;
 -(NSString*)scoreHandLow;
