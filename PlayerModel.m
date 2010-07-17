@@ -6,6 +6,8 @@
 
 @synthesize status = _status;
 @synthesize cards = _cards;
+@synthesize cardsToAdd = _cardsToAdd;
+@synthesize cardsToRemove = _cardsToRemove;
 @synthesize chips = _chips;
 
 @dynamic chipTotal;
