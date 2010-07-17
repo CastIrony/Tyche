@@ -44,6 +44,13 @@
     return [[[AnimatedFloat alloc] initWithStartValue:value endValue:value startTime:now endTime:now onStart:nil onEnd:nil] autorelease];
 }
 
++(id)withStartValue:(GLfloat)startValue endValue:(GLfloat)endValue forTime:(NSTimeInterval)timeInterval
+{
+    NSTimeInterval now = CFAbsoluteTimeGetCurrent();    
+    
+    return [[[AnimatedFloat alloc] initWithStartValue:startValue endValue:endValue startTime:now endTime:now + timeInterval onStart:nil onEnd:nil] autorelease];
+}
+
 +(id)withStartValue:(GLfloat)startValue endValue:(GLfloat)endValue speed:(GLfloat)speed
 {
     NSTimeInterval now = CFAbsoluteTimeGetCurrent();    
@@ -56,13 +63,6 @@
     {
         return [[[AnimatedFloat alloc] initWithStartValue:startValue endValue:endValue startTime:now endTime:now + absf(endValue, startValue) / speed onStart:nil onEnd:nil] autorelease];
     }
-}
-
-+(id)withStartValue:(GLfloat)startValue endValue:(GLfloat)endValue forTime:(NSTimeInterval)timeInterval
-{
-    NSTimeInterval now = CFAbsoluteTimeGetCurrent();    
-    
-    return [[[AnimatedFloat alloc] initWithStartValue:startValue endValue:endValue startTime:now endTime:now + timeInterval onStart:nil onEnd:nil] autorelease];
 }
 
 -(NSString*)description
