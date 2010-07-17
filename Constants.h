@@ -3,7 +3,7 @@
 //  Particles
 //
 
-#define TIMESCALE 1
+static GLfloat TIMESCALE 1;
 #define ZOOMSCALE 1
 
 
