@@ -241,7 +241,54 @@
     
 }
 
--(void)updateStatus
+-(void)updateStatusAndThen:(simpleBlock)work
+{
+    
+}
+
+-(void)updateCardsAndThen:(simpleBlock)work
+{
+    if(!self.renderer.animated) 
+    {
+        [self.player.cards removeObjectsInArray:self.player.cardsToRemove];
+        [self.player.cards addObjectsFromArray:self.player.cardsToAdd];
+
+        [self.renderer.cardGroup updateCardsWithKeys:self.player.cardKeys held:self.player.heldKeys andThen:nil];
+    
+        runLater(work);
+        
+        return;
+    }
+    
+    if(self.player.cardsToRemove.count > 0)
+    {
+        CardModel* card = [self.player.cardsToRemove objectAtIndex:0];
+
+        [self.player.cards removeObject:card];
+        [self.player.cardsToRemove removeObject:card];
+        
+        BOOL isLastCard = self.player.cardsToRemove.count == 0 && self.player.cardsToAdd.count == 0;
+        
+        [self.renderer.cardGroup updateCardsWithKeys:self.player.cardKeys held:self.player.heldKeys andThen:isLastCard ? work: nil];
+        
+        runAfterDelay(0.2, ^{ [self updateCards]; });
+    }
+    else if(self.player.cardsToAdd.count > 0)
+    {
+        CardModel* card = [self.player.cardsToRemove objectAtIndex:0];
+        
+        [self.player.cards removeObject:card];
+        [self.player.cardsToRemove removeObject:card];
+        
+        BOOL isLastCard = self.player.cardsToRemove.count == 0 && self.player.cardsToAdd.count == 0;
+        
+        [self.renderer.cardGroup updateCardsWithKeys:self.player.cardKeys held:self.player.heldKeys andThen:isLastCard ? work: nil];
+        
+        runAfterDelay(0.2, ^{ [self updateCards]; });
+    }
+}
+
+-(void)updateChipsAndThen:(simpleBlock)work;
 {
     TextControllerCredits* textController = [self.renderer.textControllers objectForKey:@"credits"];
     

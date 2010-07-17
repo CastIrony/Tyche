@@ -34,7 +34,9 @@
 -(NSString*)scoreHandLow;
 
 -(void)givePrize;
--(void)updateStatus;
+-(void)updateStatusAndThen:(simpleBlock)work;
+-(void)updateCardsAndThen:(simpleBlock)work;
+-(void)updateChipsAndThen:(simpleBlock)work;
 
 -(void)moveCardIndex:(int)initialIndex toIndex:(int)finalIndex;
 
