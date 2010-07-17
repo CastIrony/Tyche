@@ -39,8 +39,6 @@
 
 @implementation GameRenderer
 
-@synthesize animated = _animated;
-
 @synthesize gameController      = _gameController;
 @synthesize appController       = _appController;
 @synthesize soundController     = _soundController;

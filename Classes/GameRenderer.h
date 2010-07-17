@@ -27,8 +27,6 @@
     GLuint _colorRenderbuffer;
 }
 
-@property (nonatomic, assign) BOOL animated;
-
 @property (nonatomic, retain) GameController*      gameController;
 @property (nonatomic, retain) AppController*       appController;
 @property (nonatomic, retain) SoundController*     soundController;
