@@ -3,19 +3,6 @@
 #import "Geometry.h"
 
 @interface AnimatedFloat : NSObject 
-{
-    GLfloat        _startValue;
-    NSTimeInterval _startTime;
-    simpleBlock          _onStart;      
-    BOOL           _hasStarted;
-     
-    GLfloat        _endValue;
-    NSTimeInterval _endTime;
-    simpleBlock          _onEnd;    
-    BOOL           _hasEnded;
-
-    AnimationCurve _curve;
-}
 
 @property (nonatomic, assign)   GLfloat        startValue;
 @property (nonatomic, assign)   NSTimeInterval startTime;
