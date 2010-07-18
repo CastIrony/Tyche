@@ -37,7 +37,7 @@ typedef enum
     PlayerStatusReturningCards,
     PlayerStatusNoCards
 } 
-PlayerStatusSP;
+PlayerStatus;
 
 @implementation GameControllerSP
 
