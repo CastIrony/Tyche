@@ -121,20 +121,19 @@
             
             GLCard* card = [self.cards liveObjectForKey:key];
             
-            card.isHeld = [AnimatedFloat withStartValue:card.isHeld.value endValue:[heldKeys containsObject:key] forTime:1];
-            card.isHeld.onEnd = work;
+            [card.isHeld setValue:[heldKeys containsObject:key] forTime:1 andThen:work];
         }
         else
         {
             GLCard* card = [GLCard cardWithKey:key];
             
             card.cardGroup = self;
-            card.dealt = [AnimatedFloat withStartValue:0 endValue:1 forTime:1];
+            
+            [card.dealt setValue:1 forTime:1 andThen:work];
             
             card.angleJitter    = randomFloat(-3.0, 3.0);
             
             card.isHeld = [AnimatedFloat withValue:[heldKeys containsObject:key]];
-            card.isHeld.onEnd = work;
 
             [self.cards insertObject:card withKey:key atIndex:i];
         }
