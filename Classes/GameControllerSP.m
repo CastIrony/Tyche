@@ -58,7 +58,7 @@ PlayerStatusSP;
         
         gameController.game = [GameModel withDictionary:[archive JSONValue]];
         
-        [gameController updateStatusAndThen:nil];
+        [gameController updatePlayerAndThen:nil];
                     
         return gameController;
     }
@@ -111,7 +111,7 @@ PlayerStatusSP;
     
     self.player.status = PlayerStatusNoCards;
     
-    [self updateStatusAndThen:nil];
+    [self updatePlayerAndThen:nil];
 }
 
 -(void)labelTouchedWithKey:(NSString*)key
@@ -122,7 +122,7 @@ PlayerStatusSP;
     { 
         self.player.status = PlayerStatusShouldShowCards;
         
-        [self updateStatusAndThen:nil];
+        [self updatePlayerAndThen:nil];
     }
     
     if([key isEqual:@"draw"]) 
@@ -131,13 +131,13 @@ PlayerStatusSP;
         {
             self.player.status = PlayerStatusShouldDrawCards;
             
-            [self updateStatusAndThen:nil];
+            [self updatePlayerAndThen:nil];
         }
         else
         {
             self.player.status = PlayerStatusShouldDealCards;
 
-            [self updateStatusAndThen:nil];
+            [self updatePlayerAndThen:nil];
         }
     }
     
@@ -170,7 +170,7 @@ PlayerStatusSP;
 
         [self saveData];
 
-        [self updateStatusAndThen:nil];
+        [self updatePlayerAndThen:nil];
     }   
 }
 
@@ -209,7 +209,7 @@ PlayerStatusSP;
     
     self.player.chipTotal = self.player.chipTotal - self.player.betTotal + prize;
     
-    [self updateStatusAndThen:nil];
+    [self updatePlayerAndThen:nil];
 }
 
 -(void)updateStatus
@@ -241,7 +241,7 @@ PlayerStatusSP;
         self.player.cardsToRemove = [self.player.cards mutableCopy];
         self.player.cardsToAdd = [self.game getCards:5];
         
-        [self updateCardsAndThen:^{ self.player.status = PlayerStatusDealtCards; [self updateStatusAndThen:nil]; }];
+        [self updateCardsAndThen:^{ self.player.status = PlayerStatusDealtCards; [self updatePlayerAndThen:nil]; }];
     }
     else if(self.player.status == PlayerStatusDealingCards)
     {        
@@ -280,12 +280,10 @@ PlayerStatusSP;
     {
         self.player.status = PlayerStatusDrawingCards;
         
-        [self drawCardsAndThen:
-        ^{
-            self.player.status = PlayerStatusDrawnCards;
-             
-            [self updateStatus];
-        }];
+        self.player.cardsToRemove = self.player.heldCards; 
+        self.player.cardsToAdd = [self.game getCards:self.player.cardsToRemove.count];
+        
+        [self updateCardsAndThen:^{ self.player.status = PlayerStatusDrawnCards; [self updatePlayerAndThen:nil]; }];
     }
     else if(self.player.status == PlayerStatusDrawingCards)
     {
@@ -320,11 +318,9 @@ PlayerStatusSP;
         
         [self.renderer.cardGroup unflipCardsAndThen:
         ^{ 
-            [self discardCards:[[self.player.cards mutableCopy] autorelease] andThen:
-            ^{
-                self.player.status = PlayerStatusNoCards; 
-                [self updateStatus]; 
-            }]; 
+            self.player.cardsToRemove = [self.player.cards mutableCopy];
+            
+            [self updateCardsAndThen:^{ self.player.status = PlayerStatusNoCards; [self updateStatus]; }]; 
         }];
     }
     else if(self.player.status == PlayerStatusReturningCards)
@@ -338,7 +334,7 @@ PlayerStatusSP;
 
     [actions fillWithDictionaries:labels];
     
-    [super updateStatusAndThen:nil];
+    [super updatePlayerAndThen:nil];
 }
 
 -(void)cardFrontTouched:(int)card

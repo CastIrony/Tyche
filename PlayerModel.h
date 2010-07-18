@@ -15,6 +15,7 @@
 @property (nonatomic, readonly) int numberOfCardsMarked;
 @property (nonatomic, readonly) NSArray* cardKeys;
 @property (nonatomic, readonly) NSArray* heldKeys;
+@property (nonatomic, readonly) NSArray* heldCards;
 
 -(id)init;
 -(id)proxyForJson;

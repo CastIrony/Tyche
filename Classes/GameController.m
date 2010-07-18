@@ -219,7 +219,7 @@
     
 }
 
--(void)updateStatusAndThen:(simpleBlock)work
+-(void)updatePlayerAndThen:(simpleBlock)work
 {
     [self updateChipsAndThen:work];
 }
@@ -515,7 +515,7 @@
     
     [self saveData];
     
-    [self updateStatusAndThen:nil];
+    [self updatePlayerAndThen:nil];
     
     //TODO: refactor this into updateRendererAnimated
     chip.count = [AnimatedFloat withStartValue:chip.count.value endValue:chipModel.displayCount speed:3];
@@ -530,7 +530,7 @@
     
     [self saveData];
     
-    [self updateStatusAndThen:nil];
+    [self updatePlayerAndThen:nil];
     
     //TODO: refactor this into updateRendererAnimated
     chip.count = [AnimatedFloat withStartValue:chip.count.value endValue:chipModel.displayCount speed:3];

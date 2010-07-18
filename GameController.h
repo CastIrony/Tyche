@@ -21,7 +21,7 @@
 
 -(void)saveData;
 
--(void)updateStatusAndThen:(simpleBlock)work;
+-(void)updatePlayerAndThen:(simpleBlock)work;
 -(void)updateCardsAndThen:(simpleBlock)work;
 -(void)updateChipsAndThen:(simpleBlock)work;
 
