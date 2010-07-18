@@ -270,7 +270,7 @@
     [[UIAccelerometer sharedAccelerometer] setUpdateInterval:(1.0 / 30.0)];
     [[UIAccelerometer sharedAccelerometer] setDelegate:self];
     
-    self.splash.opacity = [AnimatedFloat withStartValue:self.splash.opacity.value endValue:0 forTime:2];
+    [self.splash.opacity setValue:0 forTime:2 andThen:nil];
     
     self.gameController = [GameController loadWithRenderer:self];
     
