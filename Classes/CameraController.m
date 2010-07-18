@@ -65,9 +65,9 @@
 {
     if(self.menuVisible)
     {
-        self.pitchFactor = [AnimatedFloat    withStartValue:self.pitchFactor.value endValue:0                         forTime:1]; 
-        self.pitchAngle  = [AnimatedFloat    withStartValue:self.pitchAngle.value  endValue:0                         forTime:1]; 
-        self.rollAngle   = [AnimatedFloat    withStartValue:self.rollAngle.value   endValue:0                         forTime:1]; 
+        [self.pitchFactor setValue:0 forTime:1 andThen:nil]; 
+//        [self.pitchAngle  setValue:0 forTime:1 andThen:nil]; 
+        [self.rollAngle   setValue:0 forTime:1 andThen:nil]; 
         self.position    = [AnimatedVector3D withStartValue:self.position.value    endValue:Vector3DMake(0, 0.0, -8 * ZOOMSCALE) forTime:1];  
         self.lookAt      = [AnimatedVector3D withStartValue:self.lookAt.value      endValue:Vector3DMake(0, 0.0,   0) forTime:1]; 
     }
@@ -75,37 +75,35 @@
     {
         if(self.status == CameraStatusCardsFlipped)
         {
-            self.pitchFactor = [AnimatedFloat    withStartValue:self.pitchFactor.value endValue:1                         forTime:1]; 
-
-            self.pitchAngle  = [AnimatedFloat    withStartValue:self.pitchAngle.value  endValue:  0                       forTime:1]; 
-            self.rollAngle   = [AnimatedFloat    withStartValue:self.rollAngle.value   endValue:-90                       forTime:1]; 
+            [self.pitchFactor setValue:1   forTime:1 andThen:nil]; 
+//            [self.pitchAngle  setValue:0   forTime:1 andThen:nil]; 
+            [self.rollAngle   setValue:-90 forTime:1 andThen:nil]; 
+            
             self.position    = [AnimatedVector3D withStartValue:self.position.value    endValue:Vector3DMake(0, 2.3, -25 * ZOOMSCALE) forTime:1]; 
             self.lookAt      = [AnimatedVector3D withStartValue:self.lookAt.value      endValue:Vector3DMake(0, 2.3,   0) forTime:1]; 
         }
         else 
         {
-            self.pitchFactor = [AnimatedFloat    withStartValue:self.pitchFactor.value endValue:1                         forTime:1]; 
+            [self.pitchFactor setValue:1   forTime:1 andThen:nil]; 
+//            [self.pitchAngle  setValue:0   forTime:1 andThen:nil]; 
+            [self.rollAngle   setValue:-90 forTime:1 andThen:nil]; 
 
-            self.pitchAngle  = [AnimatedFloat    withStartValue:self.pitchAngle.value  endValue:  0                       forTime:1]; 
-            self.rollAngle   = [AnimatedFloat    withStartValue:self.rollAngle.value   endValue:-90                       forTime:1]; 
             self.position    = [AnimatedVector3D withStartValue:self.position.value    endValue:Vector3DMake(0, 2.3, -21 * ZOOMSCALE) forTime:1];  
             self.lookAt      = [AnimatedVector3D withStartValue:self.lookAt.value      endValue:Vector3DMake(0, 2.3,   0) forTime:1];  
         }
     }
 }
 
+//TODO: one of these is wrong, but I think it was intentional
+
 -(void)flattenAndThen:(simpleBlock)work
 {
-    self.pitchFactor = [AnimatedFloat withStartValue:self.pitchFactor.value endValue:1 forTime:(self.pitchAngle.value / 45.0)]; 
-    
-    self.pitchFactor.onEnd = work;
+    [self.pitchFactor setValue:1 forTime:(self.pitchAngle.value / 45.0) andThen:work]; 
 }
 
 -(void)unflattenAndThen:(simpleBlock)work
 {
-    self.pitchFactor = [AnimatedFloat withStartValue:self.pitchFactor.value endValue:1 forTime:(self.pitchAngle.value / 45.0)]; 
-    
-    self.pitchFactor.onEnd = work;
+    [self.pitchFactor setValue:1 forTime:(self.pitchAngle.value / 45.0) andThen:work]; 
 }
 
 @end
