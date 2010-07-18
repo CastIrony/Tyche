@@ -732,7 +732,7 @@
 				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = Tyche;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "82AFA77F-1119-47E9-8A8D-D29A7C9EEA65";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "602A28ED-95C9-4B43-AE9A-01EB2663BE05";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos4.1;
 				VALID_ARCHS = "armv6 armv7";
@@ -764,7 +764,7 @@
 				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = Tyche;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "82AFA77F-1119-47E9-8A8D-D29A7C9EEA65";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "602A28ED-95C9-4B43-AE9A-01EB2663BE05";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos4.1;
 				VALID_ARCHS = "armv6 armv7";
@@ -775,7 +775,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Joel Bernstein (6452FFH9DB)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
@@ -805,7 +805,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
 				RUN_CLANG_STATIC_ANALYZER = YES;
-				SDKROOT = iphoneos4.0;
+				SDKROOT = iphoneos4.1;
 				VALID_ARCHS = "armv7 armv6";
 			};
 			name = Debug;
@@ -814,7 +814,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Joel Bernstein (6452FFH9DB)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -822,7 +822,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				SDKROOT = iphoneos4.0;
+				SDKROOT = iphoneos4.1;
 				VALID_ARCHS = "armv7 armv6";
 			};
 			name = Release;
@@ -831,7 +831,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Joel Bernstein (6452FFH9DB)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -839,7 +839,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				SDKROOT = iphoneos4.0;
+				SDKROOT = iphoneos4.1;
 				VALID_ARCHS = "armv7 armv6";
 			};
 			name = "Ad Hoc";
@@ -870,7 +870,7 @@
 				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = Tyche;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "82AFA77F-1119-47E9-8A8D-D29A7C9EEA65";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "602A28ED-95C9-4B43-AE9A-01EB2663BE05";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos4.1;
 				VALID_ARCHS = "armv6 armv7";
