@@ -75,11 +75,9 @@
     
     for(GLCard* card in self.cards.liveObjects)
     {
-        card.location  = [AnimatedFloat withStartValue:card.location.value  endValue:0 forTime:1];
-        card.angleFlip = [AnimatedFloat withStartValue:card.angleFlip.value endValue:0 forTime:1];
-        
-        if(i == 0) { card.angleFlip.onEnd = work; }
-        
+        [card.location setValue:0 forTime:1 andThen:nil];
+        [card.angleFlip setValue:0 forTime:1 andThen:(i == 0) ? work : nil];
+                
         i++;
     }
 }
@@ -96,7 +94,7 @@
         
         if(!(within(card.angleFan.value, fan, 0.001)))
         {
-            card.angleFan = [AnimatedFloat withStartValue:card.angleFan.value endValue:fan forTime:0.1];
+            [card.angleFan setValue:fan forTime:0.1 andThen:nil];
         }
         
         position++;
