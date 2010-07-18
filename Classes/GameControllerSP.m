@@ -280,7 +280,7 @@ PlayerStatusSP;
     {
         self.player.status = PlayerStatusDrawingCards;
         
-        self.player.cardsToRemove = self.player.heldCards; 
+        self.player.cardsToRemove = [self.player.heldCards mutableCopy]; 
         self.player.cardsToAdd = [self.game getCards:self.player.cardsToRemove.count];
         
         [self updateCardsAndThen:^{ self.player.status = PlayerStatusDrawnCards; [self updatePlayerAndThen:nil]; }];

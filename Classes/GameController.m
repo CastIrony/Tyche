@@ -246,7 +246,7 @@
         [self.player.cards insertObject:card atIndex:0];
         [self.player.cardsToAdd removeObject:card];
         
-        BOOL isLastCard = self.player.cardsToRemove.count == 0 && self.player.cardsToAdd.count == 0;
+        BOOL isLastCard = (self.player.cardsToRemove.count == 0) && (self.player.cardsToAdd.count == 0);
         
         [self.renderer.cardGroup updateCardsWithKeys:self.player.cardKeys held:self.player.heldKeys andThen:isLastCard ? work: nil];
         
