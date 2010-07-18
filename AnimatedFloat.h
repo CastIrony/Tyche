@@ -18,9 +18,9 @@
 
 @property (nonatomic, readonly) GLfloat      value;
 
-+(id)withValue:(GLfloat)value;
-+(id)withStartValue:(GLfloat)startValue endValue:(GLfloat)endValue forTime:(NSTimeInterval)time;
-+(id)withStartValue:(GLfloat)startValue endValue:(GLfloat)endValue speed:(GLfloat)speed;
+//+(id)withValue:(GLfloat)value;
+//+(id)withStartValue:(GLfloat)startValue endValue:(GLfloat)endValue forTime:(NSTimeInterval)time;
+//+(id)withStartValue:(GLfloat)startValue endValue:(GLfloat)endValue speed:(GLfloat)speed;
 
 -(NSString*)description;
 
