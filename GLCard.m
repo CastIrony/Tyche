@@ -654,10 +654,10 @@
 
 -(void)killWithDisplayContainer:(DisplayContainer*)container andKey:(id)key
 {
-    self.death = [AnimatedFloat withStartValue:self.death.value endValue:1 forTime:1];
+    [self.death setValue:1 forTime:1 andThen:^{ [container pruneDeadForKey:key]; [self.cardGroup layoutCards]; }];
     
-    self.death.onStart = ^{ [container pruneLiveForKey:key]; [self.cardGroup layoutCards]; };    
-    self.death.onEnd   = ^{ [container pruneDeadForKey:key]; [self.cardGroup layoutCards]; };
+    [container pruneLiveForKey:key]; 
+    [self.cardGroup layoutCards];    
 }
 
 @end
