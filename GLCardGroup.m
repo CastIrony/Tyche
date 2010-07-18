@@ -60,11 +60,9 @@
     
     for(GLCard* card in self.cards.liveObjects)
     {
-        card.location  = [AnimatedFloat withStartValue:card.location.value  endValue:(-4 * i + 8) forTime:1];
-        card.angleFlip = [AnimatedFloat withStartValue:card.angleFlip.value endValue:180          forTime:1];
-        
-        if(i == 0) { card.angleFlip.onEnd = work; }
-        
+        [card.location  setValue:(-4 * i + 8) forTime:1 andThen:nil];
+        [card.angleFlip setValue:180          forTime:1 andThen:(i == 0) ? work : nil];
+                
         i++;
     }
 }
