@@ -71,15 +71,16 @@
         
         if(oldLabel.layoutLocation) { newLabel.layoutLocation = [AnimatedVector3D withValue:oldLabel.layoutLocation.value]; }
         
-        if(oldLabel)
-        {
-            [self.items insertObject:newLabel withKey:key atIndex:[self.items.keys indexOfObject:key]];
-        }
-        else 
+        int index = [self.items.keys indexOfObject:key];
+        
+        if(index == NSNotFound)
         {
             [self.items insertObject:newLabel asLastWithKey:key];
         }
-
+        else 
+        {
+            [self.items insertObject:newLabel withKey:key atIndex:];
+        }
         
         [liveKeys addObject:key];
     }   
