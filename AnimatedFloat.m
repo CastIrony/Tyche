@@ -4,19 +4,17 @@
 
 @synthesize startValue = _startValue;
 @synthesize startTime  = _startTime;
-@synthesize onStart    = _onStart;      
 @synthesize hasStarted = _hasStarted;
 
 @synthesize endValue   = _endValue;
 @synthesize endTime    = _endTime;
-@synthesize onEnd      = _onEnd;    
 @synthesize hasEnded   = _hasEnded;
 
 @synthesize curve      = _curve; 
 
 @dynamic value;
 
--(id)initWithStartValue:(GLfloat)startValue endValue:(GLfloat)endValue startTime:(NSTimeInterval)startTime endTime:(NSTimeInterval)endTime onStart:(simpleBlock)onStart onEnd:(simpleBlock)onEnd
+-(id)initWithStartValue:(GLfloat)startValue endValue:(GLfloat)endValue startTime:(NSTimeInterval)startTime endTime:(NSTimeInterval)endTime
 {
     self = [super init];
     
@@ -29,9 +27,6 @@
         _hasStarted  = NO;
         _hasEnded    = NO;
         _curve       = AnimationEaseInOut;
-
-        self.onStart = onStart;      
-        self.onEnd   = onEnd;  
     }
     
     return self;
