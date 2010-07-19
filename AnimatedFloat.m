@@ -39,25 +39,34 @@
     return [[[AnimatedFloat alloc] initWithStartValue:value endValue:value startTime:now endTime:now] autorelease];
 }
 
-+(id)withStartValue:(GLfloat)startValue endValue:(GLfloat)endValue forTime:(NSTimeInterval)timeInterval
+-(void)setValue:(GLfloat)value forTime:(NSTimeInterval)time andThen:(simpleBlock)work
 {
     NSTimeInterval now = CFAbsoluteTimeGetCurrent();    
     
-    return [[[AnimatedFloat alloc] initWithStartValue:startValue endValue:endValue startTime:now endTime:now + timeInterval] autorelease];
+    runAfterDelay(time, work);
+    
+    self.startValue = self.value;
+    self.endValue = value;
+    self.startTime = now;
+    self.endTime = now + time;
+    self.hasStarted = NO;
+    self.hasEnded = NO;
 }
 
-+(id)withStartValue:(GLfloat)startValue endValue:(GLfloat)endValue speed:(GLfloat)speed
-{
+-(void)setValue:(GLfloat)value withSpeed:(GLfloat)speed andThen:(simpleBlock)work
+{    
+    NSTimeInterval time = speed == 0 ? 0 : absf(self.value, value) / speed; 
+
     NSTimeInterval now = CFAbsoluteTimeGetCurrent();    
+   
+    runAfterDelay(time, work);
     
-    if(speed == 0)
-    {
-        return [[[AnimatedFloat alloc] initWithStartValue:startValue endValue:endValue startTime:now endTime:now] autorelease];
-    }
-    else 
-    {
-        return [[[AnimatedFloat alloc] initWithStartValue:startValue endValue:endValue startTime:now endTime:now + absf(endValue, startValue) / speed] autorelease];
-    }
+    self.startValue = self.value;
+    self.endValue = value;
+    self.startTime = now;
+    self.endTime = now + time;
+    self.hasStarted = NO;
+    self.hasEnded = NO;
 }
 
 -(NSString*)description
