@@ -119,7 +119,7 @@
             }
         }
                     
-        liveItem.layoutOpacity = [AnimatedFloat withStartValue:liveItem.layoutOpacity.value endValue:1.0 forTime:0.3];
+        [liveItem.layoutOpacity setValue:1.0 forTime:0.3 andThen:nil];
         
         position += liveItem.layoutSize.height + self.padding;
     }
