@@ -88,12 +88,12 @@
         
         if(currentIndex != NSNotFound)
         {
-            self.offset = [AnimatedFloat withStartValue:self.offset.value endValue:currentIndex forTime:0.5];
+            [self.offset setValue:currentIndex forTime:0.5 andThen:nil];
         }
     }
     else if(self.isAlive) 
     {
-        self.offset = [AnimatedFloat withStartValue:self.offset.value endValue:-1 forTime:0.5];
+        [self.offset setValue:-1 forTime:0.5 andThen:nil];
         
         [self.owner cancelMenuLayer];
     }
