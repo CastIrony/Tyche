@@ -151,56 +151,6 @@
     [[[self.game proxyForJson] JSONRepresentation] writeToDocument:file];
 }
 
-
--(void)dealCards:(NSMutableArray*)cards andThen:(simpleBlock)work
-{    
-    if(cards.count == 0) { return; }
-    
-    CardModel* card = [cards lastObject];
-    
-    [self.player.cards insertObject:card atIndex:0];
-    [cards removeObject:card];
-
-    [self.renderer.cardGroup updateCardsWithKeys:self.player.cardKeys held:self.player.heldKeys andThen:(cards.count == 1) ? work : nil];
-    
-    runAfterDelay(0.2, ^{ [self dealCards:cards andThen:work]; });
-}
-
--(void)discardCards:(NSMutableArray*)cards andThen:(simpleBlock)work
-{
-    if(cards.count == 0) { return; }
-    
-    CardModel* card = [cards objectAtIndex:0];
-    
-    [self.player.cards removeObject:card];
-    [cards removeObject:card];
-
-    [self.renderer.cardGroup updateCardsWithKeys:self.player.cardKeys held:self.player.heldKeys andThen:(cards.count == 1) ? work : nil];
-    
-    runAfterDelay(0.2, ^{ [self discardCards:cards andThen:work]; });
-}
-
-//-(void)drawCardsAndThen:(simpleBlock)work
-//{
-//    NSMutableArray* playerCards = self.player.cards;
-//    
-//    NSArray* filteredCards = [playerCards filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"isHeld == NO"]];
-//    
-//    NSMutableArray* cardsToDiscard = [[filteredCards mutableCopy] autorelease]; 
-//    NSMutableArray* newCards = [self.game getCards:cardsToDiscard.count];
-//    
-//    [self.renderer.camera flattenAndThen:
-//    ^{
-//         [self discardCards:cardsToDiscard andThen:
-//         ^{ 
-//              [self dealCards:newCards andThen:
-//              ^{ 
-//                  [self.renderer.camera unflattenAndThen:work];
-//              }];
-//         }];    
-//    }];
-//}
-
 -(void)moveCardIndex:(int)initialIndex toIndex:(int)finalIndex
 {
     CardModel* card = [[[self.player.cards objectAtIndex:initialIndex] retain] autorelease];
@@ -306,24 +256,16 @@
 
 -(NSString*)scoreHand
 {
-    NSString* scoreHigh = [self scoreHandHigh];
-    NSString* scoreLow  = [self scoreHandLow];
+    NSString* scoreHigh = [self scoreHand:self.player.cards high:YES];
+    NSString* scoreLow  = [self scoreHand:self.player.cards high:NO];
         
     return [scoreLow compare:scoreHigh] > 0 ? scoreLow : scoreHigh;
 }
 
--(NSString*)scoreHandHigh
+-(NSString*)scoreHand:(NSArray*)hand high:(BOOL)high
 {
     if(self.player.cards.count != 5) { return @""; }
-        
-    NSArray* sortedHand = [self.player.cards sortedArrayUsingSelector:@selector(numeralCompareHigh:)];
-    
-    CardModel* card1 = [sortedHand objectAtIndex:0];
-    CardModel* card2 = [sortedHand objectAtIndex:1];
-    CardModel* card3 = [sortedHand objectAtIndex:2];
-    CardModel* card4 = [sortedHand objectAtIndex:3];
-    CardModel* card5 = [sortedHand objectAtIndex:4];
-    
+                
     NSMutableArray* quadCards   = [[[NSMutableArray alloc] init] autorelease];
     NSMutableArray* tripleCards = [[[NSMutableArray alloc] init] autorelease];
     NSMutableArray* pairCards   = [[[NSMutableArray alloc] init] autorelease];
@@ -333,21 +275,29 @@
     int triples = 0;
     int quads   = 0;
     
-    [singleCards addObject:[NSNumber numberWithInt:card1.numeralHigh]];
-    [singleCards addObject:[NSNumber numberWithInt:card2.numeralHigh]];
-    [singleCards addObject:[NSNumber numberWithInt:card3.numeralHigh]];
-    [singleCards addObject:[NSNumber numberWithInt:card4.numeralHigh]];
-    [singleCards addObject:[NSNumber numberWithInt:card5.numeralHigh]];
+    NSArray* sortedHand = [hand sortedArrayUsingSelector:high ? @selector(numeralCompareHigh:) : @selector(numeralCompareLow:)];
     
-    if(card1.numeralHigh == card2.numeralHigh) { pairs++;   [pairCards   addObject:[NSNumber numberWithInt:card1.numeralHigh]]; }
-    if(card2.numeralHigh == card3.numeralHigh) { pairs++;   [pairCards   addObject:[NSNumber numberWithInt:card2.numeralHigh]]; }
-    if(card3.numeralHigh == card4.numeralHigh) { pairs++;   [pairCards   addObject:[NSNumber numberWithInt:card3.numeralHigh]]; }
-    if(card4.numeralHigh == card5.numeralHigh) { pairs++;   [pairCards   addObject:[NSNumber numberWithInt:card4.numeralHigh]]; }
-    if(card1.numeralHigh == card3.numeralHigh) { triples++; [tripleCards addObject:[NSNumber numberWithInt:card1.numeralHigh]]; }
-    if(card2.numeralHigh == card4.numeralHigh) { triples++; [tripleCards addObject:[NSNumber numberWithInt:card2.numeralHigh]]; }
-    if(card3.numeralHigh == card5.numeralHigh) { triples++; [tripleCards addObject:[NSNumber numberWithInt:card3.numeralHigh]]; }
-    if(card1.numeralHigh == card4.numeralHigh) { quads++;   [quadCards   addObject:[NSNumber numberWithInt:card1.numeralHigh]]; }
-    if(card2.numeralHigh == card5.numeralHigh) { quads++;   [quadCards   addObject:[NSNumber numberWithInt:card2.numeralHigh]]; }
+    CardModel* card1 = [sortedHand objectAtIndex:0];
+    CardModel* card2 = [sortedHand objectAtIndex:1];
+    CardModel* card3 = [sortedHand objectAtIndex:2];
+    CardModel* card4 = [sortedHand objectAtIndex:3];
+    CardModel* card5 = [sortedHand objectAtIndex:4];
+    
+    [singleCards addObject:[NSNumber numberWithInt:high ? card1.numeralHigh : card1.numeralLow]];
+    [singleCards addObject:[NSNumber numberWithInt:high ? card2.numeralHigh : card1.numeralLow]];
+    [singleCards addObject:[NSNumber numberWithInt:high ? card3.numeralHigh : card1.numeralLow]];
+    [singleCards addObject:[NSNumber numberWithInt:high ? card4.numeralHigh : card1.numeralLow]];
+    [singleCards addObject:[NSNumber numberWithInt:high ? card5.numeralHigh : card1.numeralLow]];
+    
+    if(card1.numeralHigh == card2.numeralHigh) { pairs++;   [pairCards   addObject:[NSNumber numberWithInt:high ? card1.numeralHigh : card1.numeralLow]]; }
+    if(card2.numeralHigh == card3.numeralHigh) { pairs++;   [pairCards   addObject:[NSNumber numberWithInt:high ? card2.numeralHigh : card1.numeralLow]]; }
+    if(card3.numeralHigh == card4.numeralHigh) { pairs++;   [pairCards   addObject:[NSNumber numberWithInt:high ? card3.numeralHigh : card1.numeralLow]]; }
+    if(card4.numeralHigh == card5.numeralHigh) { pairs++;   [pairCards   addObject:[NSNumber numberWithInt:high ? card4.numeralHigh : card1.numeralLow]]; }
+    if(card1.numeralHigh == card3.numeralHigh) { triples++; [tripleCards addObject:[NSNumber numberWithInt:high ? card1.numeralHigh : card1.numeralLow]]; }
+    if(card2.numeralHigh == card4.numeralHigh) { triples++; [tripleCards addObject:[NSNumber numberWithInt:high ? card2.numeralHigh : card1.numeralLow]]; }
+    if(card3.numeralHigh == card5.numeralHigh) { triples++; [tripleCards addObject:[NSNumber numberWithInt:high ? card3.numeralHigh : card1.numeralLow]]; }
+    if(card1.numeralHigh == card4.numeralHigh) { quads++;   [quadCards   addObject:[NSNumber numberWithInt:high ? card1.numeralHigh : card1.numeralLow]]; }
+    if(card2.numeralHigh == card5.numeralHigh) { quads++;   [quadCards   addObject:[NSNumber numberWithInt:high ? card2.numeralHigh : card1.numeralLow]]; }
 
     [tripleCards removeObjectsInArray:quadCards];
     [pairCards   removeObjectsInArray:quadCards];
@@ -358,9 +308,9 @@
     
     BOOL isFlush = card1.suit == card2.suit && card2.suit == card3.suit && card3.suit == card4.suit && card4.suit == card5.suit;
     
-    BOOL isStraight = pairs == 0 && card5.numeralHigh == card1.numeralHigh + 4;
+    BOOL isStraight = pairs == 0 && (high ? card5.numeralHigh : card5.numeralLow) == (high ? card1.numeralHigh : card1.numeralLow) + 4;
     
-    if(isFlush && isStraight && card5.numeralHigh == 14)
+    if(isFlush && isStraight && (high ? card5.numeralHigh : card5.numeralLow) == 14)
     {   
         return @"09";
     }
@@ -400,98 +350,13 @@
     return [NSString stringWithFormat:@"00 %02d %02d %02d %02d %02d", [[singleCards objectAtIndex:4] intValue], [[singleCards objectAtIndex:3] intValue], [[singleCards objectAtIndex:2] intValue], [[singleCards objectAtIndex:1] intValue], [[singleCards objectAtIndex:0] intValue]];
 }
 
--(NSString*)scoreHandLow
-{
-    if(self.player.cards.count != 5) { return @""; }
-        
-    NSArray* sortedHand = [self.player.cards sortedArrayUsingSelector:@selector(numeralCompareLow:)];
-    
-    CardModel* card1 = [sortedHand objectAtIndex:0];
-    CardModel* card2 = [sortedHand objectAtIndex:1];
-    CardModel* card3 = [sortedHand objectAtIndex:2];
-    CardModel* card4 = [sortedHand objectAtIndex:3];
-    CardModel* card5 = [sortedHand objectAtIndex:4];
-    
-    NSMutableArray* quadCards   = [[[NSMutableArray alloc] init] autorelease];
-    NSMutableArray* tripleCards = [[[NSMutableArray alloc] init] autorelease];
-    NSMutableArray* pairCards   = [[[NSMutableArray alloc] init] autorelease];
-    NSMutableArray* singleCards = [[[NSMutableArray alloc] init] autorelease];
-    
-    int pairs   = 0;
-    int triples = 0;
-    int quads   = 0;
-    
-    [singleCards addObject:[NSNumber numberWithInt:card1.numeralLow]];
-    [singleCards addObject:[NSNumber numberWithInt:card2.numeralLow]];
-    [singleCards addObject:[NSNumber numberWithInt:card3.numeralLow]];
-    [singleCards addObject:[NSNumber numberWithInt:card4.numeralLow]];
-    [singleCards addObject:[NSNumber numberWithInt:card5.numeralLow]];
-    
-    if(card1.numeralLow == card2.numeralLow) { pairs++;   [pairCards   addObject:[NSNumber numberWithInt:card1.numeralLow]]; }
-    if(card2.numeralLow == card3.numeralLow) { pairs++;   [pairCards   addObject:[NSNumber numberWithInt:card2.numeralLow]]; }
-    if(card3.numeralLow == card4.numeralLow) { pairs++;   [pairCards   addObject:[NSNumber numberWithInt:card3.numeralLow]]; }
-    if(card4.numeralLow == card5.numeralLow) { pairs++;   [pairCards   addObject:[NSNumber numberWithInt:card4.numeralLow]]; }
-    if(card1.numeralLow == card3.numeralLow) { triples++; [tripleCards addObject:[NSNumber numberWithInt:card1.numeralLow]]; }
-    if(card2.numeralLow == card4.numeralLow) { triples++; [tripleCards addObject:[NSNumber numberWithInt:card2.numeralLow]]; }
-    if(card3.numeralLow == card5.numeralLow) { triples++; [tripleCards addObject:[NSNumber numberWithInt:card3.numeralLow]]; }
-    if(card1.numeralLow == card4.numeralLow) { quads++;   [quadCards   addObject:[NSNumber numberWithInt:card1.numeralLow]]; }
-    if(card2.numeralLow == card5.numeralLow) { quads++;   [quadCards   addObject:[NSNumber numberWithInt:card2.numeralLow]]; }
-    
-    [tripleCards removeObjectsInArray:quadCards];
-    [pairCards   removeObjectsInArray:quadCards];
-    [singleCards removeObjectsInArray:quadCards];
-    [pairCards   removeObjectsInArray:tripleCards];
-    [singleCards removeObjectsInArray:tripleCards];
-    [singleCards removeObjectsInArray:pairCards];
-    
-    BOOL isFlush = card1.suit == card2.suit && card2.suit == card3.suit && card3.suit == card4.suit && card4.suit == card5.suit;
-    
-    BOOL isStraight = pairs == 0 && card5.numeralLow == card1.numeralLow + 4;
-    
-    if(isFlush && isStraight)                     
-    { 
-        return [NSString stringWithFormat:@"08 %02d", [[singleCards objectAtIndex:4] intValue]]; 
-    }
-    if(pairs == 3 && triples == 2 && quads == 1)  
-    { 
-        return [NSString stringWithFormat:@"07 %02d", [[quadCards objectAtIndex:0] intValue]]; 
-    }
-    if(pairs == 3 && triples == 1 && quads == 0)  
-    { 
-        return [NSString stringWithFormat:@"06 %02d %02d", [[tripleCards objectAtIndex:0] intValue], [[pairCards objectAtIndex:0] intValue]]; 
-    }
-    if(isFlush)  
-    { 
-        return [NSString stringWithFormat:@"05 %02d %02d %02d %02d %02d", [[singleCards objectAtIndex:4] intValue], [[singleCards objectAtIndex:3] intValue], [[singleCards objectAtIndex:2] intValue], [[singleCards objectAtIndex:1] intValue], [[singleCards objectAtIndex:0] intValue]]; 
-    }
-    if(isStraight)  
-    { 
-        return [NSString stringWithFormat:@"04 %02d", [[singleCards objectAtIndex:4] intValue]];
-    }
-    if(pairs == 2 && triples == 1 && quads == 0)  
-    { 
-        return [NSString stringWithFormat:@"03 %02d", [[tripleCards objectAtIndex:0] intValue]]; 
-    }
-    if(pairs == 2 && triples == 0 && quads == 0)  
-    {
-        return [NSString stringWithFormat:@"02 %02d %02d %02d", [[pairCards objectAtIndex:1] intValue], [[pairCards objectAtIndex:0] intValue], [[singleCards objectAtIndex:0] intValue]]; 
-    }
-    if(pairs == 1 && triples == 0 && quads == 0)  
-    { 
-        return [NSString stringWithFormat:@"01 %02d %02d %02d %02d", [[pairCards objectAtIndex:0] intValue], [[singleCards objectAtIndex:2] intValue], [[singleCards objectAtIndex:1] intValue], [[singleCards objectAtIndex:0] intValue]]; 
-    }
-    
-    return [NSString stringWithFormat:@"00 %02d %02d %02d %02d %02d", [[singleCards objectAtIndex:4] intValue], [[singleCards objectAtIndex:3] intValue], [[singleCards objectAtIndex:2] intValue], [[singleCards objectAtIndex:1] intValue], [[singleCards objectAtIndex:0] intValue]];
-}
-
 -(void)labelTouchedWithKey:(NSString*)key;
 {
-    //[label setObject:@"logo" forKey:@"key"]; 
-//    [label setObject:@"join_multiplayer" forKey:@"key"]; 
-//    [label setObject:@"new_multiplayer" forKey:@"key"]; 
-//    [label setObject:@"new_game"            forKey:@"key"]; 
-//    
-//    
+    // [label setObject:@"logo"             forKey:@"key"]; 
+    // [label setObject:@"join_multiplayer" forKey:@"key"]; 
+    // [label setObject:@"new_multiplayer"  forKey:@"key"]; 
+    // [label setObject:@"new_game"         forKey:@"key"]; 
+
     if([key isEqualToString:@"logo"])
     {
         MenuControllerMain* menu = [MenuControllerMain withRenderer:self.renderer];
