@@ -56,7 +56,7 @@
 {
     menuLayer.owner = self;
     
-    [menuLayer.hidden setValue:1 forTime:0 andThen:nil];
+    menuLayer.hidden = [AnimatedFloat withValue:1];
     [menuLayer.hidden setValue:0 forTime:0.5 andThen:nil];
 
     [self.currentLayer.collapsed setValue:1 forTime:0.5 andThen:nil];
