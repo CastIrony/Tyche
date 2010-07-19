@@ -66,10 +66,7 @@
 }
 
 -(void)dealloc
-{
-    [_onStart release];
-    [_onEnd   release];
-    
+{    
     [super dealloc];
 }
 
@@ -87,14 +84,12 @@
     
     GLfloat delta2 = delta * delta;
     GLfloat delta3 = delta * delta2;
+        
+    if(self.curve == AnimationEaseIn)    { delta = (3 * delta - delta3) / 2; }
+    if(self.curve == AnimationEaseOut)   { delta = (3 * delta2 - delta3) / 2; }
+    if(self.curve == AnimationEaseInOut) { delta = (3 * delta2 - 2 * delta3); }
     
-    GLfloat proportion = delta;
-    
-    if(self.curve == AnimationEaseIn)    { proportion = (3 * delta - delta3) / 2; }
-    if(self.curve == AnimationEaseOut)   { proportion = (3 * delta2 - delta3) / 2; }
-    if(self.curve == AnimationEaseInOut) { proportion = (3 * delta2 - 2 * delta3); }
-    
-    return (1.0 - proportion) * self.startValue + (proportion) * self.endValue;
+    return (1.0 - delta) * self.startValue + (delta) * self.endValue;
 }
 
 @end
