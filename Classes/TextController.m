@@ -73,7 +73,7 @@
         
         if(oldLabel)
         {
-            [self.items insertObject:newLabel atIndex:[self.items.keys indexOfObject:key] withKey:key];
+            [self.items insertObject:newLabel withKey:key atIndex:[self.items.keys indexOfObject:key]];
         }
         else 
         {
