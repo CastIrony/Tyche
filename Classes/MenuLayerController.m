@@ -38,27 +38,27 @@
 {   
     [self.renderer.camera setMenuVisible:YES];
     
-    self.hidden = [AnimatedFloat withStartValue:self.hidden.value endValue:0 forTime:1];
+    [self.hidden setValue:0 forTime:1 andThen:nil];
     
-    self.renderer.lightness = [AnimatedFloat withStartValue:self.renderer.lightness.value endValue:0.4 forTime:1];
+    [self.renderer.lightness setValue:0.4 forTime:1 andThen:nil];
 }
 
 -(void)hideMenus
 {    
     [self.renderer.camera setMenuVisible:NO];
     
-    self.hidden = [AnimatedFloat withStartValue:self.hidden.value endValue:1 forTime:1]; 
+    [self.hidden setValue:1 forTime:1 andThen:nil]; 
     
-    self.renderer.lightness = [AnimatedFloat withStartValue:self.renderer.lightness.value endValue:1 forTime:1];
+    [self.renderer.lightness setValue:1 forTime:1 andThen:nil];
 }
 
 -(void)pushMenuLayer:(MenuController*)menuLayer forKey:(NSString*)key
 {
     menuLayer.owner = self;
     
-    menuLayer.hidden = [AnimatedFloat withStartValue:1 endValue:0 forTime:0.5];
+    [menuLayer.hidden setValue:0 forTime:0.5 andThen:nil];
 
-    self.currentLayer.collapsed = [AnimatedFloat withStartValue:self.currentLayer.collapsed.value endValue:1 forTime:0.5];
+    [self.currentLayer.collapsed setValue:1 forTime:0.5 andThen:nil];
     [self.currentLayer layoutMenus];
     
     menuLayer.first = (self.menuLayers.liveObjects.count == 0);
@@ -81,7 +81,7 @@
      
     MenuController* currentLayer = [self.menuLayers liveObjectForKey:target];
     
-    currentLayer.collapsed = [AnimatedFloat withStartValue:currentLayer.collapsed.value endValue:0 forTime:0.5];
+    [currentLayer.collapsed setValue:0 forTime:0.5 andThen:nil];
     [currentLayer layoutMenus];
 
 }
