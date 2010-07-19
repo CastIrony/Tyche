@@ -65,9 +65,7 @@
             NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
             
             [label setObject:[NSString stringWithFormat:@"Bet: %d", self.betTotal] forKey:@"textString"];     
-            
             [label setObject:[NSValue  valueWithCGSize:CGSizeMake(6, 0.65)] forKey:@"labelSize"];
-            
             [label setObject:@"bet" forKey:@"key"]; 
             
             [labels addObject:label]; 
@@ -79,9 +77,7 @@
             
             [label setObject:[NSNumber numberWithBool:YES]  forKey:@"hasBorder"];
             [label setObject:[NSNumber numberWithFloat:0.3] forKey:@"fadeMargin"]; 
-
             [label setObject:[NSValue  valueWithCGSize:CGSizeMake(3, 0.75)] forKey:@"labelSize"];
-            
             [label setObject:@"cancel_bet" forKey:@"key"]; 
             [label setObject:@"CANCEL"     forKey:@"textString"];
             
