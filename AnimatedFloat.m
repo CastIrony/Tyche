@@ -79,7 +79,7 @@
     }
     else 
     {
-        runAfterDelay(work, self.endTime - now);
+        runAfterDelay(self.endTime - now, work);
     }
 
 }
