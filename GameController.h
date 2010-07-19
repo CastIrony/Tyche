@@ -29,7 +29,7 @@
 -(void)newDeckAndThen:(simpleBlock)work;
 
 -(NSString*)scoreHand;
--(NSString*)scoreHand:(NSArray*)hand high:(BOOL)high
+-(NSString*)scoreHand:(NSArray*)hand high:(BOOL)high;
 
 -(void)moveCardIndex:(int)initialIndex toIndex:(int)finalIndex;
 -(void)labelTouchedWithKey:(NSString*)key;
