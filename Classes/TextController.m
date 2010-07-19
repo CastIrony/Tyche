@@ -59,30 +59,24 @@
         NSString* key = newLabel.key;
         
         if(!key) { continue; }
-        
-        [liveKeys addObject:key];
-        
+                
         GLLabel* oldLabel = [self.items liveObjectForKey:key];
         
-        if([newLabel isEqual:oldLabel]) { continue; }
-                 
-        newLabel.textController = self;
-        newLabel.owner = self;
-        
-        if(oldLabel.layoutLocation) { newLabel.layoutLocation = [AnimatedVector3D withValue:oldLabel.layoutLocation.value]; }
-        
-        int index = [self.items.keys indexOfObject:key];
-        
-        if(index == NSNotFound)
-        {
-            [self.items insertObject:newLabel asLastWithKey:key];
+        if([newLabel isEqual:oldLabel]) 
+        { 
+            [self.items moveKeyToLast:key];
         }
         else 
         {
-            [self.items insertObject:newLabel withKey:key atIndex:index];
+            newLabel.textController = self;
+            newLabel.owner = self;
+            
+            if(oldLabel.layoutLocation) { newLabel.layoutLocation = [AnimatedVector3D withValue:oldLabel.layoutLocation.value]; }
+                        
+            [self.items insertObject:newLabel asLastWithKey:key];
         }
-        
-        [liveKeys addObject:key];
+
+        [liveKeys addObject:key];          
     }   
     
     for(NSString* key in self.items.liveKeys)
