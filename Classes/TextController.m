@@ -79,7 +79,7 @@
         }
         else 
         {
-            [self.items insertObject:newLabel withKey:key atIndex:];
+            [self.items insertObject:newLabel withKey:key atIndex:index];
         }
         
         [liveKeys addObject:key];
