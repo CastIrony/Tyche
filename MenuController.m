@@ -115,14 +115,14 @@
         
         if(menu.location)
         {
-            menu.location = [AnimatedFloat withStartValue:menu.location.value endValue:-4.0 * counter forTime:1.0];
+            [menu.location setValue:-4.0 * counter forTime:1.0 andThen:nil];
         }
         else 
         {
             menu.location = [AnimatedFloat withValue:-4.0 * counter];
         }
             
-        menu.opacity = [AnimatedFloat withStartValue:menu.opacity.value endValue:([key isEqualToString:self.currentKey] || !collapsed) forTime:1.0];
+        [menu.opacity setValue:([key isEqualToString:self.currentKey] || !collapsed) forTime:1.0 andThen:nil];
         
         [menu.dots setDots:liveMenus.count current:counter];
         
@@ -176,7 +176,7 @@
 {    
     if(within(self.collapsed.value, 0, 0.001))
     {
-        self.offset = [AnimatedFloat withStartValue:self.offset.value endValue:self.initialOffset + (pointTo.x - pointFrom.x) / -320.0 forTime:0.05];
+        [self.offset setValue:self.initialOffset + (pointTo.x - pointFrom.x) / -320.0 forTime:0.05 andThen:nil];
     }
 }
 
@@ -224,10 +224,10 @@
 
 -(void)killWithDisplayContainer:(DisplayContainer*)container andKey:(id)key
 {
-    self.death = [AnimatedFloat withStartValue:self.death.value endValue:1 forTime:0.5];
+    [self.death setValue:1 forTime:0.5 andThen:^{ [container pruneDeadForKey:key]; [self layoutMenus]; }];
     
-    self.death.onStart = ^{ [container pruneLiveForKey:key]; [self layoutMenus]; };    
-    self.death.onEnd   = ^{ [container pruneDeadForKey:key]; [self layoutMenus]; };
+    [container pruneLiveForKey:key];
+    [self layoutMenus];
 }
 
 @end
