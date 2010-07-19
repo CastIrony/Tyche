@@ -518,7 +518,7 @@
     [self updatePlayerAndThen:nil];
     
     //TODO: refactor this into updateRendererAnimated
-    [chip.count endValue:chipModel.displayCount withSpeed:3 andThen:nil];
+    [chip.count setValue:chipModel.displayCount withSpeed:3 andThen:nil];
 }
 
 -(void)chipTouchedDownWithKey:(NSString*)key
@@ -533,7 +533,7 @@
     [self updatePlayerAndThen:nil];
     
     //TODO: refactor this into updateRendererAnimated
-    [chip.count endValue:chipModel.displayCount withSpeed:3 andThen:nil];
+    [chip.count setValue:chipModel.displayCount withSpeed:3 andThen:nil];
 }
 
 -(void)cardFrontTouched:(int)card
