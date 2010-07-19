@@ -720,7 +720,8 @@
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_FAST_MATH = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Tyche_Prefix.pch;
 				"GCC_THUMB_SUPPORT[arch=*]" = YES;
@@ -730,6 +731,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
+				LLVM_LTO = YES;
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = Tyche;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "602A28ED-95C9-4B43-AE9A-01EB2663BE05";
@@ -752,7 +754,8 @@
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_FAST_MATH = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Tyche_Prefix.pch;
 				"GCC_THUMB_SUPPORT[arch=*]" = YES;
@@ -762,6 +765,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
+				LLVM_LTO = YES;
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = Tyche;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "602A28ED-95C9-4B43-AE9A-01EB2663BE05";
@@ -858,7 +862,8 @@
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_FAST_MATH = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Tyche_Prefix.pch;
 				"GCC_THUMB_SUPPORT[arch=*]" = YES;
@@ -868,6 +873,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
+				LLVM_LTO = YES;
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = Tyche;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "602A28ED-95C9-4B43-AE9A-01EB2663BE05";
