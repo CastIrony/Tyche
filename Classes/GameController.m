@@ -554,7 +554,7 @@
     //TODO: refactor this into updateRendererAnimated
     if(self.renderer.camera.pitchAngle.value < 60 && !self.renderer.camera.isAutomatic)
     {
-        self.renderer.camera.pitchAngle = [AnimatedFloat  withStartValue:self.renderer.camera.pitchAngle.value endValue:90 forTime:1.0];
+        [self.renderer.camera.pitchAngle setValue:90 forTime:1.0 andThen:nil];
     }    
 }
 
@@ -565,7 +565,7 @@
     {
         if(self.renderer.camera.pitchAngle.value > 60)
         {
-            self.renderer.camera.pitchAngle = [AnimatedFloat withStartValue:self.renderer.camera.pitchAngle.value endValue:0 forTime:1.0];
+            [self.renderer.camera.pitchAngle setValue:0 forTime:1.0 andThen:nil];
         }
         else 
         {
