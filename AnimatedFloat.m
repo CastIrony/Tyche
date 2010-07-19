@@ -69,6 +69,21 @@
     self.hasEnded = NO;
 }
 
+-(void)register:(simpleBlock)work
+{
+    NSTimeInterval now = CFAbsoluteTimeGetCurrent();    
+
+    if(now > self.endTime)
+    {
+        runLater(work);
+    }
+    else 
+    {
+        runAfterDelay(work, self.endTime - now);
+    }
+
+}
+
 -(NSString*)description
 {
     return [NSString stringWithFormat:@"[%f5] -> [%f5] (Duration:%f5)", _startValue, _endValue, _endTime - _startTime];

@@ -20,6 +20,7 @@
 
 -(void)setValue:(GLfloat)value forTime:(NSTimeInterval)time andThen:(simpleBlock)work;
 -(void)setValue:(GLfloat)value withSpeed:(GLfloat)time andThen:(simpleBlock)work;
+-(void)register:(simpleBlock)work;
 
 -(NSString*)description;
 
