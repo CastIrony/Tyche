@@ -115,7 +115,7 @@
         {
             if(label.layoutLocation)
             {
-                NSLog(@"Previous location found for key %@: <%f2, %f2>!", liveItem.key, label.layoutLocation.value.x, label.layoutLocation.value.y);
+                NSLog(@"Previous location found for key %@: %@!", liveItem.key, label.layoutLocation);
                 
                 label.layoutLocation = [AnimatedVector3D withStartValue:label.layoutLocation.value endValue:targetLocation forTime:0.3];
             }
