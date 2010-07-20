@@ -71,7 +71,7 @@
             newLabel.textController = self;
             newLabel.owner = self;
             
-            if(oldLabel.layoutLocation) { newLabel.layoutLocation = oldLabel.layoutLocation /*[AnimatedVector3D withValue:oldLabel.layoutLocation.value]*/; NSLog(@"foo: %@", newLabel.layoutLocation); }
+            if(oldLabel.layoutLocation) { newLabel.layoutLocation = oldLabel.layoutLocation; }
                         
             [self.items insertObject:newLabel asLastWithKey:key];
         }
@@ -115,14 +115,12 @@
         {
             if(label.layoutLocation)
             {
-                if([liveItem.key isEqualToString:@"bet"]) { NSLog(@"Previous location found for key %@: %@!", liveItem.key, label.layoutLocation); }
+                if([liveItem.key isEqualToString:@"bet"]) { NSLog(@"<%f2, %f2, %f2>", targetLocation.x, targetLocation.y, targetLocation.z); }
                 
                 label.layoutLocation = [AnimatedVector3D withStartValue:label.layoutLocation.value endValue:targetLocation forTime:0.3];
             }
             else 
             {
-                if([liveItem.key isEqualToString:@"bet"]) { NSLog(@"Previous location not found for key %@.", liveItem.key); }
-                
                 label.layoutLocation = [AnimatedVector3D withValue:targetLocation];
             }
         }
