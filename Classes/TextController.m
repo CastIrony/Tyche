@@ -71,7 +71,7 @@
             newLabel.textController = self;
             newLabel.owner = self;
             
-            if(oldLabel.layoutLocation) { newLabel.layoutLocation = [AnimatedVector3D withValue:oldLabel.layoutLocation.value]; NSLog(@"foo: %@", newLabel.layoutLocation); }
+            if(oldLabel.layoutLocation) { newLabel.layoutLocation = oldLabel.layoutLocation /*[AnimatedVector3D withValue:oldLabel.layoutLocation.value]*/; NSLog(@"foo: %@", newLabel.layoutLocation); }
                         
             [self.items insertObject:newLabel asLastWithKey:key];
         }
