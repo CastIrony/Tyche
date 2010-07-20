@@ -71,8 +71,8 @@
     }
     
     self.objects = newObjects;
-    self.liveObjects = newLiveObjects;
-    self.liveKeys = newLiveKeys;
+    self.liveObjects = newLiveObjects; NSLog(@"liveObjects");
+    self.liveKeys = newLiveKeys; NSLog(@"liveKeys");
 }
 
 -(void)insertObject:(id<Killable>)object asFirstWithKey:(id<NSCopying>)key 
