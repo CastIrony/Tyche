@@ -575,8 +575,8 @@
 @dynamic isDead;
 @dynamic isAlive;
 
--(BOOL)isAlive { return within(self.death.value, 0, 0.001) && self.death.endTime < CFAbsoluteTimeGetCurrent(); }
--(BOOL)isDead  { return within(self.death.value, 1, 0.001) && self.death.endTime < CFAbsoluteTimeGetCurrent(); }
+-(BOOL)isAlive { return within(self.death.endValue, 0, 0.001) && self.death.hasStarted; }
+-(BOOL)isDead  { return within(self.death.endValue, 1, 0.001) && self.death.hasEnded; }
 
 -(void)killWithDisplayContainer:(DisplayContainer*)container andKey:(id)key
 {
