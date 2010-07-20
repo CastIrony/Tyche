@@ -115,13 +115,13 @@
         {
             if(label.layoutLocation)
             {
-                NSLog(@"Previous location found for key %@: %@!", liveItem.key, label.layoutLocation);
+                if([key isEqualToString:@"bet"]) { NSLog(@"Previous location found for key %@: %@!", liveItem.key, label.layoutLocation); }
                 
                 label.layoutLocation = [AnimatedVector3D withStartValue:label.layoutLocation.value endValue:targetLocation forTime:0.3];
             }
             else 
             {
-                NSLog(@"Previous location not found for key %@.", liveItem.key);
+                if([key isEqualToString:@"bet"]) { NSLog(@"Previous location not found for key %@.", liveItem.key); }
                 
                 label.layoutLocation = [AnimatedVector3D withValue:targetLocation];
             }
