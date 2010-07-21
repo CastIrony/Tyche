@@ -587,7 +587,7 @@
 {
     [self.death setValue:1 forTime:1 andThen:^{ [container pruneDeadForKey:key]; [self.owner layoutItems]; }];
     
-    [container pruneLiveForKey:key];
+    [container generateObjectLists];
 }
 
 @end
