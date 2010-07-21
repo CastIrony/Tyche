@@ -122,9 +122,9 @@
     self.hashtable = newHashtable;
     self.keys = newKeys;
     
+    if([previousObject isAlive]) { [previousObject killWithDisplayContainer:self key:key andThen:nil]; }
+
     [self generateObjectLists];
-    
-    if([previousObject isAlive]) { [previousObject killWithDisplayContainer:self andKey:key]; }
 }
 
 -(void)insertObject:(id<Killable>)object withKey:(id<NSCopying>)key atIndex:(int)index 
@@ -146,9 +146,9 @@
     self.hashtable = newHashtable;
     self.keys = newKeys;
 
-    [self generateObjectLists];
+    if([previousObject isAlive]) { [previousObject killWithDisplayContainer:self key:key andThen:nil]; }
     
-    if([previousObject isAlive]) { [previousObject killWithDisplayContainer:self andKey:key]; }
+    [self generateObjectLists];
 }
 
 -(void)insertObject:(id<Killable>)object withKey:(id<NSCopying>)key beforeKey:(id)target 
@@ -172,9 +172,9 @@
     self.hashtable = newHashtable;
     self.keys = newKeys;
     
-    [self generateObjectLists];
+    if([previousObject isAlive]) { [previousObject killWithDisplayContainer:self key:key andThen:nil]; }
     
-    if([previousObject isAlive]) { [previousObject killWithDisplayContainer:self andKey:key]; }
+    [self generateObjectLists];
 }
 
 -(void)insertObject:(id<Killable>)object withKey:(id<NSCopying>)key afterKey:(id)target 
@@ -198,9 +198,9 @@
     self.hashtable = newHashtable;
     self.keys = newKeys;
     
-    [self generateObjectLists];
+    if([previousObject isAlive]) { [previousObject killWithDisplayContainer:self key:key andThen:nil]; }
     
-    if([previousObject isAlive]) { [previousObject killWithDisplayContainer:self andKey:key]; }
+    [self generateObjectLists];
 }
 
 -(void)moveKeyToFirst:(id)key 
