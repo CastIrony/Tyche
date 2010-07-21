@@ -289,7 +289,7 @@
 
 -(void)drawShadow
 {
-    float countValue = self.count.value; self.count.hasEnded = NO;
+    float countValue = self.count.value;
     
     int stackCount = countValue;
     

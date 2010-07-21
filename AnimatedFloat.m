@@ -23,8 +23,6 @@
         _startTime   = startTime;
         _endValue    = endValue;
         _endTime     = startTime + TIMESCALE * animate * (endTime - startTime);
-        _hasStarted  = NO;
-        _hasEnded    = NO;
         _curve       = AnimationEaseInOut;
     }
     
@@ -48,8 +46,6 @@
     self.endValue = value;
     self.startTime = now;
     self.endTime = now + time;
-    self.hasStarted = NO;
-    self.hasEnded = NO;
 }
 
 -(void)setValue:(GLfloat)value withSpeed:(GLfloat)speed andThen:(simpleBlock)work
@@ -64,8 +60,6 @@
     self.endValue = value;
     self.startTime = now;
     self.endTime = now + time;
-    self.hasStarted = NO;
-    self.hasEnded = NO;
 }
 
 -(void)register:(simpleBlock)work
