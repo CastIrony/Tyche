@@ -452,7 +452,7 @@
 -(BOOL)isAlive { return YES; }
 -(BOOL)isDead  { return NO; }
 
--(void)killWithDisplayContainer:(DisplayContainer*)container andKey:(id)key
+-(void)killWithDisplayContainer:(DisplayContainer*)container key:(id)key andThen:(simpleBlock)work
 {
     return;
 }
