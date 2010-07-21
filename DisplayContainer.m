@@ -98,9 +98,9 @@
     self.hashtable = newHashtable;
     self.keys = newKeys;
     
-    [self generateObjectLists];
+    if([previousObject isAlive]) { [previousObject killWithDisplayContainer:self key:key andThen:nil]; }
 
-    if([previousObject isAlive]) { [previousObject killWithDisplayContainer:self andKey:key]; }
+    [self generateObjectLists];
 }
 
 -(void)insertObject:(id<Killable>)object asLastWithKey:(id<NSCopying>)key
