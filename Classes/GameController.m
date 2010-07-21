@@ -159,7 +159,7 @@
     
     [self.player.cards insertObject:card atIndex:finalIndex];
     
-    NSLog(@"%@", self.player.cards);
+    //NSLog(@"%@", self.player.cards);
     
     [self saveData];
 }

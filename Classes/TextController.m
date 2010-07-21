@@ -115,7 +115,10 @@
         {
             if(label.layoutLocation)
             {
-                if([liveItem.key isEqualToString:@"bet"]) { NSLog(@"<%f2, %f2, %f2>", targetLocation.x, targetLocation.y, targetLocation.z); }
+                if([liveItem.key isEqualToString:@"bet"]) 
+                {
+                    NSLog(@"bet target: <%f2, %f2, %f2>", targetLocation.x, targetLocation.y, targetLocation.z); 
+                }
                 
                 label.layoutLocation = [AnimatedVector3D withStartValue:label.layoutLocation.value endValue:targetLocation forTime:0.3];
             }
