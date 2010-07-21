@@ -70,7 +70,9 @@
 -(void)popUntilKey:(NSString*)target
 {
     if(![self.menuLayers.liveKeys containsObject:target]) { return; }
-        
+     
+    MenuController* currentLayer = [self.menuLayers liveObjectForKey:target];
+    
     for(NSString* key in self.menuLayers.liveKeys.reverseObjectEnumerator)
     {
         if([key isEqualToString:target]) { break; }
@@ -79,9 +81,7 @@
         
         [menuLayer killWithDisplayContainer:self.menuLayers key:key andThen:^{ [currentLayer layoutMenus]; }];
     }
-     
-    MenuController* currentLayer = [self.menuLayers liveObjectForKey:target];
-    
+         
     [currentLayer.collapsed setValue:0 forTime:0.5 andThen:nil];
     [currentLayer layoutMenus];
 
