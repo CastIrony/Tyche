@@ -62,12 +62,7 @@
         }
         
         id<Killable> topObject = [[self.hashtable objectForKey:key] lastObject];
-        
-        if([key isEqualToString:@"bet"])
-        {
-            NSLog(@"bet is alive: %i", topObject.isAlive);
-        } 
-        
+                
         if(topObject.isAlive)
         {
             [newLiveObjects addObject:topObject];
@@ -75,9 +70,13 @@
         }
     }
     
-    self.objects = newObjects;
+    NSLog(@"newObjects: %@", newObjects);
+    NSLog(@"newLiveObjects: %@", newLiveObjects);
+    NSLog(@"newLiveKeys: %@", newLiveKeys);
+    
+    self.objects     = newObjects;
     self.liveObjects = newLiveObjects;
-    self.liveKeys = newLiveKeys; 
+    self.liveKeys    = newLiveKeys; 
 }
 
 -(void)insertObject:(id<Killable>)object asFirstWithKey:(id<NSCopying>)key 
