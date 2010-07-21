@@ -70,9 +70,9 @@
         }
     }
     
-    NSLog(@"newObjects: %@", newObjects);
-    NSLog(@"newLiveObjects: %@", newLiveObjects);
-    NSLog(@"newLiveKeys: %@", newLiveKeys);
+    NSLog(@"self.objects: %@", newObjects);
+    NSLog(@"self.liveObjects: %@", newLiveObjects);
+    NSLog(@"self.liveKeys: %@", newLiveKeys);
     
     self.objects     = newObjects;
     self.liveObjects = newLiveObjects;
