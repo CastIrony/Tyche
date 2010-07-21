@@ -63,6 +63,11 @@
         
         id<Killable> topObject = [[self.hashtable objectForKey:key] lastObject];
         
+        if([key isEqualToString:@"bet"])
+        {
+            NSLog(@"bet is alive: %i", topObject.isAlive);
+        } 
+        
         if(topObject.isAlive)
         {
             [newLiveObjects addObject:topObject];
@@ -273,25 +278,6 @@
 
 -(void)pruneLiveForKey:(id)key
 {
-//    NSMutableArray* newLiveObjects = [[self.liveObjects mutableCopy] autorelease];
-//    NSMutableArray* newLiveKeys    = [[self.liveKeys    mutableCopy] autorelease];
-//        
-//    id<Killable> topObject = [[self.hashtable objectForKey:key] lastObject];
-//    
-//    if([key isEqualToString:@"bet"])
-//    {
-//        NSLog(@"bet is alive: %i", topObject.isAlive);
-//    }
-//    
-//    if(!topObject.isAlive)
-//    {
-//        [newLiveObjects removeObjectIdenticalTo:topObject];
-//        [newLiveKeys    removeObject:key];
-//    }
-//    
-//    self.liveObjects = newLiveObjects;
-//    self.liveKeys    = newLiveKeys;
-    
     [self generateObjectLists];
 }
 
