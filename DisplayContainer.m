@@ -278,6 +278,11 @@
         
     id<Killable> topObject = [[self.hashtable objectForKey:key] lastObject];
     
+    if([key isEqualToString:@"bet"])
+    {
+        NSLog(@"%@", topObject.isAlive);
+    }
+    
     if(!topObject.isAlive)
     {
         [newLiveObjects removeObjectIdenticalTo:topObject];
