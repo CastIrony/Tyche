@@ -570,7 +570,7 @@
 
 -(NSString*)description
 {
-    return [NSString stringWithFormat:@"Label with key:%@ text:%@", self.key, self.textString];
+    return [NSString stringWithFormat:@"Label with key: '%@', text:'%@'", self.key, self.textString];
 }
 
 @end
