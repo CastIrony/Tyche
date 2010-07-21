@@ -585,7 +585,7 @@
 
 -(void)killWithDisplayContainer:(DisplayContainer*)container key:(id)key andThen:(simpleBlock)work
 {
-    [self.death setValue:1 forTime:1 andThen:^{ [container pruneDeadForKey:key]; work(); }];
+    [self.death setValue:1 forTime:1 andThen:^{ [container pruneDeadForKey:key]; runLater(work); }];
     
     [container pruneLiveForKey:key];
 }
