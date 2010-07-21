@@ -115,7 +115,7 @@
         {
             if(label.layoutLocation)
             {
-                if([liveItem.key isEqualToString:@"bet"]) 
+                if([liveItem.key isEqualToString:@"bet"] && within(targetLocation.z, 2, 0.1)) 
                 {
                     NSLog(@"bet target: <%f2, %f2, %f2>", targetLocation.x, targetLocation.y, targetLocation.z); 
                 }
