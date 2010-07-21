@@ -583,6 +583,9 @@
     [self.death setValue:1 forTime:1 andThen:^{ [container pruneDeadForKey:key]; [self.owner layoutItems]; }];
     
     [container pruneLiveForKey:key];
+    
+    NSLog(@"%@ death:%@, isAlive: %i", self.key, self.death, self.isAlive);
+    
     [self.owner layoutItems];  
 }
 
