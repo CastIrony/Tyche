@@ -145,6 +145,8 @@ PlayerStatus;
     {         
         if(self.player.betTotal)
         {
+            NSLog(@"Cancel Bet Clicked");
+            
             { ChipModel* chipModel = [self.player.chips objectForKey:@"1"    ]; chipModel.betCount = 0; }
             { ChipModel* chipModel = [self.player.chips objectForKey:@"5"    ]; chipModel.betCount = 0; }
             { ChipModel* chipModel = [self.player.chips objectForKey:@"10"   ]; chipModel.betCount = 0; }
@@ -157,6 +159,8 @@ PlayerStatus;
         }
         else 
         {
+            NSLog(@"All In Clicked");
+            
             { ChipModel* chipModel = [self.player.chips objectForKey:@"1"    ]; chipModel.betCount = chipModel.chipCount; }
             { ChipModel* chipModel = [self.player.chips objectForKey:@"5"    ]; chipModel.betCount = chipModel.chipCount; }
             { ChipModel* chipModel = [self.player.chips objectForKey:@"10"   ]; chipModel.betCount = chipModel.chipCount; }
