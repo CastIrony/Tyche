@@ -280,7 +280,7 @@
     
     if([key isEqualToString:@"bet"])
     {
-        NSLog(@"%@", topObject.isAlive);
+        NSLog(@"bet is alive: %i", topObject.isAlive);
     }
     
     if(!topObject.isAlive)

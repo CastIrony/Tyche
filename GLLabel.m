@@ -582,11 +582,6 @@
 {
     [self.death setValue:1 forTime:1 andThen:^{ [container pruneDeadForKey:key]; [self.owner layoutItems]; }];
     
-    if([key isEqualToString:@"bet"])
-    {
-        NSLog(@"foo");
-    }
-    
     [container pruneLiveForKey:key];
     [self.owner layoutItems];  
 }
