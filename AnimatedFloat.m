@@ -97,9 +97,6 @@
 {
     NSTimeInterval now = CFAbsoluteTimeGetCurrent();
     
-    if(now > self.startTime && !self.hasStarted) { self.hasStarted = YES; }
-    if(now > self.endTime   && !self.hasEnded)   { self.hasEnded   = YES; }
-    
     if(now < self.startTime) { return self.startValue; }
     if(now > self.endTime)   { return self.endValue; }
     
