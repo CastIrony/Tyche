@@ -6,15 +6,14 @@
 
 @property (nonatomic, assign)   GLfloat        startValue;
 @property (nonatomic, assign)   NSTimeInterval startTime;
-@property (nonatomic, assign)   BOOL           hasStarted;
 
 @property (nonatomic, assign)   GLfloat        endValue;
 @property (nonatomic, assign)   NSTimeInterval endTime;
-@property (nonatomic, assign)   BOOL           hasEnded;
 
 @property (nonatomic, assign)   AnimationCurve curve;
 
-@property (nonatomic, readonly) GLfloat      value;
+@property (nonatomic, readonly) GLfloat value;
+@property (nonatomic, readonly) BOOL    hasEnded;
 
 +(id)withValue:(GLfloat)value;
 

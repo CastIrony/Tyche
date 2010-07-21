@@ -580,12 +580,12 @@
 @dynamic isDead;
 @dynamic isAlive;
 
--(BOOL)isAlive { return (self.death.endTime < CFAbsoluteTimeGetCurrent()) && within(self.death.value, 0, 0.001); }
--(BOOL)isDead  { return (self.death.endTime < CFAbsoluteTimeGetCurrent()) && within(self.death.value, 1, 0.001); }
+-(BOOL)isAlive { return (self.death.hasEnded) && within(self.death.value, 0, 0.001); }
+-(BOOL)isDead  { return (self.death.hasEnded) && within(self.death.value, 1, 0.001); }
 
--(void)killWithDisplayContainer:(DisplayContainer*)container andKey:(id)key
+-(void)killWithDisplayContainer:(DisplayContainer*)container key:(id)key andThen:(simpleBlock)work
 {
-    [self.death setValue:1 forTime:1 andThen:^{ [container pruneDeadForKey:key]; [self.owner layoutItems]; }];
+    [self.death setValue:1 forTime:1 andThen:^{ [container pruneDeadForKey:key]; work(); }];
     
     [container pruneLiveForKey:key];
 }

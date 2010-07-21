@@ -4,15 +4,14 @@
 
 @synthesize startValue = _startValue;
 @synthesize startTime  = _startTime;
-@synthesize hasStarted = _hasStarted;
 
 @synthesize endValue   = _endValue;
 @synthesize endTime    = _endTime;
-@synthesize hasEnded   = _hasEnded;
 
 @synthesize curve      = _curve; 
 
 @dynamic value;
+@dynamic hasEnded;
 
 -(id)initWithStartValue:(GLfloat)startValue endValue:(GLfloat)endValue startTime:(NSTimeInterval)startTime endTime:(NSTimeInterval)endTime
 {
@@ -114,6 +113,11 @@
     if(self.curve == AnimationEaseInOut) { delta = (3 * delta2 - 2 * delta3); }
     
     return (1.0 - delta) * self.startValue + (delta) * self.endValue;
+}
+
+-(BOOL)hasEnded
+{
+    return self.endTime < CFAbsoluteTimeGetCurrent();
 }
 
 @end
