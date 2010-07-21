@@ -111,12 +111,12 @@
     {
         Vector3D targetLocation = Vector3DMake(0, 0, position + (liveItem.layoutSize.height / 2));
         
+        NSLog(@"%@ target: <%f2, %f2, %f2>", liveItem.key, targetLocation.x, targetLocation.y, targetLocation.z); 
+
         for(GLLabel* label in [self.items objectsForKey:liveItem.key])
         {
             if(label.layoutLocation)
             {
-                NSLog(@"%@ target: <%f2, %f2, %f2>", liveItem.key, targetLocation.x, targetLocation.y, targetLocation.z); 
-                
                 label.layoutLocation = [AnimatedVector3D withStartValue:label.layoutLocation.value endValue:targetLocation forTime:0.3];
             }
             else 
