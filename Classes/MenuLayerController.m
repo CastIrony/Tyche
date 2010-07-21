@@ -77,7 +77,7 @@
         
         MenuController* menuLayer = [self.menuLayers liveObjectForKey:key];
         
-        [menuLayer killWithDisplayContainer:self.menuLayers andKey:key];
+        [menuLayer killWithDisplayContainer:self.menuLayers key:key andThen:^{ [currentLayer layoutMenus]; }];
     }
      
     MenuController* currentLayer = [self.menuLayers liveObjectForKey:target];

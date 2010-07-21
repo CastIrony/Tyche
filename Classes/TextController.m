@@ -83,7 +83,7 @@
     {
         if(![liveKeys containsObject:key])
         {                
-            [[self.items liveObjectForKey:key] killWithDisplayContainer:self.items andKey:key];
+            [[self.items liveObjectForKey:key] killWithDisplayContainer:self.items key:key andThen:^{ [self layoutItems]; }];
         }
     }
     
