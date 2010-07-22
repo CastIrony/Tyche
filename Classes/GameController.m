@@ -178,7 +178,7 @@
 {
     if(self.player.cardsToRemove.count > 0)
     {
-        CardModel* card = [self.player.cardsToRemove objectAtIndex:0];
+        CardModel* card = [self.player.cardsToRemove lastObject];
 
         [self.player.cards removeObject:card];
         [self.player.cardsToRemove removeObject:card];
