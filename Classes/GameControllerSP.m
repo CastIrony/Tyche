@@ -124,55 +124,23 @@ PlayerStatus;
         
         [self updatePlayerAndThen:nil];
     }
-    
-    if([key isEqual:@"draw"]) 
+    else if([key isEqual:@"draw"]) 
     { 
-        if(self.player.cards.count)
-        {
-            self.player.status = PlayerStatusShouldDrawCards;
-            
-            [self updatePlayerAndThen:nil];
-        }
-        else
-        {
-            self.player.status = PlayerStatusShouldDealCards;
-
-            [self updatePlayerAndThen:nil];
-        }
+        self.player.status = self.player.cards.count ? PlayerStatusShouldDrawCards : PlayerStatusShouldDealCards;
+        
+        [self updatePlayerAndThen:nil];
     }
-    
-    if([key isEqual:@"cancel_bet"]) 
+    else if([key isEqual:@"cancel_bet"]) 
     {         
-        if(self.player.betTotal)
-        {
-            NSLog(@"Cancel Bet Clicked");
-            
-            { ChipModel* chipModel = [self.player.chips objectForKey:@"1"    ]; chipModel.betCount = 0; }
-            { ChipModel* chipModel = [self.player.chips objectForKey:@"5"    ]; chipModel.betCount = 0; }
-            { ChipModel* chipModel = [self.player.chips objectForKey:@"10"   ]; chipModel.betCount = 0; }
-            { ChipModel* chipModel = [self.player.chips objectForKey:@"25"   ]; chipModel.betCount = 0; }
-            { ChipModel* chipModel = [self.player.chips objectForKey:@"100"  ]; chipModel.betCount = 0; }
-            { ChipModel* chipModel = [self.player.chips objectForKey:@"500"  ]; chipModel.betCount = 0; }
-            { ChipModel* chipModel = [self.player.chips objectForKey:@"1000" ]; chipModel.betCount = 0; }
-            { ChipModel* chipModel = [self.player.chips objectForKey:@"2500" ]; chipModel.betCount = 0; }
-            { ChipModel* chipModel = [self.player.chips objectForKey:@"10000"]; chipModel.betCount = 0; }
-        }
-        else 
-        {
-            NSLog(@"All In Clicked");
-            
-            { ChipModel* chipModel = [self.player.chips objectForKey:@"1"    ]; chipModel.betCount = chipModel.chipCount; }
-            { ChipModel* chipModel = [self.player.chips objectForKey:@"5"    ]; chipModel.betCount = chipModel.chipCount; }
-            { ChipModel* chipModel = [self.player.chips objectForKey:@"10"   ]; chipModel.betCount = chipModel.chipCount; }
-            { ChipModel* chipModel = [self.player.chips objectForKey:@"25"   ]; chipModel.betCount = chipModel.chipCount; }
-            { ChipModel* chipModel = [self.player.chips objectForKey:@"100"  ]; chipModel.betCount = chipModel.chipCount; }
-            { ChipModel* chipModel = [self.player.chips objectForKey:@"500"  ]; chipModel.betCount = chipModel.chipCount; }
-            { ChipModel* chipModel = [self.player.chips objectForKey:@"1000" ]; chipModel.betCount = chipModel.chipCount; }
-            { ChipModel* chipModel = [self.player.chips objectForKey:@"2500" ]; chipModel.betCount = chipModel.chipCount; }
-            { ChipModel* chipModel = [self.player.chips objectForKey:@"10000"]; chipModel.betCount = chipModel.chipCount; }
-        }
-
-        [self saveData];
+        { ChipModel* chipModel = [self.player.chips objectForKey:@"1"    ]; chipModel.betCount = self.player.betTotal ? 0 : chipModel.chipCount; }
+        { ChipModel* chipModel = [self.player.chips objectForKey:@"5"    ]; chipModel.betCount = self.player.betTotal ? 0 : chipModel.chipCount; }
+        { ChipModel* chipModel = [self.player.chips objectForKey:@"10"   ]; chipModel.betCount = self.player.betTotal ? 0 : chipModel.chipCount; }
+        { ChipModel* chipModel = [self.player.chips objectForKey:@"25"   ]; chipModel.betCount = self.player.betTotal ? 0 : chipModel.chipCount; }
+        { ChipModel* chipModel = [self.player.chips objectForKey:@"100"  ]; chipModel.betCount = self.player.betTotal ? 0 : chipModel.chipCount; }
+        { ChipModel* chipModel = [self.player.chips objectForKey:@"500"  ]; chipModel.betCount = self.player.betTotal ? 0 : chipModel.chipCount; }
+        { ChipModel* chipModel = [self.player.chips objectForKey:@"1000" ]; chipModel.betCount = self.player.betTotal ? 0 : chipModel.chipCount; }
+        { ChipModel* chipModel = [self.player.chips objectForKey:@"2500" ]; chipModel.betCount = self.player.betTotal ? 0 : chipModel.chipCount; }
+        { ChipModel* chipModel = [self.player.chips objectForKey:@"10000"]; chipModel.betCount = self.player.betTotal ? 0 : chipModel.chipCount; }
 
         [self updatePlayerAndThen:nil];
     }   
@@ -216,11 +184,13 @@ PlayerStatus;
     [self updatePlayerAndThen:nil];
 }
 
--(void)updateStatus
+-(void)updatePlayerAndThen:(simpleBlock)work
 {
+    [super updatePlayerAndThen:nil];
+    
     TextController* actions = [self.renderer.textControllers objectForKey:@"actions"];
     
-    NSMutableArray* labels = [[[NSMutableArray alloc] init] autorelease];
+    NSMutableArray* labels = [NSMutableArray array];
     
     if(self.player.status == PlayerStatusNoCards)
     {
@@ -337,8 +307,6 @@ PlayerStatus;
     }
 
     [actions fillWithDictionaries:labels];
-    
-    [super updatePlayerAndThen:nil];
 }
 
 -(void)cardFrontTouched:(int)card
