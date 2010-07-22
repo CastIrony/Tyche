@@ -7,6 +7,7 @@
 
 @property (nonatomic, assign) GameRenderer*     renderer;
 @property (nonatomic, assign) GLfloat           bendFactor;
+@property (nonatomic, readonly) GLfloat           angleFlip;
 
 @property (nonatomic, retain) DisplayContainer* cards;
 

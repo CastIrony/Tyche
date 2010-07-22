@@ -19,11 +19,18 @@
 @synthesize finalIndex      = _finalIndex;
 
 @dynamic bendFactor;
+@dynamic angleFlip;
 
 -(GLfloat)bendFactor
 {
     return [[[self.cards.liveObjects objectAtIndex:0] bendFactor] value];
 }
+
+-(GLfloat)angleFlip
+{
+    return [[[self.cards.liveObjects objectAtIndex:0] angleFlip] value];
+}
+
 
 -(void)setBendFactor:(GLfloat)bendFactor
 {

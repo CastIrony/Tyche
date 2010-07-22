@@ -353,7 +353,7 @@
         TinyProfilerStop(9);
         TinyProfilerStart(10);
         
-        if(cameraPitch > 45 || self.camera.status == CameraStatusCardsFlipped) { [self.cardGroup drawFronts]; }
+        if(cameraPitch > 45 || self.cardGroup.angleFlip > 90) { [self.cardGroup drawFronts]; }
         
         TinyProfilerStop(10);
         TinyProfilerStart(11);
