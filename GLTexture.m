@@ -123,7 +123,6 @@ static GLTexturePixelFormat defaultAlphaPixelFormat = kGLTexturePixelFormat_Defa
 	if(image == NULL) 
     {
 		[self release];
-		NSLog(@"Image is Null");
 		return nil;
 	}
 	

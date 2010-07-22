@@ -91,7 +91,6 @@
 	
     if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES)
 	{
-		NSLog(@"Failed to make complete framebuffer object %x", glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES));
         return NO;
     }
         
@@ -427,8 +426,6 @@
             isUpright = YES;
             
             [self.menuLayerController showMenus];
-            
-            //NSLog(@"Orientation Upright!");
         }
     }
     else if(acceleration.x > -0.6 && acceleration.x < 0.6 && acceleration.y > -1.6 && acceleration.y < -0.4)
@@ -442,8 +439,6 @@
             isUpright = NO;
             
             if(self.gameController) { [self.menuLayerController hideMenus]; }
-            
-            //NSLog(@"Orientation Not Upright!");
         }
         
         if(self.camera.isAutomatic)

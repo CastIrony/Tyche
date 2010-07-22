@@ -158,9 +158,7 @@
     [self.player.cards removeObject:card];
     
     [self.player.cards insertObject:card atIndex:finalIndex];
-    
-    //NSLog(@"%@", self.player.cards);
-    
+        
     [self saveData];
 }
 
