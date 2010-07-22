@@ -132,15 +132,17 @@ PlayerStatus;
     }
     else if([key isEqual:@"cancel_bet"]) 
     {         
-        { ChipModel* chipModel = [self.player.chips objectForKey:@"1"    ]; chipModel.betCount = self.player.betTotal ? 0 : chipModel.chipCount; }
-        { ChipModel* chipModel = [self.player.chips objectForKey:@"5"    ]; chipModel.betCount = self.player.betTotal ? 0 : chipModel.chipCount; }
-        { ChipModel* chipModel = [self.player.chips objectForKey:@"10"   ]; chipModel.betCount = self.player.betTotal ? 0 : chipModel.chipCount; }
-        { ChipModel* chipModel = [self.player.chips objectForKey:@"25"   ]; chipModel.betCount = self.player.betTotal ? 0 : chipModel.chipCount; }
-        { ChipModel* chipModel = [self.player.chips objectForKey:@"100"  ]; chipModel.betCount = self.player.betTotal ? 0 : chipModel.chipCount; }
-        { ChipModel* chipModel = [self.player.chips objectForKey:@"500"  ]; chipModel.betCount = self.player.betTotal ? 0 : chipModel.chipCount; }
-        { ChipModel* chipModel = [self.player.chips objectForKey:@"1000" ]; chipModel.betCount = self.player.betTotal ? 0 : chipModel.chipCount; }
-        { ChipModel* chipModel = [self.player.chips objectForKey:@"2500" ]; chipModel.betCount = self.player.betTotal ? 0 : chipModel.chipCount; }
-        { ChipModel* chipModel = [self.player.chips objectForKey:@"10000"]; chipModel.betCount = self.player.betTotal ? 0 : chipModel.chipCount; }
+        BOOL hasBetAlready = self.player.betTotal > 0;
+        
+        { ChipModel* chipModel = [self.player.chips objectForKey:@"1"    ]; chipModel.betCount = hasBetAlready ? 0 : chipModel.chipCount; }
+        { ChipModel* chipModel = [self.player.chips objectForKey:@"5"    ]; chipModel.betCount = hasBetAlready ? 0 : chipModel.chipCount; }
+        { ChipModel* chipModel = [self.player.chips objectForKey:@"10"   ]; chipModel.betCount = hasBetAlready ? 0 : chipModel.chipCount; }
+        { ChipModel* chipModel = [self.player.chips objectForKey:@"25"   ]; chipModel.betCount = hasBetAlready ? 0 : chipModel.chipCount; }
+        { ChipModel* chipModel = [self.player.chips objectForKey:@"100"  ]; chipModel.betCount = hasBetAlready ? 0 : chipModel.chipCount; }
+        { ChipModel* chipModel = [self.player.chips objectForKey:@"500"  ]; chipModel.betCount = hasBetAlready ? 0 : chipModel.chipCount; }
+        { ChipModel* chipModel = [self.player.chips objectForKey:@"1000" ]; chipModel.betCount = hasBetAlready ? 0 : chipModel.chipCount; }
+        { ChipModel* chipModel = [self.player.chips objectForKey:@"2500" ]; chipModel.betCount = hasBetAlready ? 0 : chipModel.chipCount; }
+        { ChipModel* chipModel = [self.player.chips objectForKey:@"10000"]; chipModel.betCount = hasBetAlready ? 0 : chipModel.chipCount; }
 
         [self updatePlayerAndThen:nil];
     }   
