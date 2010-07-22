@@ -178,11 +178,11 @@
     {
         CardModel* card = [self.player.cardsToRemove lastObject];
 
+        NSLog(@"Discarding Card '%@'", card);
+
         [self.player.cards removeObject:card];
         [self.player.cardsToRemove removeObject:card];
-        
-        NSLog(@"Discarding Card '%@'", card);
-        
+                
         BOOL isLastCard = self.player.cardsToRemove.count == 0 && self.player.cardsToAdd.count == 0;
         
         [self.renderer.cardGroup updateCardsWithKeys:self.player.cardKeys held:self.player.heldKeys andThen:isLastCard ? work: nil];
@@ -192,12 +192,12 @@
     else if(self.player.cardsToAdd.count > 0)
     {
         CardModel* card = [self.player.cardsToAdd objectAtIndex:0];
-        
+
+        NSLog(@"Dealing Card '%@'", card);
+
         [self.player.cards insertObject:card atIndex:0];
         [self.player.cardsToAdd removeObject:card];
-        
-        NSLog(@"Dealing Card '%@'", card);
-        
+                
         BOOL isLastCard = (self.player.cardsToRemove.count == 0) && (self.player.cardsToAdd.count == 0);
         
         [self.renderer.cardGroup updateCardsWithKeys:self.player.cardKeys held:self.player.heldKeys andThen:isLastCard ? work: nil];
