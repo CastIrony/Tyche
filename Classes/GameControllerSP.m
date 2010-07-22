@@ -276,7 +276,7 @@ PlayerStatus;
     {
         self.player.status = PlayerStatusShowingCards;
         
-        [self.renderer.cardGroup flipCardsAndThen:^{ self.player.status = PlayerStatusShownCards; [self updateStatus]; }];
+        [self.renderer.cardGroup flipCardsAndThen:^{ self.player.status = PlayerStatusShownCards; [self updatePlayerAndThen:nil]; }];
     }
     else if(self.player.status == PlayerStatusShowingCards)
     {
@@ -294,7 +294,7 @@ PlayerStatus;
         ^{ 
             self.player.cardsToRemove = [self.player.cards mutableCopy];
             
-            [self updateCardsAndThen:^{ self.player.status = PlayerStatusNoCards; [self updateStatus]; }]; 
+            [self updateCardsAndThen:^{ self.player.status = PlayerStatusNoCards; [self updatePlayerAndThen:nil]; }]; 
         }];
     }
     else if(self.player.status == PlayerStatusReturningCards)
@@ -309,20 +309,13 @@ PlayerStatus;
     [actions fillWithDictionaries:labels];
 }
 
--(void)cardFrontTouched:(int)card
-{ 
-    [super cardFrontTouched:card];
-    
-    [self updateStatus];
-}
-
 -(void)cardBackTouched:(int)card 
 {
     if(self.renderer.camera.status == CameraStatusCardsFlipped)
     {
         self.player.status = PlayerStatusShouldReturnCards;
         
-        [self updateStatus];
+        [self updatePlayerAndThen:nil];
     }
     else 
     {
