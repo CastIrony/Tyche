@@ -67,7 +67,7 @@
     
     for(GLCard* card in self.cards.liveObjects)
     {
-        [card.location  setValue:(4 * i + 8) forTime:1 andThen:nil];
+        [card.location  setValue:(4 * i - 8) forTime:1 andThen:nil];
         [card.angleFlip setValue:180          forTime:1 andThen:(i == 0) ? work : nil];
                 
         i++;
