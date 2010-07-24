@@ -59,8 +59,8 @@
 @dynamic layoutSize;
 @dynamic borderSize;
 
--(CGSize)layoutSize { return self.hasBorder ? CGSizeMake(self.labelSize.width + 1, self.labelSize.height + 2) : self.labelSize; }
--(CGSize)borderSize { return self.hasBorder ? CGSizeMake(self.labelSize.width + 1, self.labelSize.height + 1) : self.labelSize; }
+-(CGSize)layoutSize { return self.hasBorder ? CGSizeMake(self.labelSize.width + 0.5, self.labelSize.height + 1) : self.labelSize; }
+-(CGSize)borderSize { return self.hasBorder ? CGSizeMake(self.labelSize.width + 0.5, self.labelSize.height + 0.5) : self.labelSize; }
 
 -(BOOL)isEqual:(id)object
 {

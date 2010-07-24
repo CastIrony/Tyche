@@ -29,7 +29,7 @@
     
     [self.styles setObject:[NSNumber numberWithFloat:0.0]                                         forKey:@"fadeMargin"]; 
     [self.styles setObject:[UIFont   fontWithName:@"Futura-Medium" size:20]                      forKey:@"font"];
-    [self.styles setObject:[NSValue  valueWithCGSize:CGSizeMake(3.75, 0.35)]                      forKey:@"labelSize"];
+    [self.styles setObject:[NSValue  valueWithCGSize:CGSizeMake(3.75, 0.42)]                      forKey:@"labelSize"];
     [self.styles setObject:[NSValue  valueWithBytes:&colorTouched objCType:@encode(Color3D)] forKey:@"colorNormal"];
     [self.styles setObject:[NSValue  valueWithBytes:&colorTouched objCType:@encode(Color3D)] forKey:@"colorTouched"];
     [self.styles setObject:[NSNumber numberWithBool:NO] forKey:@"hasShadow"]; 
@@ -44,7 +44,7 @@
         [label setObject:[UIFont fontWithName:@"Futura-Medium" size:30] forKey:@"font"];
         [label setObject:[NSValue  valueWithBytes:&colorNormal  objCType:@encode(Color3D)] forKey:@"colorNormal"];
         [label setObject:[NSValue  valueWithBytes:&colorTouched objCType:@encode(Color3D)] forKey:@"colorTouched"];
-        [label setObject:[NSValue valueWithCGSize:CGSizeMake(3.5, 0.7)] forKey:@"labelSize"];
+        [label setObject:[NSValue valueWithCGSize:CGSizeMake(3.5, 0.84)] forKey:@"labelSize"];
 
         [labels addObject:label]; 
     }

@@ -33,8 +33,8 @@
         
         [self.styles setObject:[NSNumber numberWithFloat:0.1]                                  forKey:@"fadeMargin"]; 
         [self.styles setObject:[NSNumber numberWithBool:YES]                                   forKey:@"hasShadow"];
-        [self.styles setObject:[UIFont   fontWithName:@"Futura-Medium" size:25]               forKey:@"font"];
-        [self.styles setObject:[NSValue  valueWithCGSize:CGSizeMake(6, 0.75)]                  forKey:@"labelSize"];
+        [self.styles setObject:[UIFont   fontWithName:@"Futura-Medium" size:25]                forKey:@"font"];
+        [self.styles setObject:[NSValue  valueWithCGSize:CGSizeMake(6, 0.9)]                   forKey:@"labelSize"];
         [self.styles setObject:[NSValue  valueWithBytes:&labelColor objCType:@encode(Color3D)] forKey:@"colorNormal"];
         [self.styles setObject:[NSValue  valueWithBytes:&labelColor objCType:@encode(Color3D)] forKey:@"colorTouched"];
 
@@ -65,7 +65,7 @@
             NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
             
             [label setObject:[NSString stringWithFormat:@"Bet: %d", self.betTotal] forKey:@"textString"];     
-            [label setObject:[NSValue  valueWithCGSize:CGSizeMake(6, 0.65)] forKey:@"labelSize"];
+            [label setObject:[NSValue  valueWithCGSize:CGSizeMake(6, 0.78)] forKey:@"labelSize"];
             [label setObject:@"bet" forKey:@"key"]; 
             
             [labels addObject:label]; 
@@ -77,7 +77,7 @@
             
             [label setObject:[NSNumber numberWithBool:YES]  forKey:@"hasBorder"];
             [label setObject:[NSNumber numberWithFloat:0.3] forKey:@"fadeMargin"]; 
-            [label setObject:[NSValue  valueWithCGSize:CGSizeMake(3, 0.75)] forKey:@"labelSize"];
+            [label setObject:[NSValue  valueWithCGSize:CGSizeMake(3, 0.9)] forKey:@"labelSize"];
             [label setObject:@"cancel_bet" forKey:@"key"]; 
             [label setObject:@"CANCEL"     forKey:@"textString"];
             
@@ -91,7 +91,7 @@
         [label setObject:[NSNumber numberWithBool:YES]  forKey:@"hasBorder"];
         [label setObject:[NSNumber numberWithFloat:0.3] forKey:@"fadeMargin"]; 
         
-        [label setObject:[NSValue  valueWithCGSize:CGSizeMake(3, 0.75)] forKey:@"labelSize"];
+        [label setObject:[NSValue  valueWithCGSize:CGSizeMake(3, 0.9)] forKey:@"labelSize"];
         
         [label setObject:@"cancel_bet" forKey:@"key"]; 
         [label setObject:@"ALL IN" forKey:@"textString"];

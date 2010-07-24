@@ -16,7 +16,7 @@
         [self.styles setObject:[NSNumber numberWithFloat:0.1]                                  forKey:@"fadeMargin"]; 
         [self.styles setObject:[NSNumber numberWithBool:YES]                                   forKey:@"hasShadow"];
         [self.styles setObject:[UIFont   fontWithName:@"Futura-Medium" size:30]               forKey:@"font"];
-        [self.styles setObject:[NSValue  valueWithCGSize:CGSizeMake(15, 0.8)]                  forKey:@"labelSize"];
+        [self.styles setObject:[NSValue  valueWithCGSize:CGSizeMake(15, 0.96)]                  forKey:@"labelSize"];
         [self.styles setObject:[NSValue  valueWithBytes:&labelColor objCType:@encode(Color3D)] forKey:@"colorNormal"];
         [self.styles setObject:[NSValue  valueWithBytes:&labelColor objCType:@encode(Color3D)] forKey:@"colorTouched"];
         

@@ -25,7 +25,7 @@
     
     [self.styles setObject:[NSNumber numberWithFloat:0.0]                                         forKey:@"fadeMargin"]; 
     [self.styles setObject:[UIFont   fontWithName:@"Futura-Medium" size:20]                      forKey:@"font"];
-    [self.styles setObject:[NSValue  valueWithCGSize:CGSizeMake(3.75, 0.35)]                      forKey:@"labelSize"];
+    [self.styles setObject:[NSValue  valueWithCGSize:CGSizeMake(3.75, 0.42)]                      forKey:@"labelSize"];
     [self.styles setObject:[NSValue  valueWithBytes:&colorNormal  objCType:@encode(Color3D)] forKey:@"colorNormal"];
     [self.styles setObject:[NSValue  valueWithBytes:&colorTouched objCType:@encode(Color3D)] forKey:@"colorTouched"];
     
@@ -69,7 +69,7 @@
     }
     
     [(NSMutableDictionary*)[labels objectAtIndex:0] setObject:[UIFont  fontWithName:@"Futura-Medium" size:35] forKey:@"font"];
-    [(NSMutableDictionary*)[labels objectAtIndex:0] setObject:[NSValue valueWithCGSize:CGSizeMake(3.75, 0.5)]  forKey:@"labelSize"];
+    [(NSMutableDictionary*)[labels objectAtIndex:0] setObject:[NSValue valueWithCGSize:CGSizeMake(3.75, 0.6)]  forKey:@"labelSize"];
     
     [self fillWithDictionaries:labels];
 }
