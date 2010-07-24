@@ -23,12 +23,12 @@
 
 -(GLfloat)bendFactor
 {
-    return [[[self.cards.liveObjects objectAtIndex:0] bendFactor] value];
+    return self.cards.liveObjects.count ? [[[self.cards.liveObjects objectAtIndex:0] bendFactor] value] : 0;
 }
 
 -(GLfloat)angleFlip
 {
-    return [[[self.cards.liveObjects objectAtIndex:0] angleFlip] value];
+    return self.cards.liveObjects.count ? [[[self.cards.liveObjects objectAtIndex:0] angleFlip] value] : 0;
 }
 
 
