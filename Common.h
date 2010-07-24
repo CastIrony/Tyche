@@ -3,7 +3,7 @@
 #import "TinyProfiler.h"
 
 #define TRANSACTION_BEGIN glPushMatrix(); @try
-#define TRANSACTION_END @catch(NSException* exception) { NSLog(@"Error in transaction: %@", exception ); } @finally { glPopMatrix(); }
+#define TRANSACTION_END @catch(NSException* exception) { NSLog(@"Error in transaction: %@", exception.callStackSymbols ); } @finally { glPopMatrix(); }
 
 typedef void(^simpleBlock)(void);
 
