@@ -116,13 +116,13 @@
     
     NSArray* liveKeys = [[self.cards.liveKeys copy] autorelease];
     
-    int i = 0;
+    int i = keys.count - 1;
     
     if(keys.count == 0) { runLater(work); }
     
     NSLog(@"Cards: %@", keys);
     
-    for(NSString* key in keys.reverseObjectEnumerator)
+    for(NSString* key in keys)
     {
         if([self.cards.liveKeys containsObject:key])
         {
@@ -140,14 +140,14 @@
 
             [card.dealt setValue:1 forTime:1 andThen:work];
             
-            card.angleJitter    = randomFloat(-3.0, 3.0);
+            card.angleJitter = randomFloat(-3.0, 3.0);
             
             card.isHeld = [AnimatedFloat withValue:[heldKeys containsObject:key]];
 
             [self.cards insertObject:card withKey:key atIndex:i];
         }
         
-        i++;
+        i--;
     }
     
     for(NSString* key in liveKeys)
