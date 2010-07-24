@@ -45,7 +45,7 @@
         
         [label setObject:@"Tyche"        forKey:@"textString"];          
         [label setObject:[NSValue valueWithCGSize:CGSizeMake(181, 109)]                            forKey:@"textSize"]; 
-        [label setObject:[NSValue valueWithCGSize:CGSizeMake(3.75, 1.68)]                            forKey:@"labelSize"];
+        [label setObject:[NSValue valueWithCGSize:CGSizeMake(3.75, 1.5)]                            forKey:@"labelSize"];
         
         [label setObject:@"logo" forKey:@"key"]; 
         
