@@ -130,7 +130,7 @@
             
             GLCard* card = [self.cards liveObjectForKey:key];
             
-            card.location = [GLCard withValue:0];
+            card.location = [AnimatedFloat withValue:0];
             
             [card.isHeld setValue:[heldKeys containsObject:key] forTime:1 andThen:work];
         }
@@ -140,7 +140,7 @@
             
             card.cardGroup = self;
 
-            card.location = [GLCard withValue:0];
+            card.location = [AnimatedFloat withValue:0];
 
             [card.dealt setValue:1 forTime:1 andThen:work];
             
