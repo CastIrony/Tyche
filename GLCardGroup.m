@@ -116,7 +116,7 @@
     
     NSArray* liveKeys = [[self.cards.liveKeys copy] autorelease];
     
-    int i = keys.count - 1;
+    int i = 0;
     
     if(keys.count == 0) { runLater(work); }
     
@@ -147,7 +147,7 @@
             [self.cards insertObject:card withKey:key atIndex:i];
         }
         
-        i--;
+        i++;
     }
     
     for(NSString* key in liveKeys)
