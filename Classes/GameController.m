@@ -249,7 +249,7 @@
     { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"2500" ]; chip.maxCount = [[self.player.chips objectForKey:@"2500" ] chipCount]; [chip.count setValue:[[self.player.chips objectForKey:@"2500" ] displayCount] withSpeed:6 andThen:nil]; if(chip.count.endTime > lastToFinish.count.endTime) { lastToFinish = chip; } }    
     { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"10000"]; chip.maxCount = [[self.player.chips objectForKey:@"10000"] chipCount]; [chip.count setValue:[[self.player.chips objectForKey:@"10000"] displayCount] withSpeed:6 andThen:nil]; if(chip.count.endTime > lastToFinish.count.endTime) { lastToFinish = chip; } }
 
-    [lastToFinish.count register:work];
+    [lastToFinish.count registerEvent:work];
 }
 
 -(NSString*)scoreHand
