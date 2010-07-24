@@ -120,6 +120,8 @@
     
     if(keys.count == 0) { runLater(work); }
     
+    NSLog(@"Cards: %@", keys);
+    
     for(NSString* key in keys)
     {
         if([self.cards.liveKeys containsObject:key])
