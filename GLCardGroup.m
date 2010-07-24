@@ -95,7 +95,7 @@
     
     GLfloat position = 0;
     
-    for(GLCard* card in self.cards.liveObjects)
+    for(GLCard* card in self.cards.liveObjects.reverseObjectEnumerator)
     {
         card.position = position;
         
@@ -171,7 +171,7 @@
 
 -(void)drawFronts
 {
-    for(GLCard* card in self.cards.objects.reverseObjectEnumerator) 
+    for(GLCard* card in self.cards.objects) 
     { 
         [card drawFront]; 
     }
@@ -179,7 +179,7 @@
 
 -(void)drawBacks
 {
-    for(GLCard* card in self.cards.objects) 
+    for(GLCard* card in self.cards.objects.reverseObjectEnumerator) 
     { 
         [card drawBack]; 
     }
