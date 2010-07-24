@@ -129,9 +129,7 @@
             [self.cards moveKey:key toIndex:i];
             
             GLCard* card = [self.cards liveObjectForKey:key];
-            
-            card.location = [AnimatedFloat withValue:i];
-            
+                        
             [card.isHeld setValue:[heldKeys containsObject:key] forTime:1 andThen:work];
         }
         else
@@ -139,8 +137,6 @@
             GLCard* card = [GLCard cardWithKey:key];
             
             card.cardGroup = self;
-
-            card.location = [AnimatedFloat withValue:i];
 
             [card.dealt setValue:1 forTime:1 andThen:work];
             
