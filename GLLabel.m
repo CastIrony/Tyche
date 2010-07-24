@@ -102,8 +102,7 @@
     }
     
     [label setValuesForKeysWithDictionary:styles];
-    
-    label.labelSize = CGSizeMake(label.labelSize.width, label.labelSize.height * 1.25);
+
  
     [label makeMeshes];
 
