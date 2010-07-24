@@ -126,7 +126,7 @@
     {
         if([self.cards.liveKeys containsObject:key])
         {
-            [self.cards moveKey:key toIndex:keys - i - 1];
+            [self.cards moveKey:key toIndex:keys.count - i - 1];
             
             GLCard* card = [self.cards liveObjectForKey:key];
                         
@@ -144,7 +144,7 @@
             
             card.isHeld = [AnimatedFloat withValue:[heldKeys containsObject:key]];
 
-            [self.cards insertObject:card withKey:key atIndex:keys - i - 1];
+            [self.cards insertObject:card withKey:key atIndex:keys.count - i - 1];
         }
         
         i++;
