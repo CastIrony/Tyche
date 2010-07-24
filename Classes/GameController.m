@@ -189,7 +189,7 @@
         
         [self.renderer.cardGroup updateCardsWithKeys:self.player.cardKeys held:self.player.heldKeys andThen:isLastCard ? work: nil];
         
-        runAfterDelay(1, ^{ [self updateCardsAndThen:work]; });
+        runAfterDelay(3, ^{ [self updateCardsAndThen:work]; });
     }
     else if(self.player.cardsToAdd.count > 0)
     {
@@ -206,7 +206,7 @@
         
         [self.renderer.cardGroup updateCardsWithKeys:self.player.cardKeys held:self.player.heldKeys andThen:isLastCard ? work: nil];
         
-        runAfterDelay(1, ^{ [self updateCardsAndThen:work]; });
+        runAfterDelay(3, ^{ [self updateCardsAndThen:work]; });
     }
 }
 
