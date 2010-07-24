@@ -139,7 +139,9 @@
             GLCard* card = [GLCard cardWithKey:key];
             
             card.cardGroup = self;
-            
+
+            [card.location setValue:i forTime:1 andThen:nil];
+
             [card.dealt setValue:1 forTime:1 andThen:work];
             
             card.angleJitter    = randomFloat(-3.0, 3.0);
