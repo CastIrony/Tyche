@@ -160,7 +160,7 @@
     [TextureController setTexture:[[[GLTexture alloc] initWithPVRTCFile:@"clubsflat.pvr4"   ] autorelease] forKey:@"suit2"];
     [TextureController setTexture:[[[GLTexture alloc] initWithPVRTCFile:@"spadesflat.pvr4"  ] autorelease] forKey:@"suit3"];
     
-    UIFont* font = [UIFont fontWithName:@"Futura-Medium" size:20.0];
+    UIFont* font = [UIFont fontWithName:@"Futura-Medium" size:15.0];
     
     [TextureController setTexture:[[[GLTexture alloc] initWithString:@"HOLD" dimensions:[@"HOLD" sizeWithFont:font] alignment:UITextAlignmentCenter font:font] autorelease] forKey:@"hold"];
     [TextureController setTexture:[[[GLTexture alloc] initWithString:@"DRAW" dimensions:[@"DRAW" sizeWithFont:font] alignment:UITextAlignmentCenter font:font] autorelease] forKey:@"draw"];
