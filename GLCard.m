@@ -395,9 +395,9 @@
     Vector3D labelCorners[] = 
     {
         Vector3DMake(-0.7,  0.0,  3.0),
-        Vector3DMake(-0.7,  0.0,  3.5),
+        Vector3DMake(-0.7,  0.0,  3.6),
         Vector3DMake( 0.7,  0.0,  3.0),
-        Vector3DMake( 0.7,  0.0,  3.5)
+        Vector3DMake( 0.7,  0.0,  3.6)
     };
 
     GenerateBezierControlPoints(controlPointsBase,  baseCorners);
