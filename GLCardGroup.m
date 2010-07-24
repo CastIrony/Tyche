@@ -130,7 +130,7 @@
             
             GLCard* card = [self.cards liveObjectForKey:key];
             
-            [card.location setValue:i forTime:0 andThen:nil];
+            [card.location setValue:i forTime:1 andThen:nil];
             
             [card.isHeld setValue:[heldKeys containsObject:key] forTime:1 andThen:work];
         }
