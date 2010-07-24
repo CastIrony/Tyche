@@ -122,7 +122,7 @@
     
     NSLog(@"Cards: %@", keys);
     
-    for(NSString* key in keys)
+    for(NSString* key in keys.reverseObjectEnumerator)
     {
         if([self.cards.liveKeys containsObject:key])
         {
