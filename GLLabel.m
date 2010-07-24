@@ -169,7 +169,7 @@
 {
     GLLabel* label = [[[GLLabel alloc] init] autorelease];
     
-    label.font = [UIFont fontWithName:@"Helvetica-Bold" size:10];
+    label.font = [UIFont fontWithName:@"Futura-Medium" size:10];
     label.labelSize = CGSizeMake(0, 1);
     
     return label;

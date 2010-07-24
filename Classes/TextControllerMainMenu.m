@@ -29,7 +29,7 @@
     Color3D colorTouched     = Color3DMake(0,   0.8, 0, 0.8); 
     
     [self.styles setObject:[NSNumber numberWithFloat:0.0]                                         forKey:@"fadeMargin"]; 
-    [self.styles setObject:[UIFont   fontWithName:@"Helvetica-Bold" size:20]                      forKey:@"font"];
+    [self.styles setObject:[UIFont   fontWithName:@"Futura-Medium" size:20]                      forKey:@"font"];
     [self.styles setObject:[NSValue  valueWithCGSize:CGSizeMake(3.75, 0.35)]                      forKey:@"labelSize"];
     [self.styles setObject:[NSValue  valueWithBytes:&colorNormal  objCType:@encode(Color3D)] forKey:@"colorNormal"];
     [self.styles setObject:[NSValue  valueWithBytes:&colorTouched objCType:@encode(Color3D)] forKey:@"colorTouched"];
@@ -79,7 +79,7 @@
         [labels addObject:label]; 
     }
 
-    [(NSMutableDictionary*)[labels objectAtIndex:1] setObject:[UIFont  fontWithName:@"Helvetica-Bold" size:35] forKey:@"font"];
+    [(NSMutableDictionary*)[labels objectAtIndex:1] setObject:[UIFont  fontWithName:@"Futura-Medium" size:35] forKey:@"font"];
     [(NSMutableDictionary*)[labels objectAtIndex:1] setObject:[NSValue valueWithCGSize:CGSizeMake(3.75, 0.5)]  forKey:@"labelSize"];
     
     [self fillWithDictionaries:labels];

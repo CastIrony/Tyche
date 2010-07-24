@@ -16,7 +16,7 @@
         Color3D labelColor = Color3DMake(1, 1, 1, 0.9); 
         
         [self.styles setObject:[NSNumber numberWithBool:YES]                                   forKey:@"hasShadow"];
-        [self.styles setObject:[UIFont   fontWithName:@"Helvetica-Bold" size:25]               forKey:@"font"];
+        [self.styles setObject:[UIFont   fontWithName:@"Futura-Medium" size:25]               forKey:@"font"];
         [self.styles setObject:[NSValue  valueWithCGSize:CGSizeMake(3, 0.75)]                  forKey:@"labelSize"];
         [self.styles setObject:[NSValue  valueWithBytes:&labelColor objCType:@encode(Color3D)] forKey:@"colorNormal"];
         [self.styles setObject:[NSValue  valueWithBytes:&labelColor objCType:@encode(Color3D)] forKey:@"colorTouched"];
