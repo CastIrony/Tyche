@@ -191,7 +191,7 @@
     {
         CardModel* card = [self.player.cardsToAdd objectAtIndex:0];
 
-        [self.player.cards insertObject:card atIndex:0];
+        [self.player.cards addObject:card];
         [self.player.cardsToAdd removeObject:card];
         
         BOOL isLastCard = (self.player.cardsToRemove.count == 0) && (self.player.cardsToAdd.count == 0);
