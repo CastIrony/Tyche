@@ -176,7 +176,7 @@
 {
     if(self.player.cardsToRemove.count > 0)
     {
-        CardModel* card = [self.player.cardsToRemove lastObject];
+        CardModel* card = [self.player.cardsToRemove objectAtIndex:0];
 
         NSLog(@"Discarding Card '%@' at time %f2", card, CFAbsoluteTimeGetCurrent());
 
