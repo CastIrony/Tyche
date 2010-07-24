@@ -39,13 +39,13 @@
 -(void)setValue:(GLfloat)value forTime:(NSTimeInterval)time andThen:(simpleBlock)work
 {
     NSTimeInterval now = CFAbsoluteTimeGetCurrent();    
-    
-    runAfterDelay(time, work);
-    
+        
     self.startValue = self.value;
     self.endValue = value;
     self.startTime = now;
     self.endTime = now + time;
+
+    [self registerEvent:work];
 }
 
 -(void)setValue:(GLfloat)value withSpeed:(GLfloat)speed andThen:(simpleBlock)work
@@ -60,9 +60,11 @@
     self.endValue = value;
     self.startTime = now;
     self.endTime = now + time;
+
+    [self registerEvent:work];
 }
 
--(void)register:(simpleBlock)work
+-(void)registerEvent:(simpleBlock)work
 {
     NSTimeInterval now = CFAbsoluteTimeGetCurrent();    
 
