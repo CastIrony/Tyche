@@ -171,7 +171,7 @@
 
 -(void)drawFronts
 {
-    for(GLCard* card in self.cards.objects) 
+    for(GLCard* card in self.cards.objects.reverseObjectEnumerator) 
     { 
         [card drawFront]; 
     }
@@ -179,7 +179,7 @@
 
 -(void)drawBacks
 {
-    for(GLCard* card in self.cards.objects.reverseObjectEnumerator) 
+    for(GLCard* card in self.cards.objects) 
     { 
         [card drawBack]; 
     }
