@@ -50,6 +50,8 @@
 		C54152A41084167400D4E1A9 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = C541529E1084167400D4E1A9 /* SBJsonWriter.m */; };
 		C5438FFC1251BE9600C02980 /* wellread.png in Resources */ = {isa = PBXBuildFile; fileRef = C5438FFA1251BE9600C02980 /* wellread.png */; };
 		C5438FFD1251BE9600C02980 /* wellread@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5438FFB1251BE9600C02980 /* wellread@2x.png */; };
+		C54390201251CB5500C02980 /* wellread2.png in Resources */ = {isa = PBXBuildFile; fileRef = C543901E1251CB5500C02980 /* wellread2.png */; };
+		C54390211251CB5500C02980 /* wellread2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C543901F1251CB5500C02980 /* wellread2@2x.png */; };
 		C543A2F51187D18B005372E1 /* lightmap.png in Resources */ = {isa = PBXBuildFile; fileRef = C543A2F41187D18B005372E1 /* lightmap.png */; };
 		C543A3A31187E295005372E1 /* heartsflat.pvr4 in Resources */ = {isa = PBXBuildFile; fileRef = C543A3A21187E295005372E1 /* heartsflat.pvr4 */; };
 		C547C59111D19950001BC46B /* GLDots.m in Sources */ = {isa = PBXBuildFile; fileRef = C547C59011D19950001BC46B /* GLDots.m */; };
@@ -183,6 +185,8 @@
 		C541529E1084167400D4E1A9 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
 		C5438FFA1251BE9600C02980 /* wellread.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wellread.png; sourceTree = "<group>"; };
 		C5438FFB1251BE9600C02980 /* wellread@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wellread@2x.png"; sourceTree = "<group>"; };
+		C543901E1251CB5500C02980 /* wellread2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wellread2.png; sourceTree = "<group>"; };
+		C543901F1251CB5500C02980 /* wellread2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wellread2@2x.png"; sourceTree = "<group>"; };
 		C543A2F41187D18B005372E1 /* lightmap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lightmap.png; sourceTree = "<group>"; };
 		C543A3A21187E295005372E1 /* heartsflat.pvr4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = heartsflat.pvr4; sourceTree = "<group>"; };
 		C547C58F11D19950001BC46B /* GLDots.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLDots.h; sourceTree = "<group>"; };
@@ -350,6 +354,8 @@
 			children = (
 				C5438FFA1251BE9600C02980 /* wellread.png */,
 				C5438FFB1251BE9600C02980 /* wellread@2x.png */,
+				C543901E1251CB5500C02980 /* wellread2.png */,
+				C543901F1251CB5500C02980 /* wellread2@2x.png */,
 				C51AB91311F362E50052D231 /* Tyche-Silver-Icon-57.png */,
 				C51AB90E11F362E50052D231 /* Tyche-Silver-Icon-114.png */,
 				C51AB91011F362E50052D231 /* Icon.png */,
@@ -629,6 +635,8 @@
 				C51AB91911F362E50052D231 /* Tyche-Silver-Icon-57.png in Resources */,
 				C5438FFC1251BE9600C02980 /* wellread.png in Resources */,
 				C5438FFD1251BE9600C02980 /* wellread@2x.png in Resources */,
+				C54390201251CB5500C02980 /* wellread2.png in Resources */,
+				C54390211251CB5500C02980 /* wellread2@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
