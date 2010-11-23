@@ -93,7 +93,7 @@
 {
     GLfloat fan = 10;
     
-    GLfloat position = 5;
+    GLfloat position = 4;
         
     for(GLCard* card in self.cards.liveObjects.reverseObjectEnumerator)
     {
