@@ -600,6 +600,8 @@
 
 -(void)handleTouchDown:(UITouch*)touch fromPoint:(CGPoint)point
 {
+    LOG_EXPR(self.position);
+    
     GLfloat angle = self.cardGroup.renderer.camera.pitchAngle.value * self.cardGroup.renderer.camera.pitchFactor.value;
     
     if(angle > 60)
