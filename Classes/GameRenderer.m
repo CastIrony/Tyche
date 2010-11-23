@@ -498,7 +498,9 @@
                 {
                     LOG_EXPR(card.position);
                 
-                    object = [card testTouch:touch withPreviousObject:object]; 
+                    object = [card testTouch:touch withPreviousObject:object];
+                    
+                    LOG_EXPR(object == card);
                 }
                 
                 NSLog(@" ");
@@ -513,7 +515,9 @@
                 { 
                     LOG_EXPR(card.position);
                 
-                    object = [card testTouch:touch withPreviousObject:object]; 
+                    object = [card testTouch:touch withPreviousObject:object];
+                    
+                    LOG_EXPR(object == card);
                 }
 
                 NSLog(@" ");
