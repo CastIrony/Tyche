@@ -158,6 +158,8 @@
         }
     }
     
+    NSLog(@"Displayed Cards: %@" self.cards);
+    
     [self layoutCards];
 }
 
