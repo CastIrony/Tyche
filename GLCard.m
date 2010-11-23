@@ -610,6 +610,8 @@
 
 -(void)handleTouchMoved:(UITouch*)touch fromPoint:(CGPoint)pointFrom toPoint:(CGPoint)pointTo
 {
+    LOG_EXPR(pointTo);
+
     int target = 4 - ((pointTo.y) / 96.0);
     
     if(target < 0) { target = 0; }
