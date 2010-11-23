@@ -91,7 +91,7 @@
 
 -(void)layoutCards
 {
-    GLfloat fan = 15;
+    GLfloat fan = 10;
     
     GLfloat position = 5;
         
