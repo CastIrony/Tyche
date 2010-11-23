@@ -496,11 +496,9 @@
                 
                 for(GLCard* card in self.cardGroup.cards.liveObjects) 
                 {
-                    LOG_EXPR(card.position);
-                
                     object = [card testTouch:touch withPreviousObject:object];
                     
-                    LOG_EXPR(object == card);
+                    NSLog(@"[%i, %i]", card.position, card == object);
                 }
                 
                 NSLog(@" ");
@@ -512,12 +510,10 @@
                 NSLog(@"============= Cards UP! =============");
             
                 for(GLCard* card in self.cardGroup.cards.liveObjects.reverseObjectEnumerator) 
-                { 
-                    LOG_EXPR(card.position);
-                
+                {                 
                     object = [card testTouch:touch withPreviousObject:object];
                     
-                    LOG_EXPR(object == card);
+                    NSLog(@"[%i, %i]", card.position, card == object);
                 }
 
                 NSLog(@" ");
