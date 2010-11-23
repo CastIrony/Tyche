@@ -153,6 +153,7 @@
     [TextureController setTexture:[[[GLTexture alloc] initWithImageFile:@"lightmap.png" ] autorelease] forKey:@"lightmap"];
     [TextureController setTexture:[[[GLTexture alloc] initWithImageFile:@"chips3.png"   ] autorelease] forKey:@"chips"];
     [TextureController setTexture:[[[GLTexture alloc] initWithImageFile:@"cards2.png"   ] autorelease] forKey:@"cards"];
+    [TextureController setTexture:[[[GLTexture alloc] initWithImageFile:@"shadow.png"   ] autorelease] forKey:@"shadow"];
     [TextureController setTexture:[[[GLTexture alloc] initWithPVRTCFile:@"felt3.pvr4"   ] autorelease] forKey:@"table"];
     [TextureController setTexture:[[[GLTexture alloc] initWithImageFile:@"Default.png"  ] autorelease] forKey:@"splash"];
     [TextureController setTexture:[[[GLTexture alloc] initWithPVRTCFile:@"heartsflat.pvr4"  ] autorelease] forKey:@"suit0"];

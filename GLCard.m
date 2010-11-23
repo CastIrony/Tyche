@@ -143,7 +143,7 @@
         
         GenerateBezierTextures(arrayTexture0Front,  meshWidthFront,  meshHeightFront,  Vector2DMake(1, 1), Vector2DMake(0, 0));
         GenerateBezierTextures(arrayTexture0Back,   meshWidthBack,   meshHeightBack,   Vector2DMake(1, 1), Vector2DMake(0, 0)); 
-        GenerateBezierTextures(arrayTexture0Shadow, meshWidthShadow, meshHeightShadow, textureSizeCard, textureOffsetCard[0]);
+        GenerateBezierTextures(arrayTexture0Shadow, meshWidthShadow, meshHeightShadow, Vector2DMake(1, 1), Vector2DMake(0, 0));
         GenerateBezierTextures(arrayTexture1Front,  meshWidthFront,  meshHeightFront,  textureSizeCard, textureOffsetCard[self.numeral]);
         GenerateBezierTextures(arrayTexture1Back,   meshWidthBack,   meshHeightBack,   textureSizeCard, textureOffsetCard[14]); 
         
@@ -307,7 +307,7 @@
         
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         
-        glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"suit0"]);
+        glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"shadow"]);
         
         GLfloat held = self.isHeld.value * 0.5 + 0.5;
         
