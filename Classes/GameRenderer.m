@@ -491,20 +491,33 @@
                 for(TextController* textController in self.textControllers.objectEnumerator) { object = [textController testTouch:touch withPreviousObject:object]; }
 
                 for(GLChip* chip in self.chipGroup.chips.liveObjects) { object = [chip testTouch:touch withPreviousObject:object]; }
+
+                NSLog(@"============= Cards DOWN! =============");
                 
                 for(GLCard* card in self.cardGroup.cards.liveObjects) 
                 {
+                    LOG_EXPR(card.position);
+                
                     object = [card testTouch:touch withPreviousObject:object]; 
                 }
+                
+                NSLog(@"");
             
                 object = [self.menuLayerController testTouch:touch withPreviousObject:object]; 
             }
             else
             {
+                NSLog(@"============= Cards UP! =============");
+            
                 for(GLCard* card in self.cardGroup.cards.liveObjects.reverseObjectEnumerator) 
                 { 
+                    LOG_EXPR(card.position);
+                
                     object = [card testTouch:touch withPreviousObject:object]; 
                 }
+
+                NSLog(@"");
+
             }
             
             if(object)
