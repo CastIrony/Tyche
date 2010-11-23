@@ -28,13 +28,13 @@
 //    
 //    return self;
 //}
-//
-//+(id)withValue:(GLfloat)value
-//{
-//    NSTimeInterval now = CFAbsoluteTimeGetCurrent();    
-//    
-//    return [[[AnimatedFloat alloc] initWithStartValue:value endValue:value startTime:now endTime:now] autorelease];
-//}
+
++(id)withValue:(GLfloat)value
+{
+    NSTimeInterval now = CFAbsoluteTimeGetCurrent();    
+    
+    return [[[AnimatedFloat alloc] initWithStartValue:value endValue:value startTime:now endTime:now] autorelease];
+}
 
 -(void)setValue:(GLfloat)value forTime:(NSTimeInterval)time andThen:(simpleBlock)work
 {
