@@ -144,7 +144,7 @@
             
             card.isHeld = [AnimatedFloat withValue:[heldKeys containsObject:key]];
 
-            [self.cards insertObject:card withKey:key atIndex:0];
+            [self.cards insertObject:card withKey:key atIndex:i];
         }
         
         i++;
@@ -158,7 +158,7 @@
         }
     }
     
-    NSLog(@"Displayed Cards: %@", self.cards);
+    NSLog(@"Displayed Cards: %@", self.cards.keys);
     
     [self layoutCards];
 }
