@@ -614,7 +614,7 @@
 {
     GLfloat delta = pointTo.y - pointFrom.y;
 
-    int target = 4 - ((delta - 45) / 96.0);
+    int target = 4 - ((delta + 48) / 96.0);
 
     //LOG_NS(@"<%f5, %f5, %f5, %i, %i>", pointTo.y, pointFrom.y, delta, target, start);
     
