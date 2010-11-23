@@ -43,7 +43,7 @@
     self.startValue = self.value;
     self.endValue = value;
     self.startTime = now;
-    self.endTime = now + time;
+    self.endTime = now + time * TIMESCALE;
 
     [self registerEvent:work];
 }
@@ -59,7 +59,7 @@
     self.startValue = self.value;
     self.endValue = value;
     self.startTime = now;
-    self.endTime = now + time;
+    self.endTime = now + time * TIMESCALE;
 
     [self registerEvent:work];
 }
