@@ -144,7 +144,7 @@
             
             card.isHeld = [AnimatedFloat withValue:[heldKeys containsObject:key]];
 
-            [self.cards insertObject:card withKey:key atIndex:i];
+            [self.cards insertObject:card withKey:key atIndex:0];
         }
         
         i++;
