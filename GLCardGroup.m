@@ -106,7 +106,7 @@
         
         position--;
         
-        fan += 5;
+        fan -= 5;
     }
 }
 
