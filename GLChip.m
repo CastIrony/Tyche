@@ -416,6 +416,9 @@
 {
     GLfloat deltaX = pointTo.x - pointFrom.x;
     
+    [self.count setValue:(int)(self.count.value + 0.5) forTime:0.5 andThen:nil];
+
+    
     if(deltaX > 0) 
     { 
         if(self.chipNumber == 0) { [self.chipGroup.renderer.gameController chipTouchedUpWithKey:@"1"]; }
