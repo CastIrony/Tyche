@@ -33,7 +33,14 @@
 {
     NSTimeInterval now = CFAbsoluteTimeGetCurrent();    
     
-    return [[[AnimatedFloat alloc] initWithStartValue:value endValue:value startTime:now endTime:now] autorelease];
+    AnimatedFloat* animatedFloat = [[[AnimatedFloat alloc] init] autorelease];
+    
+    animatedFloat.startValue = value;
+    animatedFloat.endValue = value;
+    animatedFloat.startTime = now;
+    animatedFloat.endTime = now;
+    
+    return animatedFloat;
 }
 
 -(void)setValue:(GLfloat)value forTime:(NSTimeInterval)time andThen:(simpleBlock)work
