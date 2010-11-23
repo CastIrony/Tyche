@@ -409,7 +409,7 @@
 {
     float newCount = self.initialCount - clipFloat(pointTo.x - pointFrom.x, -100, 100) / 100;
     
-    if(newCount <= self.maxCount) { self.count = [AnimatedFloat withValue:newCount]; }
+    /*if(newCount <= self.maxCount)*/ { self.count = [AnimatedFloat withValue:newCount]; }
 }
 
 -(void)handleTouchUp:(UITouch*)touch fromPoint:(CGPoint)pointFrom toPoint:(CGPoint)pointTo
