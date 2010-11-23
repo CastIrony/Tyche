@@ -615,7 +615,7 @@
     int start = ((pointFrom.y) / 96.0);
     int target = 4 - ((delta) / 96.0) - start;
 
-    LOG_NS(@"<%f5, %f5, %f5, %i>", pointTo.y, pointFrom.y, delta, target, start);
+    LOG_NS(@"<%f5, %f5, %f5, %i, %i>", pointTo.y, pointFrom.y, delta, target, start);
     
     if(target < 0) { target = 0; }
     if(target > 4) { target = 4; }
