@@ -5,7 +5,7 @@
 
 static int animate = 1;
 
-#define TIMESCALE 10
+#define TIMESCALE 1
 #define ZOOMSCALE 1
 
 
