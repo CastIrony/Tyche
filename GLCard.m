@@ -610,15 +610,13 @@
 
 -(void)handleTouchMoved:(UITouch*)touch fromPoint:(CGPoint)pointFrom toPoint:(CGPoint)pointTo
 {
-    LOG_EXPR(pointTo);
+    GLfloat delta = pointTo.y - pointFrom.y;
 
-    int target = 4 - ((pointTo.y) / 96.0);
+    int target = 4 - ((delta) / 96.0);
     
     if(target < 0) { target = 0; }
     if(target > 4) { target = 4; }
-    
-    GLfloat delta = pointTo.y - pointFrom.y;
-    
+        
     [self.cardGroup dragCardToTarget:target withDelta:delta];
 }
 
