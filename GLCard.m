@@ -570,8 +570,6 @@
 
 -(id<Touchable>)testTouch:(UITouch*)touch withPreviousObject:(id<Touchable>)object
 {
-    LOG_EXPR(self.position);
-
     TRANSACTION_BEGIN
     {    
         glTranslatef(self.location.value, -1.0 * sin(DEGREES_TO_RADIANS(self.angleFlip.value)), -30 * (1 + self.death.value - self.dealt.value));
