@@ -23,4 +23,6 @@
 #import <AudioToolbox/AudioServices.h>
 #import "TargetConditionals.h"
 
+#import "VTPG_Common.h"
+
 #endif

@@ -16,6 +16,7 @@
 		28FD14FE0DC6FC130079059D /* GameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28FD14FD0DC6FC130079059D /* GameView.m */; };
 		28FD15000DC6FC520079059D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD14FF0DC6FC520079059D /* OpenGLES.framework */; };
 		28FD15080DC6FC5B0079059D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD15070DC6FC5B0079059D /* QuartzCore.framework */; };
+		C5001A6E129B6C3200D6E93F /* VTPG_Common.m in Sources */ = {isa = PBXBuildFile; fileRef = C5001A6C129B6C3200D6E93F /* VTPG_Common.m */; };
 		C507A228108421B50049B556 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C507A227108421B50049B556 /* CoreGraphics.framework */; };
 		C507A26610842A850049B556 /* GameControllerSP.m in Sources */ = {isa = PBXBuildFile; fileRef = C507A26510842A850049B556 /* GameControllerSP.m */; };
 		C507A34010856D500049B556 /* felt3.pvr4 in Resources */ = {isa = PBXBuildFile; fileRef = C507A33610856D500049B556 /* felt3.pvr4 */; };
@@ -118,6 +119,8 @@
 		28FD15070DC6FC5B0079059D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* Tyche_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tyche_Prefix.pch; sourceTree = "<group>"; };
+		C5001A6C129B6C3200D6E93F /* VTPG_Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VTPG_Common.m; sourceTree = "<group>"; };
+		C5001A6D129B6C3200D6E93F /* VTPG_Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VTPG_Common.h; sourceTree = "<group>"; };
 		C507A227108421B50049B556 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		C507A26410842A850049B556 /* GameControllerSP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameControllerSP.h; sourceTree = "<group>"; };
 		C507A26510842A850049B556 /* GameControllerSP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameControllerSP.m; sourceTree = "<group>"; };
@@ -297,6 +300,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				C5415255108415B800D4E1A9 /* Libraries */,
 				080E96DDFE201D6D7F000001 /* Misc Controllers */,
 				C555DA2210E9BE1300E3D448 /* Game Controllers */,
@@ -308,7 +312,6 @@
 				C5415254108415AD00D4E1A9 /* Models */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
-				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 			);
 			name = CustomTemplate;
@@ -319,6 +322,7 @@
 			children = (
 				C5FA3E29110988B500C44B04 /* Entitlements.plist */,
 				32CA4F630368D1EE00C91783 /* Tyche_Prefix.pch */,
+				C59803C11090B32D00DC5FBE /* Tyche-Info.plist */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 			);
 			name = "Other Sources";
@@ -328,7 +332,6 @@
 			isa = PBXGroup;
 			children = (
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
-				C59803C11090B32D00DC5FBE /* Tyche-Info.plist */,
 				C507A33010856D500049B556 /* Icons */,
 				C507A33510856D500049B556 /* Textures */,
 			);
@@ -454,6 +457,8 @@
 				C54152711084165100D4E1A9 /* Common.h */,
 				C54152721084165100D4E1A9 /* Geometry.h */,
 				C5B18FFD118A3CF400523867 /* TinyProfiler.h */,
+				C5001A6C129B6C3200D6E93F /* VTPG_Common.m */,
+				C5001A6D129B6C3200D6E93F /* VTPG_Common.h */,
 				C54152771084165100D4E1A9 /* Bezier.h */,
 				C54152781084165100D4E1A9 /* Touchable.h */,
 				C541527A1084165100D4E1A9 /* Projection.h */,
@@ -717,6 +722,7 @@
 				C513EBB211C71F260077703B /* MenuControllerHostGame.m in Sources */,
 				C547C59111D19950001BC46B /* GLDots.m in Sources */,
 				C535BD2911D54822009D539B /* DisplayContainer.m in Sources */,
+				C5001A6E129B6C3200D6E93F /* VTPG_Common.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

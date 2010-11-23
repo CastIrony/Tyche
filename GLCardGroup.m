@@ -107,6 +107,9 @@
         position--;
         
         fan += 5;
+        
+        LOG_EXPR(position);
+        LOG_EXPR(fan);
     }
 }
 
