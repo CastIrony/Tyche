@@ -91,10 +91,10 @@
 
 -(void)layoutCards
 {
-    GLfloat fan = -15 + 5 * self.cards.liveObjects.count;
+    GLfloat fan = 15;
     
-    GLfloat position = 0;
-    
+    GLfloat position = 5;
+        
     for(GLCard* card in self.cards.liveObjects.reverseObjectEnumerator)
     {
         card.position = position;
@@ -104,9 +104,9 @@
             [card.angleFan setValue:fan forTime:0.1 andThen:nil];
         }
         
-        position++;
+        position--;
         
-        fan += 5;
+        fan -= 5;
         
         LOG_EXPR(position);
         LOG_EXPR(fan);
