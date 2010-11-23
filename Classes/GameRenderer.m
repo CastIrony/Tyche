@@ -501,7 +501,7 @@
                     object = [card testTouch:touch withPreviousObject:object]; 
                 }
                 
-                NSLog(@"");
+                NSLog(@" ");
             
                 object = [self.menuLayerController testTouch:touch withPreviousObject:object]; 
             }
@@ -516,7 +516,7 @@
                     object = [card testTouch:touch withPreviousObject:object]; 
                 }
 
-                NSLog(@"");
+                NSLog(@" ");
 
             }
             
