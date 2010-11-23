@@ -13,28 +13,28 @@
 @dynamic value;
 @dynamic hasEnded;
 
--(id)initWithStartValue:(GLfloat)startValue endValue:(GLfloat)endValue startTime:(NSTimeInterval)startTime endTime:(NSTimeInterval)endTime
-{
-    self = [super init];
-    
-    if(self)
-    {
-        _startValue  = startValue;
-        _startTime   = startTime;
-        _endValue    = endValue;
-        _endTime     = startTime + TIMESCALE * animate * (endTime - startTime);
-        _curve       = AnimationEaseInOut;
-    }
-    
-    return self;
-}
-
-+(id)withValue:(GLfloat)value
-{
-    NSTimeInterval now = CFAbsoluteTimeGetCurrent();    
-    
-    return [[[AnimatedFloat alloc] initWithStartValue:value endValue:value startTime:now endTime:now] autorelease];
-}
+//-(id)initWithStartValue:(GLfloat)startValue endValue:(GLfloat)endValue startTime:(NSTimeInterval)startTime endTime:(NSTimeInterval)endTime
+//{
+//    self = [super init];
+//    
+//    if(self)
+//    {
+//        _startValue  = startValue;
+//        _startTime   = startTime;
+//        _endValue    = endValue;
+//        _endTime     = startTime + TIMESCALE * animate * (endTime - startTime);
+//        _curve       = AnimationEaseInOut;
+//    }
+//    
+//    return self;
+//}
+//
+//+(id)withValue:(GLfloat)value
+//{
+//    NSTimeInterval now = CFAbsoluteTimeGetCurrent();    
+//    
+//    return [[[AnimatedFloat alloc] initWithStartValue:value endValue:value startTime:now endTime:now] autorelease];
+//}
 
 -(void)setValue:(GLfloat)value forTime:(NSTimeInterval)time andThen:(simpleBlock)work
 {
