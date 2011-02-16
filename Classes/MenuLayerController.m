@@ -38,18 +38,18 @@
 {   
     [self.renderer.camera setMenuVisible:YES];
     
-    [self.hidden setValue:0 forTime:1 andThen:nil];
+    [self.hidden setValue:0 forTime:1];
     
-    [self.renderer.lightness setValue:0.4 forTime:1 andThen:nil];
+    [self.renderer.lightness setValue:0.4 forTime:1];
 }
 
 -(void)hideMenus
 {    
     [self.renderer.camera setMenuVisible:NO];
     
-    [self.hidden setValue:1 forTime:1 andThen:nil]; 
+    [self.hidden setValue:1 forTime:1]; 
     
-    [self.renderer.lightness setValue:1 forTime:1 andThen:nil];
+    [self.renderer.lightness setValue:1 forTime:1];
 }
 
 -(void)pushMenuLayer:(MenuController*)menuLayer forKey:(NSString*)key
@@ -57,14 +57,22 @@
     menuLayer.owner = self;
     
     menuLayer.hidden = [AnimatedFloat withValue:1];
-    [menuLayer.hidden setValue:0 forTime:0.5 andThen:nil];
+    [menuLayer.hidden setValue:0 forTime:0.5];
 
-    [self.currentLayer.collapsed setValue:1 forTime:0.5 andThen:nil];
+    [self.currentLayer.collapsed setValue:1 forTime:0.5];
     [self.currentLayer layoutMenus];
     
     menuLayer.first = (self.menuLayers.liveObjects.count == 0);
     
-    [self.menuLayers insertObject:menuLayer asLastWithKey:key];
+    NSMutableArray* newKeys = [[self.menuLayers.liveKeys mutableCopy] autorelease];
+    NSMutableDictionary* newDictionary = [[self.menuLayers.liveDictionary mutableCopy] autorelease];
+
+    [newKeys removeObject:key];
+    [newKeys addObject:key];
+    
+    [newDictionary setObject:menuLayer forKey:key];
+    
+    [self.menuLayers setKeys:newKeys andDictionary:newDictionary];
 }
 
 -(void)popUntilKey:(NSString*)target
@@ -89,7 +97,7 @@
 
 -(void)cancelMenuLayer
 {
-    [self popUntilKey:[self.menuLayers liveKeyBefore:[self.menuLayers.liveKeys lastObject]]];
+    [self popUntilKey:[self.menuLayers.liveKeys objectBefore:[self.menuLayers.liveKeys lastObject]]];
 }
 
 -(void)draw

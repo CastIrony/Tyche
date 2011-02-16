@@ -45,6 +45,24 @@
     return common;
 }
 
+-(NSArray*)arrayByRemovingObjectsInArray:(NSArray*)array
+{
+    NSMutableArray* newArray = [[self mutableCopy] autorelease];
+    
+    [newArray removeObjectsInArray:array];
+    
+    return newArray;
+}
+
+-(NSArray*)arrayByRemovingIndexes:(NSIndexSet*)indexes
+{
+    NSMutableArray* newArray = [[self mutableCopy] autorelease];
+    
+    [newArray removeObjectsAtIndexes:indexes];
+    
+    return newArray;
+}
+
 -(id)objectBefore:(id)object commonWithArray:(NSArray*)array
 {
     NSArray* common = [self commonObjectsWithArray:array];

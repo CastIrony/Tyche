@@ -16,26 +16,16 @@
 #import "AnimatedVector3D.h"
 #import "CameraController.h"
 #import "MenuLayerController.h"
+#import "TextControllerCredits.h"
 
 #import "GameControllerSP.h"
 
 typedef enum 
 {    
-    PlayerStatusShouldDealCards,
-    PlayerStatusDealingCards,
+    PlayerStatusNoCards,
     PlayerStatusDealtCards,
-    
-    PlayerStatusShouldDrawCards,
-    PlayerStatusDrawingCards,
     PlayerStatusDrawnCards,
-    
-    PlayerStatusShouldShowCards,
-    PlayerStatusShowingCards,
-    PlayerStatusShownCards,
-    
-    PlayerStatusShouldReturnCards,
-    PlayerStatusReturningCards,
-    PlayerStatusNoCards
+    PlayerStatusShownCards
 } 
 PlayerStatus;
 
@@ -43,23 +33,21 @@ PlayerStatus;
 
 +(GameController*)loadWithRenderer:(GameRenderer*)renderer
 {
-    //NSString* file    = [NSString stringWithFormat:@"%@.json", NSStringFromClass(self)];
-    //NSString* archive = [NSString stringWithContentsOfDocument:file];
+    NSString* file    = [NSString stringWithFormat:@"%@.json", NSStringFromClass(self)];
+    NSString* archive = [NSString stringWithContentsOfDocument:file];
 
     //NSString* archive = @"{\"discard\":[{\"suit\":3,\"numeral\":1,\"isHeld\":true},{\"suit\":3,\"numeral\":2,\"isHeld\":true},{\"suit\":3,\"numeral\":8,\"isHeld\":true},{\"suit\":1,\"numeral\":4,\"isHeld\":true},{\"suit\":1,\"numeral\":2,\"isHeld\":true},{\"suit\":0,\"numeral\":6,\"isHeld\":true},{\"suit\":3,\"numeral\":9,\"isHeld\":true},{\"suit\":1,\"numeral\":1,\"isHeld\":true},{\"suit\":1,\"numeral\":7,\"isHeld\":true},{\"suit\":2,\"numeral\":1,\"isHeld\":true}],\"players\":{\"\":{\"status\":0,\"chips\":{\"2500\" :{\"key\":\"2500\", \"chipCount\":0,\"betCount\":0},\"10000\":{\"key\":\"10000\",\"chipCount\":0,\"betCount\":0},\"1000\" :{\"key\":\"1000\", \"chipCount\":0,\"betCount\":0},\"1K\"   :{\"key\":\"1K\",   \"chipCount\":0,\"betCount\":0},\"10K\"  :{\"key\":\"10K\",  \"chipCount\":0, \"betCount\":0},\"5\"    :{\"key\":\"5\",    \"chipCount\":10,\"betCount\":0},\"1\"    :{\"key\":\"1\",    \"chipCount\":10,\"betCount\":0},\"25\"   :{\"key\":\"25\",   \"chipCount\":10,\"betCount\":0},\"100\"  :{\"key\":\"100\",  \"chipCount\":10,\"betCount\":0},\"10\"   :{\"key\":\"10\",   \"chipCount\":10,\"betCount\":0},\"500\"  :{\"key\":\"500\",  \"chipCount\":0, \"betCount\":0}},\"cards\":[{\"suit\":1,\"numeral\":13,\"isHeld\":true},{\"suit\":0,\"numeral\":7,\"isHeld\":true},{\"suit\":2,\"numeral\":8,\"isHeld\":true},{\"suit\":1,\"numeral\":6,\"isHeld\":false},{\"suit\":0,\"numeral\":9,\"isHeld\":true}]}},\"status\":0,\"playerIds\":[\"\"],\"deck\":[{\"suit\":0,\"numeral\":3,\"isHeld\":true},{\"suit\":0,\"numeral\":1,\"isHeld\":true},{\"suit\":1,\"numeral\":12,\"isHeld\":true},{\"suit\":3,\"numeral\":11,\"isHeld\":true},{\"suit\":2,\"numeral\":2,\"isHeld\":true},{\"suit\":1,\"numeral\":3,\"isHeld\":true},{\"suit\":3,\"numeral\":6,\"isHeld\":true},{\"suit\":3,\"numeral\":5,\"isHeld\":false},{\"suit\":1,\"numeral\":9,\"isHeld\":true},{\"suit\":3,\"numeral\":13,\"isHeld\":true},{\"suit\":2,\"numeral\":12,\"isHeld\":true},{\"suit\":1,\"numeral\":10,\"isHeld\":true},{\"suit\":2,\"numeral\":13,\"isHeld\":true},{\"suit\":2,\"numeral\":4,\"isHeld\":true},{\"suit\":0,\"numeral\":2,\"isHeld\":true},{\"suit\":3,\"numeral\":3,\"isHeld\":true},{\"suit\":0,\"numeral\":13,\"isHeld\":true},{\"suit\":2,\"numeral\":9,\"isHeld\":true},{\"suit\":0,\"numeral\":12,\"isHeld\":true},{\"suit\":0,\"numeral\":4,\"isHeld\":true},{\"suit\":1,\"numeral\":5,\"isHeld\":true},{\"suit\":2,\"numeral\":10,\"isHeld\":true},{\"suit\":0,\"numeral\":11,\"isHeld\":true},{\"suit\":2,\"numeral\":6,\"isHeld\":true},{\"suit\":0,\"numeral\":10,\"isHeld\":true},{\"suit\":0,\"numeral\":8,\"isHeld\":true},{\"suit\":2,\"numeral\":7,\"isHeld\":true},{\"suit\":1,\"numeral\":11,\"isHeld\":true},{\"suit\":2,\"numeral\":5,\"isHeld\":true},{\"suit\":3,\"numeral\":4,\"isHeld\":true},{\"suit\":3,\"numeral\":10,\"isHeld\":true},{\"suit\":3,\"numeral\":7,\"isHeld\":true},{\"suit\":2,\"numeral\":3,\"isHeld\":true},{\"suit\":1,\"numeral\":8,\"isHeld\":true},{\"suit\":2,\"numeral\":11,\"isHeld\":true},{\"suit\":3,\"numeral\":12,\"isHeld\":true},{\"suit\":0,\"numeral\":5,\"isHeld\":true}]}";
-    
-    NSString* archive = nil;
-    
+        
     if(archive)
     {
         GameControllerSP* gameController = [[[self alloc] init] autorelease];
         
         gameController.renderer = renderer;
-        
         gameController.game = [GameModel withDictionary:[archive JSONValue]];
         
-        [gameController updatePlayerAndThen:nil];
-                    
+        [gameController newGame];
+        [gameController updatePlayer];
+        
         return gameController;
     }
     else 
@@ -90,28 +78,14 @@ PlayerStatus;
 	return self;
 }
 
--(void)newGameAndThen:(simpleBlock)work
-{
-    [super newGameAndThen:nil];
-    
-    //TODO: refactor this into updateRendererAnimated
-    
-    [self.renderer.menuLayerController hideMenus];
-    
-    [self.renderer.cardGroup updateCardsWithKeys:nil held:nil andThen:nil];
-    
-    self.game = [[[GameModel alloc] init] autorelease];
-    
-    [self newDeckAndThen:nil];
-    
-    [self.game.players setObject:[[[PlayerModel alloc] init] autorelease] forKey:self.myPeerId];
-    [self.game.playerIds addObject:self.myPeerId];
-    
+-(void)newGame
+{    
+    [super newGame];
+
     self.player.chipTotal = 1000;
-    
     self.player.status = PlayerStatusNoCards;
     
-    [self updatePlayerAndThen:nil];
+    [self updatePlayer];
 }
 
 -(void)labelTouchedWithKey:(NSString*)key
@@ -120,32 +94,238 @@ PlayerStatus;
     
     if([key isEqual:@"call"]) 
     { 
-        self.player.status = PlayerStatusShouldShowCards;
+        [self givePrize];
+    
+        self.player.status = PlayerStatusShownCards;
         
-        [self updatePlayerAndThen:nil];
+        [self updatePlayer];
+    }
+    else if([key isEqual:@"deal"]) 
+    { 
+        [self.game.discard addObjectsFromArray:self.player.cards];
+        [self.player.cards removeAllObjects]; 
+        [self.player.cards addObjectsFromArray:[self.game getCards:5]];
+        
+        self.player.status = PlayerStatusDealtCards;
+
+        [self updatePlayer];
     }
     else if([key isEqual:@"draw"]) 
     { 
-        self.player.status = self.player.cards.count ? PlayerStatusShouldDrawCards : PlayerStatusShouldDealCards;
+        int cardsToDraw = self.player.drawnCards.count;
+    
+        [self.game.discard addObjectsFromArray:self.player.drawnCards];
+        [self.player.cards removeObjectsInArray:self.player.drawnCards]; 
+        [self.player.cards addObjectsFromArray:[self.game getCards:cardsToDraw]];
         
-        [self updatePlayerAndThen:nil];
+        self.player.status = PlayerStatusDrawnCards;
+        
+        [self updatePlayer];
     }
     else if([key isEqual:@"cancel_bet"]) 
     {         
-        BOOL hasBetAlready = self.player.betTotal > 0;
-        
-        { ChipModel* chipModel = [self.player.chips objectForKey:@"1"    ]; chipModel.betCount = hasBetAlready ? 0 : chipModel.chipCount; }
-        { ChipModel* chipModel = [self.player.chips objectForKey:@"5"    ]; chipModel.betCount = hasBetAlready ? 0 : chipModel.chipCount; }
-        { ChipModel* chipModel = [self.player.chips objectForKey:@"10"   ]; chipModel.betCount = hasBetAlready ? 0 : chipModel.chipCount; }
-        { ChipModel* chipModel = [self.player.chips objectForKey:@"25"   ]; chipModel.betCount = hasBetAlready ? 0 : chipModel.chipCount; }
-        { ChipModel* chipModel = [self.player.chips objectForKey:@"100"  ]; chipModel.betCount = hasBetAlready ? 0 : chipModel.chipCount; }
-        { ChipModel* chipModel = [self.player.chips objectForKey:@"500"  ]; chipModel.betCount = hasBetAlready ? 0 : chipModel.chipCount; }
-        { ChipModel* chipModel = [self.player.chips objectForKey:@"1000" ]; chipModel.betCount = hasBetAlready ? 0 : chipModel.chipCount; }
-        { ChipModel* chipModel = [self.player.chips objectForKey:@"2500" ]; chipModel.betCount = hasBetAlready ? 0 : chipModel.chipCount; }
-        { ChipModel* chipModel = [self.player.chips objectForKey:@"10000"]; chipModel.betCount = hasBetAlready ? 0 : chipModel.chipCount; }
+        if(self.player.betTotal > 0)
+        {
+            [self.player cancelBets];
+        }
+        else 
+        {
+            [self.player allIn];
+        }
 
-        [self updatePlayerAndThen:nil];
+        [self updatePlayer];
     }   
+}
+
+-(void)cardFrontTapped:(int)card
+{ 
+    CardModel* cardModel = [self.player.cards objectAtIndex:card];
+
+    cardModel.isHeld = !cardModel.isHeld;
+    
+    [self updatePlayer];
+}
+
+-(void)cardBackTapped:(int)card 
+{
+    if(self.renderer.camera.status == CameraStatusCardsFlipped)
+    {
+        self.player.status = PlayerStatusNoCards;
+        
+        [self.game.discard addObjectsFromArray:self.player.cards];
+        [self.player.cards removeAllObjects];
+
+        [self updatePlayer];
+    }
+    else 
+    {
+        [super cardBackTapped:card];
+    }
+}
+
+-(void)updatePlayer
+{
+    [self saveData];
+
+    [self updateChips];
+    
+    NSMutableArray* actionLabels = [NSMutableArray array];
+    NSMutableArray* gameOverLabels = [NSMutableArray array];
+        
+    if(self.player.status == PlayerStatusNoCards)
+    {   
+        self.renderer.chipGroup.frozen = NO;
+        
+        LOG_NS(@"Unflipping");
+        
+        [self.renderer.cardGroup unflipCardsAndThen:^
+        { 
+            LOG_NS(@"Updating Cards");
+
+            [self updateCardsAndThen:^
+            {
+                LOG_NS(@"Updating Everything Else");
+                
+                if(self.player.chipTotal > 0)
+                {
+                    if(self.player.betTotal > 0)
+                    {
+                        NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
+                        
+                        [label setObject:@"deal" forKey:@"key"]; 
+                        [label setObject:@"DEAL" forKey:@"textString"]; 
+                        
+                        [actionLabels addObject:label];
+                        
+                        self.messageDown = @"Tap 'Deal' When Ready";
+                        self.messageUp = @" ";
+                    }
+                    else
+                    {
+                        self.messageDown = @"Place Your Bet";
+                        self.messageUp = @" ";
+                    }
+                }
+                else
+                {
+                    {
+                        NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
+                        
+                        [label setObject:@"gameOverNewGame" forKey:@"key"]; 
+                        [label setObject:@"NEW GAME" forKey:@"textString"]; 
+                        [label setObject:[NSValue  valueWithCGSize:CGSizeMake(4.5, 0.9)] forKey:@"labelSize"];
+                        
+                        [gameOverLabels addObject:label];
+                    }
+                    
+                    {
+                        NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
+                        
+                        [label setObject:@"gameOverQuit" forKey:@"key"]; 
+                        [label setObject:@"QUIT" forKey:@"textString"]; 
+                        [label setObject:[NSValue  valueWithCGSize:CGSizeMake(4.5, 0.9)] forKey:@"labelSize"];
+                        
+                        [gameOverLabels addObject:label];
+                    }
+                    
+                    self.messageDown = @"Game Over";
+                    self.messageUp = @"Game Over";
+                }
+                
+                [[self.renderer.textControllers objectForKey:@"actions"] fillWithDictionaries:actionLabels];
+                [[self.renderer.textControllers objectForKey:@"gameOver"] fillWithDictionaries:gameOverLabels];
+                
+                { TextControllerStatusBar* textController = [self.renderer.textControllers objectForKey:@"messageDown"]; textController.text = self.messageDown; [textController update]; }
+                { TextControllerStatusBar* textController = [self.renderer.textControllers objectForKey:@"messageUp"]; textController.text = self.messageUp;   [textController update]; }
+            }]; 
+        }];
+    }
+    else if(self.player.status == PlayerStatusDealtCards)
+    {        
+        self.renderer.chipGroup.frozen = YES;
+
+        [[self.renderer.textControllers objectForKey:@"actions"] fillWithDictionaries:nil];
+        [[self.renderer.textControllers objectForKey:@"gameOver"] fillWithDictionaries:nil];
+        
+        [self updateCardsAndThen:^
+        {
+            NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
+            
+            if(self.player.numberOfCardsMarked)
+            {
+                [label setObject: @"draw" forKey:@"key"]; 
+                [label setObject: @"DRAW" forKey:@"textString"]; 
+            }
+            else 
+            {
+                [label setObject: @"call" forKey:@"key"]; 
+                [label setObject: @"CALL" forKey:@"textString"]; 
+            }
+            
+            [actionLabels addObject:label];
+            
+            self.messageDown = self.renderer.camera.isAutomatic ? [NSString stringWithFormat:@"Tilt %@ to peek at your cards", [[UIDevice currentDevice] name]] : @"Tap deck to peek at cards";
+            self.messageUp = @"Tap cards to mark";
+            
+            [[self.renderer.textControllers objectForKey:@"actions"] fillWithDictionaries:actionLabels];
+            [[self.renderer.textControllers objectForKey:@"gameOver"] fillWithDictionaries:nil];
+            
+            { TextControllerStatusBar* textController = [self.renderer.textControllers objectForKey:@"messageDown"]; textController.text = self.messageDown; [textController update]; }
+            { TextControllerStatusBar* textController = [self.renderer.textControllers objectForKey:@"messageUp"]; textController.text = self.messageUp;   [textController update]; }
+        }];
+    }
+    else if(self.player.status == PlayerStatusDrawnCards)
+    {   
+        self.renderer.chipGroup.frozen = YES;     
+        
+        [[self.renderer.textControllers objectForKey:@"actions"] fillWithDictionaries:nil];
+        [[self.renderer.textControllers objectForKey:@"gameOver"] fillWithDictionaries:nil];
+        
+        [self updateCardsAndThen:^
+        {
+            NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
+            
+            [label setObject:@"call" forKey:@"key"]; 
+            [label setObject:@"CALL" forKey:@"textString"]; 
+            
+            [actionLabels addObject:label];
+            
+            self.messageDown = self.renderer.camera.isAutomatic ? @"Tilt iPhone to peek at your cards" : @"Tap deck to peek at cards";
+            self.messageUp = @" ";
+            
+            [[self.renderer.textControllers objectForKey:@"actions"] fillWithDictionaries:actionLabels];
+            [[self.renderer.textControllers objectForKey:@"gameOver"] fillWithDictionaries:nil];
+            
+            { TextControllerStatusBar* textController = [self.renderer.textControllers objectForKey:@"messageDown"]; textController.text = self.messageDown; [textController update]; }
+            { TextControllerStatusBar* textController = [self.renderer.textControllers objectForKey:@"messageUp"]; textController.text = self.messageUp;   [textController update]; }
+        }];
+    }
+    else if(self.player.status == PlayerStatusShownCards)
+    {
+        self.renderer.chipGroup.frozen = YES;
+        
+        [[self.renderer.textControllers objectForKey:@"actions"] fillWithDictionaries:nil];
+                
+        [self.renderer.cardGroup flipCardsAndThen:nil];
+
+        [[self.renderer.textControllers objectForKey:@"actions"] fillWithDictionaries:nil];
+        [[self.renderer.textControllers objectForKey:@"gameOver"] fillWithDictionaries:nil];
+        
+        { TextControllerStatusBar* textController = [self.renderer.textControllers objectForKey:@"messageDown"]; textController.text = self.messageDown; [textController update]; }
+        { TextControllerStatusBar* textController = [self.renderer.textControllers objectForKey:@"messageUp"]; textController.text = self.messageUp;   [textController update]; }
+    }
+}
+
+-(void)updateCardsAndThen:(SimpleBlock)work
+{
+    [self.renderer.cardGroup updateCardsWithKeys:self.player.cardKeys held:(self.player.status == PlayerStatusDealtCards) ? self.player.heldKeys : self.player.cardKeys andThen:work];
+
+    self.renderer.cardGroup.showLabels = (self.player.status == PlayerStatusDealtCards);
+}
+
+-(void)updateCards
+{
+    [self updateCardsAndThen:nil];
 }
 
 -(void)givePrize
@@ -163,166 +343,35 @@ PlayerStatus;
         if(comparison >= 0)
         {
             scoreName = [_rankNames objectForKey:level];
-            prize = [[_rankPrizes objectForKey:level] intValue] * (self.player.betTotal + 1);
+            prize = [[_rankPrizes objectForKey:level] intValue] * (self.player.betTotal);
             
             break;
         }
     }
     
-    //TODO: refactor this into updateRendererAnimated
-    if(prize == 0) 
-    { 
-        { TextControllerStatusBar* textController = [self.renderer.textControllers objectForKey:@"status1"]; textController.text = @"No Prize"; [textController update]; }
-        { TextControllerStatusBar* textController = [self.renderer.textControllers objectForKey:@"status2"]; textController.text = @"No Prize"; [textController update]; }
-    }
-    else 
-    {
-        { TextControllerStatusBar* textController = [self.renderer.textControllers objectForKey:@"status1"]; textController.text = [NSString stringWithFormat:@"%@   +%d credits", scoreName, prize - self.player.betTotal - 1]; [textController update]; }
-        { TextControllerStatusBar* textController = [self.renderer.textControllers objectForKey:@"status2"]; textController.text = [NSString stringWithFormat:@"%@   +%d credits", scoreName, prize - self.player.betTotal - 1]; [textController update]; }
-    }
-    
+    self.messageDown = (prize == 0) ? @"No Prize" : [NSString stringWithFormat:@"%@   +%d credits", scoreName, prize - self.player.betTotal];
+    self.messageUp   = (prize == 0) ? @"No Prize" : [NSString stringWithFormat:@"%@   +%d credits", scoreName, prize - self.player.betTotal];
+
+    LOG_EXPR(self.messageDown);
+    LOG_EXPR(self.messageUp);
+
     self.player.chipTotal = self.player.chipTotal - self.player.betTotal + prize;
+    [self.player cancelBets];
     
-    [self updatePlayerAndThen:nil];
+    //[self updatePlayer];
 }
 
--(void)updatePlayerAndThen:(simpleBlock)work
+-(void)updateChips;
 {
-    [super updatePlayerAndThen:nil];
+    TextControllerCredits* textController = [self.renderer.textControllers objectForKey:@"credits"];
     
-    TextController* actions = [self.renderer.textControllers objectForKey:@"actions"];
-    
-    NSMutableArray* labels = [NSMutableArray array];
-    
-    if(self.player.status == PlayerStatusNoCards)
-    {
-        if(self.player.cards.count)
-        {                        
-            [self.player.cards removeAllObjects];
-            
-            [self.renderer.cardGroup updateCardsWithKeys:self.player.cardKeys held:self.player.heldKeys andThen:nil];
-        }
-                
-        NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
-        
-        [label setObject:@"draw" forKey:@"key"]; 
-        [label setObject:@"DEAL" forKey:@"textString"]; 
-                
-        [labels addObject:label];
-    }
-    else if(self.player.status == PlayerStatusShouldDealCards)
-    {
-        self.player.status = PlayerStatusDealingCards;
+    textController.showButton = (self.player.status == PlayerStatusNoCards);
 
-        self.player.cardsToRemove = [self.player.cards mutableCopy];
-        self.player.cardsToAdd = [self.game getCards:5];
-        
-        [self updateCardsAndThen:^{ self.player.status = PlayerStatusDealtCards; [self updatePlayerAndThen:nil]; }];
-    }
-    else if(self.player.status == PlayerStatusDealingCards)
-    {        
-        
-    }
-    else if(self.player.status == PlayerStatusDealtCards)
-    {
-        NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
-        
-        if(self.player.numberOfCardsMarked)
-        {
-            [label setObject: @"draw" forKey:@"key"]; 
-            [label setObject: @"DRAW" forKey:@"textString"]; 
-        }
-        else 
-        {
-            [label setObject: @"call" forKey:@"key"]; 
-            [label setObject: @"CALL" forKey:@"textString"]; 
-        }
+    [textController.opacity setValue:(self.player.status != PlayerStatusShownCards) forTime:0.5 andThen:nil];
     
-        [labels addObject:label];
-    
-        
-        if(self.renderer.camera.isAutomatic)
-        {
-            { TextControllerStatusBar* textController = [self.renderer.textControllers objectForKey:@"status1"]; textController.text = @"Tilt to peek at cards"; [textController update]; }
-            { TextControllerStatusBar* textController = [self.renderer.textControllers objectForKey:@"status2"]; textController.text = @"Tap cards to mark";     [textController update]; }
-        }
-        else 
-        {
-            { TextControllerStatusBar* textController = [self.renderer.textControllers objectForKey:@"status1"]; textController.text = @"Tap deck to peek at cards"; [textController update]; }
-            { TextControllerStatusBar* textController = [self.renderer.textControllers objectForKey:@"status2"]; textController.text = @"Tap cards to mark";         [textController update]; }
-        }
-    }
-    else if(self.player.status == PlayerStatusShouldDrawCards)
-    {
-        self.player.status = PlayerStatusDrawingCards;
-        
-        self.player.cardsToRemove = [self.player.heldCards mutableCopy]; 
-        self.player.cardsToAdd = [self.game getCards:self.player.cardsToRemove.count];
-        
-        [self updateCardsAndThen:^{ self.player.status = PlayerStatusDrawnCards; [self updatePlayerAndThen:nil]; }];
-    }
-    else if(self.player.status == PlayerStatusDrawingCards)
-    {
-        
-    }
-    else if(self.player.status == PlayerStatusDrawnCards)
-    {
-        NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
-        
-        [label setObject:@"call" forKey:@"key"]; 
-        [label setObject:@"CALL" forKey:@"textString"]; 
-        
-        [labels addObject:label]; 
-    }
-    else if(self.player.status == PlayerStatusShouldShowCards)
-    {
-        self.player.status = PlayerStatusShowingCards;
-        
-        [self.renderer.cardGroup flipCardsAndThen:^{ self.player.status = PlayerStatusShownCards; [self updatePlayerAndThen:nil]; }];
-    }
-    else if(self.player.status == PlayerStatusShowingCards)
-    {
-        
-    }
-    else if(self.player.status == PlayerStatusShownCards)
-    {
-        
-    }
-    else if(self.player.status == PlayerStatusShouldReturnCards)
-    {
-        self.player.status = PlayerStatusReturningCards;
-        
-        [self.renderer.cardGroup unflipCardsAndThen:
-        ^{ 
-            self.player.cardsToRemove = [self.player.cards mutableCopy];
-            
-            [self updateCardsAndThen:^{ self.player.status = PlayerStatusNoCards; [self updatePlayerAndThen:nil]; }]; 
-        }];
-    }
-    else if(self.player.status == PlayerStatusReturningCards)
-    {
-    
-    }
-    else 
-    {
-    
-    }
+    [textController update];
 
-    [actions fillWithDictionaries:labels];
-}
-
--(void)cardBackTouched:(int)card 
-{
-    if(self.renderer.camera.status == CameraStatusCardsFlipped)
-    {
-        self.player.status = PlayerStatusShouldReturnCards;
-        
-        [self updatePlayerAndThen:nil];
-    }
-    else 
-    {
-        [super cardBackTouched:card];
-    }
+    [super updateChips];
 }
 
 @end

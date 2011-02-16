@@ -22,7 +22,7 @@
 
 @dynamic value;
 
--(id)initWithStartValue:(Vector3D)startValue endValue:(Vector3D)endValue startTime:(NSTimeInterval)startTime endTime:(NSTimeInterval)endTime onStart:(simpleBlock)onStart onEnd:(simpleBlock)onEnd
+-(id)initWithStartValue:(Vector3D)startValue endValue:(Vector3D)endValue startTime:(NSTimeInterval)startTime endTime:(NSTimeInterval)endTime onStart:(SimpleBlock)onStart onEnd:(SimpleBlock)onEnd
 {
     self = [super init];
     
@@ -45,14 +45,14 @@
 
 +(id)withValue:(Vector3D)value
 {
-    NSTimeInterval now = CFAbsoluteTimeGetCurrent();    
+    NSTimeInterval now = CACurrentMediaTime();    
     
     return [[[AnimatedVector3D alloc] initWithStartValue:value endValue:value startTime:now endTime:now onStart:nil onEnd:nil] autorelease];
 }
 
 +(id)withStartValue:(Vector3D)startValue endValue:(Vector3D)endValue speed:(GLfloat)speed
 {
-    NSTimeInterval now = CFAbsoluteTimeGetCurrent();    
+    NSTimeInterval now = CACurrentMediaTime();    
     
     if(speed == 0)
     {
@@ -70,7 +70,7 @@
 
 +(id)withStartValue:(Vector3D)startValue endValue:(Vector3D)endValue forTime:(NSTimeInterval)timeInterval
 {
-    NSTimeInterval now = CFAbsoluteTimeGetCurrent();    
+    NSTimeInterval now = CACurrentMediaTime();    
     
     return [[[AnimatedVector3D alloc] initWithStartValue:startValue endValue:endValue startTime:now endTime:now + timeInterval onStart:nil onEnd:nil] autorelease];
 }
@@ -90,7 +90,7 @@
 
 -(Vector3D)value
 {
-    NSTimeInterval now = CFAbsoluteTimeGetCurrent();
+    NSTimeInterval now = CACurrentMediaTime();
     
     if(now > self.startTime && !self.hasStarted) 
     {

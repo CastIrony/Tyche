@@ -9,4 +9,7 @@
     NSDictionary* _rankPrizes;
 }
 
+-(void)givePrize;
+-(void)updateCardsAndThen:(SimpleBlock)work;
+
 @end

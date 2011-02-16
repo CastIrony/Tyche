@@ -13,25 +13,9 @@
 @dynamic value;
 @dynamic hasEnded;
 
-//-(id)initWithStartValue:(GLfloat)startValue endValue:(GLfloat)endValue startTime:(NSTimeInterval)startTime endTime:(NSTimeInterval)endTime
-//{
-//    self = [super init];
-//    
-//    if(self)
-//    {
-//        _startValue  = startValue;
-//        _startTime   = startTime;
-//        _endValue    = endValue;
-//        _endTime     = startTime + TIMESCALE * animate * (endTime - startTime);
-//        _curve       = AnimationEaseInOut;
-//    }
-//    
-//    return self;
-//}
-
 +(id)withValue:(GLfloat)value
 {
-    NSTimeInterval now = CFAbsoluteTimeGetCurrent();    
+    NSTimeInterval now = CACurrentMediaTime();    
     
     AnimatedFloat* animatedFloat = [[[AnimatedFloat alloc] init] autorelease];
     
@@ -43,9 +27,29 @@
     return animatedFloat;
 }
 
--(void)setValue:(GLfloat)value forTime:(NSTimeInterval)time andThen:(simpleBlock)work
+-(void)setValue:(GLfloat)value
 {
-    NSTimeInterval now = CFAbsoluteTimeGetCurrent();    
+    NSTimeInterval now = CACurrentMediaTime();    
+        
+    self.startValue = value;
+    self.endValue = value;
+    self.startTime = now;
+    self.endTime = now;
+}
+
+-(void)setValue:(GLfloat)value forTime:(NSTimeInterval)time
+{
+    NSTimeInterval now = CACurrentMediaTime();    
+        
+    self.startValue = self.value;
+    self.endValue = value;
+    self.startTime = now;
+    self.endTime = now + time * TIMESCALE;
+}
+
+-(void)setValue:(GLfloat)value forTime:(NSTimeInterval)time andThen:(SimpleBlock)work
+{
+    NSTimeInterval now = CACurrentMediaTime();    
         
     self.startValue = self.value;
     self.endValue = value;
@@ -55,14 +59,36 @@
     [self registerEvent:work];
 }
 
--(void)setValue:(GLfloat)value withSpeed:(GLfloat)speed andThen:(simpleBlock)work
+-(void)setValue:(GLfloat)value forTime:(NSTimeInterval)time afterDelay:(NSTimeInterval)delay andThen:(SimpleBlock)work
+{
+    NSTimeInterval now = CACurrentMediaTime();    
+        
+    self.startValue = self.value;
+    self.endValue = value;
+    self.startTime = now + delay;
+    self.endTime = now + (delay + time) * TIMESCALE;
+
+    [self registerEvent:work];
+}
+
+-(void)setValue:(GLfloat)value withSpeed:(GLfloat)speed
 {    
     NSTimeInterval time = speed == 0 ? 0 : absf(self.value, value) / speed; 
 
-    NSTimeInterval now = CFAbsoluteTimeGetCurrent();    
-   
-    runAfterDelay(time, work);
+    NSTimeInterval now = CACurrentMediaTime();    
     
+    self.startValue = self.value;
+    self.endValue = value;
+    self.startTime = now;
+    self.endTime = now + time * TIMESCALE;
+}
+
+-(void)setValue:(GLfloat)value withSpeed:(GLfloat)speed andThen:(SimpleBlock)work
+{    
+    NSTimeInterval time = speed == 0 ? 0 : absf(self.value, value) / speed; 
+
+    NSTimeInterval now = CACurrentMediaTime();    
+       
     self.startValue = self.value;
     self.endValue = value;
     self.startTime = now;
@@ -71,17 +97,31 @@
     [self registerEvent:work];
 }
 
--(void)registerEvent:(simpleBlock)work
+-(void)setValue:(GLfloat)value withSpeed:(GLfloat)speed afterDelay:(NSTimeInterval)delay andThen:(SimpleBlock)work
 {
-    NSTimeInterval now = CFAbsoluteTimeGetCurrent();    
+    NSTimeInterval time = speed == 0 ? 0 : absf(self.value, value) / speed; 
+
+    NSTimeInterval now = CACurrentMediaTime();    
+    
+    self.startValue = self.value;
+    self.endValue = value;
+    self.startTime = now + delay;
+    self.endTime = now + (delay + time) * TIMESCALE;
+
+    [self registerEvent:work];
+}
+
+-(void)registerEvent:(SimpleBlock)work
+{
+    NSTimeInterval now = CACurrentMediaTime();    
 
     if(now > self.endTime)
     {
-        runLater(work);
+        RunLater(work);
     }
     else 
     {
-        runAfterDelay(self.endTime - now, work);
+        RunAfterDelay(self.endTime - now, work);
     }
 
 }
@@ -98,7 +138,7 @@
 
 -(GLfloat)value
 {
-    NSTimeInterval now = CFAbsoluteTimeGetCurrent();
+    NSTimeInterval now = CACurrentMediaTime();
     
     if(now < self.startTime) { return self.startValue; }
     if(now > self.endTime)   { return self.endValue; }
@@ -117,7 +157,7 @@
 
 -(BOOL)hasEnded
 {
-    return self.endTime < CFAbsoluteTimeGetCurrent();
+    return self.endTime + 0.1 < CACurrentMediaTime();
 }
 
 @end

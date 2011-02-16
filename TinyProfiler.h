@@ -5,7 +5,7 @@
 
 #define TINY_PROFILER_LOG_INTERVAL 150
 #define TINY_PROFILER_COUNT        32
-#define TINY_PROFILER_TIMER        CFAbsoluteTimeGetCurrent()
+#define TINY_PROFILER_TIMER        CACurrentMediaTime()
 #define TINY_PROFILER_TIME_TYPE    NSTimeInterval
 #define TINY_PROFILER_LOG(...)     printf("%d, %d, %f5, %f5\n", __VA_ARGS__)
 

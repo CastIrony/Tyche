@@ -276,35 +276,42 @@ static void rotateVectors(Vector3D* points, int count, GLfloat angle, Vector3D o
     GLfloat sinT = sin(DEGREES_TO_RADIANS(angle));
     GLfloat cosT = cos(DEGREES_TO_RADIANS(angle));
     
-    GLfloat a  = origin.x;
-    GLfloat b  = origin.y;
-    GLfloat c  = origin.z;
+    GLfloat ox  = origin.x;
+    GLfloat oy  = origin.y;
+    GLfloat oz  = origin.z;
     
-    GLfloat u  = axis.x;
-    GLfloat v  = axis.y;
-    GLfloat w  = axis.z;
+    GLfloat ax  = axis.x;
+    GLfloat ay  = axis.y;
+    GLfloat az  = axis.z;
     
-    GLfloat u2 = u * u;
-    GLfloat v2 = v * v;
-    GLfloat w2 = w * w;
+    GLfloat ax2 = ax * ax;
+    GLfloat ay2 = ay * ay;
+    GLfloat az2 = az * az;
     
-    GLfloat l2 = u2 + v2 + w2;
+    GLfloat l2 = ax2 + ay2 + az2;
     GLfloat l  = sqrt(l2);
     
-    GLfloat m11 = (u2 + (v2 + w2) * cosT) / l2;
-    GLfloat m22 = (v2 + (u2 + w2) * cosT) / l2;
-    GLfloat m33 = (w2 + (u2 + v2) * cosT) / l2;
+    GLfloat m21 = (ax * ay * (1 - cosT) + az * l * sinT) / l2;
+    GLfloat m31 = (ax * az * (1 - cosT) - ay * l * sinT) / l2;
     
-    GLfloat m12 = (u * v * (1 - cosT) - w * l * sinT) / l2;
-    GLfloat m13 = (u * w * (1 - cosT) + v * l * sinT) / l2;
-    GLfloat m21 = (u * v * (1 - cosT) + w * l * sinT) / l2;
-    GLfloat m23 = (v * w * (1 - cosT) - u * l * sinT) / l2;
-    GLfloat m31 = (u * w * (1 - cosT) - v * l * sinT) / l2;
-    GLfloat m32 = (v * w * (1 - cosT) + u * l * sinT) / l2;
+    GLfloat m12 = (ax * ay * (1 - cosT) - az * l * sinT) / l2;
+    GLfloat m32 = (ay * az * (1 - cosT) + ax * l * sinT) / l2;
     
-    GLfloat m14 = (a * (v2 + w2) - u * (b * v + c * w) + (u * (b * v + c * w) - a * (v2 + w2)) * cosT + (b * w - c * v) * l * sinT) / l2;
-    GLfloat m24 = (b * (u2 + w2) - v * (a * u + c * w) + (v * (a * u + c * w) - b * (u2 + w2)) * cosT + (c * u - a * w) * l * sinT) / l2;
-    GLfloat m34 = (c * (u2 + v2) - w * (a * u + b * v) + (w * (a * u + b * v) - c * (u2 + v2)) * cosT + (a * v - b * u) * l * sinT) / l2;
+    GLfloat m13 = (ax * az * (1 - cosT) + ay * l * sinT) / l2;
+    GLfloat m23 = (ay * az * (1 - cosT) - ax * l * sinT) / l2;
+
+    GLfloat m22 = (ay2 + (ax2 + az2) * cosT) / l2;
+    GLfloat m11 = (ax2 + (ay2 + az2) * cosT) / l2;
+    GLfloat m33 = (az2 + (ax2 + ay2) * cosT) / l2;
+    
+    GLfloat m14 = (ox * (ay2 + az2) - ax * (oy * ay + oz * az) + (ax * (oy * ay + oz * az) - ox * (ay2 + az2)) * cosT + (oy * az - oz * ay) * l * sinT) / l2;
+    GLfloat m24 = (oy * (ax2 + az2) - ay * (ox * ax + oz * az) + (ay * (ox * ax + oz * az) - oy * (ax2 + az2)) * cosT + (oz * ax - ox * az) * l * sinT) / l2;
+    GLfloat m34 = (oz * (ax2 + ay2) - az * (ox * ax + oy * ay) + (az * (ox * ax + oy * ay) - oz * (ax2 + ay2)) * cosT + (ox * ay - oy * ax) * l * sinT) / l2;
+    
+    GLfloat m41 = 0;
+    GLfloat m42 = 0;
+    GLfloat m43 = 0;
+    GLfloat m44 = 1;
     
     Vector3D point;
     Vector3D newPoint;

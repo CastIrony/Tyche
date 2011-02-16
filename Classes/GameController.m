@@ -21,11 +21,14 @@
 #import "DisplayContainer.h"
 #import "MenuControllerMain.h"
 #import "MenuLayerController.h"
+#import "TextControllerStatusBar.h"
 
 @implementation GameController
 
 @synthesize renderer = _renderer;
 @synthesize game     = _game;
+@synthesize messageDown = _messageDown;
+@synthesize messageUp   = _messageUp;
 
 @dynamic myPeerId;
 @dynamic player;
@@ -118,7 +121,7 @@
 	return self;
 }
 
--(void)newDeckAndThen:(simpleBlock)work
+-(void)newDeck
 {
     self.game.deck = [[NSMutableArray alloc] init];
     
@@ -139,9 +142,16 @@
     [self.game.deck shuffle];
 }
 
--(void)newGameAndThen:(simpleBlock)work
+-(void)newGame
 {
+    [self.renderer.menuLayerController hideMenus];
 
+    self.game = [[[GameModel alloc] init] autorelease];
+        
+    [self.game.players setObject:[[[PlayerModel alloc] init] autorelease] forKey:self.myPeerId];
+    [self.game.playerIds addObject:self.myPeerId];
+        
+    [self newDeck];
 }
 
 -(void)saveData
@@ -158,8 +168,6 @@
     [self.player.cards removeObject:card];
     
     [self.player.cards insertObject:card atIndex:finalIndex];
-        
-    [self saveData];
 }
 
 -(void)givePrize
@@ -167,48 +175,25 @@
     
 }
 
--(void)updatePlayerAndThen:(simpleBlock)work
+-(void)updatePlayer
 {
-    [self updateChipsAndThen:work];
+    [self saveData];
+
+    [self updateCards];
+    [self updateChips];
 }
 
--(void)updateCardsAndThen:(simpleBlock)work
+-(void)updateCards
 {
-    if(self.player.cardsToRemove.count > 0)
-    {
-        CardModel* card = [self.player.cardsToRemove lastObject];
-
-        [self.player.cards removeObject:card];
-        [self.player.cardsToRemove removeObject:card];
-                
-        BOOL isLastCard = self.player.cardsToRemove.count == 0 && self.player.cardsToAdd.count == 0;
-        
-        [self.renderer.cardGroup updateCardsWithKeys:self.player.cardKeys held:self.player.heldKeys andThen:isLastCard ? work: nil];
-        
-        runAfterDelay(0.2, ^{ [self updateCardsAndThen:work]; });
-    }
-    else if(self.player.cardsToAdd.count > 0)
-    {
-        CardModel* card = [self.player.cardsToAdd objectAtIndex:0];
-
-        [self.player.cards addObject:card];
-        [self.player.cardsToAdd removeObject:card];
-        
-        BOOL isLastCard = (self.player.cardsToRemove.count == 0) && (self.player.cardsToAdd.count == 0);
-        
-        [self.renderer.cardGroup updateCardsWithKeys:self.player.cardKeys held:self.player.heldKeys andThen:isLastCard ? work: nil];
-        
-        runAfterDelay(0.2, ^{ [self updateCardsAndThen:work]; });
-    }
+    [self.renderer.cardGroup updateCardsWithKeys:self.player.cardKeys held:self.player.heldKeys andThen:nil];
 }
 
--(void)updateChipsAndThen:(simpleBlock)work;
+-(void)updateChips;
 {
     TextControllerCredits* textController = [self.renderer.textControllers objectForKey:@"credits"];
     
     textController.creditTotal = self.player.chipTotal;
     textController.betTotal    = self.player.betTotal;
-    textController.showButton  = YES;
 
     [textController update];
     
@@ -236,20 +221,16 @@
     }
 
     [self.renderer.chipGroup.offset setValue:offset forTime:1 andThen:nil];
-
-    GLChip* lastToFinish = nil;
     
-    { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"1"    ]; chip.maxCount = [[self.player.chips objectForKey:@"1"    ] chipCount]; [chip.count setValue:[[self.player.chips objectForKey:@"1"    ] displayCount] withSpeed:6 andThen:nil]; if(chip.count.endTime > lastToFinish.count.endTime) { lastToFinish = chip; } }
-    { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"5"    ]; chip.maxCount = [[self.player.chips objectForKey:@"5"    ] chipCount]; [chip.count setValue:[[self.player.chips objectForKey:@"5"    ] displayCount] withSpeed:6 andThen:nil]; if(chip.count.endTime > lastToFinish.count.endTime) { lastToFinish = chip; } }
-    { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"10"   ]; chip.maxCount = [[self.player.chips objectForKey:@"10"   ] chipCount]; [chip.count setValue:[[self.player.chips objectForKey:@"10"   ] displayCount] withSpeed:6 andThen:nil]; if(chip.count.endTime > lastToFinish.count.endTime) { lastToFinish = chip; } }
-    { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"25"   ]; chip.maxCount = [[self.player.chips objectForKey:@"25"   ] chipCount]; [chip.count setValue:[[self.player.chips objectForKey:@"25"   ] displayCount] withSpeed:6 andThen:nil]; if(chip.count.endTime > lastToFinish.count.endTime) { lastToFinish = chip; } }
-    { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"100"  ]; chip.maxCount = [[self.player.chips objectForKey:@"100"  ] chipCount]; [chip.count setValue:[[self.player.chips objectForKey:@"100"  ] displayCount] withSpeed:6 andThen:nil]; if(chip.count.endTime > lastToFinish.count.endTime) { lastToFinish = chip; } }    
-    { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"500"  ]; chip.maxCount = [[self.player.chips objectForKey:@"500"  ] chipCount]; [chip.count setValue:[[self.player.chips objectForKey:@"500"  ] displayCount] withSpeed:6 andThen:nil]; if(chip.count.endTime > lastToFinish.count.endTime) { lastToFinish = chip; } }    
-    { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"1000" ]; chip.maxCount = [[self.player.chips objectForKey:@"1000" ] chipCount]; [chip.count setValue:[[self.player.chips objectForKey:@"1000" ] displayCount] withSpeed:6 andThen:nil]; if(chip.count.endTime > lastToFinish.count.endTime) { lastToFinish = chip; } }    
-    { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"2500" ]; chip.maxCount = [[self.player.chips objectForKey:@"2500" ] chipCount]; [chip.count setValue:[[self.player.chips objectForKey:@"2500" ] displayCount] withSpeed:6 andThen:nil]; if(chip.count.endTime > lastToFinish.count.endTime) { lastToFinish = chip; } }    
-    { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"10000"]; chip.maxCount = [[self.player.chips objectForKey:@"10000"] chipCount]; [chip.count setValue:[[self.player.chips objectForKey:@"10000"] displayCount] withSpeed:6 andThen:nil]; if(chip.count.endTime > lastToFinish.count.endTime) { lastToFinish = chip; } }
-
-    [lastToFinish.count registerEvent:work];
+    { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"1"    ]; chip.maxCount = [[self.player.chips objectForKey:@"1"    ] chipCount]; [chip.count setValue:[[self.player.chips objectForKey:@"1"    ] displayCount] withSpeed:6 andThen:nil]; }
+    { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"5"    ]; chip.maxCount = [[self.player.chips objectForKey:@"5"    ] chipCount]; [chip.count setValue:[[self.player.chips objectForKey:@"5"    ] displayCount] withSpeed:6 andThen:nil]; }
+    { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"10"   ]; chip.maxCount = [[self.player.chips objectForKey:@"10"   ] chipCount]; [chip.count setValue:[[self.player.chips objectForKey:@"10"   ] displayCount] withSpeed:6 andThen:nil]; }
+    { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"25"   ]; chip.maxCount = [[self.player.chips objectForKey:@"25"   ] chipCount]; [chip.count setValue:[[self.player.chips objectForKey:@"25"   ] displayCount] withSpeed:6 andThen:nil]; }
+    { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"100"  ]; chip.maxCount = [[self.player.chips objectForKey:@"100"  ] chipCount]; [chip.count setValue:[[self.player.chips objectForKey:@"100"  ] displayCount] withSpeed:6 andThen:nil]; }    
+    { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"500"  ]; chip.maxCount = [[self.player.chips objectForKey:@"500"  ] chipCount]; [chip.count setValue:[[self.player.chips objectForKey:@"500"  ] displayCount] withSpeed:6 andThen:nil]; }    
+    { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"1000" ]; chip.maxCount = [[self.player.chips objectForKey:@"1000" ] chipCount]; [chip.count setValue:[[self.player.chips objectForKey:@"1000" ] displayCount] withSpeed:6 andThen:nil]; }    
+    { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"2500" ]; chip.maxCount = [[self.player.chips objectForKey:@"2500" ] chipCount]; [chip.count setValue:[[self.player.chips objectForKey:@"2500" ] displayCount] withSpeed:6 andThen:nil]; }    
+    { GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:@"10000"]; chip.maxCount = [[self.player.chips objectForKey:@"10000"] chipCount]; [chip.count setValue:[[self.player.chips objectForKey:@"10000"] displayCount] withSpeed:6 andThen:nil]; }
 }
 
 -(NSString*)scoreHand
@@ -262,8 +243,10 @@
 
 -(NSString*)scoreHand:(NSArray*)hand high:(BOOL)high
 {
-    if(self.player.cards.count != 5) { return @""; }
-                
+    if(hand.count != 5) { return @""; }
+    
+    NSArray* sortedHand = [hand sortedArrayUsingSelector:high ? @selector(numeralCompareHigh:) : @selector(numeralCompareLow:)];
+                                        
     NSMutableArray* quadCards   = [[[NSMutableArray alloc] init] autorelease];
     NSMutableArray* tripleCards = [[[NSMutableArray alloc] init] autorelease];
     NSMutableArray* pairCards   = [[[NSMutableArray alloc] init] autorelease];
@@ -272,9 +255,7 @@
     int pairs   = 0;
     int triples = 0;
     int quads   = 0;
-    
-    NSArray* sortedHand = [hand sortedArrayUsingSelector:high ? @selector(numeralCompareHigh:) : @selector(numeralCompareLow:)];
-    
+        
     CardModel* card1 = [sortedHand objectAtIndex:0];
     CardModel* card2 = [sortedHand objectAtIndex:1];
     CardModel* card3 = [sortedHand objectAtIndex:2];
@@ -282,20 +263,20 @@
     CardModel* card5 = [sortedHand objectAtIndex:4];
     
     [singleCards addObject:[NSNumber numberWithInt:high ? card1.numeralHigh : card1.numeralLow]];
-    [singleCards addObject:[NSNumber numberWithInt:high ? card2.numeralHigh : card1.numeralLow]];
-    [singleCards addObject:[NSNumber numberWithInt:high ? card3.numeralHigh : card1.numeralLow]];
-    [singleCards addObject:[NSNumber numberWithInt:high ? card4.numeralHigh : card1.numeralLow]];
-    [singleCards addObject:[NSNumber numberWithInt:high ? card5.numeralHigh : card1.numeralLow]];
+    [singleCards addObject:[NSNumber numberWithInt:high ? card2.numeralHigh : card2.numeralLow]];
+    [singleCards addObject:[NSNumber numberWithInt:high ? card3.numeralHigh : card3.numeralLow]];
+    [singleCards addObject:[NSNumber numberWithInt:high ? card4.numeralHigh : card4.numeralLow]];
+    [singleCards addObject:[NSNumber numberWithInt:high ? card5.numeralHigh : card5.numeralLow]];
     
     if(card1.numeralHigh == card2.numeralHigh) { pairs++;   [pairCards   addObject:[NSNumber numberWithInt:high ? card1.numeralHigh : card1.numeralLow]]; }
-    if(card2.numeralHigh == card3.numeralHigh) { pairs++;   [pairCards   addObject:[NSNumber numberWithInt:high ? card2.numeralHigh : card1.numeralLow]]; }
-    if(card3.numeralHigh == card4.numeralHigh) { pairs++;   [pairCards   addObject:[NSNumber numberWithInt:high ? card3.numeralHigh : card1.numeralLow]]; }
-    if(card4.numeralHigh == card5.numeralHigh) { pairs++;   [pairCards   addObject:[NSNumber numberWithInt:high ? card4.numeralHigh : card1.numeralLow]]; }
+    if(card2.numeralHigh == card3.numeralHigh) { pairs++;   [pairCards   addObject:[NSNumber numberWithInt:high ? card2.numeralHigh : card2.numeralLow]]; }
+    if(card3.numeralHigh == card4.numeralHigh) { pairs++;   [pairCards   addObject:[NSNumber numberWithInt:high ? card3.numeralHigh : card3.numeralLow]]; }
+    if(card4.numeralHigh == card5.numeralHigh) { pairs++;   [pairCards   addObject:[NSNumber numberWithInt:high ? card4.numeralHigh : card4.numeralLow]]; }
     if(card1.numeralHigh == card3.numeralHigh) { triples++; [tripleCards addObject:[NSNumber numberWithInt:high ? card1.numeralHigh : card1.numeralLow]]; }
-    if(card2.numeralHigh == card4.numeralHigh) { triples++; [tripleCards addObject:[NSNumber numberWithInt:high ? card2.numeralHigh : card1.numeralLow]]; }
-    if(card3.numeralHigh == card5.numeralHigh) { triples++; [tripleCards addObject:[NSNumber numberWithInt:high ? card3.numeralHigh : card1.numeralLow]]; }
+    if(card2.numeralHigh == card4.numeralHigh) { triples++; [tripleCards addObject:[NSNumber numberWithInt:high ? card2.numeralHigh : card2.numeralLow]]; }
+    if(card3.numeralHigh == card5.numeralHigh) { triples++; [tripleCards addObject:[NSNumber numberWithInt:high ? card3.numeralHigh : card3.numeralLow]]; }
     if(card1.numeralHigh == card4.numeralHigh) { quads++;   [quadCards   addObject:[NSNumber numberWithInt:high ? card1.numeralHigh : card1.numeralLow]]; }
-    if(card2.numeralHigh == card5.numeralHigh) { quads++;   [quadCards   addObject:[NSNumber numberWithInt:high ? card2.numeralHigh : card1.numeralLow]]; }
+    if(card2.numeralHigh == card5.numeralHigh) { quads++;   [quadCards   addObject:[NSNumber numberWithInt:high ? card2.numeralHigh : card2.numeralLow]]; }
 
     [tripleCards removeObjectsInArray:quadCards];
     [pairCards   removeObjectsInArray:quadCards];
@@ -350,101 +331,35 @@
 
 -(void)labelTouchedWithKey:(NSString*)key;
 {
-    // [label setObject:@"logo"             forKey:@"key"]; 
-    // [label setObject:@"join_multiplayer" forKey:@"key"]; 
-    // [label setObject:@"new_multiplayer"  forKey:@"key"]; 
-    // [label setObject:@"new_game"         forKey:@"key"]; 
 
-    if([key isEqualToString:@"logo"])
-    {
-        MenuControllerMain* menu = [MenuControllerMain withRenderer:self.renderer];
-    
-        [self.renderer.menuLayerController pushMenuLayer:menu forKey:[NSString stringWithFormat:@"%X", menu]];
-    }
-    else if([key isEqualToString:@"join_multiplayer"])
-    {
-        [self.renderer.menuLayerController cancelMenuLayer];
-    }
-    else if([key isEqualToString:@"new_multiplayer"])
-    {
-        [self.renderer.menuLayerController.currentLayer deleteMenuForKey:self.renderer.menuLayerController.currentLayer.currentKey]; 
-    }
 }
 
--(void)chipTouchedUpWithKey:(NSString*)key
+-(void)chipSwipedUpWithKey:(NSString*)key
 {
     ChipModel* chipModel = [self.player.chips objectForKey:key];
-    GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:key];
     
     chipModel.betCount += 1;
     
-    [self saveData];
-    
-    [self updatePlayerAndThen:nil];
-    
-    //TODO: refactor this into updateRendererAnimated
-    [chip.count setValue:chipModel.displayCount withSpeed:3 andThen:nil];
+    [self updatePlayer];
 }
 
--(void)chipTouchedDownWithKey:(NSString*)key
+-(void)chipSwipedDownWithKey:(NSString*)key
 {
     ChipModel* chipModel = [self.player.chips objectForKey:key];
-    GLChip* chip = [self.renderer.chipGroup.chips liveObjectForKey:key];
     
     chipModel.betCount -= 1;
-    
-    [self saveData];
-    
-    [self updatePlayerAndThen:nil];
-    
-    //TODO: refactor this into updateRendererAnimated
-    [chip.count setValue:chipModel.displayCount withSpeed:3 andThen:nil];
+
+    [self updatePlayer];
 }
 
--(void)cardFrontTouched:(int)card
+-(void)cardFrontTapped:(int)card
 { 
-//    CardModel* cardModel = [self.player.cards             objectAtIndex:card];
-//    GLCard*    cardView  = [self.renderer.cardGroup.cards objectAtIndex:card];
-//    
-//    cardModel.isHeld = !cardModel.isHeld;
-//    
-//    //TODO: refactor this into updateRendererAnimated
-//    cardView.isHeld = [AnimatedFloat withStartValue:cardView.isHeld.value endValue:cardModel.isHeld speed:4.0];
-//    
-//    [self saveData];
+
 }
 
--(void)cardBackTouched:(int)card 
+-(void)cardBackTapped:(int)card 
 {
-    //TODO: refactor this into updateRendererAnimated
-    if(self.renderer.camera.pitchAngle.value < 60 && !self.renderer.camera.isAutomatic)
-    {
-        [self.renderer.camera.pitchAngle setValue:90 forTime:1.0 andThen:nil];
-    }    
-}
-
--(void)emptySpaceTouched 
-{
-    //TODO: refactor this into updateRendererAnimated
-    if(!self.renderer.camera.isAutomatic)
-    {
-        if(self.renderer.camera.pitchAngle.value > 60)
-        {
-            [self.renderer.camera.pitchAngle setValue:0 forTime:1.0 andThen:nil];
-        }
-        else 
-        {
-            if(self.renderer.camera.menuVisible) 
-            {
-                [self.renderer.menuLayerController hideMenus];
-            }
-            else 
-            {
-                [self.renderer.menuLayerController showMenus];
-            }
-        }
-
-    }
+    [self.renderer.camera.pitchAngle setValue:90 forTime:1];
 }
 
 @end

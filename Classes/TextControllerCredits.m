@@ -37,9 +37,10 @@
         [self.styles setObject:[NSValue  valueWithCGSize:CGSizeMake(6, 0.9)]                   forKey:@"labelSize"];
         [self.styles setObject:[NSValue  valueWithBytes:&labelColor objCType:@encode(Color3D)] forKey:@"colorNormal"];
         [self.styles setObject:[NSValue  valueWithBytes:&labelColor objCType:@encode(Color3D)] forKey:@"colorTouched"];
+        [self.styles setObject:[NSNumber numberWithFloat:0.2] forKey:@"topMargin"]; 
+        [self.styles setObject:[NSNumber numberWithFloat:0.2] forKey:@"bottomMargin"]; 
 
         self.center = YES;
-        self.padding = 0.2;
     }
     
     return self;
@@ -48,57 +49,59 @@
 -(void)update
 {
     NSMutableArray* labels = [[[NSMutableArray alloc] init] autorelease];
-    
-    { 
-        NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
-        
-        [label setObject:[NSString stringWithFormat:@"Credits: %d", self.creditTotal] forKey:@"textString"];          
-        
-        [label setObject:@"credits" forKey:@"key"]; 
-        
-        [labels addObject:label]; 
-    }
-    
-    if(self.betTotal)
+
+    if(self.creditTotal > 0)
     {
         { 
             NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
             
-            [label setObject:[NSString stringWithFormat:@"Bet: %d", self.betTotal] forKey:@"textString"];     
-            [label setObject:[NSValue  valueWithCGSize:CGSizeMake(6, 0.78)] forKey:@"labelSize"];
-            [label setObject:@"bet" forKey:@"key"]; 
+            [label setObject:[NSString stringWithFormat:@"Credits: %d", self.creditTotal] forKey:@"textString"];          
+            
+            [label setObject:@"credits" forKey:@"key"]; 
             
             [labels addObject:label]; 
         }
-        
-        if(self.showButton)
-        { 
+
+        if(self.betTotal > 0)
+        {
+            { 
+                NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
+                
+                [label setObject:[NSString stringWithFormat:@"Bet: %d", self.betTotal] forKey:@"textString"];     
+                [label setObject:[NSValue  valueWithCGSize:CGSizeMake(6, 0.78)] forKey:@"labelSize"];
+                [label setObject:@"bet" forKey:@"key"]; 
+                
+                [labels addObject:label]; 
+            }
+            
+            if(self.showButton)
+            { 
+                NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
+                
+                [label setObject:[NSNumber numberWithBool:YES]  forKey:@"hasBorder"];
+                [label setObject:[NSNumber numberWithFloat:0.3] forKey:@"fadeMargin"]; 
+                [label setObject:[NSValue  valueWithCGSize:CGSizeMake(3, 0.9)] forKey:@"labelSize"];
+                [label setObject:@"cancel_bet" forKey:@"key"]; 
+                [label setObject:@"CANCEL"     forKey:@"textString"];
+                
+                [labels addObject:label]; 
+            }
+        }
+        else if(self.showButton)
+        {
             NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
             
             [label setObject:[NSNumber numberWithBool:YES]  forKey:@"hasBorder"];
             [label setObject:[NSNumber numberWithFloat:0.3] forKey:@"fadeMargin"]; 
+            
             [label setObject:[NSValue  valueWithCGSize:CGSizeMake(3, 0.9)] forKey:@"labelSize"];
+            
             [label setObject:@"cancel_bet" forKey:@"key"]; 
-            [label setObject:@"CANCEL"     forKey:@"textString"];
+            [label setObject:@"ALL IN" forKey:@"textString"];
             
             [labels addObject:label]; 
         }
     }
-    else if(self.showButton)
-    {
-        NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
-        
-        [label setObject:[NSNumber numberWithBool:YES]  forKey:@"hasBorder"];
-        [label setObject:[NSNumber numberWithFloat:0.3] forKey:@"fadeMargin"]; 
-        
-        [label setObject:[NSValue  valueWithCGSize:CGSizeMake(3, 0.9)] forKey:@"labelSize"];
-        
-        [label setObject:@"cancel_bet" forKey:@"key"]; 
-        [label setObject:@"ALL IN" forKey:@"textString"];
-        
-        [labels addObject:label]; 
-    }
-    
     [self fillWithDictionaries:labels];
 }
 

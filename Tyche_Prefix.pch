@@ -2,7 +2,7 @@
 // Prefix header for all source files of the 'OpenGLTest' target in the 'OpenGLTest' project
 //
 
-#define __IPHONE_OS_VERSION_MIN_REQUIRED __IPHONE_4_0
+//#define __IPHONE_OS_VERSION_MIN_REQUIRED __IPHONE_4_0
 
 #import <Availability.h>
 

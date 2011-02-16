@@ -5,16 +5,43 @@
 #define TRANSACTION_BEGIN glPushMatrix(); @try
 #define TRANSACTION_END @catch(NSException* exception) { NSLog(@"Error in transaction: %@", exception.callStackSymbols ); } @finally { glPopMatrix(); }
 
-typedef void(^simpleBlock)(void);
+typedef void(^SimpleBlock)(void);
 
-static inline void runAfterDelay(NSTimeInterval delay, simpleBlock work)
+#define RUNBLOCK(work) if(work) { work(); }
+
+static void RunUrgentlyInBackground(SimpleBlock block)
 {
-    [[[work copy] autorelease] performSelector:@selector(my_callBlock) withObject:nil afterDelay:delay * TIMESCALE * animate];
+    if(!block) { return; }
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), block);
 }
 
-static inline void runLater(simpleBlock work)
+static void RunInBackground(SimpleBlock block)
 {
-    [[[work copy] autorelease] performSelector:@selector(my_callBlock) withObject:nil afterDelay:0];
+    if(!block) { return; }
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), block);
+}
+
+static void RunOnMainThread(BOOL wait, SimpleBlock block)
+{    
+    if(!block) { return; }
+
+    dispatch_async(dispatch_get_main_queue(), block);
+}
+
+static void RunLater(SimpleBlock block)
+{
+    if(!block) { return; }
+    
+    dispatch_async(dispatch_get_main_queue(), block);
+}
+
+static void RunAfterDelay(NSTimeInterval delay, SimpleBlock block)
+{
+    if(!block) { return; }
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), block);
 }
 
 static inline BOOL within(GLfloat float1, GLfloat float2, GLfloat epsilon)

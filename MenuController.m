@@ -23,6 +23,8 @@
 @synthesize hidden        = _hidden;
 @synthesize owner         = _owner;
 @synthesize first         = _first;
+@synthesize key              = _key;
+@synthesize displayContainer = _displayContainer;
 
 -(id)initWithRenderer:(GameRenderer*)renderer
 {
@@ -49,22 +51,20 @@
     return [[[self alloc] initWithRenderer:renderer] autorelease];
 }
 
--(BOOL)isAlive
-{
-    return within(self.death.value, 0, 0.001) && self.death.endTime < CFAbsoluteTimeGetCurrent();
-}
-
--(BOOL)isDead
-{
-    return within(self.death.value, 1, 0.001) && self.death.endTime < CFAbsoluteTimeGetCurrent();
-}
-
 -(void)addMenu:(GLMenu*)menu forKey:(NSString*)key
 {
     menu.owner = self;
     
-    [self.menus insertObject:menu asLastWithKey:key];
+    NSMutableArray* newKeys = [[self.menus.liveKeys mutableCopy] autorelease];
+    NSMutableDictionary* newDictionary = [[self.menus.liveDictionary mutableCopy] autorelease];
+
+    [newKeys removeObject:key];
+    [newKeys addObject:key];
     
+    [newDictionary setObject:menu forKey:key];
+    
+    [self.menus setKeys:newKeys andDictionary:newDictionary];
+
     if(!self.currentKey) { self.currentKey = key; }
     
     [self layoutMenus];
@@ -74,9 +74,9 @@
 {
     GLMenu* menu = [self.menus liveObjectForKey:key];
     
-    [menu.death setValue:1 forTime:1 andThen:^{ [self.menus pruneDeadForKey:key]; [self layoutMenus]; }];
+    [menu.death setValue:1 forTime:1 andThen:^{ [self.menus pruneDead]; [self layoutMenus]; }];
     
-    [self.menus pruneLiveForKey:key]; 
+    [self.menus generateObjectLists]; 
     [self layoutMenus];
 }
 
@@ -88,12 +88,12 @@
         
         if(currentIndex != NSNotFound)
         {
-            [self.offset setValue:currentIndex forTime:0.5 andThen:nil];
+            [self.offset setValue:currentIndex forTime:0.3 andThen:nil];
         }
     }
     else if(self.isAlive) 
     {
-        [self.offset setValue:-1 forTime:0.5 andThen:nil];
+        [self.offset setValue:-1 forTime:0.3 andThen:nil];
         
         [self.owner cancelMenuLayer];
     }
@@ -200,33 +200,26 @@
             }
             else 
             {
-                self.currentKey = [self.menus keyBefore:self.currentKey];
+                self.currentKey = [self.menus.keys objectBefore:self.currentKey];
             }
         }
         else if(pointTo.x - pointFrom.x < -10)
         {
-            self.currentKey = [self.menus keyAfter:self.currentKey];
+            self.currentKey = [self.menus.keys objectAfter:self.currentKey];
         }
 
         [self updateOffset];
     }
 }
 
-@end
+-(BOOL)isAlive { return within(self.death.endValue, 0, 0.001); }
+-(BOOL)isDead  { return within(self.death.value,    1, 0.001); }
 
-@implementation MenuController (Killable)
-
-@dynamic isDead;
-@dynamic isAlive;
-
--(BOOL)isAlive { return within(self.death.value, 0, 0.001) && self.death.endTime < CFAbsoluteTimeGetCurrent(); }
--(BOOL)isDead  { return within(self.death.value, 1, 0.001) && self.death.endTime < CFAbsoluteTimeGetCurrent(); }
-
--(void)killWithDisplayContainer:(DisplayContainer*)container key:(id)key andThen:(simpleBlock)work
+-(void)killAfterDelay:(NSTimeInterval)delay andThen:(SimpleBlock)work
 {
-    [self.death setValue:1 forTime:0.5 andThen:^{ [container pruneDeadForKey:key]; runLater(work); }];
-    
-    [container pruneLiveForKey:key];
+    // TODO: this should respect the specified delay
+
+    [self.death setValue:1 forTime:0.3 andThen:^{ [self.displayContainer pruneDead]; RunLater(work); }];
 }
 
 @end

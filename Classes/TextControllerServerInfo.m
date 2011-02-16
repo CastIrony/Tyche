@@ -15,7 +15,6 @@
     
     if(self)
     {   
-        self.padding = 0.4;
         self.center = NO;
     }
     
@@ -27,12 +26,14 @@
     Color3D colorNormal      = Color3DMake(0.5, 0.0, 0, 0.75); 
     Color3D colorTouched     = Color3DMake(0.0, 0.0, 0, 0.75); 
     
-    [self.styles setObject:[NSNumber numberWithFloat:0.0]                                         forKey:@"fadeMargin"]; 
     [self.styles setObject:[UIFont   fontWithName:@"Futura-Medium" size:20]                      forKey:@"font"];
     [self.styles setObject:[NSValue  valueWithCGSize:CGSizeMake(3.75, 0.42)]                      forKey:@"labelSize"];
     [self.styles setObject:[NSValue  valueWithBytes:&colorTouched objCType:@encode(Color3D)] forKey:@"colorNormal"];
     [self.styles setObject:[NSValue  valueWithBytes:&colorTouched objCType:@encode(Color3D)] forKey:@"colorTouched"];
-    [self.styles setObject:[NSNumber numberWithBool:NO] forKey:@"hasShadow"]; 
+    [self.styles setObject:[NSNumber numberWithBool:NO]   forKey:@"hasShadow"]; 
+    [self.styles setObject:[NSNumber numberWithFloat:0.0] forKey:@"fadeMargin"]; 
+    [self.styles setObject:[NSNumber numberWithFloat:0.4] forKey:@"topMargin"]; 
+    [self.styles setObject:[NSNumber numberWithFloat:0.4] forKey:@"bottomMargin"]; 
 
     NSMutableArray* labels = [[[NSMutableArray alloc] init] autorelease];
     

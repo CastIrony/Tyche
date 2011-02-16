@@ -23,18 +23,20 @@
 
 +(GameController*)loadWithRenderer:(GameRenderer*)renderer
 {
-    NSString* file = [NSString stringWithFormat:@"%@.json", NSStringFromClass(self)];
-    
-    NSString* archive = [NSString stringWithContentsOfDocument:file];
-    
-    if(archive)
-    {
-        GameController* gameController = [[[self alloc] init] autorelease];
-        
-        gameController.renderer = renderer;
-        
-        gameController.game = [GameModel withDictionary:[archive JSONValue]];
-        
+    return nil;
+//    
+//    NSString* file = [NSString stringWithFormat:@"%@.json", NSStringFromClass(self)];
+//    
+//    NSString* archive = [NSString stringWithContentsOfDocument:file];
+//    
+//    if(archive)
+//    {
+//        GameController* gameController = [[[self alloc] init] autorelease];
+//        
+//        gameController.renderer = renderer;
+//        
+//        gameController.game = [GameModel withDictionary:[archive JSONValue]];
+//        
 //        GLfloat delay = 0;
 //        
 //        for(CardModel* card in gameController.player.cards.reverseObjectEnumerator) 
@@ -42,19 +44,19 @@
 //            [gameController.renderer.cardGroup dealCardWithSuit:card.suit numeral:card.numeral held:card.isHeld afterDelay:delay += 0.2 andThen:nil];
 //        }
 //        
-        [gameController updatePlayerAndThen:nil];
-        
-        [gameController.renderer.menuLayerController hideMenus];
-                
-        return gameController;
-    }
-    else 
-    {
-        return nil;
-    }
+//        [gameController updatePlayer];
+//        
+//        [gameController.renderer.menuLayerController hideMenus];
+//                
+//        return gameController;
+//    }
+//    else 
+//    {
+//        return nil;
+//    }
 }
 
--(void)joinGameAndThen:(simpleBlock)work
+-(void)joinGameAndThen:(SimpleBlock)work
 {
 }
 

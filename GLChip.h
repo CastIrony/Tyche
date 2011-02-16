@@ -1,13 +1,13 @@
 #import "Geometry.h"
 #import "Touchable.h"
-#import "Killable.h"
+#import "DisplayContainer.h"
 #import "GameController.h"
 
 @class AnimatedFloat;
 @class AnimatedVector3D;
 @class GLChipGroup;
 
-@interface GLChip : NSObject
+@interface GLChip : NSObject <Perishable, Touchable>
 {
     Vector2D chipOffsets[9];
     Vector2D markerOffsets[9];
@@ -28,13 +28,16 @@
     int _meshSize;
 }
 
-@property (nonatomic, assign) Vector3D        location;
-@property (nonatomic, retain) AnimatedFloat*  count;
-@property (nonatomic, assign) int             chipNumber;
-@property (nonatomic, assign) int             maxCount;
-@property (nonatomic, assign) GLfloat         initialCount;
+@property (nonatomic, assign) Vector3D          location;
+@property (nonatomic, retain) AnimatedFloat*    count;
+@property (nonatomic, assign) int               chipNumber;
+@property (nonatomic, assign) int               maxCount;
+@property (nonatomic, assign) GLfloat           initialCount;
+@property (nonatomic, assign) GLfloat           markerOpacity;
+@property (nonatomic, assign) GLChipGroup*      chipGroup;
 
-@property (nonatomic, assign) GLChipGroup*    chipGroup;
+@property (nonatomic, assign) DisplayContainer* displayContainer;
+@property (nonatomic, copy)   id<NSCopying>     key;
 
 +(GLChip*)chip;
 
@@ -42,23 +45,5 @@
 -(void)draw;
 -(void)drawShadow;
 -(void)drawMarker;
-
-@end
-
-@interface GLChip (Touchable) <Touchable>
-
--(id<Touchable>)testTouch:(UITouch*)touch withPreviousObject:(id<Touchable>)object;
--(void)handleTouchDown:(UITouch*)touch fromPoint:(CGPoint)point;
--(void)handleTouchMoved:(UITouch*)touch fromPoint:(CGPoint)pointFrom toPoint:(CGPoint)pointTo;
--(void)handleTouchUp:(UITouch*)touch fromPoint:(CGPoint)pointFrom toPoint:(CGPoint)pointTo;
-
-@end
-
-@interface GLChip (Killable) <Killable>
-
-@property (nonatomic, readonly) BOOL isDead;
-@property (nonatomic, readonly) BOOL isAlive;
-
--(void)killWithDisplayContainer:(DisplayContainer*)container key:(id)key andThen:(simpleBlock)work;
 
 @end

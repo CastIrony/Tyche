@@ -6,8 +6,6 @@
 
 @synthesize status = _status;
 @synthesize cards = _cards;
-@synthesize cardsToAdd = _cardsToAdd;
-@synthesize cardsToRemove = _cardsToRemove;
 @synthesize chips = _chips;
 
 @dynamic chipTotal;
@@ -149,6 +147,32 @@
          + [[self.chips objectForKey:@"10000"] betCount] * 10000;
 }
 
+-(void)cancelBets
+{
+    [[self.chips objectForKey:@"1"    ] setBetCount:0];
+    [[self.chips objectForKey:@"5"    ] setBetCount:0];
+    [[self.chips objectForKey:@"10"   ] setBetCount:0];
+    [[self.chips objectForKey:@"25"   ] setBetCount:0];
+    [[self.chips objectForKey:@"100"  ] setBetCount:0];
+    [[self.chips objectForKey:@"500"  ] setBetCount:0];
+    [[self.chips objectForKey:@"1000" ] setBetCount:0];
+    [[self.chips objectForKey:@"2500" ] setBetCount:0];
+    [[self.chips objectForKey:@"10000"] setBetCount:0];
+}
+
+-(void)allIn
+{
+    [[self.chips objectForKey:@"1"    ] setBetCount:[[self.chips objectForKey:@"1"    ] chipCount]];
+    [[self.chips objectForKey:@"5"    ] setBetCount:[[self.chips objectForKey:@"5"    ] chipCount]];
+    [[self.chips objectForKey:@"10"   ] setBetCount:[[self.chips objectForKey:@"10"   ] chipCount]];
+    [[self.chips objectForKey:@"25"   ] setBetCount:[[self.chips objectForKey:@"25"   ] chipCount]];
+    [[self.chips objectForKey:@"100"  ] setBetCount:[[self.chips objectForKey:@"100"  ] chipCount]];
+    [[self.chips objectForKey:@"500"  ] setBetCount:[[self.chips objectForKey:@"500"  ] chipCount]];
+    [[self.chips objectForKey:@"1000" ] setBetCount:[[self.chips objectForKey:@"1000" ] chipCount]];
+    [[self.chips objectForKey:@"2500" ] setBetCount:[[self.chips objectForKey:@"2500" ] chipCount]];
+    [[self.chips objectForKey:@"10000"] setBetCount:[[self.chips objectForKey:@"10000"] chipCount]];
+}
+
 -(int)numberOfCardsMarked
 {
     int marked = 0;
@@ -197,6 +221,29 @@
     return cards;
 }
 
+-(NSArray*)drawnKeys
+{
+    NSMutableArray* keys = [NSMutableArray array];
+    
+    for(CardModel* card in self.cards) 
+    {
+        if(!card.isHeld) { [keys addObject:card.key]; }
+    }
+    
+    return keys;
+}
+
+-(NSArray*)drawnCards
+{
+    NSMutableArray* cards = [NSMutableArray array];
+    
+    for(CardModel* card in self.cards) 
+    {
+        if(!card.isHeld) { [cards addObject:card]; }
+    }
+    
+    return cards;
+}
 
 -(id)init
 {
@@ -205,8 +252,6 @@
     if(self)
     {
         self.cards         = [[[NSMutableArray      alloc] init] autorelease];
-        self.cardsToAdd    = [[[NSMutableArray      alloc] init] autorelease];
-        self.cardsToRemove = [[[NSMutableArray      alloc] init] autorelease];
         self.chips         = [[[NSMutableDictionary alloc] init] autorelease];
         
         { ChipModel* chipModel = [[[ChipModel alloc] initWithKey:@"1"    ] autorelease]; [self.chips setObject:chipModel forKey:@"1"    ]; }
@@ -229,8 +274,6 @@
 
     [dictionary setObject:[NSNumber numberWithInt:(int)self.status] forKey:@"status"];
     [dictionary setObject:self.cards                                forKey:@"cards"];
-    [dictionary setObject:self.cardsToAdd                           forKey:@"cardsToAdd"];
-    [dictionary setObject:self.cardsToRemove                        forKey:@"cardsToRemove"];
     [dictionary setObject:self.chips                                forKey:@"chips"];
                                 
     return dictionary;
@@ -242,27 +285,15 @@
              
     NSNumber*            status        = [dictionary objectForKey:@"status"];
     NSMutableArray*      cards         = [dictionary objectForKey:@"cards"];
-    NSMutableArray*      cardsToAdd    = [dictionary objectForKey:@"cardsToAdd"];
-    NSMutableArray*      cardsToRemove = [dictionary objectForKey:@"cardsToRemove"];
     NSMutableDictionary* chips         = [dictionary objectForKey:@"chips"];
     
     player.status = [status intValue];
-    
+        
     for(NSDictionary* card in cards) 
     { 
         [player.cards addObject:[CardModel withDictionary:card]]; 
     }
-    
-    for(NSDictionary* card in cardsToAdd) 
-    { 
-        [player.cardsToAdd addObject:[CardModel withDictionary:card]]; 
-    }
-    
-    for(NSDictionary* card in cardsToRemove) 
-    { 
-        [player.cardsToRemove addObject:[CardModel withDictionary:card]]; 
-    }
-    
+        
     for(NSString* key in chips) 
     { 
         [player.chips setObject:[ChipModel withDictionary:[chips objectForKey:key]] forKey:key];

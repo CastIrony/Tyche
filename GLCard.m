@@ -28,9 +28,15 @@
 @synthesize bendFactor = _bendFactor;
 @synthesize angleFlip  = _angleFlip;
 @synthesize angleFan   = _angleFan;
+@synthesize cancelTap  = _cancelTap;
+
+@synthesize key              = _key;
+@synthesize displayContainer = _displayContainer;
+
+@dynamic isDead;
+@dynamic isAlive;
 
 @dynamic isMeshAnimating;
-@dynamic key;
 
 -(void)dealloc
 {
@@ -57,19 +63,26 @@
     [super dealloc];
 }
 
--(BOOL)isMeshAnimating
-{    
-    return 1; //!self.bendFactor.hasEnded || !self.angleFlip.hasEnded || !self.angleFan.hasEnded || !self.location.hasEnded;
+-(void)appearAfterDelay:(NSTimeInterval)delay
+{
+    [self.dealt setValue:1 forTime:1 afterDelay:delay andThen:nil];
+            
+    self.angleJitter = randomFloat(-3.0, 3.0);
 }
 
--(NSString*)key
+-(BOOL)isMeshAnimating
 {    
-    return [NSString stringWithFormat:@"%d-%d", self.suit, self.numeral];
+    return !self.bendFactor.hasEnded || !self.angleFlip.hasEnded || !self.angleFan.hasEnded || !self.location.hasEnded;
 }
 
 -(NSString*)description
 {
-    return [NSString stringWithFormat:@"Card with suit:%d numeral:%d", self.suit, self.numeral];
+    NSString* status = @"D";
+    
+    if(self.isAlive) { status = @"A"; }
+    if(self.isDead)  { status = @"X"; }
+    
+    return [NSString stringWithFormat:@"<GLCard key:'%@', status:'%@:%3i'>", self.key, status, (int)(self.death.value * 100)];
 }
 
 +(GLCard*)cardWithKey:(NSString*)key
@@ -79,10 +92,28 @@
     int suit    = [[components objectAtIndex:0] intValue];    
     int numeral = [[components objectAtIndex:1] intValue];
     
-    return [[[GLCard alloc]initWithSuit:suit numeral:numeral] autorelease];
-}
+    GLCard* card = [[[GLCard alloc]initWithSuit:suit numeral:numeral held:YES] autorelease];
     
--(id)initWithSuit:(int)suit numeral:(int)numeral
+    card.key = key;
+    
+    return card;
+}
+ 
++(GLCard*)cardWithKey:(NSString*)key held:(BOOL)held
+{
+    NSArray* components = [key componentsSeparatedByString:@"-"];
+    
+    int suit    = [[components objectAtIndex:0] intValue];    
+    int numeral = [[components objectAtIndex:1] intValue];
+    
+    GLCard* card = [[[GLCard alloc]initWithSuit:suit numeral:numeral held:held] autorelease];
+    
+    card.key = key;
+    
+    return card;
+}
+          
+-(id)initWithSuit:(int)suit numeral:(int)numeral held:(BOOL)held
 {
     self = [super init];
     
@@ -155,7 +186,7 @@
         GenerateBezierMesh(arrayMeshShadow,     meshWidthShadow, meshHeightShadow);
         GenerateBezierMesh(arrayMeshBackSimple, 2, 2);                                         
 
-        self.isHeld     = [AnimatedFloat withValue:0];
+        self.isHeld     = [AnimatedFloat withValue:held];
         self.isSelected = [AnimatedFloat withValue:0];
         self.angleFlip  = [AnimatedFloat withValue:0];
         self.angleFan   = [AnimatedFloat withValue:0];
@@ -180,16 +211,20 @@
 
 -(void)drawFront
 {   
+    GLfloat held = self.isHeld.value * 0.5 + 0.5;
+    GLfloat opacity = held * MIN(-4.0 * (1.0 + self.death.value - self.dealt.value) + 4.0, 1.0);
+
+    if(within(opacity, 0, 0.001)) { return; }
+
     TRANSACTION_BEGIN
     {    
         glTranslatef(self.location.value, -1.0 * sin(DEGREES_TO_RADIANS(self.angleFlip.value)), -30 * (1 + self.death.value - self.dealt.value));
     
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             
-        GLfloat held = self.isHeld.value * 0.5 + 0.5;
         GLfloat lightness = self.cardGroup.renderer.lightness.value;
         
-        glColor4f(lightness, lightness, lightness, held);
+        glColor4f(lightness, lightness, lightness, opacity);
         
         glVertexPointer  (3, GL_FLOAT, 0, arrayVertexFront);
         glNormalPointer  (   GL_FLOAT, 0, arrayNormalFront);
@@ -222,17 +257,21 @@
 
 -(void)drawBack
 {
+    GLfloat held = self.isHeld.value     * 0.5 + 0.5;
+
+    GLfloat opacity = held * MIN(-4.0 * (1.0 + self.death.value - self.dealt.value) + 4.0, 1.0);
+            
+    if(within(opacity, 0, 0.001)) { return; }
+
     TRANSACTION_BEGIN
     {    
-        glTranslatef(self.location.value, -1.0 * sin(DEGREES_TO_RADIANS(self.angleFlip.value)), -30 * (1 + self.death.value - self.dealt.value));
+        glTranslatef(self.location.value, -1.0 * sin(DEGREES_TO_RADIANS(self.angleFlip.value)), -30.0 * (1.0 + self.death.value - self.dealt.value));
         
         if(within(self.bendFactor.value, 0, 0.001))
         {
-            GLfloat held = self.isHeld.value     * 0.5 + 0.5;
-            
             GLfloat lightness = self.cardGroup.renderer.lightness.value;
-            
-            glColor4f(lightness, lightness, lightness, held);
+        
+            glColor4f(lightness, lightness, lightness, opacity);
             
             glVertexPointer  (3, GL_FLOAT, 0, arrayVertexBackSimple);                                                                             
             glNormalPointer  (   GL_FLOAT, 0, arrayNormalBackSimple);                                                                             
@@ -261,11 +300,9 @@
         }
         else 
         {
-            GLfloat held = self.isHeld.value     * 0.5 + 0.5;
-            
             GLfloat lightness = self.cardGroup.renderer.lightness.value;
-            
-            glColor4f(lightness, lightness, lightness, held);
+                        
+            glColor4f(lightness, lightness, lightness, opacity);
                 
             glVertexPointer  (3, GL_FLOAT, 0, arrayVertexBack);                                                                             
             glNormalPointer  (   GL_FLOAT, 0, arrayNormalBack);                                                                             
@@ -299,6 +336,12 @@
 
 -(void)drawShadow
 {
+    GLfloat held = self.isHeld.value * 0.5 + 0.5;
+
+    GLfloat opacity = held * MIN(-4.0 * (1.0 + self.death.value - self.dealt.value) + 4.0, 1.0);
+            
+    if(within(opacity, 0, 0.001)) { return; }
+
     TRANSACTION_BEGIN
     {    
         glTranslatef(self.location.value, -1.0 * sin(DEGREES_TO_RADIANS(self.angleFlip.value)), -30 * (1 + self.death.value - self.dealt.value));
@@ -308,11 +351,9 @@
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         
         glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"shadow"]);
-        
-        GLfloat held = self.isHeld.value * 0.5 + 0.5;
-        
-        glColor4f(1, 1, 1, held);    
-            
+                            
+        glColor4f(1, 1, 1, opacity);
+
         glVertexPointer  (3, GL_FLOAT, 0, arrayVertexShadow);
         glNormalPointer  (   GL_FLOAT, 0, arrayNormalShadow);
         glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture0Shadow);            
@@ -326,6 +367,12 @@
 
 -(void)drawLabel
 {
+    if(!self.cardGroup.showLabels) { return; }
+
+    GLfloat opacity = MIN(-4.0 * (1.0 + self.death.value - self.dealt.value) + 4.0, 1.0);
+
+    if(within(opacity, 0, 0.001)) { return; }
+
     TRANSACTION_BEGIN
     {    
         glTranslatef(self.location.value, -1.0 * sin(DEGREES_TO_RADIANS(self.angleFlip.value)), -30 * (1 + self.death.value - self.dealt.value));
@@ -353,8 +400,8 @@
             // HOLD
             {
                 glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"hold"]);
-                
-                glColor4f(1, 1, 1, self.isHeld.value);
+                                
+                glColor4f(1, 1, 1, opacity * self.isHeld.value);
                             
                 GenerateBezierTextures(arrayTexture0, 2, 2, Vector2DMake(1,1), Vector2DMake(0,0));
                 
@@ -367,7 +414,7 @@
             {
                 glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"draw"]);
                 
-                glColor4f(1, 1, 1, (1 - self.isHeld.value) / 2);
+                glColor4f(1, 1, 1, opacity * (1.0 - self.isHeld.value) / 2.0);
                 
                 GenerateBezierTextures(arrayTexture0, 2, 2, Vector2DMake(1,1), Vector2DMake(0,0));
                 
@@ -394,78 +441,78 @@
     
     Vector3D labelCorners[] = 
     {
-        Vector3DMake(-0.6,  0.0,  3.0),
-        Vector3DMake(-0.6,  0.0,  3.5),
-        Vector3DMake( 0.6,  0.0,  3.0),
-        Vector3DMake( 0.6,  0.0,  3.5)
+        Vector3DMake( 0.0,  0.0,  3.0),
+        Vector3DMake( 0.0,  0.0,  3.5),
+        Vector3DMake( 1.2,  0.0,  3.0),
+        Vector3DMake( 1.2,  0.0,  3.5)
     };
 
     GenerateBezierControlPoints(controlPointsBase,  baseCorners);
     GenerateBezierControlPoints(controlPointsLabel, labelCorners);
         
-    controlPointsFront[ 0] = controlPointsBase [ 0];
-    controlPointsFront[ 1] = controlPointsBase [ 1];
-    controlPointsFront[ 2] = controlPointsBase [ 2];
-    controlPointsFront[ 3] = controlPointsBase [ 3];
+    controlPointsFront[ 0] = controlPointsBase[ 0];
+    controlPointsFront[ 1] = controlPointsBase[ 1];
+    controlPointsFront[ 2] = controlPointsBase[ 2];
+    controlPointsFront[ 3] = controlPointsBase[ 3];
     
-    controlPointsFront[ 4] = controlPointsBase [ 4];
-    controlPointsFront[ 5] = controlPointsBase [ 5];
-    controlPointsFront[ 6] = controlPointsBase [ 6];
-    controlPointsFront[ 7] = controlPointsBase [ 7];
+    controlPointsFront[ 4] = controlPointsBase[ 4];
+    controlPointsFront[ 5] = controlPointsBase[ 5];
+    controlPointsFront[ 6] = controlPointsBase[ 6];
+    controlPointsFront[ 7] = controlPointsBase[ 7];
     
-    controlPointsFront[ 8] = controlPointsBase [ 8];
-    controlPointsFront[ 9] = controlPointsBase [ 9];
-    controlPointsFront[10] = controlPointsBase [10];
-    controlPointsFront[11] = controlPointsBase [11];
+    controlPointsFront[ 8] = controlPointsBase[ 8];
+    controlPointsFront[ 9] = controlPointsBase[ 9];
+    controlPointsFront[10] = controlPointsBase[10];
+    controlPointsFront[11] = controlPointsBase[11];
     
-    controlPointsFront[12] = controlPointsBase [12];
-    controlPointsFront[13] = controlPointsBase [13];
-    controlPointsFront[14] = controlPointsBase [14];
-    controlPointsFront[15] = controlPointsBase [15];
+    controlPointsFront[12] = controlPointsBase[12];
+    controlPointsFront[13] = controlPointsBase[13];
+    controlPointsFront[14] = controlPointsBase[14];
+    controlPointsFront[15] = controlPointsBase[15];
         
-    controlPointsBack[ 0]  = controlPointsBase [ 3];
-    controlPointsBack[ 1]  = controlPointsBase [ 2];
-    controlPointsBack[ 2]  = controlPointsBase [ 1];
-    controlPointsBack[ 3]  = controlPointsBase [ 0];
+    controlPointsBack[ 0]  = controlPointsBase[ 3];
+    controlPointsBack[ 1]  = controlPointsBase[ 2];
+    controlPointsBack[ 2]  = controlPointsBase[ 1];
+    controlPointsBack[ 3]  = controlPointsBase[ 0];
     
-    controlPointsBack[ 4]  = controlPointsBase [ 7];
-    controlPointsBack[ 5]  = controlPointsBase [ 6];
-    controlPointsBack[ 6]  = controlPointsBase [ 5];
-    controlPointsBack[ 7]  = controlPointsBase [ 4];
+    controlPointsBack[ 4]  = controlPointsBase[ 7];
+    controlPointsBack[ 5]  = controlPointsBase[ 6];
+    controlPointsBack[ 6]  = controlPointsBase[ 5];
+    controlPointsBack[ 7]  = controlPointsBase[ 4];
     
-    controlPointsBack[ 8]  = controlPointsBase [11];
-    controlPointsBack[ 9]  = controlPointsBase [10];
-    controlPointsBack[10]  = controlPointsBase [ 9];
-    controlPointsBack[11]  = controlPointsBase [ 8];
+    controlPointsBack[ 8]  = controlPointsBase[11];
+    controlPointsBack[ 9]  = controlPointsBase[10];
+    controlPointsBack[10]  = controlPointsBase[ 9];
+    controlPointsBack[11]  = controlPointsBase[ 8];
     
-    controlPointsBack[12]  = controlPointsBase [15];
-    controlPointsBack[13]  = controlPointsBase [14];
-    controlPointsBack[14]  = controlPointsBase [13];
-    controlPointsBack[15]  = controlPointsBase [12];
+    controlPointsBack[12]  = controlPointsBase[15];
+    controlPointsBack[13]  = controlPointsBase[14];
+    controlPointsBack[14]  = controlPointsBase[13];
+    controlPointsBack[15]  = controlPointsBase[12];
     
-    controlPointsShadow[ 0] = controlPointsBase [ 3];
-    controlPointsShadow[ 1] = controlPointsBase [ 2];
-    controlPointsShadow[ 2] = controlPointsBase [ 1];
-    controlPointsShadow[ 3] = controlPointsBase [ 0];
+    controlPointsShadow[ 0] = controlPointsBase[ 3];
+    controlPointsShadow[ 1] = controlPointsBase[ 2];
+    controlPointsShadow[ 2] = controlPointsBase[ 1];
+    controlPointsShadow[ 3] = controlPointsBase[ 0];
     
-    controlPointsShadow[ 4] = controlPointsBase [ 7];
-    controlPointsShadow[ 5] = controlPointsBase [ 6];
-    controlPointsShadow[ 6] = controlPointsBase [ 5];
-    controlPointsShadow[ 7] = controlPointsBase [ 4];
+    controlPointsShadow[ 4] = controlPointsBase[ 7];
+    controlPointsShadow[ 5] = controlPointsBase[ 6];
+    controlPointsShadow[ 6] = controlPointsBase[ 5];
+    controlPointsShadow[ 7] = controlPointsBase[ 4];
     
-    controlPointsShadow[ 8] = controlPointsBase [11];
-    controlPointsShadow[ 9] = controlPointsBase [10];
-    controlPointsShadow[10] = controlPointsBase [ 9];
-    controlPointsShadow[11] = controlPointsBase [ 8];
+    controlPointsShadow[ 8] = controlPointsBase[11];
+    controlPointsShadow[ 9] = controlPointsBase[10];
+    controlPointsShadow[10] = controlPointsBase[ 9];
+    controlPointsShadow[11] = controlPointsBase[ 8];
     
-    controlPointsShadow[12] = controlPointsBase [15];
-    controlPointsShadow[13] = controlPointsBase [14];
-    controlPointsShadow[14] = controlPointsBase [13];
-    controlPointsShadow[15] = controlPointsBase [12];
+    controlPointsShadow[12] = controlPointsBase[15];
+    controlPointsShadow[13] = controlPointsBase[14];
+    controlPointsShadow[14] = controlPointsBase[13];
+    controlPointsShadow[15] = controlPointsBase[12];
     
     [self rotateWithAngle:self.angleFlip.value aroundPoint:Vector3DMake(0.0, 0.0, 0.0) andAxis:Vector3DMake(0.0, 0.0, 1.0)];
     [self rotateWithAngle:self.angleJitter aroundPoint:Vector3DMake(0.0, 0.0, 0.0) andAxis:Vector3DMake(0.0, 1.0, 0.0)];
-    [self rotateWithAngle:self.bendFactor.value * self.angleFan.value aroundPoint:Vector3DMake(0.0, 0.0, -30.0) andAxis:Vector3DMake(0.0, 1.0, 0.0)];
+    [self rotateWithAngle:self.bendFactor.value * self.angleFan.value aroundPoint:Vector3DMake(0.0, 0.0, -25.0) andAxis:Vector3DMake(0.0, 1.0, 0.0)];
     
     [self bendWithAngle:self.bendFactor.value * 108 aroundPoint:Vector3DMake(0.0, 0.0, 0.0) andAxis:Vector3DMake(1.0, 0.0, 0.0)];
     
@@ -564,10 +611,6 @@
     }
 }
 
-@end
-
-@implementation GLCard (Touchable)
-
 -(id<Touchable>)testTouch:(UITouch*)touch withPreviousObject:(id<Touchable>)object
 {
     TRANSACTION_BEGIN
@@ -600,7 +643,7 @@
 
 -(void)handleTouchDown:(UITouch*)touch fromPoint:(CGPoint)point
 {
-    LOG_EXPR(self);
+    self.cancelTap = NO;
     
     GLfloat angle = self.cardGroup.renderer.camera.pitchAngle.value * self.cardGroup.renderer.camera.pitchFactor.value;
     
@@ -612,14 +655,22 @@
 
 -(void)handleTouchMoved:(UITouch*)touch fromPoint:(CGPoint)pointFrom toPoint:(CGPoint)pointTo
 {
-    GLfloat delta = pointTo.y - pointFrom.y;
+    GLfloat deltaX = pointTo.x - pointFrom.x;
+    GLfloat deltaY = pointTo.y - pointFrom.y;
+
+    if(!self.cancelTap)
+    {
+        GLfloat distance = sqrt(deltaX * deltaX + deltaY * deltaY);
+
+        self.cancelTap = distance > 10;
+    }
 
     int target = 5 - ((pointTo.y) / 96.0);
     
     if(target < 0) { target = 0; }
     if(target > 4) { target = 4; }
         
-    [self.cardGroup dragCardToTarget:target withDelta:delta];
+    [self.cardGroup dragCardToTarget:target withDelta:deltaY];
 }
 
 -(void)handleTouchUp:(UITouch*)touch fromPoint:(CGPoint)pointFrom toPoint:(CGPoint)pointTo
@@ -627,37 +678,44 @@
     GLfloat angle = self.cardGroup.renderer.camera.pitchAngle.value * self.cardGroup.renderer.camera.pitchFactor.value;
     
     [self.cardGroup stopDrag];
-
-    GLfloat delta = absf(pointFrom.y, pointTo.y);
         
-    if(delta < 20)
+    if(!self.cancelTap)
     {
         if(angle > 60)
         {
-            [self.cardGroup.renderer.gameController cardFrontTouched:self.position];
+            [self.cardGroup.renderer.gameController cardFrontTapped:self.position];
         }
         else
         {            
-            [self.cardGroup.renderer.gameController cardBackTouched:self.position];
+            [self.cardGroup.renderer.gameController cardBackTapped:self.position];
         }
+    }
+    
+    self.cancelTap = NO;
+}
+
+
+-(BOOL)isAlive { return within(self.death.endValue, 0, 0.001); }
+-(BOOL)isDead  { return within(self.death.value,    1, 0.001); }
+
+-(void)absorb:(id<Perishable>)newObject
+{
+    if([newObject isKindOfClass:[GLCard class]])
+    {
+        GLCard* newCard = (GLCard*)newObject;
+    
+        [self.isHeld setValue:newCard.isHeld.value withSpeed:3];
     }
 }
 
-@end
-
-@implementation GLCard (Killable)
-
-@dynamic isDead;
-@dynamic isAlive;
-
--(BOOL)isAlive { return within(self.death.value, 0, 0.001) && self.death.hasEnded; }
--(BOOL)isDead  { return within(self.death.value, 1, 0.001) && self.death.hasEnded; }
-
--(void)killWithDisplayContainer:(DisplayContainer*)container key:(id)key andThen:(simpleBlock)work
+-(void)killAfterDelay:(NSTimeInterval)delay andThen:(SimpleBlock)work
 {
-    [self.death setValue:1 forTime:1 andThen:^{ [container pruneDeadForKey:key]; runLater(work); }];
-    
-    [container pruneLiveForKey:key]; 
+    [self.death setValue:1 forTime:1 afterDelay:delay andThen:^
+    { 
+        [self.displayContainer pruneDead]; 
+        
+        RunLater(work); 
+    }];
 }
 
 @end

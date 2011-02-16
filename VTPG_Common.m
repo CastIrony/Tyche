@@ -1,3 +1,5 @@
+#import "Geometry.h"
+
 #import "VTPG_Common.h"
 // Copyright (c) 2008-2010, Vincent Gable.
 // http://vincentgable.com
@@ -13,6 +15,11 @@ static BOOL TypeCodeIsCharArray(const char *typeCode){
 	for(int i = 1; i < secondToLastCharOffset; i++)
 		isCharArray = isCharArray && isdigit(typeCode[i]);
 	return isCharArray;
+}
+
+static NSString* NSStringFromColor3D(Color3D color) 
+{
+    return [NSString stringWithFormat:@"<%f, %f, %f, %f>", color.red, color.green, color.blue, color.alpha];
 }
 
 //since BOOL is #defined as a signed char, we treat the value as
@@ -47,6 +54,7 @@ NSString * VTPG_DDToStringFromTypeAndValue(const char * typeCode, void * value) 
 	IF_TYPE_MATCHES_INTERPRET_WITH(CGPoint,NSStringFromCGPoint);
 	IF_TYPE_MATCHES_INTERPRET_WITH(CGSize,NSStringFromCGSize);
 	IF_TYPE_MATCHES_INTERPRET_WITH(CGRect,NSStringFromCGRect);
+    IF_TYPE_MATCHES_INTERPRET_WITH(Color3D,NSStringFromColor3D);
 #else
 	IF_TYPE_MATCHES_INTERPRET_WITH(NSPoint,NSStringFromPoint);
 	IF_TYPE_MATCHES_INTERPRET_WITH(NSSize,NSStringFromSize);

@@ -28,6 +28,8 @@
 @synthesize location       = _location;
 @synthesize death          = _death;
 @synthesize owner          = _owner;
+@synthesize key              = _key;
+@synthesize displayContainer = _displayContainer;
 
 -(void)dealloc
 {
@@ -110,7 +112,7 @@
 
         [self.dots draw];
         
-        self.textController.opacity = self.opacity.value;
+        self.textController.opacity = self.opacity;
         self.textController.lightness = self.lightness;
         
         [self.textController draw];
@@ -146,10 +148,6 @@
         _controlPoints[i].z = _controlPoints[i].z + vector.z;
     }
 }
-
-@end
-
-@implementation GLMenu (Touchable)
 
 -(id<Touchable>)testTouch:(UITouch*)touch withPreviousObject:(id<Touchable>)object
 {
@@ -203,21 +201,21 @@
     [self.owner handleTouchUp:touch fromPoint:pointFrom toPoint:pointTo];
 }
 
-@end
-
-@implementation GLMenu (Killable)
-
 @dynamic isDead;
 @dynamic isAlive;
 
--(BOOL)isAlive { return within(self.death.value, 0, 0.001) && self.death.endTime < CFAbsoluteTimeGetCurrent(); }
--(BOOL)isDead  { return within(self.death.value, 1, 0.001) && self.death.endTime < CFAbsoluteTimeGetCurrent(); }
 
--(void)killWithDisplayContainer:(DisplayContainer*)container key:(id)key andThen:(simpleBlock)work
+-(BOOL)isAlive { return within(self.death.endValue, 0, 0.001); }
+-(BOOL)isDead  { return within(self.death.value,    1, 0.001); }
+
+-(void)killAfterDelay:(NSTimeInterval)delay andThen:(SimpleBlock)work
 {
-    [self.death setValue:1 forTime:1 andThen:^{ [container pruneDeadForKey:key]; runLater(work); }];
-    
-    [container pruneLiveForKey:key]; 
+    [self.death setValue:1 forTime:1 afterDelay:delay andThen:^
+    { 
+        [self.displayContainer pruneDead]; 
+        
+        RunLater(work); 
+    }];
 }
 
 @end

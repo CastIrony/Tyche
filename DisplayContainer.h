@@ -1,36 +1,46 @@
-#import "Killable.h"
+#import "Common.h"
+
+@class DisplayContainer;
+
+@protocol Perishable <NSObject>
+
+@property (nonatomic, assign) DisplayContainer* displayContainer;
+@property (nonatomic, copy) id<NSCopying> key;
+
+@property (nonatomic, readonly) BOOL isDead;
+@property (nonatomic, readonly) BOOL isAlive;
+
+-(void)killAfterDelay:(NSTimeInterval)delay andThen:(SimpleBlock)work;
+
+@optional
+
+-(void)appearAfterDelay:(NSTimeInterval)delay;
+
+-(void)absorb:(id<Perishable>)newObject;
+-(void)reincarnateFrom:(id<Perishable>)oldObject;
+
+@end
 
 @interface DisplayContainer : NSObject 
 
-@property (nonatomic, retain, readonly) NSMutableDictionary* hashtable;
-@property (nonatomic, retain, readonly) NSMutableArray* keys;
-@property (nonatomic, retain, readonly) NSMutableArray* liveKeys;
-@property (nonatomic, retain, readonly) NSMutableArray* objects;
-@property (nonatomic, retain, readonly) NSMutableArray* liveObjects;
+@property (nonatomic, retain, readonly) NSDictionary* dictionary;
+@property (nonatomic, retain, readonly) NSDictionary* liveDictionary;
+@property (nonatomic, retain, readonly) NSArray* keys;
+@property (nonatomic, retain, readonly) NSArray* liveKeys;
+@property (nonatomic, retain, readonly) NSArray* objects;
+@property (nonatomic, retain, readonly) NSArray* liveObjects;
+
+@property (nonatomic, assign) NSTimeInterval delay;
 
 +(DisplayContainer*)container;
 
--(void)insertObject:(id<Killable>)object asFirstWithKey:(id<NSCopying>)key;
--(void)insertObject:(id<Killable>)object asLastWithKey:(id<NSCopying>)key;
--(void)insertObject:(id<Killable>)object withKey:(id<NSCopying>)key atIndex:(int)index;
--(void)insertObject:(id<Killable>)object withKey:(id<NSCopying>)key beforeKey:(id)target;
--(void)insertObject:(id<Killable>)object withKey:(id<NSCopying>)key afterKey:(id)target;
+-(void)setKeys:(NSArray*)keys andDictionary:(NSDictionary*)dictionary;
+-(void)setKeys:(NSArray*)keys dictionary:(NSDictionary*)dictionary andThen:(SimpleBlock)work;
 
--(void)moveKeyToFirst:(id)key;
--(void)moveKeyToLast:(id)key;
--(void)moveKey:(id)key toIndex:(int)index;
--(void)moveKey:(id)key beforeKey:(id)target;
--(void)moveKey:(id)key afterKey:(id)target;
+-(void)generateObjectLists;
+-(void)pruneDead;
 
--(void)pruneLiveForKey:(id)key;
--(void)pruneDeadForKey:(id)key;
-
--(id)keyBefore:(id)target;
--(id)keyAfter:(id)target;
--(id)liveKeyBefore:(id)target;
--(id)liveKeyAfter:(id)target;
-
--(NSArray*)objectsForKey:(id)key;
--(id)liveObjectForKey:(id)key;
+-(NSArray*)objectsForKey:(id<NSCopying>)key;
+-(id<Perishable>)liveObjectForKey:(id<NSCopying>)key;
 
 @end

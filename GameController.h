@@ -16,27 +16,28 @@
 @property (nonatomic, retain)   GameModel*    game;
 @property (nonatomic, readonly) NSString*     myPeerId;
 @property (nonatomic, readonly) PlayerModel*  player;
+@property (nonatomic, retain) NSString*     messageDown;
+@property (nonatomic, retain) NSString*     messageUp;
 
 +(GameController*)loadWithRenderer:(GameRenderer*)renderer;
 
 -(void)saveData;
 
--(void)updatePlayerAndThen:(simpleBlock)work;
--(void)updateCardsAndThen:(simpleBlock)work;
--(void)updateChipsAndThen:(simpleBlock)work;
+-(void)updatePlayer;
+-(void)updateCards;
+-(void)updateChips;
 
--(void)newGameAndThen:(simpleBlock)work;
--(void)newDeckAndThen:(simpleBlock)work;
+-(void)newGame;
+-(void)newDeck;
 
 -(NSString*)scoreHand;
 -(NSString*)scoreHand:(NSArray*)hand high:(BOOL)high;
 
 -(void)moveCardIndex:(int)initialIndex toIndex:(int)finalIndex;
 -(void)labelTouchedWithKey:(NSString*)key;
--(void)chipTouchedUpWithKey:(NSString*)key;
--(void)chipTouchedDownWithKey:(NSString*)key;
--(void)cardFrontTouched:(int)card;
--(void)cardBackTouched:(int)card;
--(void)emptySpaceTouched;
+-(void)chipSwipedUpWithKey:(NSString*)key;
+-(void)chipSwipedDownWithKey:(NSString*)key;
+-(void)cardFrontTapped:(int)card;
+-(void)cardBackTapped:(int)card;
 
 @end

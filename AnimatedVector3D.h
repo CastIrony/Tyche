@@ -6,12 +6,12 @@
 
 @property (nonatomic, assign)   Vector3D       startValue;
 @property (nonatomic, assign)   NSTimeInterval startTime;
-@property (nonatomic, copy)     simpleBlock    onStart;      
+@property (nonatomic, copy)     SimpleBlock    onStart;      
 @property (nonatomic, readonly) BOOL           hasStarted;
 
 @property (nonatomic, assign)   Vector3D       endValue;
 @property (nonatomic, assign)   NSTimeInterval endTime;
-@property (nonatomic, copy)     simpleBlock    onEnd;    
+@property (nonatomic, copy)     SimpleBlock    onEnd;    
 @property (nonatomic, readonly) BOOL           hasEnded;
 
 @property (nonatomic, assign)   AnimationCurve curve;

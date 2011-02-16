@@ -1,6 +1,6 @@
 #import "Geometry.h"
 #import "Touchable.h"
-#import "Killable.h"
+#import "DisplayContainer.h"
 
 @class AnimatedFloat;
 @class AnimatedVector3D;
@@ -10,7 +10,7 @@
 @class GLTexture;
 @class GLDots;
 
-@interface GLMenu : NSObject
+@interface GLMenu : NSObject <Touchable, Perishable>
 {
     Vector3D   _controlPoints[16];
     
@@ -43,23 +43,5 @@
 -(void)rotateWithAngle:(GLfloat)angle aroundPoint:(Vector3D)point andAxis:(Vector3D)axis;
 -(void)scaleWithFactor:(Vector3D)factor fromPoint:(Vector3D)point;
 -(void)translateWithVector:(Vector3D)vector;
-
-@end
-
-@interface GLMenu (Touchable) <Touchable>
-
--(id<Touchable>)testTouch:(UITouch*)touch withPreviousObject:(id<Touchable>)object;
--(void)handleTouchDown:(UITouch*)touch fromPoint:(CGPoint)point;
--(void)handleTouchMoved:(UITouch*)touch fromPoint:(CGPoint)pointFrom toPoint:(CGPoint)pointTo;
--(void)handleTouchUp:(UITouch*)touch fromPoint:(CGPoint)pointFrom toPoint:(CGPoint)pointTo;
-
-@end
-
-@interface GLMenu (Killable) <Killable>
-
-@property (nonatomic, readonly) BOOL isDead;
-@property (nonatomic, readonly) BOOL isAlive;
-
--(void)killWithDisplayContainer:(DisplayContainer*)container key:(id)key andThen:(simpleBlock)work;
 
 @end

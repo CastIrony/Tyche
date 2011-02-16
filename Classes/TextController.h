@@ -15,9 +15,8 @@
 @property (nonatomic, retain) DisplayContainer* items;
 
 @property (nonatomic, assign) Vector3D location;
-@property (nonatomic, assign) GLfloat  padding;
 @property (nonatomic, assign) GLfloat  lightness;
-@property (nonatomic, assign) GLfloat  opacity;
+@property (nonatomic, retain) AnimatedFloat* opacity;
 @property (nonatomic, assign) GLfloat  anglePitch;
 @property (nonatomic, assign) GLfloat  angleJitter;
 @property (nonatomic, assign) GLfloat  angleSin;

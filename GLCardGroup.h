@@ -15,16 +15,17 @@
 @property (nonatomic, assign) GLfloat           initialAngle;
 @property (nonatomic, assign) int               initialIndex;
 @property (nonatomic, assign) int               finalIndex;
+@property (nonatomic, assign) BOOL              showLabels;
 
 -(void)drawFronts;
 -(void)drawBacks;
 -(void)drawShadows;
 -(void)drawLabels;
 
--(void)flipCardsAndThen:(simpleBlock)work;
--(void)unflipCardsAndThen:(simpleBlock)work;
+-(void)flipCardsAndThen:(SimpleBlock)work;
+-(void)unflipCardsAndThen:(SimpleBlock)work;
 
--(void)updateCardsWithKeys:(NSArray*)keys held:(NSArray*)heldKeys andThen:(simpleBlock)work;
+-(void)updateCardsWithKeys:(NSArray*)keys held:(NSArray*)heldKeys andThen:(SimpleBlock)work;
 
 -(void)layoutCards;
 -(void)makeControlPoints;

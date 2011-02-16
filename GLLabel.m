@@ -24,8 +24,6 @@
 @synthesize textureBulletLeft    = _textureBulletLeft;
 @synthesize textureBulletRight   = _textureBulletRight;
 
-@synthesize key                  = _key;
-
 @synthesize lightness            = _lightness;
 
 @synthesize layoutLocation       = _layoutLocation;
@@ -36,8 +34,15 @@
 @synthesize bulletLeftString     = _bulletLeftString;
 @synthesize bulletRightString    = _bulletRightString;
 @synthesize font                 = _font;
+
 @synthesize labelSize            = _labelSize;
+
 @synthesize fadeMargin           = _fadeMargin;
+@synthesize topMargin            = _topMargin;
+@synthesize bottomMargin         = _bottomMargin;
+@synthesize topPadding           = _topPadding;
+@synthesize bottomPadding        = _bottomPadding;
+
 @synthesize colorNormal          = _colorNormal;
 @synthesize colorTouched         = _colorTouched;
 @synthesize textAlignment        = _textAlignment;
@@ -56,10 +61,13 @@
 
 @synthesize owner                = _owner;
 
+@synthesize key                  = _key;
+@synthesize displayContainer     = _displayContainer;
+
 @dynamic layoutSize;
 @dynamic borderSize;
 
--(CGSize)layoutSize { return self.hasBorder ? CGSizeMake(self.labelSize.width + 0.75, self.labelSize.height + 1.5) : self.labelSize; }
+-(CGSize)layoutSize { return self.hasBorder ? CGSizeMake(self.labelSize.width + 0.75, self.labelSize.height + 0.75) : self.labelSize; }
 -(CGSize)borderSize { return self.hasBorder ? CGSizeMake(self.labelSize.width + 0.75, self.labelSize.height + 0.75) : self.labelSize; }
 
 -(BOOL)isEqual:(id)object
@@ -73,6 +81,10 @@
     if(label.bulletRightString != self.bulletRightString && ![label.bulletRightString isEqual:self.bulletRightString]) { return NO; }
     
     if(label.fadeMargin         != self.fadeMargin)         { return NO; }
+    if(label.topMargin          != self.topMargin)          { return NO; }
+    if(label.bottomMargin       != self.bottomMargin)       { return NO; }
+    if(label.topPadding         != self.topPadding)         { return NO; }
+    if(label.bottomPadding      != self.bottomPadding)      { return NO; }
     if(label.textAlignment      != self.textAlignment)      { return NO; }
     if(label.hasBorder          != self.hasBorder)          { return NO; }
     if(label.hasShadow          != self.hasShadow)          { return NO; }
@@ -100,10 +112,15 @@
     {     
         [styles addEntriesFromDictionary:dictionary]; 
     }
+        
+    Color3D colorNormal;
+    Color3D colorTouched;
     
+    [[styles objectForKey:@"colorNormal"] getValue:&colorNormal];
+    [[styles objectForKey:@"colorTouched"] getValue:&colorTouched];
+        
     [label setValuesForKeysWithDictionary:styles];
 
- 
     [label makeMeshes];
 
     return label;
@@ -357,15 +374,15 @@
         {        
             if(self.isLabelTouched && self.labelStatus == LabelStatusTextSelected)
             {
-                colorLabelOpaque      = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity);
+                colorLabelOpaque      = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity.value);
                 colorLabelTransparent = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue, 0);
             }
             else 
             {
-                colorLabelOpaque       = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * (1 - self.death.value) * self.layoutOpacity.value * self.textController.opacity);
+                colorLabelOpaque       = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * (1 - self.death.value) * self.layoutOpacity.value * self.textController.opacity.value);
                 colorLabelTransparent  = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, 0);    
             }
-                    
+                                
             glBindTexture(GL_TEXTURE_2D, self.isLabelTouched && self.labelStatus == LabelStatusTextSelected ? [TextureController nameForKey:@"borderTouched"] : [TextureController nameForKey:@"borderNormal"]);
                     
             glVertexPointer  (3, GL_FLOAT, 0, arrayBorderVertex);
@@ -382,15 +399,15 @@
                         
             if(self.isLabelTouched && self.labelStatus == LabelStatusTextSelected)
             {
-                colorLabelOpaque      = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity);
+                colorLabelOpaque      = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity.value);
                 colorLabelTransparent = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue, 0);
             }
             else 
             {
-                colorLabelOpaque       = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * (1 - self.death.value) * self.layoutOpacity.value * self.textController.opacity);
+                colorLabelOpaque       = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * (1 - self.death.value) * self.layoutOpacity.value * self.textController.opacity.value);
                 colorLabelTransparent  = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, 0);    
             }
-                    
+
             glBindTexture(GL_TEXTURE_2D, self.textureText.name);
             
             arrayTextColor[0] = colorLabelTransparent;
@@ -408,7 +425,7 @@
             }
             else 
             {
-                float scroll = self.scrollAmplitude * sin(CFAbsoluteTimeGetCurrent());
+                float scroll = self.scrollAmplitude * sin(CACurrentMediaTime());
                 
                 memcpy(arrayTextTextureScrolled, arrayTextTextureBase, sizeof(Vector2D) * 8);
                 
@@ -423,7 +440,7 @@
                 
                 glTexCoordPointer(2, GL_FLOAT, 0, arrayTextTextureScrolled);
             }
-                    
+                                
             glVertexPointer  (3, GL_FLOAT, 0, arrayTextVertex);
             glColorPointer   (4, GL_FLOAT, 0, arrayTextColor);
             
@@ -436,11 +453,11 @@
         {
             if(self.isLabelTouched && self.labelStatus == LabelStatusBulletRightSelected)
             {
-                colorLabelOpaque = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity);
+                colorLabelOpaque = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity.value);
             }
             else 
             {
-                colorLabelOpaque = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * (1 - self.death.value) * self.layoutOpacity.value * self.textController.opacity);
+                colorLabelOpaque = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * (1 - self.death.value) * self.layoutOpacity.value * self.textController.opacity.value);
             }
             
             glBindTexture(GL_TEXTURE_2D, self.textureBulletRight.name);
@@ -459,11 +476,11 @@
         {
             if(self.isLabelTouched && self.labelStatus == LabelStatusBulletLeftSelected)
             {
-                colorLabelOpaque = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity);
+                colorLabelOpaque = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity.value);
             }
             else 
             {
-                colorLabelOpaque = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * (1 - self.death.value) * self.layoutOpacity.value * self.textController.opacity);
+                colorLabelOpaque = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * (1 - self.death.value) * self.layoutOpacity.value * self.textController.opacity.value);
             }
                     
             glBindTexture(GL_TEXTURE_2D, self.textureBulletLeft.name);
@@ -480,11 +497,6 @@
         
     glEnableClientState(GL_NORMAL_ARRAY);
 }
-
-
-@end
-
-@implementation GLLabel (Touchable)
 
 -(id<Touchable>)testTouch:(UITouch*)touch withPreviousObject:(id<Touchable>)object
 {
@@ -571,24 +583,35 @@
 
 -(NSString*)description
 {
-    return [NSString stringWithFormat:@"Label with key: '%@', text:'%@'", self.key, self.textString];
+    NSString* status = @"D";
+    
+    if(self.isAlive) { status = @"A"; }
+    if(self.isDead)  { status = @"X"; }
+    
+    return [NSString stringWithFormat:@"<GLLabel key:'%@', text:'%@', status:'%@:%3i'>", self.key, self.textString, status, (int)(self.death.value * 100)];
 }
 
-@end
+-(BOOL)isAlive { return within(self.death.endValue, 0, 0.001); }
+-(BOOL)isDead  { return within(self.death.value,    1, 0.001); }
 
-@implementation GLLabel (Killable)
-
-@dynamic isDead;
-@dynamic isAlive;
-
--(BOOL)isAlive { return (self.death.hasEnded) && within(self.death.value, 0, 0.001); }
--(BOOL)isDead  { return (self.death.hasEnded) && within(self.death.value, 1, 0.001); }
-
--(void)killWithDisplayContainer:(DisplayContainer*)container key:(id)key andThen:(simpleBlock)work
+-(void)reincarnateFrom:(id<Perishable>)oldObject
 {
-    [self.death setValue:1 forTime:1 andThen:^{ [container pruneDeadForKey:key]; runLater(work); }];
-    
-    [container pruneLiveForKey:key];
+    if([oldObject isKindOfClass:[GLLabel class]])
+    {
+        GLLabel* oldLabel = (GLLabel*)oldObject;
+        
+        self.layoutLocation = oldLabel.layoutLocation;
+    }
+}
+
+-(void)killAfterDelay:(NSTimeInterval)delay andThen:(SimpleBlock)work
+{
+    [self.death setValue:1 forTime:0.4 afterDelay:delay andThen:^
+    { 
+        [self.displayContainer pruneDead]; 
+        
+        RunLater(work); 
+    }];
 }
 
 @end

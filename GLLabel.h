@@ -2,7 +2,7 @@
 #import "Common.h"
 #import "Geometry.h"
 #import "Touchable.h"
-#import "Killable.h"
+#import "DisplayContainer.h"
 
 @class AnimatedFloat;
 @class AnimatedVector3D;
@@ -53,8 +53,15 @@ LabelStatus;
 @property (nonatomic, retain)   NSString*         bulletLeftString;
 @property (nonatomic, retain)   NSString*         bulletRightString;
 @property (nonatomic, retain)   UIFont*           font;
+
 @property (nonatomic, assign)   CGSize            labelSize;
+
 @property (nonatomic, assign)   GLfloat           fadeMargin;
+@property (nonatomic, assign)   GLfloat           topMargin;
+@property (nonatomic, assign)   GLfloat           bottomMargin;
+@property (nonatomic, assign)   GLfloat           topPadding;
+@property (nonatomic, assign)   GLfloat           bottomPadding;
+
 @property (nonatomic, assign)   Color3D           colorNormal;
 @property (nonatomic, assign)   Color3D           colorTouched;
 @property (nonatomic, assign)   UITextAlignment   textAlignment;
@@ -91,10 +98,10 @@ LabelStatus;
 
 @end
 
-@interface GLLabel (Killable) <Killable>
+@interface GLLabel (Perishable) <Perishable>
 
 @property (nonatomic, readonly) BOOL isDead;
 @property (nonatomic, readonly) BOOL isAlive;
 
--(void)killWithDisplayContainer:(DisplayContainer*)container key:(id)key andThen:(simpleBlock)work;
+-(void)killWithDisplayContainer:(DisplayContainer*)container key:(id)key andThen:(SimpleBlock)work;
 @end

@@ -13,15 +13,20 @@
 
 @implementation GLChip
 
-@synthesize location      = _location;
-@synthesize chipNumber    = _chipNumber;
-@synthesize maxCount      = _maxCount;
-@synthesize count         = _count;
-@synthesize initialCount  = _initialCount;
-@synthesize chipGroup     = _chipGroup;
+@synthesize location         = _location;
+@synthesize chipNumber       = _chipNumber;
+@synthesize maxCount         = _maxCount;
+@synthesize count            = _count;
+@synthesize markerOpacity    = _markerOpacity;
+@synthesize initialCount     = _initialCount;
+@synthesize chipGroup        = _chipGroup;
+@synthesize key              = _key;
+@synthesize displayContainer = _displayContainer;
 
-#pragma mark -
-#pragma mark INIT
+-(BOOL)isAlive { return YES; }
+-(BOOL)isDead  { return NO; }
+
+-(void)killAfterDelay:(NSTimeInterval)delay andThen:(SimpleBlock)work { return; }
 
 +(GLChip*)chip
 {
@@ -114,7 +119,7 @@
     
     GLfloat distance = sqrt(self.location.x * self.location.x + self.location.z * self.location.z);
     
-    GLfloat lightness = clipFloat(1.0 - 0.06 * distance, 0.3, 1.0) * self.chipGroup.renderer.lightness.value;
+    GLfloat lightness = clipFloat(1.0 - 0.03 * distance, 0.0, 1.0) * self.chipGroup.renderer.lightness.value;
         
     for(int chipCounter = 0; chipCounter <= stackCount; chipCounter++) 
     {
@@ -204,7 +209,9 @@
 -(void)draw
 {
     if(self.chipGroup.opacity < 0.0001) { return; }
-        
+    
+    [self generateMesh];
+
     glDisableClientState(GL_NORMAL_ARRAY);
     glEnableClientState(GL_COLOR_ARRAY);
     
@@ -214,11 +221,6 @@
     
     glNormal3f(0.0, -1.0, 0.0);
 
-    if(!self.count.hasEnded)
-    {
-        [self generateMesh];
-    }
-    
     glTexCoordPointer(2, GL_FLOAT, 0, stackTexture);            
     glColorPointer   (4, GL_FLOAT, 0, stackColors);                                    
     glVertexPointer  (3, GL_FLOAT, 0, stackVectors);
@@ -230,61 +232,50 @@
 }
 
 -(void)drawMarker
-{
-//    int stackCount = self.count.value;
-//    
-//    if(stackCount < 0) { return; }
-//    
-//    return;
-//    
-//    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-//    
-//    glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"chip"]);
-//    
-//    Vector3D vertexArray[] = 
-//    {
-//        Vector3DMake(-1,  0.0, -1),        
-//        Vector3DMake( 1,  0.0, -1),        
-//        Vector3DMake(-1,  0.0,  1),        
-//        Vector3DMake( 1,  0.0,  1),
-//    };
-//        
-//    Vector2D textureArrayShadow[] = 
-//    {
-//        Vector2DMake(1.0 * chipSize.u + markerOffsets[self.chipNumber].u, 0.0 * chipSize.v + markerOffsets[self.chipNumber].v),
-//        Vector2DMake(0.0 * chipSize.u + markerOffsets[self.chipNumber].u, 0.0 * chipSize.v + markerOffsets[self.chipNumber].v),
-//        Vector2DMake(1.0 * chipSize.u + markerOffsets[self.chipNumber].u, 1.0 * chipSize.v + markerOffsets[self.chipNumber].v),
-//        Vector2DMake(0.0 * chipSize.u + markerOffsets[self.chipNumber].u, 1.0 * chipSize.v + markerOffsets[self.chipNumber].v),
-//    };
-//    
-//    GLushort meshArray[6];
-//    
-//    GenerateBezierMesh(meshArray, 2, 2);
-//    
-//    glNormal3f(0.0, -1.0, 0.0);
-//    
-//    glDisableClientState(GL_NORMAL_ARRAY);
-//    
-//    glVertexPointer(3, GL_FLOAT, 0, vertexArray);
-//        
-//    GLfloat fade = self.count.value - stackCount;
-//    
-//    glTexCoordPointer(2, GL_FLOAT, 0, textureArrayShadow);            
-//
-//    glColor4f(self.markerOpacity, self.markerOpacity, self.markerOpacity, self.markerOpacity);
-//
-//    if(stackCount == 0)
-//    {
-//        TRANSACTION_BEGIN
-//        {
-//            glTranslatef(self.location.x, self.location.y, self.location.z);
-//            
-//            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, meshArray);    
-//        }
-//        TRANSACTION_END
-//    }
-//    
-//    glEnableClientState(GL_NORMAL_ARRAY);
+{    
+    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+    
+    glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"chips"]);
+    
+    Vector3D vertexArray[] = 
+    {
+        Vector3DMake(-1,  0.0, -1),        
+        Vector3DMake( 1,  0.0, -1),        
+        Vector3DMake(-1,  0.0,  1),        
+        Vector3DMake( 1,  0.0,  1),
+    };
+        
+    Vector2D textureArrayShadow[] = 
+    {
+        Vector2DMake(1.0 * chipSize.u + markerOffsets[self.chipNumber].u, 0.0 * chipSize.v + markerOffsets[self.chipNumber].v),
+        Vector2DMake(0.0 * chipSize.u + markerOffsets[self.chipNumber].u, 0.0 * chipSize.v + markerOffsets[self.chipNumber].v),
+        Vector2DMake(1.0 * chipSize.u + markerOffsets[self.chipNumber].u, 1.0 * chipSize.v + markerOffsets[self.chipNumber].v),
+        Vector2DMake(0.0 * chipSize.u + markerOffsets[self.chipNumber].u, 1.0 * chipSize.v + markerOffsets[self.chipNumber].v),
+    };
+    
+    GLushort meshArray[6];
+    
+    GenerateBezierMesh(meshArray, 2, 2);
+    
+    glNormal3f(0.0, -1.0, 0.0);
+    
+    glDisableClientState(GL_NORMAL_ARRAY);
+    
+    glVertexPointer(3, GL_FLOAT, 0, vertexArray);
+            
+    glTexCoordPointer(2, GL_FLOAT, 0, textureArrayShadow);            
+
+    glColor4f(self.markerOpacity, self.markerOpacity, self.markerOpacity, self.markerOpacity);
+
+    TRANSACTION_BEGIN
+    {
+        glTranslatef(self.location.x, self.location.y, self.location.z);
+        
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, meshArray);    
+    }
+    TRANSACTION_END
+    
+    glEnableClientState(GL_NORMAL_ARRAY);
 }
 
 -(void)drawShadow
@@ -321,9 +312,9 @@
     
     glTexCoordPointer(2, GL_FLOAT, 0, textureArrayShadow);            
     
-    Vector3D light = Vector3DMake(0, -10, 0);
+    Vector3D light = Vector3DMake(-self.chipGroup.renderer.offset.value, -7.5, 0);
     
-    for(int i = 0; i < stackCount; i += 10)
+    for(int i = 0; i < stackCount; i += 5)
     {        
         GLfloat displacement = -0.15 * (i + 1);
         
@@ -355,12 +346,10 @@
     glEnableClientState(GL_NORMAL_ARRAY);
 }
 
-@end
-
-@implementation GLChip (Touchable)
-
 -(id<Touchable>)testTouch:(UITouch*)touch withPreviousObject:(id<Touchable>)object
 {
+    if(self.chipGroup.frozen) { return object; }
+
     GLfloat model_view[16];
 
     TRANSACTION_BEGIN
@@ -409,55 +398,40 @@
 {
     float newCount = self.initialCount - clipFloat(pointTo.x - pointFrom.x, -100, 100) / 100;
     
-    [self.count setValue:fmin(newCount, self.maxCount) forTime:0.05 andThen:nil];
+    [self.count setValue:fmin(newCount, self.maxCount) forTime:0.05];
 }
 
 -(void)handleTouchUp:(UITouch*)touch fromPoint:(CGPoint)pointFrom toPoint:(CGPoint)pointTo
 {
     GLfloat deltaX = pointTo.x - pointFrom.x;
     
-    [self.count setValue:(int)(self.count.value + 0.5) forTime:0.5 andThen:nil];
+    [self.count setValue:(int)(self.count.value + 0.5) forTime:0.5];
 
     
     if(deltaX > 0) 
     { 
-        if(self.chipNumber == 0) { [self.chipGroup.renderer.gameController chipTouchedUpWithKey:@"1"]; }
-        if(self.chipNumber == 1) { [self.chipGroup.renderer.gameController chipTouchedUpWithKey:@"5"]; }
-        if(self.chipNumber == 2) { [self.chipGroup.renderer.gameController chipTouchedUpWithKey:@"10"]; }
-        if(self.chipNumber == 3) { [self.chipGroup.renderer.gameController chipTouchedUpWithKey:@"25"]; }
-        if(self.chipNumber == 4) { [self.chipGroup.renderer.gameController chipTouchedUpWithKey:@"100"]; }
-        if(self.chipNumber == 5) { [self.chipGroup.renderer.gameController chipTouchedUpWithKey:@"500"]; }
-        if(self.chipNumber == 6) { [self.chipGroup.renderer.gameController chipTouchedUpWithKey:@"1000"]; }
-        if(self.chipNumber == 7) { [self.chipGroup.renderer.gameController chipTouchedUpWithKey:@"2500"]; }
-        if(self.chipNumber == 8) { [self.chipGroup.renderer.gameController chipTouchedUpWithKey:@"10000"]; }
+        if(self.chipNumber == 0) { [self.chipGroup.renderer.gameController chipSwipedUpWithKey:@"1"]; }
+        if(self.chipNumber == 1) { [self.chipGroup.renderer.gameController chipSwipedUpWithKey:@"5"]; }
+        if(self.chipNumber == 2) { [self.chipGroup.renderer.gameController chipSwipedUpWithKey:@"10"]; }
+        if(self.chipNumber == 3) { [self.chipGroup.renderer.gameController chipSwipedUpWithKey:@"25"]; }
+        if(self.chipNumber == 4) { [self.chipGroup.renderer.gameController chipSwipedUpWithKey:@"100"]; }
+        if(self.chipNumber == 5) { [self.chipGroup.renderer.gameController chipSwipedUpWithKey:@"500"]; }
+        if(self.chipNumber == 6) { [self.chipGroup.renderer.gameController chipSwipedUpWithKey:@"1000"]; }
+        if(self.chipNumber == 7) { [self.chipGroup.renderer.gameController chipSwipedUpWithKey:@"2500"]; }
+        if(self.chipNumber == 8) { [self.chipGroup.renderer.gameController chipSwipedUpWithKey:@"10000"]; }
     }
     else if(deltaX <= 0) 
     { 
-        if(self.chipNumber == 0) { [self.chipGroup.renderer.gameController chipTouchedDownWithKey:@"1"]; }
-        if(self.chipNumber == 1) { [self.chipGroup.renderer.gameController chipTouchedDownWithKey:@"5"]; }
-        if(self.chipNumber == 2) { [self.chipGroup.renderer.gameController chipTouchedDownWithKey:@"10"]; }
-        if(self.chipNumber == 3) { [self.chipGroup.renderer.gameController chipTouchedDownWithKey:@"25"]; }
-        if(self.chipNumber == 4) { [self.chipGroup.renderer.gameController chipTouchedDownWithKey:@"100"]; }
-        if(self.chipNumber == 5) { [self.chipGroup.renderer.gameController chipTouchedDownWithKey:@"500"]; }
-        if(self.chipNumber == 6) { [self.chipGroup.renderer.gameController chipTouchedDownWithKey:@"1000"]; }
-        if(self.chipNumber == 7) { [self.chipGroup.renderer.gameController chipTouchedDownWithKey:@"2500"]; }
-        if(self.chipNumber == 8) { [self.chipGroup.renderer.gameController chipTouchedDownWithKey:@"10000"]; }
+        if(self.chipNumber == 0) { [self.chipGroup.renderer.gameController chipSwipedDownWithKey:@"1"]; }
+        if(self.chipNumber == 1) { [self.chipGroup.renderer.gameController chipSwipedDownWithKey:@"5"]; }
+        if(self.chipNumber == 2) { [self.chipGroup.renderer.gameController chipSwipedDownWithKey:@"10"]; }
+        if(self.chipNumber == 3) { [self.chipGroup.renderer.gameController chipSwipedDownWithKey:@"25"]; }
+        if(self.chipNumber == 4) { [self.chipGroup.renderer.gameController chipSwipedDownWithKey:@"100"]; }
+        if(self.chipNumber == 5) { [self.chipGroup.renderer.gameController chipSwipedDownWithKey:@"500"]; }
+        if(self.chipNumber == 6) { [self.chipGroup.renderer.gameController chipSwipedDownWithKey:@"1000"]; }
+        if(self.chipNumber == 7) { [self.chipGroup.renderer.gameController chipSwipedDownWithKey:@"2500"]; }
+        if(self.chipNumber == 8) { [self.chipGroup.renderer.gameController chipSwipedDownWithKey:@"10000"]; }
     }
-}
-
-@end
-
-@implementation GLChip (Killable)
-
-@dynamic isDead;
-@dynamic isAlive;
-
--(BOOL)isAlive { return YES; }
--(BOOL)isDead  { return NO; }
-
--(void)killWithDisplayContainer:(DisplayContainer*)container key:(id)key andThen:(simpleBlock)work
-{
-    return;
 }
 
 @end

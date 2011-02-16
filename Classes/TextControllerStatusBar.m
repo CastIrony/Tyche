@@ -19,9 +19,10 @@
         [self.styles setObject:[NSValue  valueWithCGSize:CGSizeMake(15, 0.96)]                  forKey:@"labelSize"];
         [self.styles setObject:[NSValue  valueWithBytes:&labelColor objCType:@encode(Color3D)] forKey:@"colorNormal"];
         [self.styles setObject:[NSValue  valueWithBytes:&labelColor objCType:@encode(Color3D)] forKey:@"colorTouched"];
+        [self.styles setObject:[NSNumber numberWithFloat:0.2] forKey:@"topMargin"]; 
+        [self.styles setObject:[NSNumber numberWithFloat:0.2] forKey:@"bottomMargin"]; 
         
         self.center = YES;
-        self.padding = 0.2;
     }
     
     return self;
@@ -34,7 +35,7 @@
     { 
         NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
         
-        [label setObject:/*self.text*/@"Lorem ipsum dolor sit amet" forKey:@"textString"];          
+        [label setObject:self.text forKey:@"textString"];          
         
         [label setObject:@"text" forKey:@"key"]; 
         

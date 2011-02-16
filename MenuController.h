@@ -1,5 +1,5 @@
 #import "Touchable.h"
-#import "Killable.h"
+#import "DisplayContainer.h"
 
 @class AnimatedFloat;
 @class GLMenu;
@@ -37,11 +37,11 @@
 
 @end
 
-@interface MenuController (Killable) <Killable>
+@interface MenuController (Perishable) <Perishable>
 
 @property (nonatomic, readonly) BOOL isDead;
 @property (nonatomic, readonly) BOOL isAlive;
 
--(void)killWithDisplayContainer:(DisplayContainer*)container key:(id)key andThen:(simpleBlock)work;
+-(void)killWithDisplayContainer:(DisplayContainer*)container key:(id)key andThen:(SimpleBlock)work;
 
 @end

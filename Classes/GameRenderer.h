@@ -48,12 +48,19 @@
 @property (nonatomic, retain) NSMutableDictionary* betItems;
 @property (nonatomic, retain) AnimatedFloat*       lightness;
 
-@property (nonatomic, copy) simpleBlock work;
+//@property (nonatomic, copy) SimpleBlock work;
+@property (nonatomic, retain) AnimatedFloat* offset;
 
 -(BOOL)resizeFromLayer:(CAEAGLLayer*)layer;
 -(void)load;
 -(void)draw;
 
 -(void)labelTouchedWithKey:(NSString*)key;
+
+-(void)handleEmptyTouchDown:(UITouch*)touch fromPoint:(CGPoint)point;
+-(void)handleEmptyTouchMoved:(UITouch*)touch fromPoint:(CGPoint)pointFrom toPoint:(CGPoint)pointTo;
+-(void)handleEmptyTouchUp:(UITouch*)touch fromPoint:(CGPoint)pointFrom toPoint:(CGPoint)pointTo;
+
+-(void)emptySpaceTouched;
 
 @end

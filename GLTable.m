@@ -111,10 +111,10 @@
     
     Vector2D topTextureArray0[] =
     {
-        Vector2DMake(-1, -2),        
-        Vector2DMake(-1,  2),        
-        Vector2DMake( 1, -2),        
-        Vector2DMake( 1,  2),
+        Vector2DMake(-1, -2 - self.renderer.offset.value * 0.1),        
+        Vector2DMake(-1,  2 - self.renderer.offset.value * 0.1),        
+        Vector2DMake( 1, -2 - self.renderer.offset.value * 0.1),        
+        Vector2DMake( 1,  2 - self.renderer.offset.value * 0.1),
     };
 
     Vector2D topTextureArray1[4];
@@ -126,7 +126,7 @@
         
     GLfloat lightness = self.renderer.lightness.value;
     
-    glColor4f(lightness, lightness, lightness, 0.4);
+    glColor4f(lightness, lightness, lightness, self.drawStatus == GLTableDrawStatusDiffuse ? 0.55 : 0.45);
     
     glVertexPointer  (3, GL_FLOAT, 0, topVertexArray);
     
@@ -169,18 +169,18 @@
     GenerateBezierNormals (frontNormalArray,  vertexWidth, vertexHeight, frontControlPoints);
     GenerateBezierTextures(frontTextureArray0, vertexWidth, vertexHeight, Vector2DMake(4.0, 1.0 / 5.0), Vector2DMake(0, 0));
     
-    frontTextureArray1[ 0] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(1, 1) : Vector2DMake(0.777, 1);
-    frontTextureArray1[ 1] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(1, 1) : Vector2DMake(0.777, 1);
-    frontTextureArray1[ 2] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(1, 1) : Vector2DMake(0.777, 1);
-    frontTextureArray1[ 3] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(1, 1) : Vector2DMake(0.777, 1);
-    frontTextureArray1[ 4] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(1, 1) : Vector2DMake(0.777, 1);
-    frontTextureArray1[ 5] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(1, 1) : Vector2DMake(0.777, 1);
-    frontTextureArray1[ 6] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(0, 1) : Vector2DMake(0.225, 1);
-    frontTextureArray1[ 7] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(0, 1) : Vector2DMake(0.225, 1);
-    frontTextureArray1[ 8] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(0, 1) : Vector2DMake(0.225, 1);
-    frontTextureArray1[ 9] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(0, 1) : Vector2DMake(0.225, 1);
-    frontTextureArray1[10] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(0, 1) : Vector2DMake(0.225, 1);
-    frontTextureArray1[11] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(0, 1) : Vector2DMake(0.225, 1);
+    frontTextureArray1[ 0] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(1, 1 - self.renderer.offset.value * 0.1) : Vector2DMake(0.777, 1);
+    frontTextureArray1[ 1] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(1, 1 - self.renderer.offset.value * 0.1) : Vector2DMake(0.777, 1);
+    frontTextureArray1[ 2] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(1, 1 - self.renderer.offset.value * 0.1) : Vector2DMake(0.777, 1);
+    frontTextureArray1[ 3] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(1, 1 - self.renderer.offset.value * 0.1) : Vector2DMake(0.777, 1);
+    frontTextureArray1[ 4] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(1, 1 - self.renderer.offset.value * 0.1) : Vector2DMake(0.777, 1);
+    frontTextureArray1[ 5] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(1, 1 - self.renderer.offset.value * 0.1) : Vector2DMake(0.777, 1);
+    frontTextureArray1[ 6] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(0, 1 - self.renderer.offset.value * 0.1) : Vector2DMake(0.225, 1);
+    frontTextureArray1[ 7] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(0, 1 - self.renderer.offset.value * 0.1) : Vector2DMake(0.225, 1);
+    frontTextureArray1[ 8] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(0, 1 - self.renderer.offset.value * 0.1) : Vector2DMake(0.225, 1);
+    frontTextureArray1[ 9] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(0, 1 - self.renderer.offset.value * 0.1) : Vector2DMake(0.225, 1);
+    frontTextureArray1[10] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(0, 1 - self.renderer.offset.value * 0.1) : Vector2DMake(0.225, 1);
+    frontTextureArray1[11] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(0, 1 - self.renderer.offset.value * 0.1) : Vector2DMake(0.225, 1);
     
     
     glVertexPointer  (3, GL_FLOAT, 0, frontVertexArray);

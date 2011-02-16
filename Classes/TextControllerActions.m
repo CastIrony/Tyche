@@ -22,9 +22,10 @@
         [self.styles setObject:[NSValue  valueWithBytes:&labelColor objCType:@encode(Color3D)] forKey:@"colorTouched"];
         [self.styles setObject:[NSNumber numberWithBool:YES]  forKey:@"hasBorder"];
         [self.styles setObject:[NSNumber numberWithFloat:0.3] forKey:@"fadeMargin"]; 
+        [self.styles setObject:[NSNumber numberWithFloat:0.2] forKey:@"topMargin"]; 
+        [self.styles setObject:[NSNumber numberWithFloat:0.2] forKey:@"bottomMargin"]; 
                 
         self.center = YES;
-        self.padding = 0.2;
     }
     
     return self;

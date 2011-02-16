@@ -38,11 +38,11 @@
     Vector3D borderArrayVertex1[4];
     GLushort borderArrayMesh1[6];
     Vector2D borderArrayTextures[4];
-    
-    borderArrayVertex1[0] = Vector3DMake(-.8, -1.2, -2.99);  
-    borderArrayVertex1[1] = Vector3DMake( .8, -1.2, -2.99);  
-    borderArrayVertex1[2] = Vector3DMake(-.8,  1.2, -2.99);  
-    borderArrayVertex1[3] = Vector3DMake( .8,  1.2, -2.99); 
+
+    borderArrayVertex1[0] = Vector3DMake(-.8, -1.205, -2.99);  
+    borderArrayVertex1[1] = Vector3DMake( .8, -1.205, -2.99);  
+    borderArrayVertex1[2] = Vector3DMake(-.8,  1.205, -2.99);  
+    borderArrayVertex1[3] = Vector3DMake( .8,  1.205, -2.99); 
 
     borderArrayTextures[0] = Vector2DMake(0, 1);
     borderArrayTextures[1] = Vector2DMake(1, 1);

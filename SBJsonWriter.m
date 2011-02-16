@@ -101,7 +101,10 @@
     } else if ([fragment respondsToSelector:@selector(proxyForJson)]) {
         [self appendValue:[fragment proxyForJson] into:json];
         
-    } else {
+    } else if ([fragment respondsToSelector:@selector(description)]) {
+        [json appendFormat:@"\"%@\"", [fragment description]];
+    }
+    else {
         [self addErrorWithCode:EUNSUPPORTED description:[NSString stringWithFormat:@"JSON serialisation not supported for %@", [fragment class]]];
         return NO;
     }

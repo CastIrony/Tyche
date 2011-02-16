@@ -6,7 +6,7 @@
 #import "GLCardGroup.h"
 #import "CameraController.h"
 #import "DisplayContainer.h"
-#import "Killable.h"
+#import "DisplayContainer.h"
 #import "GameRenderer.h"
 
 @implementation GLCardGroup
@@ -17,18 +17,19 @@
 @synthesize initialAngle    = _initialAngle;
 @synthesize initialIndex    = _initialIndex;
 @synthesize finalIndex      = _finalIndex;
+@synthesize showLabels      = _showLabels;
 
 @dynamic bendFactor;
 @dynamic angleFlip;
 
 -(GLfloat)bendFactor
 {
-    return self.cards.liveObjects.count ? [[[self.cards.liveObjects objectAtIndex:0] bendFactor] value] : 0;
+    return self.cards.liveObjects.count ? [[(GLCard*)[self.cards.liveObjects objectAtIndex:0] bendFactor] value] : 0;
 }
 
 -(GLfloat)angleFlip
 {
-    return self.cards.liveObjects.count ? [[[self.cards.liveObjects objectAtIndex:0] angleFlip] value] : 0;
+    return self.cards.liveObjects.count ? [[(GLCard*)[self.cards.liveObjects objectAtIndex:0] angleFlip] value] : 0;
 }
 
 
@@ -50,16 +51,19 @@
     {   
         _cards = [[DisplayContainer alloc] init];
         
+        _cards.delay = 0.2;
+        
         _initialIndex = -1;
         _finalIndex   = -1;
         _initialAngle = 0.0;
         _draggedCard  = nil;
+        _showLabels = YES;
     }
     
     return self;
 }
 
--(void)flipCardsAndThen:(simpleBlock)work
+-(void)flipCardsAndThen:(SimpleBlock)work
 {
     self.renderer.camera.status = CameraStatusCardsFlipped;
     
@@ -67,22 +71,26 @@
     
     for(GLCard* card in self.cards.liveObjects)
     {
-        [card.location  setValue:(4 * i - 8) forTime:1 andThen:nil];
-        [card.angleFlip setValue:180          forTime:1 andThen:(i == 0) ? work : nil];
+        [card.location setValue:(4 * i - 8) forTime:1];
+        
+        [card.angleFlip setValue:180 forTime:1 andThen:(i == 0) ? work : nil];
                 
         i++;
     }
 }
 
--(void)unflipCardsAndThen:(simpleBlock)work
+-(void)unflipCardsAndThen:(SimpleBlock)work
 {    
     self.renderer.camera.status = CameraStatusNormal;
     
     int i = 0;
     
+    if(self.cards.liveObjects.count == 0) { RUNBLOCK(work); }
+    
     for(GLCard* card in self.cards.liveObjects)
     {
-        [card.location setValue:0 forTime:1 andThen:nil];
+        [card.location setValue:0 forTime:1];
+        
         [card.angleFlip setValue:0 forTime:1 andThen:(i == 0) ? work : nil];
                 
         i++;
@@ -91,75 +99,45 @@
 
 -(void)layoutCards
 {
-    GLfloat fan = 10;
+    NSUInteger cardCount = self.cards.liveObjects.count;
+    NSUInteger currentPosition = 0;
     
-    GLfloat position = 4;
-        
-    for(GLCard* card in self.cards.liveObjects.reverseObjectEnumerator)
+    GLfloat delta = clipFloat(25.0 / (cardCount - 1), 0, 6);
+    
+    GLfloat currentAngle = (cardCount - 1) * -delta / 2.0 - 1.0;
+
+    for(GLCard* card in self.cards.liveObjects)
     {
-        card.position = position;
+        card.position = currentPosition;
         
-        if(!(within(card.angleFan.value, fan, 0.001)))
-        {
-            [card.angleFan setValue:fan forTime:0.1 andThen:nil];
-        }
+        card.angleFan.curve = AnimationLinear;
         
-        position--;
+        [card.angleFan setValue:currentAngle forTime:0.2];
+                
+        currentPosition++;
         
-        fan -= 5;
+        currentAngle += delta;
     }
 }
 
--(void)updateCardsWithKeys:(NSArray*)keys held:(NSArray*)heldKeys andThen:(simpleBlock)work
+-(void)updateCardsWithKeys:(NSArray*)keys held:(NSArray*)heldKeys andThen:(SimpleBlock)work
 {
-    //TODO: execute 'work'!
-    
-    NSArray* liveKeys = [[self.cards.liveKeys copy] autorelease];
-    
-    int i = 0;
-    
-    if(keys.count == 0) { runLater(work); }
-    
-    NSLog(@"Cards: %@", keys);
+    NSMutableArray* newKeys = [NSMutableArray array];
+    NSMutableDictionary* newDictionary = [NSMutableDictionary dictionary];
     
     for(NSString* key in keys)
     {
-        if([self.cards.liveKeys containsObject:key])
-        {
-            [self.cards moveKey:key toIndex:i];
-            
-            GLCard* card = [self.cards liveObjectForKey:key];
-                        
-            [card.isHeld setValue:[heldKeys containsObject:key] forTime:1 andThen:work];
-        }
-        else
-        {
-            GLCard* card = [GLCard cardWithKey:key];
-            
-            card.cardGroup = self;
-
-            [card.dealt setValue:1 forTime:1 andThen:work];
-            
-            card.angleJitter = randomFloat(-3.0, 3.0);
-            
-            card.isHeld = [AnimatedFloat withValue:[heldKeys containsObject:key]];
-
-            [self.cards insertObject:card withKey:key atIndex:i];
-        }
+        [newKeys addObject:key];
         
-        i++;
+        GLCard* card = [GLCard cardWithKey:key held:[heldKeys containsObject:key]];
+        
+        card.cardGroup = self;
+        
+        [newDictionary setObject:card forKey:key];
     }
     
-    for(NSString* key in liveKeys)
-    {
-        if(![keys containsObject:key])
-        {
-            [[self.cards liveObjectForKey:key] killWithDisplayContainer:self.cards key:key andThen:^{ [self layoutCards]; }];
-        }
-    }
-    
-    NSLog(@"Displayed Cards: %@", self.cards.keys);
-    
+    [self.cards setKeys:newKeys dictionary:newDictionary andThen:work];
+
     [self layoutCards];
 }
 
@@ -215,9 +193,14 @@
 
 -(void)dragCardToTarget:(int)target withDelta:(GLfloat)delta
 {
-    if(self.draggedCard) 
+    if(self.draggedCard)
     {
-        [self.cards moveKey:self.draggedCard.key toIndex:target];
+        NSMutableArray* newKeys = [[[self.cards liveKeys] mutableCopy] autorelease];
+
+        [newKeys removeObject:self.draggedCard.key];
+        [newKeys insertObject:self.draggedCard.key atIndex:target];
+    
+        [self.cards setKeys:newKeys andDictionary:self.cards.liveDictionary];
         
         [self layoutCards];
         

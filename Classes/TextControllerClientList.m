@@ -11,7 +11,6 @@
     
     if(self)
     {   
-        self.padding = 0.4;
         self.center = YES;
     }
     
@@ -29,6 +28,8 @@
     [self.styles setObject:[NSValue  valueWithCGSize:CGSizeMake(3, 0.42)]                    forKey:@"labelSize"];
     [self.styles setObject:[NSValue  valueWithBytes:&colorNormal  objCType:@encode(Color3D)] forKey:@"colorNormal"];
     [self.styles setObject:[NSValue  valueWithBytes:&colorTouched objCType:@encode(Color3D)] forKey:@"colorTouched"];
+    [self.styles setObject:[NSNumber numberWithFloat:0.4] forKey:@"topMargin"]; 
+    [self.styles setObject:[NSNumber numberWithFloat:0.4] forKey:@"bottomMargin"]; 
     
     NSMutableArray* labels = [[[NSMutableArray alloc] init] autorelease];
     

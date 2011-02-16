@@ -14,7 +14,6 @@
 
 @synthesize renderer;
 @synthesize location;
-@synthesize padding;
 @synthesize lightness;
 @synthesize opacity;
 @synthesize anglePitch;
@@ -31,7 +30,7 @@
     {   
         self.center = YES;
         
-        self.opacity = 1;
+        self.opacity = [AnimatedFloat withValue:1];
     
         self.items = [DisplayContainer container];
         
@@ -50,42 +49,23 @@
 
 -(void)fillWithDictionaries:(NSArray*)dictionaries
 {
-    NSMutableArray* liveKeys = [NSMutableArray array];
+    NSMutableArray* newKeys = [NSMutableArray array];
+    NSMutableDictionary* newDictionary = [NSMutableDictionary dictionary];
     
-    for(NSMutableDictionary* dictionary in dictionaries)
+    for(NSDictionary* dictionary in dictionaries)
     {
         GLLabel* newLabel = [GLLabel withDictionaries:[NSArray arrayWithObjects:self.styles, dictionary, nil]];
         
+        newLabel.owner = self;
+        newLabel.textController = self;
+        
         NSString* key = newLabel.key;
         
-        if(!key) { continue; }
-                
-        GLLabel* oldLabel = [self.items liveObjectForKey:key];
-        
-        if([newLabel isEqual:oldLabel]) 
-        { 
-            [self.items moveKeyToLast:key];
-        }
-        else 
-        {
-            newLabel.textController = self;
-            newLabel.owner = self;
-            
-            if(oldLabel.layoutLocation) { newLabel.layoutLocation = oldLabel.layoutLocation; }
-                        
-            [self.items insertObject:newLabel asLastWithKey:key];
-        }
-
-        [liveKeys addObject:key];          
+        [newKeys addObject:key];
+        [newDictionary setObject:newLabel forKey:key];
     }   
     
-    for(NSString* key in self.items.liveKeys)
-    {
-        if(![liveKeys containsObject:key])
-        {                
-            [[self.items liveObjectForKey:key] killWithDisplayContainer:self.items key:key andThen:^{ [self layoutItems]; }];
-        }
-    }
+    [self.items setKeys:newKeys andDictionary:newDictionary];
     
     [self layoutItems];
 }
@@ -97,25 +77,34 @@
 
 -(void)layoutItems
 {
-    GLfloat totalHeight = -self.padding;
-    GLfloat position;
+    GLfloat totalHeight = 0;
+    GLfloat previousMargin = 0;
+    GLfloat previousPadding = 0;
     
     for(GLLabel* liveItem in self.items.liveObjects)
     {        
-        totalHeight += liveItem.layoutSize.height + self.padding;
+        totalHeight += previousPadding + MAX(liveItem.topMargin, previousMargin) + liveItem.topPadding + liveItem.layoutSize.height;
+        
+        previousMargin = liveItem.bottomMargin;
+        previousPadding = liveItem.bottomPadding;
     }
     
-    position = self.center ? -totalHeight / 2.0: 0;
+    totalHeight += previousMargin + previousPadding;
+    
+    GLfloat position = self.center ? -(totalHeight / 2.0) : 0;
+    
+    previousMargin = 0;
+    previousPadding = 0;
     
     for(GLLabel* liveItem in self.items.liveObjects)
     {
-        Vector3D targetLocation = Vector3DMake(0, 0, position + (liveItem.layoutSize.height / 2));
+        Vector3D targetLocation = Vector3DMake(0, 0, position + previousPadding + MAX(liveItem.topMargin, previousMargin) + liveItem.topPadding + (liveItem.layoutSize.height / 2));
         
         for(GLLabel* label in [self.items objectsForKey:liveItem.key])
         {
             if(label.layoutLocation)
             {
-                label.layoutLocation = [AnimatedVector3D withStartValue:label.layoutLocation.value endValue:targetLocation forTime:0.3];
+                label.layoutLocation = [AnimatedVector3D withStartValue:label.layoutLocation.value endValue:targetLocation forTime:0.4];
             }
             else 
             {
@@ -123,9 +112,12 @@
             }
         }
                     
-        [liveItem.layoutOpacity setValue:1.0 forTime:0.3 andThen:nil];
+        [liveItem.layoutOpacity setValue:1.0 forTime:0.4 andThen:nil];
         
-        position += liveItem.layoutSize.height + self.padding;
+        position += previousPadding + MAX(liveItem.topMargin, previousMargin) + liveItem.topPadding + liveItem.layoutSize.height;
+        
+        previousMargin = liveItem.bottomMargin;
+        previousPadding = liveItem.bottomPadding;
     }
 }
 

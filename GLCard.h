@@ -1,5 +1,5 @@
 #import "Touchable.h"
-#import "Killable.h"
+#import "DisplayContainer.h"
 #import "GameController.h"
 
 @class GLCardGroup;
@@ -7,7 +7,7 @@
 @class DisplayContainer;
 @class AnimatedVector3D;
 
-@interface GLCard : NSObject
+@interface GLCard : NSObject <Touchable, Perishable>
 {
     Vector3D controlPointsBase[16];
     Vector3D controlPointsFront[16];
@@ -65,12 +65,13 @@
 @property (nonatomic, retain)   AnimatedFloat*      angleFlip;
 @property (nonatomic, retain)   AnimatedFloat*      angleFan;
 @property (nonatomic, retain)   AnimatedFloat*      bendFactor;
+@property (nonatomic, assign)   BOOL                cancelTap;
 @property (nonatomic, readonly) BOOL                isMeshAnimating;
-@property (nonatomic, readonly) NSString*           key;
 
-+(GLCard*)cardWithKey:(NSString*)keys;
++(GLCard*)cardWithKey:(NSString*)key;
++(GLCard*)cardWithKey:(NSString*)key held:(BOOL)held;
 
--(id)initWithSuit:(int)suit numeral:(int)numeral;
+-(id)initWithSuit:(int)suit numeral:(int)numeral held:(BOOL)held;
 
 -(void)drawFront;
 -(void)drawBack;
@@ -84,23 +85,5 @@
 -(void)scaleShadowWithFactor:(Vector3D)factor fromPoint:(Vector3D)point;
 -(void)translateWithVector:(Vector3D)vector;
 -(void)flattenShadow;
-
-@end
-
-@interface GLCard (Touchable) <Touchable>
-
--(id<Touchable>)testTouch:(UITouch*)touch withPreviousObject:(id<Touchable>)object;
--(void)handleTouchDown:(UITouch*)touch fromPoint:(CGPoint)point;
--(void)handleTouchMoved:(UITouch*)touch fromPoint:(CGPoint)pointFrom toPoint:(CGPoint)pointTo;
--(void)handleTouchUp:(UITouch*)touch fromPoint:(CGPoint)pointFrom toPoint:(CGPoint)pointTo;
-
-@end
-
-@interface GLCard (Killable) <Killable>
-
-@property (nonatomic, readonly) BOOL isDead;
-@property (nonatomic, readonly) BOOL isAlive;
-
--(void)killWithDisplayContainer:(DisplayContainer*)container key:(id)key andThen:(simpleBlock)work;
 
 @end

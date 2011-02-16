@@ -14,7 +14,6 @@
         
         textController.owner = menu;
         textController.center = NO;
-        textController.opacity = 1;
         textController.location = Vector3DMake(0, 0, -2.5);
         textController.renderer = self.renderer;
         

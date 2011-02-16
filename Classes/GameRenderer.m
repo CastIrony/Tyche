@@ -55,7 +55,8 @@
 @synthesize betLabel            = _betLabel;
 @synthesize betItems            = _betItems;
 @synthesize lightness           = _lightness;
-@synthesize work                = _work;
+@synthesize offset              = _offset;
+//@synthesize work                = _work;
 
 -(id)init
 {
@@ -76,6 +77,7 @@
         
         animate = YES;
         self.lightness = [AnimatedFloat withValue:1];
+        self.offset = [AnimatedFloat withValue:0];
     }
 	
 	return self;
@@ -163,7 +165,7 @@
     
     UIFont* font = [UIFont fontWithName:@"Futura-Medium" size:15.0];
     
-    [TextureController setTexture:[[[GLTexture alloc] initWithString:@"HOLD" dimensions:[@"HOLD" sizeWithFont:font] alignment:UITextAlignmentCenter font:font] autorelease] forKey:@"hold"];
+    [TextureController setTexture:[[[GLTexture alloc] initWithString:@" " dimensions:[@" " sizeWithFont:font] alignment:UITextAlignmentCenter font:font] autorelease] forKey:@"hold"];
     [TextureController setTexture:[[[GLTexture alloc] initWithString:@"DRAW" dimensions:[@"DRAW" sizeWithFont:font] alignment:UITextAlignmentCenter font:font] autorelease] forKey:@"draw"];
     [TextureController setTexture:[[[GLTexture alloc] initWithButtonOpacity:0.25] autorelease] forKey:@"borderNormal"];
     [TextureController setTexture:[[[GLTexture alloc] initWithButtonOpacity:0.70] autorelease] forKey:@"borderTouched"];
@@ -210,12 +212,22 @@
         
         textController.location = Vector3DMake(5.25, 0, 0);
         
-        textController.creditTotal = 235;
-        textController.betTotal = 35;
+        textController.creditTotal = 0;
+        textController.betTotal = 0;
                     
         [textController update];
         
         [self.textControllers setObject:textController forKey:@"credits"];
+    }
+
+    {
+        TextControllerActions* textController = [[[TextControllerActions alloc] init] autorelease];
+        
+        textController.renderer = self;
+        
+        textController.location = Vector3DMake(0, 0, 0);
+        
+        [self.textControllers setObject:textController forKey:@"gameOver"];
     }
     
     {
@@ -233,9 +245,9 @@
                 
         textController.renderer = self;
         
-        textController.location = Vector3DMake(0, 0, -7); //-6.4
+        textController.location = Vector3DMake(0, 0, -6.6);
         
-        [self.textControllers setObject:textController forKey:@"status1"];
+        [self.textControllers setObject:textController forKey:@"messageDown"];
     }
 
     {
@@ -243,11 +255,11 @@
                 
         textController.renderer = self;
         
-        textController.location = Vector3DMake(0, 0, -5.2); //-6.4
+        textController.location = Vector3DMake(0, 0, -5.2);
         
         textController.anglePitch = -90;
         
-        [self.textControllers setObject:textController forKey:@"status2"];
+        [self.textControllers setObject:textController forKey:@"messageUp"];
     }
     
     GLfloat zNear       =   0.001;
@@ -287,7 +299,7 @@
     {
         TinyProfilerStart(0);
         
-        GLfloat cameraPitch = self.camera.pitchAngle.value * self.camera.pitchFactor.value;
+        GLfloat cameraPitch = self.camera.pitchAngle.value * self.camera.pitchFactor.value * (1.0 - self.cardGroup.angleFlip / 180.0);
         
         glClear(GL_COLOR_BUFFER_BIT);
         
@@ -310,65 +322,80 @@
 
         TinyProfilerStop(1);
         TinyProfilerStart(2);
-        
-        self.table.drawStatus = GLTableDrawStatusDiffuse; [self.table draw];                                            
-        
-        TinyProfilerStop(2);
-        TinyProfilerStart(3);
-        
-        [self.cardGroup drawShadows];
-        
-        TinyProfilerStop(3);
-        TinyProfilerStart(4);
-        
-        [self.chipGroup drawShadows];
-        
-        TinyProfilerStop(4);
-        TinyProfilerStart(5);
-        
-        self.table.drawStatus = GLTableDrawStatusAmbient; [self.table draw];                                              
-    
-        TinyProfilerStop(5);
-        TinyProfilerStart(6);
 
-        // !
-        
-        { TextController* textController = [self.textControllers objectForKey:@"credits"]; textController.opacity = 1.0/* - (cameraPitch / 90.0)*/; [textController draw]; }
-        { TextController* textController = [self.textControllers objectForKey:@"actions"]; textController.opacity = 1.0/* - (cameraPitch / 90.0)*/; [textController draw]; }
-        { TextController* textController = [self.textControllers objectForKey:@"status1"]; textController.opacity = 1.0/* - (cameraPitch / 90.0)*/; [textController draw]; }
-        
-        TinyProfilerStop(6);
+            self.table.drawStatus = GLTableDrawStatusDiffuse; [self.table draw];                                            
+            
+            TinyProfilerStop(2);
+            TinyProfilerStart(3);
 
-        TinyProfilerStart(8);
-        
-        // !
+            TRANSACTION_BEGIN
+            {
+                glTranslatef(self.offset.value, 0, 0);
+            
+                [self.cardGroup drawShadows];
                 
-        self.chipGroup.opacity = clipFloat(-0.04 * cameraPitch + 3.4, 0, 1);
-        [self.chipGroup drawChips];
+                TinyProfilerStop(3);
+                TinyProfilerStart(4);
+                
+                [self.chipGroup drawShadows];
+            }
+            TRANSACTION_END
+                
+            TinyProfilerStop(4);
+            TinyProfilerStart(5);
+            
+            self.table.drawStatus = GLTableDrawStatusAmbient; [self.table draw];                                              
         
-        TinyProfilerStop(8);
-        TinyProfilerStart(9);
+            TinyProfilerStop(5);
+            TinyProfilerStart(6);
         
-        [self.cardGroup drawBacks]; 
-        
-        TinyProfilerStop(9);
-        TinyProfilerStart(10);
-        
-        if(cameraPitch > 45 || self.cardGroup.angleFlip > 1) { [self.cardGroup drawFronts]; }
-        
-        TinyProfilerStop(10);
-        TinyProfilerStart(11);
-        
-        [self.cardGroup drawLabels];
-        
-        TinyProfilerStop(11);
-        TinyProfilerStart(12);
-        
-        { TextController* textController = [self.textControllers objectForKey:@"status2"]; textController.opacity = cameraPitch / 45 - 1; [textController draw]; }
-        
-        TinyProfilerStop(12);
-        TinyProfilerStart(13);
-        
+            TRANSACTION_BEGIN
+            {
+                glTranslatef(self.offset.value, 0, 0);
+
+            // !
+            
+            { TextController* textController = [self.textControllers objectForKey:@"credits"];     [textController draw]; }
+            { TextController* textController = [self.textControllers objectForKey:@"actions"];     [textController draw]; }
+            { TextController* textController = [self.textControllers objectForKey:@"gameOver"];    [textController draw]; }
+            { TextController* textController = [self.textControllers objectForKey:@"messageDown"]; [textController draw]; }
+            
+            TinyProfilerStop(6);
+
+            TinyProfilerStart(8);
+            
+            // !
+                    
+            self.chipGroup.opacity = 1.0; //clipFloat(-0.04 * cameraPitch + 3.4, 0, 1);
+
+            [self.chipGroup drawMarkers];
+            [self.chipGroup drawChips];
+            
+            TinyProfilerStop(8);
+            TinyProfilerStart(9);
+            
+            [self.cardGroup drawBacks]; 
+            
+            TinyProfilerStop(9);
+            TinyProfilerStart(10);
+            
+            if(cameraPitch > 45 || self.cardGroup.angleFlip > 1) { [self.cardGroup drawFronts]; }
+            
+            TinyProfilerStop(10);
+            TinyProfilerStart(11);
+            
+            [self.cardGroup drawLabels];
+            
+            TinyProfilerStop(11);
+            TinyProfilerStart(12);
+            
+            { TextController* textController = [self.textControllers objectForKey:@"messageUp"]; [textController.opacity setValue:cameraPitch / 45.0 - 1.0]; [textController draw]; }
+            
+            TinyProfilerStop(12);
+            TinyProfilerStart(13);
+        }
+        TRANSACTION_END;
+            
         // !
         
         [self.menuLayerController draw];
@@ -383,22 +410,24 @@
 
     [_context presentRenderbuffer:GL_RENDERBUFFER_OES];
     
-    for(NSValue* key in self.touchedObjects.allKeys) 
+    for(NSValue* key in self.touchedLocations.allKeys) 
     {
-        //NSValue* key = [NSValue valueWithPointer:touch];
-
         UITouch* touch = [key pointerValue];
         
         id<Touchable> object = [self.touchedObjects objectForKey:key];
+
+        NSValue* location = [self.touchedLocations objectForKey:key];
         
+        CGPoint pointFrom = [location CGPointValue];
+        CGPoint pointTo   = [touch locationInView:touch.view];
+
         if(object)
         {
-            NSValue* location = [self.touchedLocations objectForKey:key];
-            
-            CGPoint pointFrom = [location CGPointValue];
-            CGPoint pointTo   = [touch locationInView:touch.view];
-            
             [object handleTouchMoved:touch fromPoint:pointFrom toPoint:pointTo];
+        }
+        else
+        {
+            [self handleEmptyTouchMoved:touch fromPoint:pointFrom toPoint:pointTo];
         }
     }   
     
@@ -425,7 +454,7 @@
         if(!isUpright)
         {
             isUpright = YES;
-            
+                        
             [self.menuLayerController showMenus];
         }
     }
@@ -438,7 +467,7 @@
         if(isUpright)
         {
             isUpright = NO;
-            
+                        
             if(self.gameController) { [self.menuLayerController hideMenus]; }
         }
         
@@ -493,46 +522,33 @@
 
                 for(GLChip* chip in self.chipGroup.chips.liveObjects) { object = [chip testTouch:touch withPreviousObject:object]; }
 
-                NSLog(@"============= Cards DOWN! =============");
-                
                 for(GLCard* card in self.cardGroup.cards.liveObjects) 
                 {
                     object = [card testTouch:touch withPreviousObject:object];
-                    
-                    NSLog(@"[%i, %i]", card.position, card == object);
                 }
                 
-                NSLog(@" ");
-            
                 object = [self.menuLayerController testTouch:touch withPreviousObject:object]; 
             }
             else
             {
-                NSLog(@"============= Cards UP! =============");
-            
                 for(GLCard* card in self.cardGroup.cards.liveObjects.reverseObjectEnumerator) 
                 {                 
                     object = [card testTouch:touch withPreviousObject:object];
-                    
-                    NSLog(@"[%i, %i]", card.position, card == object);
                 }
-
-                NSLog(@" ");
-
             }
+            
+            NSValue* key = [NSValue valueWithPointer:touch];
+            [self.touchedLocations setObject:[NSValue valueWithCGPoint:[touch locationInView:touch.view]] forKey:[NSValue valueWithPointer:touch]];
             
             if(object)
             {            
-                NSValue* key = [NSValue valueWithPointer:touch];
-                
                 [object handleTouchDown:touch fromPoint:[touch locationInView:touch.view]];
                 
                 [self.touchedObjects setObject:object forKey:key];
-                [self.touchedLocations setObject:[NSValue valueWithCGPoint:[touch locationInView:touch.view]] forKey:[NSValue valueWithPointer:touch]];
             }
             else
             {    
-                [self.gameController emptySpaceTouched];
+                [self handleEmptyTouchDown:touch fromPoint:[touch locationInView:touch.view]];
             }
         }
     }
@@ -549,15 +565,62 @@
         
         id<Touchable> object = [self.touchedObjects objectForKey:key];
         
+        CGPoint pointFrom = [location CGPointValue];
+        CGPoint pointTo   = [touch locationInView:touch.view];
+
+        [self.touchedLocations removeObjectForKey:key];        
+
         if(object)
         {
-            CGPoint pointFrom = [location CGPointValue];
-            CGPoint pointTo   = [touch locationInView:touch.view];
-            
             [object handleTouchUp:touch fromPoint:pointFrom toPoint:pointTo];
             
-            [self.touchedLocations removeObjectForKey:key];        
             [self.touchedObjects removeObjectForKey:key];
+        }
+        else
+        {
+            [self handleEmptyTouchUp:touch fromPoint:pointFrom toPoint:pointTo];
+        }
+    }
+}
+
+-(void)handleEmptyTouchDown:(UITouch*)touch fromPoint:(CGPoint)point
+{    
+    
+}
+
+-(void)handleEmptyTouchMoved:(UITouch*)touch fromPoint:(CGPoint)pointFrom toPoint:(CGPoint)pointTo
+{
+    [self.offset setValue:(pointTo.y - pointFrom.y) / -30.0];
+}
+
+-(void)handleEmptyTouchUp:(UITouch*)touch fromPoint:(CGPoint)pointFrom toPoint:(CGPoint)pointTo
+{    
+    if(absf(pointTo.y, pointFrom.y) < 10.0)
+    {
+        [self emptySpaceTouched];
+    }
+    
+    [self.offset setValue:0 forTime:0.4];
+}
+
+-(void)emptySpaceTouched 
+{
+    if(!self.camera.isAutomatic)
+    {
+        if(self.camera.pitchAngle.value > 60)
+        {
+            [self.camera.pitchAngle setValue:0 forTime:1.0 andThen:nil];
+        }
+        else 
+        {
+            if(self.camera.menuVisible) 
+            {
+                [self.menuLayerController hideMenus];
+            }
+            else 
+            {
+                [self.menuLayerController showMenus];
+            }
         }
     }
 }
