@@ -1,15 +1,11 @@
-#import "NSObject+SBJSON.h"
-#import "NSString+SBJSON.h"
-#import "NSString+Documents.h"
-#import "NSMutableArray+Deck.h"
 #import "GameController.h"
 
-@interface GameControllerSP : GameController
-{
-    NSDictionary* _rankPrizes;
-}
+@interface GameControllerSP5D : GameController
 
--(void)givePrize;
--(void)updateCardsAndThen:(SimpleBlock)work;
+@property (nonatomic, retain)   NSMutableDictionary* cardLongNames;
+@property (nonatomic, retain)   NSMutableDictionary* cardShortNames;
+@property (nonatomic, retain)   NSMutableArray*      rankLevels;
+@property (nonatomic, retain)   NSMutableDictionary* rankNames;
+@property (nonatomic, retain)   NSMutableDictionary* rankPrizes;
 
 @end

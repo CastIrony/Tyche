@@ -1,7 +1,5 @@
-#import "SessionController.h"
+#import "GameNetworkController.h"
 
-@interface SessionControllerServer : SessionController
-{
-}
+@interface GameNetworkControllerGK : GameNetworkController
 
 @end

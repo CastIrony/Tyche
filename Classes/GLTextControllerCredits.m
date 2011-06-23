@@ -1,27 +1,14 @@
-#import "GameControllerSP.h"
-#import "GameRenderer.h"
+#import "GameController.h"
+#import "GLRenderer.h"
 
-#import "TextControllerCredits.h"
+#import "GLTextControllerCredits.h"
 
-@implementation TextControllerCredits
+@implementation GLTextControllerCredits
 
 @synthesize gameController = _gameController;
-@synthesize showButton = _showButton;
-@dynamic creditTotal;
-@dynamic betTotal;
-
--(int)creditTotal { return _creditTotal; }
--(int)betTotal { return _betTotal; }
-
--(void)setCreditTotal:(int)creditTotal
-{
-    _creditTotal = creditTotal;
-}
-
--(void)setBetTotal:(int)betTotal
-{
-    _betTotal = betTotal;
-}
+@synthesize showButton     = _showButton;
+@synthesize creditTotal    = _creditTotal;
+@synthesize betTotal       = _betTotal;
 
 -(id)init
 {
@@ -29,14 +16,14 @@
     
     if(self)
     {   
-        Color3D labelColor = Color3DMake(1, 1, 1, 0.9); 
+        color labelColor = colorMake(1, 1, 1, 0.9); 
         
         [self.styles setObject:[NSNumber numberWithFloat:0.1]                                  forKey:@"fadeMargin"]; 
         [self.styles setObject:[NSNumber numberWithBool:YES]                                   forKey:@"hasShadow"];
         [self.styles setObject:[UIFont   fontWithName:@"Futura-Medium" size:25]                forKey:@"font"];
         [self.styles setObject:[NSValue  valueWithCGSize:CGSizeMake(6, 0.9)]                   forKey:@"labelSize"];
-        [self.styles setObject:[NSValue  valueWithBytes:&labelColor objCType:@encode(Color3D)] forKey:@"colorNormal"];
-        [self.styles setObject:[NSValue  valueWithBytes:&labelColor objCType:@encode(Color3D)] forKey:@"colorTouched"];
+        [self.styles setObject:[NSValue  valueWithBytes:&labelColor objCType:@encode(color)] forKey:@"colorNormal"];
+        [self.styles setObject:[NSValue  valueWithBytes:&labelColor objCType:@encode(color)] forKey:@"colorTouched"];
         [self.styles setObject:[NSNumber numberWithFloat:0.2] forKey:@"topMargin"]; 
         [self.styles setObject:[NSNumber numberWithFloat:0.2] forKey:@"bottomMargin"]; 
 
@@ -48,12 +35,12 @@
 
 -(void)update
 {
-    NSMutableArray* labels = [[[NSMutableArray alloc] init] autorelease];
+    NSMutableArray* labels = [NSMutableArray array];
 
     if(self.creditTotal > 0)
     {
         { 
-            NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
+            NSMutableDictionary* label = [NSMutableDictionary dictionary]; 
             
             [label setObject:[NSString stringWithFormat:@"Credits: %d", self.creditTotal] forKey:@"textString"];          
             
@@ -65,7 +52,7 @@
         if(self.betTotal > 0)
         {
             { 
-                NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
+                NSMutableDictionary* label = [NSMutableDictionary dictionary]; 
                 
                 [label setObject:[NSString stringWithFormat:@"Bet: %d", self.betTotal] forKey:@"textString"];     
                 [label setObject:[NSValue  valueWithCGSize:CGSizeMake(6, 0.78)] forKey:@"labelSize"];
@@ -76,7 +63,7 @@
             
             if(self.showButton)
             { 
-                NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
+                NSMutableDictionary* label = [NSMutableDictionary dictionary]; 
                 
                 [label setObject:[NSNumber numberWithBool:YES]  forKey:@"hasBorder"];
                 [label setObject:[NSNumber numberWithFloat:0.3] forKey:@"fadeMargin"]; 
@@ -89,7 +76,7 @@
         }
         else if(self.showButton)
         {
-            NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
+            NSMutableDictionary* label = [NSMutableDictionary dictionary]; 
             
             [label setObject:[NSNumber numberWithBool:YES]  forKey:@"hasBorder"];
             [label setObject:[NSNumber numberWithFloat:0.3] forKey:@"fadeMargin"]; 

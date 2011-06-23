@@ -1,17 +1,17 @@
-#import "NSArray+Circle.h"
-#import "MenuLayerController.h"
-#import "GameRenderer.h"
+#import "NSArray+JBCommon.h"
+#import "GLMenuLayerController.h"
+#import "GLRenderer.h"
 #import "AnimatedFloat.h"
-#import "AnimatedVector3D.h"
+#import "AnimatedVec3.h"
 #import "GLMenu.h"
-#import "TextController.h"
-#import "GLLabel.h"
+#import "GLTextController.h"
+#import "GLText.h"
 #import "GLDots.h"
 #import "DisplayContainer.h"
 
-#import "MenuController.h"
+#import "GLMenuController.h"
 
-@implementation MenuController
+@implementation GLMenuController
 
 @synthesize renderer      = _renderer;
 @synthesize menus         = _menus;
@@ -26,7 +26,7 @@
 @synthesize key              = _key;
 @synthesize displayContainer = _displayContainer;
 
--(id)initWithRenderer:(GameRenderer*)renderer
+-(id)initWithRenderer:(GLRenderer*)renderer
 {
     self = [super init];
     
@@ -36,17 +36,16 @@
         
         self.menus = [DisplayContainer container];
         
-        self.offset = [AnimatedFloat withValue:0];
-        
-        self.hidden    = [AnimatedFloat withValue:0];
-        self.death     = [AnimatedFloat withValue:0];
-        self.collapsed = [AnimatedFloat withValue:0];
+        self.offset    = [AnimatedFloat floatWithValue:0];
+        self.hidden    = [AnimatedFloat floatWithValue:0];
+        self.death     = [AnimatedFloat floatWithValue:0];
+        self.collapsed = [AnimatedFloat floatWithValue:0];
     }
     
     return self;
 }
 
-+(MenuController*)withRenderer:(GameRenderer *)renderer
++(GLMenuController*)withRenderer:(GLRenderer *)renderer
 {
     return [[[self alloc] initWithRenderer:renderer] autorelease];
 }
@@ -63,7 +62,7 @@
     
     [newDictionary setObject:menu forKey:key];
     
-    [self.menus setKeys:newKeys andDictionary:newDictionary];
+    [self.menus setLiveKeys:newKeys liveDictionary:newDictionary andThen:nil];
 
     if(!self.currentKey) { self.currentKey = key; }
     
@@ -72,11 +71,12 @@
 
 -(void)deleteMenuForKey:(NSString*)key
 {
-    GLMenu* menu = [self.menus liveObjectForKey:key];
+    NSMutableArray* newKeys = [[self.menus.liveKeys mutableCopy] autorelease];
+
+    [newKeys removeObject:key];
     
-    [menu.death setValue:1 forTime:1 andThen:^{ [self.menus pruneDead]; [self layoutMenus]; }];
-    
-    [self.menus generateObjectLists]; 
+    [self.menus setLiveKeys:newKeys liveDictionary:self.menus.liveDictionary andThen:nil];
+
     [self layoutMenus];
 }
 
@@ -111,7 +111,7 @@
     
     for(NSString* key in self.menus.liveKeys)
     {   
-        GLMenu* menu = [self.menus liveObjectForKey:key];
+        GLMenu* menu = (GLMenu*)[self.menus liveObjectForKey:key];
         
         if(menu.location)
         {
@@ -119,7 +119,7 @@
         }
         else 
         {
-            menu.location = [AnimatedFloat withValue:-4.0 * counter];
+            menu.location = [AnimatedFloat floatWithValue:-4.0 * counter];
         }
             
         [menu.opacity setValue:([key isEqualToString:self.currentKey] || !collapsed) forTime:1.0 andThen:nil];
@@ -215,11 +215,9 @@
 -(BOOL)isAlive { return within(self.death.endValue, 0, 0.001); }
 -(BOOL)isDead  { return within(self.death.value,    1, 0.001); }
 
--(void)killAfterDelay:(NSTimeInterval)delay andThen:(SimpleBlock)work
+-(void)dieAfterDelay:(NSTimeInterval)delay andThen:(SimpleBlock)work
 {
-    // TODO: this should respect the specified delay
-
-    [self.death setValue:1 forTime:0.3 andThen:^{ [self.displayContainer pruneDead]; RunLater(work); }];
+    [self.death setValue:1 forTime:0.3 afterDelay:delay andThen:work];
 }
 
 @end

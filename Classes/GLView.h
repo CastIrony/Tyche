@@ -1,21 +1,18 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
-#import "GameRenderer.h"
+#import "GLRenderer.h"
 
-@interface GameView : UIView
-{    
-    GameRenderer* renderer;
-	
-	BOOL displayLinkSupported;
-	NSInteger animationFrameInterval;
-	id displayLink;
-}
+@interface GLView : UIView
 
-@property (nonatomic, assign) AppController* appController;
-@property (readonly, nonatomic/*, getter=isMeshAnimating*/) BOOL animating;
-@property (nonatomic) NSInteger animationFrameInterval;
+@property (nonatomic, assign)   GLRenderer* renderer;
 
-- (void) startAnimation;
-- (void) stopAnimation;
+@property (nonatomic, readonly) CAEAGLLayer* eaglLayer;
+@property (nonatomic, retain)   EAGLContext* eaglContext;
+@property (nonatomic, assign)   GLuint       framebuffer;
+@property (nonatomic, assign)   GLuint       renderbuffer;
+
+@property (nonatomic, readonly) CGRect viewport;
+
+-(void)presentRenderbuffer;
 
 @end

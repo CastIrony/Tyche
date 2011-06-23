@@ -1,12 +1,9 @@
-#import "TextController.h"
+#import "GLTextController.h"
 
 @class AppController;
 @class GLTexture;
 
-@interface TextControllerMainMenu : TextController 
-{
-    AppController* _appController;
-}
+@interface GLTextControllerMainMenu : GLTextController 
 
 @property (nonatomic, assign) AppController* appController;
 

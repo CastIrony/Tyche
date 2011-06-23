@@ -1,57 +1,44 @@
-#import "Geometry.h"
+#import "MC3DVector.h"
 #import "GameController.h"
 
 @class AnimatedFloat;
-@class AnimatedVector3D;
+@class AnimatedVec3;
 @class GLTable;
 @class GLTexture;
+@class GLSplash;
+@class GLPlayer;
+@class GLMenuLayerController;
 @class AppController;
 @class SoundController;
-@class GameView;
-@class GLCardGroup;
-@class GLChipGroup;
-@class MenuController;
-@class MenuLayerController;
-@class GLLabel;
-@class GLSplash;
-@class CameraController;
+@class GLView;
+@class DisplayContainer;
+@class GLCamera;
 
-@interface GameRenderer : UIViewController <UIAccelerometerDelegate>
-{
-    EAGLContext* _context;
-	
-	GLint _backingWidth;
-	GLint _backingHeight;
-	
-	GLuint _defaultFramebuffer;
-    GLuint _colorRenderbuffer;
-}
+@interface GLRenderer : UIViewController <UIAccelerometerDelegate>
 
-@property (nonatomic, retain) GameController*      gameController;
-@property (nonatomic, retain) AppController*       appController;
-@property (nonatomic, retain) SoundController*     soundController;
+@property (nonatomic, retain)   AppController*         appController;
+@property (nonatomic, readonly) GameController*        gameController;
+@property (nonatomic, readonly) SoundController*       soundController;
 
-@property (nonatomic, retain) NSMutableDictionary* touchedObjects;
-@property (nonatomic, retain) NSMutableDictionary* touchedLocations;
-@property (nonatomic, retain) NSMutableDictionary* textControllers;
+@property (nonatomic, retain)   NSMutableDictionary*   touchedObjects;
+@property (nonatomic, retain)   NSMutableDictionary*   touchedLocations;
 
-@property (nonatomic, retain) MenuLayerController* menuLayerController;
-@property (nonatomic, retain) GLChipGroup*         chipGroup;
-@property (nonatomic, retain) GLCardGroup*         cardGroup;
-@property (nonatomic, retain) GLTable*             table;
-@property (nonatomic, retain) GLSplash*            splash;
+@property (nonatomic, retain)   GLMenuLayerController* menuLayerController;
+@property (nonatomic, retain)   GLCamera*              camera;
+@property (nonatomic, retain)   GLTable*               table;
+@property (nonatomic, retain)   GLSplash*              splash;
+@property (nonatomic, retain)   AnimatedFloat*         lightness;
 
-@property (nonatomic, retain) CameraController*    camera;
+@property (nonatomic, retain)   DisplayContainer*      players;
 
-@property (nonatomic, retain) GLLabel*             creditLabel;
-@property (nonatomic, retain) GLLabel*             betLabel;
-@property (nonatomic, retain) NSMutableDictionary* betItems;
-@property (nonatomic, retain) AnimatedFloat*       lightness;
+@property (nonatomic, retain)   AnimatedFloat*         currentOffset;
+@property (nonatomic, assign)   GLfloat                initialOffset;
 
-//@property (nonatomic, copy) SimpleBlock work;
-@property (nonatomic, retain) AnimatedFloat* offset;
+@property (nonatomic, retain)   GLPlayer*              currentPlayer;
+@property (nonatomic, readonly) GLPlayer*              mainPlayer;
 
--(BOOL)resizeFromLayer:(CAEAGLLayer*)layer;
+@property (nonatomic, readonly) GLView*                glView;
+
 -(void)load;
 -(void)draw;
 
@@ -59,7 +46,9 @@
 
 -(void)handleEmptyTouchDown:(UITouch*)touch fromPoint:(CGPoint)point;
 -(void)handleEmptyTouchMoved:(UITouch*)touch fromPoint:(CGPoint)pointFrom toPoint:(CGPoint)pointTo;
--(void)handleEmptyTouchUp:(UITouch*)touch fromPoint:(CGPoint)pointFrom toPoint:(CGPoint)pointTo;
+-(void)handleEmptyTouchUp:(UITouch*)touch fromPoint:(CGPoint)pointFrom toPoint:(CGPoint)vpointTo;
+
+-(void)updatePlayersWithKeys:(NSArray*)keys andThen:(SimpleBlock)work;
 
 -(void)emptySpaceTouched;
 

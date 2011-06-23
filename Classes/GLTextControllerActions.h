@@ -1,12 +1,9 @@
-#import "TextController.h"
+#import "GLTextController.h"
 
-@class GameControllerSP;
+@class GameControllerSP5D;
 
-@interface TextControllerActions : TextController 
-{
-    GameControllerSP* _gameController;
-}
+@interface GLTextControllerActions : GLTextController 
 
-@property (nonatomic, assign) GameControllerSP* gameController;
+@property (nonatomic, assign) GameControllerSP5D* gameController;
 
 @end

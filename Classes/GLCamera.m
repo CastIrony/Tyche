@@ -1,7 +1,12 @@
-#import "GameRenderer.h"
-#import "CameraController.h"
+#import "GLRenderer.h"
+#import "GLCamera.h"
 
-@implementation CameraController
+@implementation GLCamera
+
++(GLCamera*)camera
+{
+    return [[[GLCamera alloc] init] autorelease];
+}
 
 @synthesize renderer    = _renderer;
 @synthesize position    = _position;
@@ -9,10 +14,10 @@
 @synthesize pitchAngle  = _pitchAngle;
 @synthesize pitchFactor = _pitchFactor;
 @synthesize rollAngle   = _rollAngle;
-
-@dynamic isAutomatic;
-@dynamic status;
-@dynamic menuVisible;
+@synthesize flipAngle   = _flipAngle;
+@synthesize isAutomatic = _isAutomatic;
+@synthesize status      = _status;
+@synthesize menuVisible = _menuVisible;
 
 -(id)init
 {
@@ -20,26 +25,19 @@
     
     if(self)
     {
-        self.lookAt      = [AnimatedVector3D withValue:Vector3DMake(0, 2.3,   0)];  
-        self.position    = [AnimatedVector3D withValue:Vector3DMake(0, 2.3, -21)];  
-        self.pitchAngle  = [AnimatedFloat    withValue:  0                      ];
-        self.rollAngle   = [AnimatedFloat    withValue:-90                      ];
-        self.pitchFactor = [AnimatedFloat    withValue:  1                      ];
+        self.lookAt      = [AnimatedVec3 vec3WithValue:vec3Make(0, 2.3,   0)];  
+        self.position    = [AnimatedVec3 vec3WithValue:vec3Make(0, 2.3, -21)];  
+        self.pitchAngle  = [AnimatedFloat floatWithValue:  0];
+        self.rollAngle   = [AnimatedFloat floatWithValue:-90];
+        self.pitchFactor = [AnimatedFloat floatWithValue:  1];
+        self.status      = CameraStatusNormal;
+        
+        self.isAutomatic = !TARGET_IPHONE_SIMULATOR;
+        
+        [self updateCamera];
     }
     
     return self;
-}
-
--(BOOL)isAutomatic
-{
-    if(!_isAutomatic) { _isAutomatic = [NSNumber numberWithBool:!(TARGET_IPHONE_SIMULATOR)]; }
-    
-    return [_isAutomatic boolValue];
-}
-
--(BOOL)menuVisible
-{
-    return _menuVisible;
 }
 
 -(void)setMenuVisible:(BOOL)value
@@ -49,12 +47,7 @@
     [self updateCamera];
 }
 
--(CameraStatus)status
-{     
-    return _status;
-}
-
--(void)setStatus:(CameraStatus)status
+-(void)setStatus:(GLCameraStatus)status
 {
     _status = status;
     
@@ -68,8 +61,8 @@
         [self.pitchFactor setValue:0 forTime:1]; 
         [self.rollAngle   setValue:0 forTime:1]; 
         
-        self.position = [AnimatedVector3D withStartValue:self.position.value    endValue:Vector3DMake(0, 0.0, -9 * ZOOMSCALE) forTime:1];  
-        self.lookAt   = [AnimatedVector3D withStartValue:self.lookAt.value      endValue:Vector3DMake(0, 0.0,   0) forTime:1]; 
+        [self.position setValue:vec3Make(0, 0.0, -9 * ZOOMSCALE) forTime:1];  
+        [self.lookAt setValue:vec3Make(0, 0.0, 0) forTime:1]; 
     }
     else 
     {
@@ -78,16 +71,16 @@
             [self.pitchFactor setValue:1   forTime:1]; 
             [self.rollAngle   setValue:-90 forTime:1]; 
             
-            self.position = [AnimatedVector3D withStartValue:self.position.value    endValue:Vector3DMake(0, 2.3, -25 * ZOOMSCALE) forTime:1]; 
-            self.lookAt   = [AnimatedVector3D withStartValue:self.lookAt.value      endValue:Vector3DMake(0, 2.3,   0) forTime:1]; 
+            [self.position setValue:vec3Make(0, 2.3, -25 * ZOOMSCALE) forTime:1]; 
+            [self.lookAt setValue:vec3Make(0, 2.3, 0) forTime:1]; 
         }
         else 
         {
             [self.pitchFactor setValue:1   forTime:1]; 
             [self.rollAngle   setValue:-90 forTime:1]; 
 
-            self.position    = [AnimatedVector3D withStartValue:self.position.value    endValue:Vector3DMake(0, 2.3, -21 * ZOOMSCALE) forTime:1];  
-            self.lookAt      = [AnimatedVector3D withStartValue:self.lookAt.value      endValue:Vector3DMake(0, 2.3,   0) forTime:1];  
+            [self.position setValue:vec3Make(0, 2.3, -21 * ZOOMSCALE) forTime:1];  
+            [self.lookAt setValue:vec3Make(0, 2.3,   0) forTime:1];  
         }
     }
 }

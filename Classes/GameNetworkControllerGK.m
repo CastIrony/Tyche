@@ -1,9 +1,9 @@
 #import "Envelope.h"
-#import "GameControllerMP.h"
+#import "GameController.h"
 
-#import "SessionControllerServer.h"
+#import "GameNetworkControllerGK.h"
 
-@implementation SessionControllerServer
+@implementation GameNetworkControllerGK
 
 //@synthesize session = _session;
 //@synthesize gameController = _gameController;

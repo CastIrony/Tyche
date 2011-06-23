@@ -1,20 +1,20 @@
 #import "Touchable.h"
 
-@class MenuController;
+@class GLMenuController;
 @class DisplayContainer;
 @class AnimatedFloat;
 
-@interface MenuLayerController : NSObject 
+@interface GLMenuLayerController : NSObject 
 
-@property (nonatomic, assign) GameRenderer* renderer;
+@property (nonatomic, assign) GLRenderer* renderer;
 @property (nonatomic, retain) DisplayContainer* menuLayers;
 @property (nonatomic, retain) AnimatedFloat* hidden;
-@property (nonatomic, readonly) MenuController* currentLayer;
+@property (nonatomic, readonly) GLMenuController* currentLayer;
 
 -(void)showMenus;
 -(void)hideMenus;
 
--(void)pushMenuLayer:(MenuController*)menu forKey:(NSString*)key;
+-(void)pushMenuLayer:(GLMenuController*)menu forKey:(NSString*)key;
 -(void)popUntilKey:(NSString*)key;
 -(void)cancelMenuLayer;
 
@@ -22,7 +22,7 @@
 
 @end
 
-@interface MenuLayerController (Touchable) <Touchable>
+@interface GLMenuLayerController (Touchable) <Touchable>
 
 -(id<Touchable>)testTouch:(UITouch*)touch withPreviousObject:(id<Touchable>)object;
 -(void)handleTouchDown:(UITouch*)touch fromPoint:(CGPoint)point;

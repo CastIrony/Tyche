@@ -1,15 +1,15 @@
 #import "GLMenu.h"
-#import "TextControllerClientList.h"
-#import "TextControllerMainMenu.h"
-#import "TextControllerSettings.h"
-#import "AnimatedVector3D.h"
+#import "GLTextControllerClientList.h"
+#import "GLTextControllerMainMenu.h"
+#import "GLTextControllerSettings.h"
+#import "AnimatedVec3.h"
 #import "GLCardGroup.h"
 
-#import "MenuControllerMain.h"
+#import "GLMenuControllerMain.h"
 
-@implementation MenuControllerMain
+@implementation GLMenuControllerMain
 
--(id)initWithRenderer:(GameRenderer*)renderer
+-(id)initWithRenderer:(GLRenderer*)renderer
 {
     self = [super initWithRenderer:renderer];
     
@@ -18,11 +18,11 @@
         {
             GLMenu* menu = [[[GLMenu alloc] init] autorelease]; 
             
-            TextControllerMainMenu* textController = [[[TextControllerMainMenu alloc] init] autorelease];
+            GLTextControllerMainMenu* textController = [[[GLTextControllerMainMenu alloc] init] autorelease];
             
             textController.owner = menu;
             textController.center = NO;
-            textController.location = Vector3DMake(0, 0, -2.5);
+            textController.location = vec3Make(0, 0, -2.5);
             textController.renderer = self.renderer;
             
             [textController update];
@@ -37,11 +37,11 @@
         {
             GLMenu* menu = [[[GLMenu alloc] init] autorelease]; 
             
-            TextControllerSettings* textController = [[[TextControllerSettings alloc] init] autorelease];
+            GLTextControllerSettings* textController = [[[GLTextControllerSettings alloc] init] autorelease];
             
             textController.owner = menu;
             textController.center = NO;
-            textController.location = Vector3DMake(0, 0, -2.5);
+            textController.location = vec3Make(0, 0, -2.5);
             textController.renderer = self.renderer;
             
             [textController update];

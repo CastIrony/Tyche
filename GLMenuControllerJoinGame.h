@@ -1,9 +1,6 @@
-#import "MenuController.h"  
+#import "GLMenuController.h"  
 
-@interface MenuControllerJoinGame : MenuController 
-{
-
-}
+@interface GLMenuControllerJoinGame : GLMenuController 
 
 -(void)addServerWithPeerId:(NSString*)peerId name:(NSString*)name;
 

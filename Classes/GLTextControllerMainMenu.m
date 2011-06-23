@@ -1,12 +1,12 @@
-#import "NSArray+Circle.h"
+#import "NSArray+JBCommon.h"
 
-#import "GameRenderer.h"
-#import "MenuLayerController.h"
+#import "GLRenderer.h"
+#import "GLMenuLayerController.h"
 #import "GLTexture.h"
 
-#import "TextControllerMainMenu.h"
+#import "GLTextControllerMainMenu.h"
 
-@implementation TextControllerMainMenu
+@implementation GLTextControllerMainMenu
 
 @synthesize appController = _appController;
 
@@ -24,27 +24,26 @@
 
 -(void)update
 {
-    Color3D colorNormal      = Color3DMake(0.8,   0, 0, 0.8); 
-    Color3D colorTouched     = Color3DMake(0.4,   0, 0, 0.8); 
+    color colorNormal      = colorMake(0.8,   0, 0, 0.8); 
+    color colorTouched     = colorMake(0.4,   0, 0, 0.8); 
     
     [self.styles setObject:[NSNumber numberWithFloat:0.0]                                    forKey:@"fadeMargin"]; 
     [self.styles setObject:[UIFont   fontWithName:@"Futura-Medium" size:30]                  forKey:@"font"];
     [self.styles setObject:[NSValue  valueWithCGSize:CGSizeMake(3.75, 0.42)]                 forKey:@"labelSize"];
-    [self.styles setObject:[NSValue  valueWithBytes:&colorNormal  objCType:@encode(Color3D)] forKey:@"colorNormal"];
-    [self.styles setObject:[NSValue  valueWithBytes:&colorTouched objCType:@encode(Color3D)] forKey:@"colorTouched"];
+    [self.styles setObject:[NSValue  valueWithBytes:&colorNormal  objCType:@encode(color)] forKey:@"colorNormal"];
+    [self.styles setObject:[NSValue  valueWithBytes:&colorTouched objCType:@encode(color)] forKey:@"colorTouched"];
     [self.styles setObject:[NSNumber numberWithFloat:0.2] forKey:@"fadeMargin"]; 
     [self.styles setObject:[NSNumber numberWithFloat:0.4] forKey:@"topMargin"]; 
     [self.styles setObject:[NSNumber numberWithFloat:0.4] forKey:@"bottomMargin"]; 
 
-    NSMutableArray* labels = [[[NSMutableArray alloc] init] autorelease];
+    NSMutableArray* labels = [NSMutableArray array];
     
     { 
-        NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease];
+        NSMutableDictionary* label = [NSMutableDictionary dictionary];
         
         [label setObject:[[[GLTexture alloc] initWithImageFile:@"logo.png"] autorelease]           forKey:@"textureText"]; 
         
-        [label setObject:@"Tyche"        forKey:@"textString"];          
-        [label setObject:[NSValue valueWithCGSize:CGSizeMake(640, 468)]                            forKey:@"textSize"]; 
+        [label setObject:@"Studly"        forKey:@"textString"];          
         [label setObject:[NSValue valueWithCGSize:CGSizeMake(3.75, 2)]                            forKey:@"labelSize"];
         [label setObject:[NSNumber numberWithFloat:0.05] forKey:@"topMargin"]; 
         [label setObject:[NSNumber numberWithFloat:0.0] forKey:@"bottomMargin"]; 
@@ -56,7 +55,7 @@
     }
     
     { 
-        NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
+        NSMutableDictionary* label = [NSMutableDictionary dictionary]; 
         
         [label setObject:@"join_multiplayer" forKey:@"key"]; 
         [label setObject:@"Join Game"        forKey:@"textString"];          
@@ -65,7 +64,7 @@
     }
     
     { 
-        NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
+        NSMutableDictionary* label = [NSMutableDictionary dictionary]; 
         
         [label setObject:@"new_multiplayer" forKey:@"key"]; 
         [label setObject:@"Start New Game"  forKey:@"textString"];     
@@ -74,7 +73,7 @@
     }
     
     { 
-        NSMutableDictionary* label = [[[NSMutableDictionary alloc] init] autorelease]; 
+        NSMutableDictionary* label = [NSMutableDictionary dictionary]; 
         
         [label setObject:@"new_game"            forKey:@"key"]; 
         [label setObject:@"Start Single Player" forKey:@"textString"]; 

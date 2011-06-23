@@ -1,12 +1,12 @@
-#import "GLLabel.h"
-#import "GameRenderer.h"
+#import "GLText.h"
+#import "GLRenderer.h"
 #import "AnimatedFloat.h"
-#import "AnimatedVector3D.h"
+#import "AnimatedVec3.h"
 #import "DisplayContainer.h"
 
-#import "TextController.h"
+#import "GLTextController.h"
 
-@implementation TextController
+@implementation GLTextController
 
 @synthesize styles;
 
@@ -30,11 +30,11 @@
     {   
         self.center = YES;
         
-        self.opacity = [AnimatedFloat withValue:1];
+        self.opacity = [AnimatedFloat floatWithValue:1];
     
         self.items = [DisplayContainer container];
         
-        self.styles = [[[NSMutableDictionary alloc] init] autorelease];
+        self.styles = [NSMutableDictionary dictionary];
         self.lightness = 1;
     }
     
@@ -54,7 +54,7 @@
     
     for(NSDictionary* dictionary in dictionaries)
     {
-        GLLabel* newLabel = [GLLabel withDictionaries:[NSArray arrayWithObjects:self.styles, dictionary, nil]];
+        GLText* newLabel = [GLText withDictionaries:[NSArray arrayWithObjects:self.styles, dictionary, nil]];
         
         newLabel.owner = self;
         newLabel.textController = self;
@@ -65,7 +65,7 @@
         [newDictionary setObject:newLabel forKey:key];
     }   
     
-    [self.items setKeys:newKeys andDictionary:newDictionary];
+    [self.items setLiveKeys:newKeys liveDictionary:newDictionary andThen:nil];
     
     [self layoutItems];
 }
@@ -81,7 +81,7 @@
     GLfloat previousMargin = 0;
     GLfloat previousPadding = 0;
     
-    for(GLLabel* liveItem in self.items.liveObjects)
+    for(GLText* liveItem in self.items.liveObjects)
     {        
         totalHeight += previousPadding + MAX(liveItem.topMargin, previousMargin) + liveItem.topPadding + liveItem.layoutSize.height;
         
@@ -96,19 +96,19 @@
     previousMargin = 0;
     previousPadding = 0;
     
-    for(GLLabel* liveItem in self.items.liveObjects)
+    for(GLText* liveItem in self.items.liveObjects)
     {
-        Vector3D targetLocation = Vector3DMake(0, 0, position + previousPadding + MAX(liveItem.topMargin, previousMargin) + liveItem.topPadding + (liveItem.layoutSize.height / 2));
+        vec3 targetLocation = vec3Make(0, 0, position + previousPadding + MAX(liveItem.topMargin, previousMargin) + liveItem.topPadding + (liveItem.layoutSize.height / 2));
         
-        for(GLLabel* label in [self.items objectsForKey:liveItem.key])
+        for(GLText* label in [self.items objectsForKey:liveItem.key])
         {
             if(label.layoutLocation)
             {
-                label.layoutLocation = [AnimatedVector3D withStartValue:label.layoutLocation.value endValue:targetLocation forTime:0.4];
+                [label.layoutLocation setValue:targetLocation forTime:0.4];
             }
             else 
             {
-                label.layoutLocation = [AnimatedVector3D withValue:targetLocation];
+                [label.layoutLocation setValue:targetLocation];
             }
         }
                     
@@ -129,7 +129,7 @@
                 
         glTranslatef(self.location.x, self.location.y, self.location.z);
         
-        for(GLLabel* item in self.items.objects)
+        for(GLText* item in self.items.objects)
         {
             item.lightness = self.lightness;
             
@@ -146,7 +146,7 @@
 
 @end
 
-@implementation TextController (Touchable)
+@implementation GLTextController (Touchable)
 
 -(id<Touchable>)testTouch:(UITouch*)touch withPreviousObject:(id<Touchable>)object
 {
@@ -158,7 +158,7 @@
                 
         glTranslatef(self.location.x, self.location.y, self.location.z);
         
-        for(GLLabel* item in self.items.liveObjects)
+        for(GLText* item in self.items.liveObjects)
         {
             returnObject = [item testTouch:touch withPreviousObject:returnObject];
         }

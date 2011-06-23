@@ -1,8 +1,5 @@
-#import "TextController.h"
+#import "GLTextController.h"
 
-@interface TextControllerClientList : TextController 
-{
-
-}
+@interface GLTextControllerClientList : GLTextController 
 
 @end

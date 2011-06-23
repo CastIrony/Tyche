@@ -1,12 +1,8 @@
-#import "TextController.h"
+#import "GLTextController.h"
 
-@interface TextControllerStatusBar : TextController 
-{
-    GameController* _gameController;
-    NSString* _text;
-}
+@interface GLTextControllerStatusBar : GLTextController 
 
 @property (nonatomic, assign) GameController* gameController;
-@property (nonatomic, retain) NSString* text;
+@property (nonatomic, copy) NSString* text;
 
 @end

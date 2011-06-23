@@ -1,13 +1,6 @@
-#import "TextController.h"
+#import "GLTextController.h"
 
-@interface TextControllerCredits : TextController 
-{
-    GameController* _gameController;
-    
-    int  _creditTotal;
-    int  _betTotal;
-    BOOL _showButton;
-}
+@interface GLTextControllerCredits : GLTextController 
 
 @property (nonatomic, assign) GameController* gameController;
 @property (nonatomic, assign) int creditTotal;

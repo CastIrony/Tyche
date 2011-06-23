@@ -1,14 +1,14 @@
 #import "Constants.h"
 #import "Common.h"
-#import "Geometry.h"
+#import "MC3DVector.h"
 #import "Touchable.h"
 #import "DisplayContainer.h"
 
 @class AnimatedFloat;
-@class AnimatedVector3D;
+@class AnimatedVec3;
 @class GLTexture;
-@class TextController;
-@class GameRenderer;
+@class GLTextController;
+@class GLRenderer;
 
 typedef enum 
 {
@@ -19,22 +19,22 @@ typedef enum
 } 
 LabelStatus;
 
-@interface GLLabel : NSObject
+@interface GLText : NSObject
 {   
-    Vector3D* arrayTextVertex;
-    Vector3D* arrayBorderVertex;
-    Vector3D* arrayBulletRightVertex;
-    Vector3D* arrayBulletLeftVertex;
-    Vector2D* arrayTextTextureBase;
-    Vector2D* arrayTextTextureScrolled;
-    Vector2D* arrayBorderTexture;
-    Vector2D* arrayBulletTexture;
+    vec3* arrayTextVertex;
+    vec3* arrayBorderVertex;
+    vec3* arrayBulletRightVertex;
+    vec3* arrayBulletLeftVertex;
+    vec2* arrayTextTextureBase;
+    vec2* arrayTextTextureScrolled;
+    vec2* arrayBorderTexture;
+    vec2* arrayBulletTexture;
     GLushort* arrayTextMesh;
     GLushort* arrayBorderMesh;
     GLushort* arrayBulletMesh;
 }
 
-@property (nonatomic, assign)   TextController*   textController;
+@property (nonatomic, assign)   GLTextController*   textController;
 @property (nonatomic, assign)   LabelStatus   labelStatus;
 
 @property (nonatomic, retain)   GLTexture*        textureText;
@@ -45,13 +45,13 @@ LabelStatus;
 
 @property (nonatomic, assign)   GLfloat           lightness;
 
-@property (nonatomic, retain)   AnimatedVector3D* layoutLocation;
+@property (nonatomic, retain)   AnimatedVec3* layoutLocation;
 @property (nonatomic, retain)   AnimatedFloat*    layoutOpacity;
 @property (nonatomic, retain)   AnimatedFloat*    death;
 
-@property (nonatomic, retain)   NSString*         textString;
-@property (nonatomic, retain)   NSString*         bulletLeftString;
-@property (nonatomic, retain)   NSString*         bulletRightString;
+@property (nonatomic, copy)     NSString*         textString;
+@property (nonatomic, copy)     NSString*         bulletLeftString;
+@property (nonatomic, copy)     NSString*         bulletRightString;
 @property (nonatomic, retain)   UIFont*           font;
 
 @property (nonatomic, assign)   CGSize            labelSize;
@@ -62,8 +62,8 @@ LabelStatus;
 @property (nonatomic, assign)   GLfloat           topPadding;
 @property (nonatomic, assign)   GLfloat           bottomPadding;
 
-@property (nonatomic, assign)   Color3D           colorNormal;
-@property (nonatomic, assign)   Color3D           colorTouched;
+@property (nonatomic, assign)   color           colorNormal;
+@property (nonatomic, assign)   color           colorTouched;
 @property (nonatomic, assign)   UITextAlignment   textAlignment;
 
 @property (nonatomic, assign)   GLfloat           scrollBase;
@@ -74,22 +74,19 @@ LabelStatus;
 @property (nonatomic, assign)   BOOL              hasBorder;
 @property (nonatomic, assign)   BOOL              hasShadow;
 
-@property (nonatomic, assign)   CGSize            textSize;
-@property (nonatomic, assign)   CGSize            bulletLeftSize;
-@property (nonatomic, assign)   CGSize            bulletRightSize;
 @property (nonatomic, readonly) CGSize            layoutSize;
 @property (nonatomic, readonly) CGSize            borderSize;
        
 @property (nonatomic, assign) id owner;
 
-+(GLLabel*)emptyLabel;
-+(GLLabel*)withDictionaries:(NSArray*)dictionaries;
++(GLText*)emptyLabel;
++(GLText*)withDictionaries:(NSArray*)dictionaries;
 -(void)makeMeshes;
 -(void)draw;
 
 @end
 
-@interface GLLabel (Touchable) <Touchable>
+@interface GLText (Touchable) <Touchable>
 
 -(id<Touchable>)testTouch:(UITouch*)touch withPreviousObject:(id<Touchable>)object;
 -(void)handleTouchDown:(UITouch*)touch fromPoint:(CGPoint)point;
@@ -98,7 +95,7 @@ LabelStatus;
 
 @end
 
-@interface GLLabel (Perishable) <Perishable>
+@interface GLText (Displayable) <Displayable>
 
 @property (nonatomic, readonly) BOOL isDead;
 @property (nonatomic, readonly) BOOL isAlive;

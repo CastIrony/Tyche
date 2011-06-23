@@ -3,9 +3,11 @@
 @implementation JBDiffResult
 
 @synthesize oldArray;
-@synthesize newArray;
+@synthesize arrayNew;
 @synthesize lcsArray;
 @synthesize combinedArray;
+@synthesize deletedObjects;
+@synthesize insertedObjects;
 @synthesize deletedIndexes;
 @synthesize insertedIndexes;
 @synthesize combinedDeletedIndexes;
@@ -18,11 +20,11 @@
 
 @end
 
-static int factorial(int n)
+static NSUInteger factorial(NSUInteger n)
 {
-    int result = 1;
+    NSUInteger result = 1;
     
-    for(int i = n; i > 1; i--)
+    for(NSUInteger i = n; i > 1; i--)
     {
         result *= i;
     }
@@ -30,39 +32,97 @@ static int factorial(int n)
     return result;
 }
 
-static int binomial(int n, int k)
+static NSUInteger binomial(NSUInteger n, NSUInteger k)
 {
     return factorial(n) / (factorial(k) * factorial(n - k));   
 }
 
 @implementation NSArray (JBCommon)
 
+-(NSComparisonResult)compare:(NSArray*)otherArray
+{
+    NSUInteger count = MIN(self.count, otherArray.count);
+    
+    for(NSUInteger i = 0; i < count; i++)
+    {
+        id objectA = [self objectAtIndex:i];
+        id objectB = [otherArray objectAtIndex:i];
+        
+        NSComparisonResult result;
+        
+        //this is stupid
+        
+        NSInvocation* invocation = [NSInvocation invocationWithMethodSignature:[objectA methodSignatureForSelector:@selector(compare:)]];
+        
+        [invocation setTarget:objectA];
+        [invocation setSelector:@selector(compare:)];
+        [invocation setArgument:&objectB atIndex:2];
+        [invocation invoke];
+        [invocation getReturnValue:&result];
+                        
+        if(result == NSOrderedAscending) { return NSOrderedAscending; }
+        if(result == NSOrderedDescending) { return NSOrderedDescending; }
+    }
+    
+    if(self.count < otherArray.count)
+    {
+        return NSOrderedAscending;
+    }
+    else if(self.count > otherArray.count)
+    {
+        return NSOrderedDescending;
+    }
+    
+    return NSOrderedSame;
+}
+
 -(id)objectBefore:(id)object
 {
-    int objectIndex = [self indexOfObject:object] - 1;
+    if(self.count == 0) { return nil; }
+
+    int objectIndex = [self indexOfObject:object];
     
-    if(objectIndex == -1)
+    if(objectIndex == NSNotFound)
+    {
+        return nil;
+    }
+    else if(objectIndex == 0)
     {
         return [self lastObject];
     }
     else
     {
-        return [self objectAtIndex:(objectIndex)];
+        return [self objectAtIndex:(objectIndex - 1)];
     }
 }
 
 -(id)objectAfter:(id)object
 {
-    int objectIndex = [self indexOfObject:object] + 1;
+    if(self.count == 0) { return nil; }
     
-    if(objectIndex == (int)self.count)
+    int objectIndex = [self indexOfObject:object];
+    
+    if(objectIndex == NSNotFound)
+    {
+        return nil;
+    }
+    else if(objectIndex == (int)self.count - 1)
     {
         return [self objectAtIndex:0];
     }
     else
     {
-        return [self objectAtIndex:(objectIndex)];
+        return [self objectAtIndex:(objectIndex + 1)];
     }    
+}
+
+-(NSArray*)arrayByRemovingObject:(id)object
+{
+    NSMutableArray* newArray = [[self mutableCopy] autorelease];
+    
+    [newArray removeObject:object];
+    
+    return newArray;
 }
 
 -(NSArray*)arrayByRemovingObjectsInArray:(NSArray*)array
@@ -96,7 +156,7 @@ static int binomial(int n, int k)
 {
     NSMutableIndexSet* indexSet = [NSMutableIndexSet indexSet];
     
-    for(int i = 0; i < count; i++)
+    for(NSUInteger i = 0; i < count; i++)
     {
         [indexSet addIndex:indexes[i]];
     }
@@ -146,13 +206,13 @@ static int binomial(int n, int k)
 
 -(JBDiffResult*)diffWithArray:(NSArray*)newArray;
 {
-    int lengthArray[self.count + 1][newArray.count + 1];    
+    NSUInteger lengthArray[self.count + 1][newArray.count + 1];    
     
-    for(int selfIndex = self.count; selfIndex >= 0; selfIndex--)
+    for(NSInteger selfIndex = self.count; selfIndex >= 0; selfIndex--)
 	{    
-        for(int newIndex = newArray.count; newIndex >= 0; newIndex--)
+        for(NSInteger newIndex = newArray.count; newIndex >= 0; newIndex--)
 	    {
-            if(selfIndex == self.count || newIndex == newArray.count)
+            if(selfIndex == (NSInteger)self.count || newIndex == (NSInteger)newArray.count)
             {
                 lengthArray[selfIndex][newIndex] = 0;
             }
@@ -169,14 +229,16 @@ static int binomial(int n, int k)
     
     NSMutableArray*    lcsArray                = [NSMutableArray array];
     NSMutableArray*    combinedArray           = [NSMutableArray array];
+    NSMutableArray*    deletedObjects          = [NSMutableArray array];
+    NSMutableArray*    insertedObjects         = [NSMutableArray array]; 
     NSMutableIndexSet* deletedIndexes          = [NSMutableIndexSet indexSet];
     NSMutableIndexSet* insertedIndexes         = [NSMutableIndexSet indexSet]; 
     NSMutableIndexSet* combinedDeletedIndexes  = [NSMutableIndexSet indexSet];
     NSMutableIndexSet* combinedInsertedIndexes = [NSMutableIndexSet indexSet]; 
     
-    int selfIndex = 0;
-    int newIndex = 0;
-    int combinedIndex = 0;
+    NSUInteger selfIndex = 0;
+    NSUInteger newIndex = 0;
+    NSUInteger combinedIndex = 0;
     
     while(selfIndex < self.count && newIndex < newArray.count)
     {
@@ -192,6 +254,7 @@ static int binomial(int n, int k)
         else if(lengthArray[selfIndex + 1][newIndex] >= lengthArray[selfIndex][newIndex + 1])
         {
             [combinedArray          addObject:[self objectAtIndex:selfIndex]];
+            [deletedObjects         addObject:[self objectAtIndex:selfIndex]];
             [deletedIndexes         addIndex:selfIndex];
             [combinedDeletedIndexes addIndex:combinedIndex];
             
@@ -201,6 +264,7 @@ static int binomial(int n, int k)
         else
         {
             [combinedArray           addObject:[newArray objectAtIndex:newIndex]];
+            [insertedObjects         addObject:[newArray objectAtIndex:newIndex]];
             [insertedIndexes         addIndex:newIndex];
             [combinedInsertedIndexes addIndex:combinedIndex];
             
@@ -212,6 +276,7 @@ static int binomial(int n, int k)
     while(selfIndex < self.count) 
     {
         [combinedArray          addObject:[self objectAtIndex:selfIndex]];
+        [deletedObjects         addObject:[self objectAtIndex:selfIndex]];
         [deletedIndexes         addIndex:selfIndex];
         [combinedDeletedIndexes addIndex:combinedIndex];
         
@@ -222,6 +287,7 @@ static int binomial(int n, int k)
     while(newIndex < newArray.count) 
     {
         [combinedArray           addObject:[newArray objectAtIndex:newIndex]];
+        [insertedObjects         addObject:[newArray objectAtIndex:newIndex]];
         [insertedIndexes         addIndex:newIndex];
         [combinedInsertedIndexes addIndex:combinedIndex];
         
@@ -232,9 +298,11 @@ static int binomial(int n, int k)
     JBDiffResult* result = [[[JBDiffResult alloc] init] autorelease];
     
     result.oldArray                = [self copy];
-    result.newArray                = [newArray copy];
+    result.arrayNew                = [newArray copy];
     result.lcsArray                = lcsArray;               
     result.combinedArray           = combinedArray;          
+    result.deletedObjects          = deletedObjects;         
+    result.insertedObjects         = insertedObjects;        
     result.deletedIndexes          = deletedIndexes;         
     result.insertedIndexes         = insertedIndexes;        
     result.combinedDeletedIndexes  = combinedDeletedIndexes; 

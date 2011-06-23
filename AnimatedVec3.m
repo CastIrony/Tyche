@@ -1,124 +1,171 @@
-#import "AnimatedVector3D.h"
+#import "AnimatedVec3.h"
 
-@interface AnimatedVector3D ()
-
-@property (nonatomic, assign) BOOL hasStarted;
-@property (nonatomic, assign) BOOL hasEnded;
-
-@end
-
-@implementation AnimatedVector3D 
+@implementation AnimatedVec3 
 
 @synthesize startValue = _startValue;
 @synthesize startTime  = _startTime;
-@synthesize onStart    = _onStart;      
-@synthesize hasStarted = _hasStarted;
 
 @synthesize endValue   = _endValue;
 @synthesize endTime    = _endTime;
-@synthesize onEnd      = _onEnd;    
-@synthesize hasEnded   = _hasEnded;
+
 @synthesize curve      = _curve; 
 
 @dynamic value;
+@dynamic hasEnded;
 
--(id)initWithStartValue:(Vector3D)startValue endValue:(Vector3D)endValue startTime:(NSTimeInterval)startTime endTime:(NSTimeInterval)endTime onStart:(SimpleBlock)onStart onEnd:(SimpleBlock)onEnd
-{
-    self = [super init];
-    
-    if(self)
-    {
-        _startValue  = startValue;
-        _startTime   = startTime;
-        _endValue    = endValue;
-        _endTime     = startTime + TIMESCALE * animate * (endTime - startTime);
-        _hasStarted  = NO;
-        _hasEnded    = NO;
-        _curve       = AnimationEaseInOut;
-        
-        self.onStart = onStart;      
-        self.onEnd   = onEnd;  
-    }
-    
-    return self;
-}
-
-+(id)withValue:(Vector3D)value
++(id)vec3WithValue:(vec3)value
 {
     NSTimeInterval now = CACurrentMediaTime();    
     
-    return [[[AnimatedVector3D alloc] initWithStartValue:value endValue:value startTime:now endTime:now onStart:nil onEnd:nil] autorelease];
+    AnimatedVec3* animatedVector = [[[AnimatedVec3 alloc] init] autorelease];
+    
+    animatedVector.startValue = value;
+    animatedVector.endValue = value;
+    animatedVector.startTime = now;
+    animatedVector.endTime = now;
+    
+    return animatedVector;
 }
 
-+(id)withStartValue:(Vector3D)startValue endValue:(Vector3D)endValue speed:(GLfloat)speed
+-(void)setValue:(vec3)value
 {
     NSTimeInterval now = CACurrentMediaTime();    
     
-    if(speed == 0)
+    self.startValue = value;
+    self.endValue = value;
+    self.startTime = now;
+    self.endTime = now;
+}
+
+-(void)setValue:(vec3)value forTime:(NSTimeInterval)time
+{
+    NSTimeInterval now = CACurrentMediaTime();    
+    
+    self.startValue = self.value;
+    self.endValue = value;
+    self.startTime = now;
+    self.endTime = now + time * TIMESCALE;
+}
+
+-(void)setValue:(vec3)value forTime:(NSTimeInterval)time andThen:(SimpleBlock)work
+{
+    NSTimeInterval now = CACurrentMediaTime();    
+    
+    self.startValue = self.value;
+    self.endValue = value;
+    self.startTime = now;
+    self.endTime = now + time * TIMESCALE;
+    
+    [self finishAndThen:work];
+}
+
+-(void)setValue:(vec3)value forTime:(NSTimeInterval)time afterDelay:(NSTimeInterval)delay andThen:(SimpleBlock)work
+{
+    NSTimeInterval now = CACurrentMediaTime();    
+    
+    self.startValue = self.value;
+    self.endValue = value;
+    self.startTime = now + delay;
+    self.endTime = now + (delay + time) * TIMESCALE;
+    
+    [self finishAndThen:work];
+}
+
+-(void)setValue:(vec3)value withSpeed:(GLfloat)speed
+{    
+    NSTimeInterval time = speed == 0 ? 0 : vec3Magnitude(vec3Subtract(value, self.value)) / speed; 
+    
+    NSTimeInterval now = CACurrentMediaTime();    
+    
+    self.startValue = self.value;
+    self.endValue = value;
+    self.startTime = now;
+    self.endTime = now + time * TIMESCALE;
+}
+
+-(void)setValue:(vec3)value withSpeed:(GLfloat)speed andThen:(SimpleBlock)work
+{    
+    NSTimeInterval time = speed == 0 ? 0 : vec3Magnitude(vec3Subtract(value, self.value)) / speed; 
+    
+    NSTimeInterval now = CACurrentMediaTime();    
+    
+    self.startValue = self.value;
+    self.endValue = value;
+    self.startTime = now;
+    self.endTime = now + time * TIMESCALE;
+    
+    [self finishAndThen:work];
+}
+
+-(void)setValue:(vec3)value withSpeed:(GLfloat)speed afterDelay:(NSTimeInterval)delay andThen:(SimpleBlock)work
+{
+    NSTimeInterval time = speed == 0 ? 0 : vec3Magnitude(vec3Subtract(value, self.value)) / speed; 
+    
+    NSTimeInterval now = CACurrentMediaTime();    
+    
+    self.startValue = self.value;
+    self.endValue = value;
+    self.startTime = now + delay;
+    self.endTime = now + (delay + time) * TIMESCALE;
+    
+    [self finishAndThen:work];
+}
+
+-(void)finishAndThen:(SimpleBlock)work
+{
+    NSTimeInterval now = CACurrentMediaTime();    
+    
+    if(now > self.endTime)
     {
-        return [[[AnimatedVector3D alloc] initWithStartValue:startValue endValue:endValue startTime:now endTime:now onStart:nil onEnd:nil] autorelease];
+        RunLater(work);
     }
     else 
     {
-        Vector3D difference = Vector3DMakeWithStartAndEndPoints(startValue, endValue);
-                
-        GLfloat length = Vector3DMagnitude(difference);
-       
-        return [[[AnimatedVector3D alloc] initWithStartValue:startValue endValue:endValue startTime:now endTime:now + length / abs(speed) onStart:nil onEnd:nil] autorelease];
+        RunAfterDelay(self.endTime - now, work);
     }
-}
-
-+(id)withStartValue:(Vector3D)startValue endValue:(Vector3D)endValue forTime:(NSTimeInterval)timeInterval
-{
-    NSTimeInterval now = CACurrentMediaTime();    
-    
-    return [[[AnimatedVector3D alloc] initWithStartValue:startValue endValue:endValue startTime:now endTime:now + timeInterval onStart:nil onEnd:nil] autorelease];
-}
-
--(void)dealloc
-{
-    [_onStart release];
-    [_onEnd   release];
-    
-    [super dealloc];
 }
 
 -(NSString*)description
 {
-    return [NSString stringWithFormat:@"[%f5, %f5, %f5] -> [%f5, %f5, %f5]", _startValue.x, _startValue.y, _startValue.z, _endValue.x, _endValue.y, _endValue.z];
+    return [NSString stringWithFormat:@"[%f5] -> [%f5] (Duration:%f5)", _startValue, _endValue, _endTime - _startTime];
 }
 
--(Vector3D)value
+-(void)dealloc
+{    
+    [super dealloc];
+}
+
+-(GLfloat)delta
 {
     NSTimeInterval now = CACurrentMediaTime();
     
-    if(now > self.startTime && !self.hasStarted) 
-    {
-        if(self.onStart) { self.onStart(); } 
-        self.hasStarted = YES;         
-    }
-    
-    if(now > self.endTime && !self.hasEnded) 
-    { 
-        if(self.onEnd) { self.onEnd(); }
-        self.hasEnded = YES; 
-    }
+    return clipFloat((now - self.startTime) / (self.endTime - self.startTime), 0, 1);
+}
+
+-(vec3)value
+{
+    NSTimeInterval now = CACurrentMediaTime();
     
     if(now < self.startTime) { return self.startValue; }
     if(now > self.endTime)   { return self.endValue; }
     
-    GLfloat delta = (now - self.startTime) / (self.endTime - self.startTime);
+    GLfloat delta = [self delta];
     
     GLfloat delta2 = delta * delta;
     GLfloat delta3 = delta * delta2;
     
-    GLfloat proportion = delta;
+    if(self.curve == AnimationEaseIn)    { delta = (3 * delta - delta3) / 2; }
+    if(self.curve == AnimationEaseOut)   { delta = (3 * delta2 - delta3) / 2; }
+    if(self.curve == AnimationEaseInOut) { delta = (3 * delta2 - 2 * delta3); }
     
-    if(self.curve == AnimationEaseIn)    { proportion = (3 * delta - delta3) / 2; }
-    if(self.curve == AnimationEaseOut)   { proportion = (3 * delta2 - delta3) / 2; }
-    if(self.curve == AnimationEaseInOut) { proportion = (3 * delta2 - 2 * delta3); }
-    
-    return Vector3DInterpolate(self.startValue, self.endValue, proportion);
+    return vec3Make((1.0 - delta) * self.startValue.x + (delta) * self.endValue.x, 
+                        (1.0 - delta) * self.startValue.y + (delta) * self.endValue.y, 
+                        (1.0 - delta) * self.startValue.z + (delta) * self.endValue.z);
+}
+
+-(BOOL)hasEnded
+{
+    return self.endTime + 0.1 < CACurrentMediaTime();
 }
 
 @end

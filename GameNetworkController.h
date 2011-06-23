@@ -1,15 +1,10 @@
-@class GameControllerMP;
+@class GameController;
 
-@interface SessionController : NSObject <GKSessionDelegate>
-{
-    GameControllerMP* _gameController;
-    GKSession*        _session;
-    NSString*         _serverPeerId;
-}
+@interface GameNetworkController : NSObject <GKSessionDelegate>
 
-@property (nonatomic, assign)   GameControllerMP* gameController;
-@property (nonatomic, retain)   GKSession*        session;
-@property (nonatomic, retain)   NSString*         serverPeerId;
+@property (nonatomic, assign) GameController* gameController;
+@property (nonatomic, retain) GKSession*      session;
+@property (nonatomic, copy)   NSString*       serverPeerId;
 
 -(void)session:(GKSession*)session connectionWithPeerFailed:(NSString*)peerID withError:(NSError*)error;
 -(void)session:(GKSession*)session didFailWithError:(NSError*)error;

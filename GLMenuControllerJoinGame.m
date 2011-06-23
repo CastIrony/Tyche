@@ -1,19 +1,19 @@
 #import "GLMenu.h"
-#import "TextControllerServerInfo.h"
+#import "GLTextControllerServerInfo.h"
 
-#import "MenuControllerJoinGame.h"
+#import "GLMenuControllerJoinGame.h"
 
-@implementation MenuControllerJoinGame
+@implementation GLMenuControllerJoinGame
 
 -(void)addServerWithPeerId:(NSString*)peerId name:(NSString*)name
 {
     GLMenu* menu  = [[[GLMenu alloc] init] autorelease]; 
     
-    TextControllerServerInfo* textController = [[[TextControllerServerInfo alloc] init] autorelease];
+    GLTextControllerServerInfo* textController = [[[GLTextControllerServerInfo alloc] init] autorelease];
     
     textController.owner = menu;
     textController.center = NO;
-    textController.location = Vector3DMake(0, 0, -2.5);
+    textController.location = vec3Make(0, 0, -2.5);
     textController.serverName = [name substringFromIndex:1];
     textController.serverIcon = [name substringToIndex:1];
     

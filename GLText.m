@@ -1,20 +1,20 @@
-#import "Constants.h"
 #import "Geometry.h"
+#import "MC3DVector.h"
 #import "Bezier.h"
 #import "GLTexture.h"
 #import "Projection.h"
 #import "AnimatedFloat.h"
-#import "AnimatedVector3D.h"
+#import "AnimatedVec3.h"
 #import "AppController.h"
 #import "GameController.h"
-#import "TextController.h"
+#import "GLTextController.h"
 #import "TextureController.h"
-#import "GameRenderer.h"
+#import "GLRenderer.h"
 #import "DisplayContainer.h"
 
-#import "GLLabel.h"
+#import "GLText.h"
 
-@implementation GLLabel
+@implementation GLText
 
 @synthesize textController       = _textController;
 
@@ -55,10 +55,6 @@
 @synthesize hasBorder            = _hasBorder;
 @synthesize hasShadow            = _hasShadow;
 
-@synthesize textSize             = _textSize;
-@synthesize bulletLeftSize       = _bulletLeftSize;
-@synthesize bulletRightSize      = _bulletRightSize;
-
 @synthesize owner                = _owner;
 
 @synthesize key                  = _key;
@@ -67,12 +63,12 @@
 @dynamic layoutSize;
 @dynamic borderSize;
 
--(CGSize)layoutSize { return self.hasBorder ? CGSizeMake(self.labelSize.width + 0.75, self.labelSize.height + 0.75) : self.labelSize; }
+-(CGSize)layoutSize { return self.hasBorder ? CGSizeMake(self.labelSize.width + 0.75, self.labelSize.height + 1.5) : self.labelSize; }
 -(CGSize)borderSize { return self.hasBorder ? CGSizeMake(self.labelSize.width + 0.75, self.labelSize.height + 0.75) : self.labelSize; }
 
 -(BOOL)isEqual:(id)object
 {
-    GLLabel* label = (GLLabel*)object;
+    GLText* label = (GLText*)object;
     
     if(label.key               != self.key               && ![label.key               isEqual:self.key])               { return NO; }
     if(label.textString        != self.textString        && ![label.textString        isEqual:self.textString])        { return NO; }
@@ -102,19 +98,19 @@
     return YES;
 }
 
-+(GLLabel*)withDictionaries:(NSArray*)dictionaries
++(GLText*)withDictionaries:(NSArray*)dictionaries
 {
-    GLLabel* label = [[[GLLabel alloc] init] autorelease];
+    GLText* label = [[[GLText alloc] init] autorelease];
     
-    NSMutableDictionary* styles = [[[NSMutableDictionary alloc] init] autorelease];
+    NSMutableDictionary* styles = [NSMutableDictionary dictionary];
     
     for(NSDictionary* dictionary in dictionaries) 
     {     
         [styles addEntriesFromDictionary:dictionary]; 
     }
         
-    Color3D colorNormal;
-    Color3D colorTouched;
+    color colorNormal;
+    color colorTouched;
     
     [[styles objectForKey:@"colorNormal"] getValue:&colorNormal];
     [[styles objectForKey:@"colorTouched"] getValue:&colorTouched];
@@ -122,7 +118,7 @@
     [label setValuesForKeysWithDictionary:styles];
 
     [label makeMeshes];
-
+    
     return label;
 }
 
@@ -132,23 +128,17 @@
     
     if(self.textString) 
     { 
-        self.textSize = [self.textString sizeWithFont:self.font];
-        
-        self.textureText = [[[GLTexture alloc] initWithString:self.textString dimensions:self.textSize alignment:UITextAlignmentCenter font:self.font] autorelease];
+        self.textureText = [[[GLTexture alloc] initWithString:self.textString font:self.font] autorelease];
     }
     
     if(self.bulletLeftString) 
     { 
-        self.bulletLeftSize = [self.bulletLeftString  sizeWithFont:self.font];
-        
-        self.textureBulletLeft = [[[GLTexture alloc] initWithString:self.bulletLeftString dimensions:self.bulletLeftSize alignment:UITextAlignmentCenter font:self.font] autorelease];
+        self.textureBulletLeft = [[[GLTexture alloc] initWithString:self.bulletLeftString font:self.font] autorelease];
     }
     
     if(self.bulletRightString) 
     { 
-        self.bulletRightSize = [self.bulletRightString sizeWithFont:self.font];
-        
-        self.textureBulletRight = [[[GLTexture alloc] initWithString:self.bulletRightString dimensions:self.bulletRightSize alignment:UITextAlignmentCenter font:self.font] autorelease];
+        self.textureBulletRight = [[[GLTexture alloc] initWithString:self.bulletRightString font:self.font] autorelease];
     }
 }
 
@@ -158,23 +148,24 @@
     
     if(self) 
     {   
-        _colorNormal   = Color3DMake(1, 1, 1, 1);
-        _colorTouched  = Color3DMake(1, 1, 1, 1);
+        _colorNormal   = colorMake(1, 1, 1, 1);
+        _colorTouched  = colorMake(1, 1, 1, 1);
         _textAlignment = UITextAlignmentCenter;
         _hasShadow = NO;
         
-        self.layoutOpacity = [AnimatedFloat withValue:0.0];
-        self.death         = [AnimatedFloat withValue:0.0];
-        self.fadeMargin    = 0;
+        self.layoutLocation = [AnimatedVec3 vec3WithValue:vec3Make(0, 0, 0)];
+        self.layoutOpacity  = [AnimatedFloat floatWithValue:0.0];
+        self.death          = [AnimatedFloat floatWithValue:0.0];
+        self.fadeMargin     = 0;
         
-        arrayTextVertex          = malloc( 8 * sizeof(Vector3D));
-        arrayBulletRightVertex   = malloc( 4 * sizeof(Vector3D));
-        arrayBulletLeftVertex    = malloc( 4 * sizeof(Vector3D));
-        arrayBorderVertex        = malloc(16 * sizeof(Vector3D));
-        arrayTextTextureBase     = malloc( 8 * sizeof(Vector2D));
-        arrayTextTextureScrolled = malloc( 8 * sizeof(Vector2D));
-        arrayBulletTexture       = malloc( 4 * sizeof(Vector2D));
-        arrayBorderTexture       = malloc(16 * sizeof(Vector2D));
+        arrayTextVertex          = malloc( 8 * sizeof(vec3));
+        arrayBulletRightVertex   = malloc( 4 * sizeof(vec3));
+        arrayBulletLeftVertex    = malloc( 4 * sizeof(vec3));
+        arrayBorderVertex        = malloc(16 * sizeof(vec3));
+        arrayTextTextureBase     = malloc( 8 * sizeof(vec2));
+        arrayTextTextureScrolled = malloc( 8 * sizeof(vec2));
+        arrayBulletTexture       = malloc( 4 * sizeof(vec2));
+        arrayBorderTexture       = malloc(16 * sizeof(vec2));
         arrayTextMesh            = malloc(18 * sizeof(GLushort));
         arrayBulletMesh          = malloc( 6 * sizeof(GLushort));
         arrayBorderMesh          = malloc(54 * sizeof(GLushort));
@@ -183,9 +174,9 @@
     return self;
 }
 
-+(GLLabel*)emptyLabel
++(GLText*)emptyLabel
 {
-    GLLabel* label = [[[GLLabel alloc] init] autorelease];
+    GLText* label = [[[GLText alloc] init] autorelease];
     
     label.font = [UIFont fontWithName:@"Futura-Medium" size:10];
     label.labelSize = CGSizeMake(0, 1);
@@ -197,13 +188,13 @@
 {
     if(!self.textureText) { [self makeTextures]; }
     
-    GLfloat textWidth    = self.textSize.width;
-    GLfloat textHeight   = self.textSize.height;
+    GLfloat textWidth    = self.textureText.contentSize.width;
+    GLfloat textHeight   = self.textureText.contentSize.height;
     GLfloat borderWidth  = self.borderSize.width;
     GLfloat borderHeight = self.borderSize.height;
     
-    GLfloat bulletRightWidth  = self.textureBulletRight ? self.bulletRightSize.width / self.bulletRightSize.height * self.labelSize.height : 0;
-    GLfloat bulletLeftWidth   = self.textureBulletLeft ? self.bulletLeftSize.width / self.bulletLeftSize.height * self.labelSize.height : 0;
+    GLfloat bulletRightWidth  = self.textureBulletRight ? self.textureBulletRight.contentSize.width / self.textureBulletRight.contentSize.height * self.labelSize.height : 0;
+    GLfloat bulletLeftWidth   = self.textureBulletLeft ? self.textureBulletLeft.contentSize.width / self.textureBulletLeft.contentSize.height * self.labelSize.height : 0;
     
     GLfloat labelRight  = -(self.labelSize.width  / 2.0) + bulletRightWidth;
     GLfloat labelLeft   =  (self.labelSize.width  / 2.0) - bulletLeftWidth;
@@ -230,39 +221,39 @@
     GLfloat borderTopMargin    = borderTop    + self.fadeMargin;
     GLfloat borderBottomMargin = borderBottom - self.fadeMargin;
     
-    arrayBorderVertex[ 0] = Vector3DMake(borderRight,       0.0, borderTop);  
-    arrayBorderVertex[ 1] = Vector3DMake(borderRightMargin, 0.0, borderTop);  
-    arrayBorderVertex[ 2] = Vector3DMake(borderLeftMargin,  0.0, borderTop);  
-    arrayBorderVertex[ 3] = Vector3DMake(borderLeft,        0.0, borderTop);
-    arrayBorderVertex[ 4] = Vector3DMake(borderRight,       0.0, borderTopMargin);  
-    arrayBorderVertex[ 5] = Vector3DMake(borderRightMargin, 0.0, borderTopMargin);  
-    arrayBorderVertex[ 6] = Vector3DMake(borderLeftMargin,  0.0, borderTopMargin);  
-    arrayBorderVertex[ 7] = Vector3DMake(borderLeft,        0.0, borderTopMargin);  
-    arrayBorderVertex[ 8] = Vector3DMake(borderRight,       0.0, borderBottomMargin);  
-    arrayBorderVertex[ 9] = Vector3DMake(borderRightMargin, 0.0, borderBottomMargin);  
-    arrayBorderVertex[10] = Vector3DMake(borderLeftMargin,  0.0, borderBottomMargin);  
-    arrayBorderVertex[11] = Vector3DMake(borderLeft,        0.0, borderBottomMargin);  
-    arrayBorderVertex[12] = Vector3DMake(borderRight,       0.0, borderBottom);  
-    arrayBorderVertex[13] = Vector3DMake(borderRightMargin, 0.0, borderBottom);  
-    arrayBorderVertex[14] = Vector3DMake(borderLeftMargin,  0.0, borderBottom);  
-    arrayBorderVertex[15] = Vector3DMake(borderLeft,        0.0, borderBottom);  
+    arrayBorderVertex[ 0] = vec3Make(borderRight,       0.0, borderTop);  
+    arrayBorderVertex[ 1] = vec3Make(borderRightMargin, 0.0, borderTop);  
+    arrayBorderVertex[ 2] = vec3Make(borderLeftMargin,  0.0, borderTop);  
+    arrayBorderVertex[ 3] = vec3Make(borderLeft,        0.0, borderTop);
+    arrayBorderVertex[ 4] = vec3Make(borderRight,       0.0, borderTopMargin);  
+    arrayBorderVertex[ 5] = vec3Make(borderRightMargin, 0.0, borderTopMargin);  
+    arrayBorderVertex[ 6] = vec3Make(borderLeftMargin,  0.0, borderTopMargin);  
+    arrayBorderVertex[ 7] = vec3Make(borderLeft,        0.0, borderTopMargin);  
+    arrayBorderVertex[ 8] = vec3Make(borderRight,       0.0, borderBottomMargin);  
+    arrayBorderVertex[ 9] = vec3Make(borderRightMargin, 0.0, borderBottomMargin);  
+    arrayBorderVertex[10] = vec3Make(borderLeftMargin,  0.0, borderBottomMargin);  
+    arrayBorderVertex[11] = vec3Make(borderLeft,        0.0, borderBottomMargin);  
+    arrayBorderVertex[12] = vec3Make(borderRight,       0.0, borderBottom);  
+    arrayBorderVertex[13] = vec3Make(borderRightMargin, 0.0, borderBottom);  
+    arrayBorderVertex[14] = vec3Make(borderLeftMargin,  0.0, borderBottom);  
+    arrayBorderVertex[15] = vec3Make(borderLeft,        0.0, borderBottom);  
     
-    arrayBorderTexture[ 0] = Vector2DMake(0.0, 0.0);  
-    arrayBorderTexture[ 1] = Vector2DMake(0.5, 0.0);  
-    arrayBorderTexture[ 2] = Vector2DMake(0.5, 0.0);  
-    arrayBorderTexture[ 3] = Vector2DMake(1.0, 0.0);
-    arrayBorderTexture[ 4] = Vector2DMake(0.0, 0.5);
-    arrayBorderTexture[ 5] = Vector2DMake(0.5, 0.5);  
-    arrayBorderTexture[ 6] = Vector2DMake(0.5, 0.5);  
-    arrayBorderTexture[ 7] = Vector2DMake(1.0, 0.5);  
-    arrayBorderTexture[ 8] = Vector2DMake(0.0, 0.5);  
-    arrayBorderTexture[ 9] = Vector2DMake(0.5, 0.5);  
-    arrayBorderTexture[10] = Vector2DMake(0.5, 0.5);  
-    arrayBorderTexture[11] = Vector2DMake(1.0, 0.5);  
-    arrayBorderTexture[12] = Vector2DMake(0.0, 1.0);  
-    arrayBorderTexture[13] = Vector2DMake(0.5, 1.0);  
-    arrayBorderTexture[14] = Vector2DMake(0.5, 1.0);  
-    arrayBorderTexture[15] = Vector2DMake(1.0, 1.0);  
+    arrayBorderTexture[ 0] = vec2Make(0.0, 0.0);  
+    arrayBorderTexture[ 1] = vec2Make(0.5, 0.0);  
+    arrayBorderTexture[ 2] = vec2Make(0.5, 0.0);  
+    arrayBorderTexture[ 3] = vec2Make(1.0, 0.0);
+    arrayBorderTexture[ 4] = vec2Make(0.0, 0.5);
+    arrayBorderTexture[ 5] = vec2Make(0.5, 0.5);  
+    arrayBorderTexture[ 6] = vec2Make(0.5, 0.5);  
+    arrayBorderTexture[ 7] = vec2Make(1.0, 0.5);  
+    arrayBorderTexture[ 8] = vec2Make(0.0, 0.5);  
+    arrayBorderTexture[ 9] = vec2Make(0.5, 0.5);  
+    arrayBorderTexture[10] = vec2Make(0.5, 0.5);  
+    arrayBorderTexture[11] = vec2Make(1.0, 0.5);  
+    arrayBorderTexture[12] = vec2Make(0.0, 1.0);  
+    arrayBorderTexture[13] = vec2Make(0.5, 1.0);  
+    arrayBorderTexture[14] = vec2Make(0.5, 1.0);  
+    arrayBorderTexture[15] = vec2Make(1.0, 1.0);  
     
     GenerateBezierMesh(arrayBorderMesh, 4, 4);
     
@@ -283,14 +274,14 @@
     }
     
     
-    arrayTextVertex[0] = Vector3DMake(labelRight,      0.0, labelTop);  
-    arrayTextVertex[1] = Vector3DMake(labelRightFade,  0.0, labelTop);  
-    arrayTextVertex[2] = Vector3DMake(labelLeftFade,   0.0, labelTop);  
-    arrayTextVertex[3] = Vector3DMake(labelLeft,       0.0, labelTop);  
-    arrayTextVertex[4] = Vector3DMake(labelRight,      0.0, labelBottom);  
-    arrayTextVertex[5] = Vector3DMake(labelRightFade,  0.0, labelBottom);  
-    arrayTextVertex[6] = Vector3DMake(labelLeftFade,   0.0, labelBottom);  
-    arrayTextVertex[7] = Vector3DMake(labelLeft,       0.0, labelBottom);  
+    arrayTextVertex[0] = vec3Make(labelRight,      0.0, labelTop);  
+    arrayTextVertex[1] = vec3Make(labelRightFade,  0.0, labelTop);  
+    arrayTextVertex[2] = vec3Make(labelLeftFade,   0.0, labelTop);  
+    arrayTextVertex[3] = vec3Make(labelLeft,       0.0, labelTop);  
+    arrayTextVertex[4] = vec3Make(labelRight,      0.0, labelBottom);  
+    arrayTextVertex[5] = vec3Make(labelRightFade,  0.0, labelBottom);  
+    arrayTextVertex[6] = vec3Make(labelLeftFade,   0.0, labelBottom);  
+    arrayTextVertex[7] = vec3Make(labelLeft,       0.0, labelBottom);  
         
     arrayTextMesh[ 0] = 0;
     arrayTextMesh[ 1] = 1;
@@ -311,20 +302,20 @@
     arrayTextMesh[16] = 3;
     arrayTextMesh[17] = 7;
          
-    arrayBulletRightVertex[0] = Vector3DMake(labelRight - bulletRightWidth, 0.0, labelTop);  
-    arrayBulletRightVertex[1] = Vector3DMake(labelRight,                    0.0, labelTop);  
-    arrayBulletRightVertex[2] = Vector3DMake(labelRight - bulletRightWidth, 0.0, labelBottom);  
-    arrayBulletRightVertex[3] = Vector3DMake(labelRight,                    0.0, labelBottom);  
+    arrayBulletRightVertex[0] = vec3Make(labelRight - bulletRightWidth, 0.0, labelTop);  
+    arrayBulletRightVertex[1] = vec3Make(labelRight,                    0.0, labelTop);  
+    arrayBulletRightVertex[2] = vec3Make(labelRight - bulletRightWidth, 0.0, labelBottom);  
+    arrayBulletRightVertex[3] = vec3Make(labelRight,                    0.0, labelBottom);  
     
-    arrayBulletLeftVertex[0] = Vector3DMake(labelLeft,                   0.0, labelTop);  
-    arrayBulletLeftVertex[1] = Vector3DMake(labelLeft + bulletLeftWidth, 0.0, labelTop);  
-    arrayBulletLeftVertex[2] = Vector3DMake(labelLeft,                   0.0, labelBottom);  
-    arrayBulletLeftVertex[3] = Vector3DMake(labelLeft + bulletLeftWidth, 0.0, labelBottom);  
+    arrayBulletLeftVertex[0] = vec3Make(labelLeft,                   0.0, labelTop);  
+    arrayBulletLeftVertex[1] = vec3Make(labelLeft + bulletLeftWidth, 0.0, labelTop);  
+    arrayBulletLeftVertex[2] = vec3Make(labelLeft,                   0.0, labelBottom);  
+    arrayBulletLeftVertex[3] = vec3Make(labelLeft + bulletLeftWidth, 0.0, labelBottom);  
     
-    arrayBulletTexture[0] = Vector2DMake(1, 0);
-    arrayBulletTexture[1] = Vector2DMake(0, 0);
-    arrayBulletTexture[2] = Vector2DMake(1, 1);
-    arrayBulletTexture[3] = Vector2DMake(0, 1);
+    arrayBulletTexture[0] = vec2Make(1, 0);
+    arrayBulletTexture[1] = vec2Make(0, 0);
+    arrayBulletTexture[2] = vec2Make(1, 1);
+    arrayBulletTexture[3] = vec2Make(0, 1);
     
     arrayBulletMesh[ 0] = 0;
     arrayBulletMesh[ 1] = 1;
@@ -341,24 +332,24 @@
     GLfloat textureStringRightMargin = textureStringRight  - (self.fadeMargin / labelWidth * labelViewportWidth);
     GLfloat textureStringLeftMargin  = textureStringLeft   + (self.fadeMargin / labelWidth * labelViewportWidth);
     
-    arrayTextTextureBase[0] = Vector2DMake(textureStringRight,        textureStringTop);
-    arrayTextTextureBase[1] = Vector2DMake(textureStringRightMargin,  textureStringTop);
-    arrayTextTextureBase[2] = Vector2DMake(textureStringLeftMargin,   textureStringTop);
-    arrayTextTextureBase[3] = Vector2DMake(textureStringLeft,         textureStringTop);
-    arrayTextTextureBase[4] = Vector2DMake(textureStringRight,        textureStringBottom);
-    arrayTextTextureBase[5] = Vector2DMake(textureStringRightMargin,  textureStringBottom);
-    arrayTextTextureBase[6] = Vector2DMake(textureStringLeftMargin,   textureStringBottom);
-    arrayTextTextureBase[7] = Vector2DMake(textureStringLeft,         textureStringBottom);
+    arrayTextTextureBase[0] = vec2Make(textureStringRight,        textureStringTop);
+    arrayTextTextureBase[1] = vec2Make(textureStringRightMargin,  textureStringTop);
+    arrayTextTextureBase[2] = vec2Make(textureStringLeftMargin,   textureStringTop);
+    arrayTextTextureBase[3] = vec2Make(textureStringLeft,         textureStringTop);
+    arrayTextTextureBase[4] = vec2Make(textureStringRight,        textureStringBottom);
+    arrayTextTextureBase[5] = vec2Make(textureStringRightMargin,  textureStringBottom);
+    arrayTextTextureBase[6] = vec2Make(textureStringLeftMargin,   textureStringBottom);
+    arrayTextTextureBase[7] = vec2Make(textureStringLeft,         textureStringBottom);
 }
 
 -(void)draw
 {    
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             
-    Color3D arrayTextColor[8];
+    color arrayTextColor[8];
     
-    Color3D colorLabelOpaque;
-    Color3D colorLabelTransparent;
+    color colorLabelOpaque;
+    color colorLabelTransparent;
     
     glDisableClientState(GL_NORMAL_ARRAY);
 
@@ -374,13 +365,13 @@
         {        
             if(self.isLabelTouched && self.labelStatus == LabelStatusTextSelected)
             {
-                colorLabelOpaque      = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity.value);
-                colorLabelTransparent = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue, 0);
+                colorLabelOpaque      = colorMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity.value);
+                colorLabelTransparent = colorMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue, 0);
             }
             else 
             {
-                colorLabelOpaque       = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * (1 - self.death.value) * self.layoutOpacity.value * self.textController.opacity.value);
-                colorLabelTransparent  = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, 0);    
+                colorLabelOpaque       = colorMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * (1 - self.death.value) * self.layoutOpacity.value * self.textController.opacity.value);
+                colorLabelTransparent  = colorMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, 0);    
             }
                                 
             glBindTexture(GL_TEXTURE_2D, self.isLabelTouched && self.labelStatus == LabelStatusTextSelected ? [TextureController nameForKey:@"borderTouched"] : [TextureController nameForKey:@"borderNormal"]);
@@ -399,15 +390,15 @@
                         
             if(self.isLabelTouched && self.labelStatus == LabelStatusTextSelected)
             {
-                colorLabelOpaque      = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity.value);
-                colorLabelTransparent = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue, 0);
+                colorLabelOpaque      = colorMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity.value);
+                colorLabelTransparent = colorMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue, 0);
             }
             else 
             {
-                colorLabelOpaque       = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * (1 - self.death.value) * self.layoutOpacity.value * self.textController.opacity.value);
-                colorLabelTransparent  = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, 0);    
+                colorLabelOpaque       = colorMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * (1 - self.death.value) * self.layoutOpacity.value * self.textController.opacity.value);
+                colorLabelTransparent  = colorMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, 0);    
             }
-
+            
             glBindTexture(GL_TEXTURE_2D, self.textureText.name);
             
             arrayTextColor[0] = colorLabelTransparent;
@@ -427,22 +418,22 @@
             {
                 float scroll = self.scrollAmplitude * sin(CACurrentMediaTime());
                 
-                memcpy(arrayTextTextureScrolled, arrayTextTextureBase, sizeof(Vector2D) * 8);
+                memcpy(arrayTextTextureScrolled, arrayTextTextureBase, sizeof(vec2) * 8);
                 
-                arrayTextTextureScrolled[0].u = arrayTextTextureScrolled[0].u + scroll;
-                arrayTextTextureScrolled[1].u = arrayTextTextureScrolled[1].u + scroll;
-                arrayTextTextureScrolled[2].u = arrayTextTextureScrolled[2].u + scroll;
-                arrayTextTextureScrolled[3].u = arrayTextTextureScrolled[3].u + scroll;
-                arrayTextTextureScrolled[4].u = arrayTextTextureScrolled[4].u + scroll;
-                arrayTextTextureScrolled[5].u = arrayTextTextureScrolled[5].u + scroll;
-                arrayTextTextureScrolled[6].u = arrayTextTextureScrolled[6].u + scroll;
-                arrayTextTextureScrolled[7].u = arrayTextTextureScrolled[7].u + scroll;
+                arrayTextTextureScrolled[0].x = arrayTextTextureScrolled[0].x + scroll;
+                arrayTextTextureScrolled[1].x = arrayTextTextureScrolled[1].x + scroll;
+                arrayTextTextureScrolled[2].x = arrayTextTextureScrolled[2].x + scroll;
+                arrayTextTextureScrolled[3].x = arrayTextTextureScrolled[3].x + scroll;
+                arrayTextTextureScrolled[4].x = arrayTextTextureScrolled[4].x + scroll;
+                arrayTextTextureScrolled[5].x = arrayTextTextureScrolled[5].x + scroll;
+                arrayTextTextureScrolled[6].x = arrayTextTextureScrolled[6].x + scroll;
+                arrayTextTextureScrolled[7].x = arrayTextTextureScrolled[7].x + scroll;
                 
                 glTexCoordPointer(2, GL_FLOAT, 0, arrayTextTextureScrolled);
             }
                                 
-            glVertexPointer  (3, GL_FLOAT, 0, arrayTextVertex);
-            glColorPointer   (4, GL_FLOAT, 0, arrayTextColor);
+            glVertexPointer(3, GL_FLOAT, 0, arrayTextVertex);
+            glColorPointer (4, GL_FLOAT, 0, arrayTextColor);
             
             glDrawElements(GL_TRIANGLES, 18, GL_UNSIGNED_SHORT, arrayTextMesh);    
             
@@ -453,11 +444,11 @@
         {
             if(self.isLabelTouched && self.labelStatus == LabelStatusBulletRightSelected)
             {
-                colorLabelOpaque = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity.value);
+                colorLabelOpaque = colorMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity.value);
             }
             else 
             {
-                colorLabelOpaque = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * (1 - self.death.value) * self.layoutOpacity.value * self.textController.opacity.value);
+                colorLabelOpaque = colorMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * (1 - self.death.value) * self.layoutOpacity.value * self.textController.opacity.value);
             }
             
             glBindTexture(GL_TEXTURE_2D, self.textureBulletRight.name);
@@ -476,11 +467,11 @@
         {
             if(self.isLabelTouched && self.labelStatus == LabelStatusBulletLeftSelected)
             {
-                colorLabelOpaque = Color3DMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity.value);
+                colorLabelOpaque = colorMake(lightness * self.colorTouched.red, lightness * self.colorTouched.green, lightness * self.colorTouched.blue,  self.colorTouched.alpha * self.textController.opacity.value);
             }
             else 
             {
-                colorLabelOpaque = Color3DMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * (1 - self.death.value) * self.layoutOpacity.value * self.textController.opacity.value);
+                colorLabelOpaque = colorMake(lightness * self.colorNormal.red, lightness * self.colorNormal.green, lightness * self.colorNormal.blue, self.colorNormal.alpha * (1 - self.death.value) * self.layoutOpacity.value * self.textController.opacity.value);
             }
                     
             glBindTexture(GL_TEXTURE_2D, self.textureBulletLeft.name);
@@ -504,9 +495,9 @@
     GLfloat projection[16];
     GLint viewport[4];
 
-    Vector2D pointsText[16];
-    Vector2D pointsBulletRight[4];
-    Vector2D pointsBulletLeft[4];
+    vec2 pointsText[16];
+    vec2 pointsBulletRight[4];
+    vec2 pointsBulletLeft[4];
     
     TRANSACTION_BEGIN
     {    
@@ -525,7 +516,7 @@
     
     CGPoint touchPoint = [touch locationInView:touch.view];
     
-    Vector2D touchLocation = Vector2DMake(touchPoint.x, 480 - touchPoint.y);
+    vec2 touchLocation = vec2Make(touchPoint.x, UIScreen.mainScreen.bounds.size.height - touchPoint.y);
     
     if(TestTriangles(touchLocation, pointsText,        arrayBorderMesh, 18)) { self.labelStatus = LabelStatusTextSelected;        return self; }
     if(TestTriangles(touchLocation, pointsBulletRight, arrayBulletMesh,  2)) { self.labelStatus = LabelStatusBulletRightSelected; return self; }
@@ -588,30 +579,25 @@
     if(self.isAlive) { status = @"A"; }
     if(self.isDead)  { status = @"X"; }
     
-    return [NSString stringWithFormat:@"<GLLabel key:'%@', text:'%@', status:'%@:%3i'>", self.key, self.textString, status, (int)(self.death.value * 100)];
+    return [NSString stringWithFormat:@"<GLText key:'%@', text:'%@', status:'%@:%3i'>", self.key, self.textString, status, (int)(self.death.value * 100)];
 }
 
 -(BOOL)isAlive { return within(self.death.endValue, 0, 0.001); }
 -(BOOL)isDead  { return within(self.death.value,    1, 0.001); }
 
--(void)reincarnateFrom:(id<Perishable>)oldObject
+-(void)reincarnate:(id<Displayable>)oldObject
 {
-    if([oldObject isKindOfClass:[GLLabel class]])
+    if([oldObject isKindOfClass:[GLText class]])
     {
-        GLLabel* oldLabel = (GLLabel*)oldObject;
+        GLText* oldLabel = (GLText*)oldObject;
         
         self.layoutLocation = oldLabel.layoutLocation;
     }
 }
 
--(void)killAfterDelay:(NSTimeInterval)delay andThen:(SimpleBlock)work
+-(void)dieAfterDelay:(NSTimeInterval)delay andThen:(SimpleBlock)work
 {
-    [self.death setValue:1 forTime:0.4 afterDelay:delay andThen:^
-    { 
-        [self.displayContainer pruneDead]; 
-        
-        RunLater(work); 
-    }];
+    [self.death setValue:1 forTime:0.4 afterDelay:delay andThen:work];
 }
 
 @end

@@ -1,8 +1,8 @@
-#import "MenuControllerHostGame.h"
+#import "GLMenuControllerHostGame.h"
 
-@implementation MenuControllerHostGame
+@implementation GLMenuControllerHostGame
 
--(id)initWithRenderer:(GameRenderer*)renderer
+-(id)initWithRenderer:(GLRenderer*)renderer
 {
     self = [super initWithRenderer:renderer];
     
@@ -10,11 +10,11 @@
     {
         GLMenu* menu = [[[GLMenu alloc] init] autorelease]; 
         
-        TextControllerClientList* textController = [[[TextControllerClientList alloc] init] autorelease];
+        GLTextControllerClientList* textController = [[[GLTextControllerClientList alloc] init] autorelease];
         
         textController.owner = menu;
         textController.center = NO;
-        textController.location = Vector3DMake(0, 0, -2.5);
+        textController.location = vec3Make(0, 0, -2.5);
         textController.renderer = self.renderer;
         
         [textController update];

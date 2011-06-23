@@ -1,12 +1,8 @@
-#import "TextController.h"
+#import "GLTextController.h"
 
-@interface TextControllerServerInfo : TextController 
-{
-    NSString* _serverName;
-    NSString* _serverIcon;
-}
+@interface GLTextControllerServerInfo : GLTextController 
 
-@property (nonatomic, retain) NSString* serverName;
-@property (nonatomic, retain) NSString* serverIcon;
+@property (nonatomic, copy) NSString* serverName;
+@property (nonatomic, copy) NSString* serverIcon;
 
 @end

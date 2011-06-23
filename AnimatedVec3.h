@@ -1,27 +1,34 @@
 #import "Constants.h"
 #import "Common.h"
-#import "Geometry.h"
+#import "MC3DVector.h"
+#import "AnimationGroup.h"
 
-@interface AnimatedVector3D : NSObject 
+@interface AnimatedVec3 : NSObject <Animated>
 
-@property (nonatomic, assign)   Vector3D       startValue;
+@property (nonatomic, assign)   vec3       startValue;
 @property (nonatomic, assign)   NSTimeInterval startTime;
-@property (nonatomic, copy)     SimpleBlock    onStart;      
-@property (nonatomic, readonly) BOOL           hasStarted;
 
-@property (nonatomic, assign)   Vector3D       endValue;
+@property (nonatomic, assign)   vec3       endValue;
 @property (nonatomic, assign)   NSTimeInterval endTime;
-@property (nonatomic, copy)     SimpleBlock    onEnd;    
-@property (nonatomic, readonly) BOOL           hasEnded;
 
 @property (nonatomic, assign)   AnimationCurve curve;
 
-@property (nonatomic, readonly)   Vector3D        value;
+@property (nonatomic, readonly) vec3 value;
+@property (nonatomic, readonly) BOOL     hasEnded;
 
-+(id)withValue:(Vector3D)value;
++(id)vec3WithValue:(vec3)value;
 
-+(id)withStartValue:(Vector3D)startValue endValue:(Vector3D)endValue forTime:(NSTimeInterval)time;
-+(id)withStartValue:(Vector3D)startValue endValue:(Vector3D)endValue speed:(GLfloat)speed;
+-(void)setValue:(vec3)value;
+
+-(void)setValue:(vec3)value forTime:(NSTimeInterval)time;
+-(void)setValue:(vec3)value forTime:(NSTimeInterval)time andThen:(SimpleBlock)work;
+-(void)setValue:(vec3)value forTime:(NSTimeInterval)time afterDelay:(NSTimeInterval)delay andThen:(SimpleBlock)work;
+
+-(void)setValue:(vec3)value withSpeed:(GLfloat)speed;
+-(void)setValue:(vec3)value withSpeed:(GLfloat)speed andThen:(SimpleBlock)work;
+-(void)setValue:(vec3)value withSpeed:(GLfloat)speed afterDelay:(NSTimeInterval)delay andThen:(SimpleBlock)work;
+
+-(void)finishAndThen:(SimpleBlock)work;
 
 -(NSString*)description;
 

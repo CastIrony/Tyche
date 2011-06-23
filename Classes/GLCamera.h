@@ -1,42 +1,32 @@
 #import "AnimatedFloat.h"
-#import "AnimatedVector3D.h"
+#import "AnimatedVec3.h"
 
 typedef enum 
 {
     CameraStatusNormal,
     CameraStatusCardsFlipped
 } 
-CameraStatus;
+GLCameraStatus;
 
-@class GameRenderer;
+@class GLRenderer;
 
-@interface CameraController : NSObject 
-{
-    GameRenderer*     _renderer;
-    BOOL              _menuVisible;
-    CameraStatus      _status;
-    AnimatedVector3D* _position;
-    AnimatedVector3D* _lookAt;
-    AnimatedFloat*    _pitchAngle;
-    AnimatedFloat*    _pitchFactor;
-    AnimatedFloat*    _rollAngle;
-    NSNumber*         _isAutomatic;
-}
+@interface GLCamera : NSObject 
 
-@property (nonatomic, assign)   GameRenderer*      renderer;
-@property (nonatomic, readonly) BOOL               isAutomatic;
-@property (nonatomic, assign)   BOOL               menuVisible;
-@property (nonatomic, assign)   CameraStatus       status;
-@property (nonatomic, retain)   AnimatedVector3D*  position;
-@property (nonatomic, retain)   AnimatedVector3D*  lookAt;
-@property (nonatomic, retain)   AnimatedFloat*     pitchAngle;
-@property (nonatomic, retain)   AnimatedFloat*     pitchFactor;
-@property (nonatomic, retain)   AnimatedFloat*     rollAngle;
++(GLCamera*)camera;
+
+@property (nonatomic, assign) BOOL           isAutomatic;
+@property (nonatomic, assign) BOOL           menuVisible;
+@property (nonatomic, assign) GLCameraStatus status;
+@property (nonatomic, assign) GLRenderer*    renderer;
+@property (nonatomic, retain) AnimatedVec3*  position;
+@property (nonatomic, retain) AnimatedVec3*  lookAt;
+@property (nonatomic, retain) AnimatedFloat* pitchAngle;
+@property (nonatomic, retain) AnimatedFloat* pitchFactor;
+@property (nonatomic, retain) AnimatedFloat* rollAngle;
+@property (nonatomic, retain) AnimatedFloat* flipAngle;
 
 -(void)setMenuVisible:(BOOL)value;
--(void)setStatus:(CameraStatus)status;
+-(void)setStatus:(GLCameraStatus)status;
 -(void)updateCamera;
--(void)flattenAndThen:(SimpleBlock)work;
--(void)unflattenAndThen:(SimpleBlock)work;
 
 @end

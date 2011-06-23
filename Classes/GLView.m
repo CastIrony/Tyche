@@ -1,124 +1,107 @@
 //
 //  EAGLView.m
-//  OpenGLTest
+//  Studly
 //
 //  Created by Joel Bernstein on 9/24/09.
 //  Copyright Joel Bernstein 2009. All rights reserved.
 //
 
-#import "GameView.h"
-#import "GameControllerSP.h"
+#import "GLView.h"
+#import "GameController.h"
 #import "AppController.h"
-#import "GameRenderer.h"
+#import "GLRenderer.h"
 #import "GLSplash.h"
 #import "AnimatedFloat.h"
+@implementation GLView
 
-@implementation GameView
++(Class)layerClass { return [CAEAGLLayer class]; }
 
-@synthesize appController;
-@synthesize animating;
-@dynamic animationFrameInterval;
+@synthesize renderer     = _renderer;
+@synthesize eaglContext  = _eaglContext;
+@synthesize framebuffer  = _framebuffer;
+@synthesize renderbuffer = _renderbuffer;
 
-// You must implement this method
-+ (Class) layerClass
-{
-    return [CAEAGLLayer class];
-}
+@dynamic eaglLayer;
+@dynamic viewport;
 
-//The GL view is stored in the nib file. When it's unarchived it's sent -initWithCoder:
-- (id) initWithCoder:(NSCoder*)coder
+-(CAEAGLLayer*)eaglLayer { return (CAEAGLLayer*)self.layer; }
+
+-(CGRect)viewport { return CGRectMake(0, 0, self.bounds.size.width * self.contentScaleFactor, self.bounds.size.height * self.contentScaleFactor);  }
+
+-(id)initWithFrame:(CGRect)aRect
 {    
-    if ((self = [super initWithCoder:coder]))
+    self = [super initWithFrame:aRect];
+    
+    if(self)
 	{
-        // Get the layer
-        CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
+        self.eaglContext = [[[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1] autorelease];
         
-        eaglLayer.opaque = TRUE;
-        eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:FALSE], kEAGLDrawablePropertyRetainedBacking, 
-                                                                                  /*kEAGLColorFormatRGBA8*/kEAGLColorFormatRGB565,           kEAGLDrawablePropertyColorFormat, 
-                                                                                  nil];
+        if(!self.eaglContext || ![EAGLContext setCurrentContext:self.eaglContext]) 
+        { 
+            [self release]; 
+            return nil;
+        }
 		
-        renderer = [[GameRenderer alloc] init];
+		glGenFramebuffersOES (1, &_framebuffer);
+		glGenRenderbuffersOES(1, &_renderbuffer);
         
-        renderer.view = self;
-                
-		animating = FALSE;
-		displayLinkSupported = FALSE;
-		animationFrameInterval = 2;
-		displayLink = nil;
-		
-		// A system version of 3.1 or greater is required to use CADisplayLink. The NSTimer
-		// class is used as fallback when it isn't available.
-		NSString *reqSysVer = @"3.1";
-		NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
-		if ([currSysVer compare:reqSysVer options:NSNumericSearch] != NSOrderedAscending)
-			displayLinkSupported = TRUE;
-                
-        if ([UIScreen mainScreen].currentMode.size.width == 640) { self.contentScaleFactor = 2.0; }
+		glBindFramebufferOES (GL_FRAMEBUFFER_OES, self.framebuffer);
+		glBindRenderbufferOES(GL_RENDERBUFFER_OES, self.renderbuffer);
+
+		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, self.renderbuffer);
+        
+        self.eaglLayer.opaque = TRUE;
+        self.eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:FALSE], kEAGLDrawablePropertyRetainedBacking, nil]; 
+                		                
+        if(UIScreen.mainScreen.currentMode.size.width == 640) 
+        { 
+            self.contentScaleFactor = 2.0; 
+        }
     }
 	
     return self;
 }
 
--(void)layoutSubviews
-{
-    renderer.appController = self.appController;
-    renderer.appController.renderer = renderer;
+-(BOOL)resize
+{	
+	glBindRenderbufferOES(GL_RENDERBUFFER_OES, self.renderbuffer);
     
-    [renderer resizeFromLayer:(CAEAGLLayer*)self.layer];
-        
-    [renderer draw];
+    [self.eaglContext renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:self.eaglLayer];
+    
+    return glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) == GL_FRAMEBUFFER_COMPLETE_OES;
 }
 
--(NSInteger)animationFrameInterval
+-(void)presentRenderbuffer
 {
-	return animationFrameInterval;
+    [self.eaglContext presentRenderbuffer:GL_RENDERBUFFER_OES];
 }
 
--(void)setAnimationFrameInterval:(NSInteger)frameInterval
-{
-	if(frameInterval >= 1)
-	{
-		animationFrameInterval = frameInterval;
-		
-		if(animating)
-		{
-			[self stopAnimation];
-			[self startAnimation];
-		}
-	}
-}
-
--(void)startAnimation
-{
-	if(!animating)
-	{
-		displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:renderer selector:@selector(draw)];
-		
-        [displayLink setFrameInterval:animationFrameInterval];
-		
-        [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-		
-		animating = TRUE;
-	}
-}
-
--(void)stopAnimation
-{
-	if(animating)
-	{
-        [displayLink invalidate];
-        displayLink = nil;
-		
-		animating = FALSE;
-	}
+-(void)layoutSubviews
+{    
+    [self resize];
+    [self.renderer draw];
 }
 
 -(void)dealloc
 {
-    [renderer release];
+	if(self.framebuffer)
+	{
+		glDeleteFramebuffersOES(1, &_framebuffer);
+		self.framebuffer = 0;
+	}
+    
+	if(self.renderbuffer)
+	{
+		glDeleteRenderbuffersOES(1, &_renderbuffer);
+		self.renderbuffer = 0;
+	}
 	
-    [super dealloc];
+	if([EAGLContext currentContext] == self.eaglContext) { [EAGLContext setCurrentContext:nil]; }
+	
+	self.eaglContext = nil;
+	
+	[super dealloc];
 }
+
 
 @end

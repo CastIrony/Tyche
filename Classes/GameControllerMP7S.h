@@ -1,16 +1,10 @@
-#import "NSObject+SBJSON.h"
-#import "NSString+SBJSON.h"
-#import "NSString+Documents.h"
-#import "NSMutableArray+Deck.h"
 #import "GameController.h"
 
 @class GameModel;
-@class SessionController;
 
-@interface GameControllerMP : GameController
+@interface GameControllerMP7S : GameController
 
-@property (nonatomic, retain) SessionController* sessionController;
-
--(void)joinGameAndThen:(SimpleBlock)work;
+@property (nonatomic, assign) BOOL isDealer;
+@property (nonatomic, assign) BOOL isMyTurn;
 
 @end

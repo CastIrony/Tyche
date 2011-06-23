@@ -1,8 +1,5 @@
-#import "MenuController.h"
+#import "GLMenuController.h"
 
-@interface MenuControllerMain : MenuController 
-{
-
-}
+@interface GLMenuControllerMain : GLMenuController 
 
 @end

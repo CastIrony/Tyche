@@ -1,62 +1,78 @@
 //
 //  GameRenderer.m
-//  OpenGLTest
+//  Studly
 //
 //  Created by Joel Bernstein on 9/24/09.
 //  Copyright Joel Bernstein 2009. All rights reserved.
 //
 
-#import "GameRenderer.h"
+#import "Geometry.h"
 #import "AnimatedFloat.h"
-#import "AnimatedVector3D.h"
-#import "TextController.h"
+#import "AnimatedVec3.h"
+#import "GLTextController.h"
 #import "GLMenu.h"
 #import "GLCard.h"
+#import "GLPlayer.h"
 #import "GLTable.h"
 #import "GLSplash.h"
-#import "MenuController.h"
-#import "MenuLayerController.h"
+#import "GLMenuController.h"
+#import "GLMenuLayerController.h"
+#import "GLFlatCardGroup.h"
 #import "GLCardGroup.h"
 #import "GLChipGroup.h"
 #import "GLChip.h"
-#import "GLLabel.h"
+#import "GLText.h"
 #import "AppController.h"
 #import "SoundController.h"
 #import "GameController.h"
-#import "GameControllerSP.h"
-#import "GameControllerMP.h"
 #import "GLTexture.h"
-#import "CameraController.h"
-#import "TextControllerMainMenu.h"
-#import "TextControllerCredits.h"
-#import "TextControllerActions.h"
-#import "TextControllerStatusBar.h"
-#import "TextControllerServerInfo.h"
+#import "GLCamera.h"
+#import "GLTextControllerMainMenu.h"
+#import "GLTextControllerCredits.h"
+#import "GLTextControllerStatusBar.h"
+#import "GLTextControllerServerInfo.h"
 #import "TextureController.h"
-#import "MenuControllerJoinGame.h"
-#import "MenuControllerMain.h"
+#import "GLMenuControllerJoinGame.h"
+#import "GLMenuControllerMain.h"
 #import "DisplayContainer.h"
+#import "NSArray+JBCommon.h"
+#import "GLView.h"
+#import "GLRenderer.h"
 
-@implementation GameRenderer
+@implementation GLRenderer
 
-@synthesize gameController      = _gameController;
 @synthesize appController       = _appController;
-@synthesize soundController     = _soundController;
 @synthesize touchedObjects      = _touchedObjects;
 @synthesize touchedLocations    = _touchedLocations;
-@synthesize menuLayerController = _menuLayerController;
-@synthesize chipGroup           = _chipGroup;
-@synthesize cardGroup           = _cardGroup;
+@synthesize players             = _players;
 @synthesize table               = _table;
-@synthesize splash              = _splash;
-@synthesize textControllers     = _textControllers;
 @synthesize camera              = _camera;
-@synthesize creditLabel         = _creditLabel;
-@synthesize betLabel            = _betLabel;
-@synthesize betItems            = _betItems;
+@synthesize splash              = _splash;
+@synthesize menuLayerController = _menuLayerController;
+@synthesize currentOffset       = _offset;
+@synthesize initialOffset       = _initialOffset;
 @synthesize lightness           = _lightness;
-@synthesize offset              = _offset;
-//@synthesize work                = _work;
+@synthesize currentPlayer       = _currentPlayer;
+
+@dynamic glView;
+@dynamic mainPlayer;
+@dynamic gameController;
+@dynamic soundController;
+
+-(GLView*)glView
+{
+    return (GLView*)self.view;
+}
+
+-(GameController*)gameController
+{
+    return self.appController.gameController;
+}
+
+-(SoundController*)soundController
+{
+    return nil;
+}
 
 -(id)init
 {
@@ -64,50 +80,26 @@
     
 	if(self)
 	{
-		_context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
+        self.lightness = [AnimatedFloat floatWithValue:1];
+        self.currentOffset    = [AnimatedFloat floatWithValue:0];
         
-        if(!_context || ![EAGLContext setCurrentContext:_context]) { [self release]; return nil; }
-		
-		// Create default framebuffer object. The backing will be allocated for the current layer in -resizeFromLayer
-		glGenFramebuffersOES(1, &_defaultFramebuffer);
-		glGenRenderbuffersOES(1, &_colorRenderbuffer);
-		glBindFramebufferOES(GL_FRAMEBUFFER_OES, _defaultFramebuffer);
-		glBindRenderbufferOES(GL_RENDERBUFFER_OES, _colorRenderbuffer);
-		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, _colorRenderbuffer);
+        GLView* glView = [[[GLView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]] autorelease];
         
-        animate = YES;
-        self.lightness = [AnimatedFloat withValue:1];
-        self.offset = [AnimatedFloat withValue:0];
+        glView.renderer = self;
+        
+        self.view = glView;
+        
+        [self load];
     }
 	
 	return self;
 }
 
--(BOOL)resizeFromLayer:(CAEAGLLayer*)layer
-{	
-	// Allocate color buffer backing based on the current layer size
-    glBindRenderbufferOES(GL_RENDERBUFFER_OES, _colorRenderbuffer);
-    [_context renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:layer];
-	glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &_backingWidth);
-    glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &_backingHeight);
-	
-    if (glCheckFramebufferStatusOES(GL_FRAMEBUFFER_OES) != GL_FRAMEBUFFER_COMPLETE_OES)
-	{
-        return NO;
-    }
-        
-    [self load];
-    
-    return YES;
-}
-
 -(void)load
 {
-    animate = NO;
-    
     //setup code:
         
-    self.camera = [[[CameraController alloc] init] autorelease];
+    self.camera = [[[GLCamera alloc] init] autorelease];
     
     self.camera.renderer = self;
     
@@ -139,16 +131,13 @@
     
     glClearColor(0.0, 0.0, 0.0, 1.0);
     
-    self.chipGroup        = [GLChipGroup chipGroupWithRenderer:self];
-    
-    self.cardGroup        = [[[GLCardGroup         alloc] init] autorelease]; 
+    self.players          = [DisplayContainer container];
     self.splash           = [[[GLSplash            alloc] init] autorelease]; 
     self.table            = [[[GLTable             alloc] init] autorelease]; 
-    self.touchedObjects   = [[[NSMutableDictionary alloc] init] autorelease];
-    self.touchedLocations = [[[NSMutableDictionary alloc] init] autorelease];
-    self.textControllers  = [[[NSMutableDictionary alloc] init] autorelease];
+    self.touchedObjects   = [NSMutableDictionary dictionary];
+    self.touchedLocations = [NSMutableDictionary dictionary];
     
-    self.menuLayerController = [[[MenuLayerController alloc] init] autorelease];
+    self.menuLayerController = [[[GLMenuLayerController alloc] init] autorelease];
     
     self.menuLayerController.renderer = self;
     
@@ -165,16 +154,15 @@
     
     UIFont* font = [UIFont fontWithName:@"Futura-Medium" size:15.0];
     
-    [TextureController setTexture:[[[GLTexture alloc] initWithString:@" " dimensions:[@" " sizeWithFont:font] alignment:UITextAlignmentCenter font:font] autorelease] forKey:@"hold"];
-    [TextureController setTexture:[[[GLTexture alloc] initWithString:@"DRAW" dimensions:[@"DRAW" sizeWithFont:font] alignment:UITextAlignmentCenter font:font] autorelease] forKey:@"draw"];
+    [TextureController setTexture:[[[GLTexture alloc] initWithString:@" " font:font] autorelease] forKey:@"hold"];
+    [TextureController setTexture:[[[GLTexture alloc] initWithString:@"DRAW" font:font] autorelease] forKey:@"draw"];
     [TextureController setTexture:[[[GLTexture alloc] initWithButtonOpacity:0.25] autorelease] forKey:@"borderNormal"];
     [TextureController setTexture:[[[GLTexture alloc] initWithButtonOpacity:0.70] autorelease] forKey:@"borderTouched"];
     
-    self.cardGroup.renderer = self;
     self.splash.renderer = self;
     self.table.renderer = self;
         
-    NSMutableArray* servers = [[[NSMutableArray alloc] init] autorelease];
+    NSMutableArray* servers = [NSMutableArray array];
                                 
     [servers addObject:@"☃Joel's iPhone"];                           
     [servers addObject:@"☝Rachel's iPod"];                           
@@ -184,96 +172,23 @@
     [servers addObject:@"♘Michele's iPod"];                           
     [servers addObject:@"☂Bonnie's iPhone"];                           
     [servers addObject:@"♂Charles's iPod"];    
-//    [servers addObject:@"☃Joel's iPhone 2"];                           
-//    [servers addObject:@"☝Rachel's iPod 2"];                           
-//    [servers addObject:@"♜Carolyn's iPhone 2"];                           
-//    [servers addObject:@"☠John's iPod 2"];                           
-//    [servers addObject:@"Sarah's iPhone 2"];                           
-//    [servers addObject:@"♘Michele's iPod 2"];                           
-//    [servers addObject:@"☂Bonnie's iPhone 2"];                           
     
     srand48(time(NULL));
-
-//    MenuControllerJoinGame* menu = [MenuControllerJoinGame withRenderer:self];
-//    
-//    for(NSString* server in servers)
-//    {
-//        [menu addServerWithPeerId:server name:server];
-//    }
     
-    //[self.menuLayerController pushMenu:menu forKey:@"main"];
-    
-    [self.menuLayerController pushMenuLayer:[MenuControllerMain withRenderer:self] forKey:@"main"];
-
-    {
-        TextControllerCredits* textController = [[[TextControllerCredits alloc] init] autorelease];
-        
-        textController.renderer = self;
-        
-        textController.location = Vector3DMake(5.25, 0, 0);
-        
-        textController.creditTotal = 0;
-        textController.betTotal = 0;
-                    
-        [textController update];
-        
-        [self.textControllers setObject:textController forKey:@"credits"];
-    }
-
-    {
-        TextControllerActions* textController = [[[TextControllerActions alloc] init] autorelease];
-        
-        textController.renderer = self;
-        
-        textController.location = Vector3DMake(0, 0, 0);
-        
-        [self.textControllers setObject:textController forKey:@"gameOver"];
-    }
-    
-    {
-        TextControllerActions* textController = [[[TextControllerActions alloc] init] autorelease];
-        
-        textController.renderer = self;
-        
-        textController.location = Vector3DMake(-5.25, 0, 0);
-        
-        [self.textControllers setObject:textController forKey:@"actions"];
-    }
-    
-    {
-        TextControllerStatusBar* textController = [[[TextControllerStatusBar alloc] init] autorelease];
-                
-        textController.renderer = self;
-        
-        textController.location = Vector3DMake(0, 0, -6.6);
-        
-        [self.textControllers setObject:textController forKey:@"messageDown"];
-    }
-
-    {
-        TextControllerStatusBar* textController = [[[TextControllerStatusBar alloc] init] autorelease];
-                
-        textController.renderer = self;
-        
-        textController.location = Vector3DMake(0, 0, -5.2);
-        
-        textController.anglePitch = -90;
-        
-        [self.textControllers setObject:textController forKey:@"messageUp"];
-    }
+    [self.menuLayerController pushMenuLayer:[GLMenuControllerMain withRenderer:self] forKey:@"main"];
     
     GLfloat zNear       =   0.001;
     GLfloat zFar        = 500.00;
     GLfloat fieldOfView =  30.00; 
     GLfloat size        = zNear * tanf(DEGREES_TO_RADIANS(fieldOfView) / 2.0);
-    
-    CGRect rect = CGRectMake(0, 0, _backingWidth, _backingHeight); 
+        
+    CGRect viewport = self.glView.viewport;
     
     glMatrixMode(GL_PROJECTION); 
     
-    glFrustumf(-size, size, -size / (rect.size.width / rect.size.height), size / (rect.size.width / rect.size.height), zNear, zFar); 
+    glFrustumf(-size, size, -size / (viewport.size.width / viewport.size.height), size / (viewport.size.width / viewport.size.height), zNear, zFar); 
     
-    glViewport(0, 0, rect.size.width, rect.size.height);  
+    glViewport(0, 0, viewport.size.width, viewport.size.height);  
     
     glMatrixMode(GL_MODELVIEW);
         
@@ -283,23 +198,18 @@
     [[UIAccelerometer sharedAccelerometer] setDelegate:self];
     
     [self.splash.opacity setValue:0 forTime:2 andThen:nil];
-    
-    self.gameController = [GameController loadWithRenderer:self];
-    
+        
     if(!self.gameController) { [self.menuLayerController showMenus]; }
-    
-    animate = YES;
 }
 
 -(void)draw
 {
     static BOOL hasRendered = NO;
-
+    
     TRANSACTION_BEGIN
     {
-        TinyProfilerStart(0);
-        
-        GLfloat cameraPitch = self.camera.pitchAngle.value * self.camera.pitchFactor.value * (1.0 - self.cardGroup.angleFlip / 180.0);
+        //TODO: move this calculation to the Camera Controller class so it can be animated
+        GLfloat cameraPitch = self.camera.pitchAngle.value * self.camera.pitchFactor.value * (1.0 - self.currentPlayer.cardGroup.angleFlip / 180.0);
         
         glClear(GL_COLOR_BUFFER_BIT);
         
@@ -308,99 +218,54 @@
         gluLookAt(self.camera.position.value.x, self.camera.position.value.y, self.camera.position.value.z, self.camera.lookAt.value.x, self.camera.lookAt.value.y, self.camera.lookAt.value.z, 0.0, 1.0, 0.0);
         
         glRotatef(cameraPitch + 90, 1.0f, 0.0f, 0.0f);            
-        
-        self.cardGroup.bendFactor = cameraPitch / 90.0;
                         
         glTranslatef(0, 0, 3.0 * cameraPitch / 90.0);
+
+        self.table.drawStatus = GLTableDrawStatusDiffuse; [self.table draw];                                            
         
-        TinyProfilerStop(0);
-        TinyProfilerStart(1);
+        TRANSACTION_BEGIN
+        {
+            glTranslatef(self.currentOffset.value, 0, 0);
 
-        // !
-        
-        [self.cardGroup makeControlPoints];
-
-        TinyProfilerStop(1);
-        TinyProfilerStart(2);
-
-            self.table.drawStatus = GLTableDrawStatusDiffuse; [self.table draw];                                            
+            self.currentPlayer.cardGroup.bendFactor = cameraPitch / 90.0;
             
-            TinyProfilerStop(2);
-            TinyProfilerStart(3);
-
-            TRANSACTION_BEGIN
-            {
-                glTranslatef(self.offset.value, 0, 0);
-            
-                [self.cardGroup drawShadows];
-                
-                TinyProfilerStop(3);
-                TinyProfilerStart(4);
-                
-                [self.chipGroup drawShadows];
-            }
-            TRANSACTION_END
-                
-            TinyProfilerStop(4);
-            TinyProfilerStart(5);
-            
-            self.table.drawStatus = GLTableDrawStatusAmbient; [self.table draw];                                              
-        
-            TinyProfilerStop(5);
-            TinyProfilerStart(6);
-        
-            TRANSACTION_BEGIN
-            {
-                glTranslatef(self.offset.value, 0, 0);
-
-            // !
-            
-            { TextController* textController = [self.textControllers objectForKey:@"credits"];     [textController draw]; }
-            { TextController* textController = [self.textControllers objectForKey:@"actions"];     [textController draw]; }
-            { TextController* textController = [self.textControllers objectForKey:@"gameOver"];    [textController draw]; }
-            { TextController* textController = [self.textControllers objectForKey:@"messageDown"]; [textController draw]; }
-            
-            TinyProfilerStop(6);
-
-            TinyProfilerStart(8);
-            
-            // !
-                    
-            self.chipGroup.opacity = 1.0; //clipFloat(-0.04 * cameraPitch + 3.4, 0, 1);
-
-            [self.chipGroup drawMarkers];
-            [self.chipGroup drawChips];
-            
-            TinyProfilerStop(8);
-            TinyProfilerStart(9);
-            
-            [self.cardGroup drawBacks]; 
-            
-            TinyProfilerStop(9);
-            TinyProfilerStart(10);
-            
-            if(cameraPitch > 45 || self.cardGroup.angleFlip > 1) { [self.cardGroup drawFronts]; }
-            
-            TinyProfilerStop(10);
-            TinyProfilerStart(11);
-            
-            [self.cardGroup drawLabels];
-            
-            TinyProfilerStop(11);
-            TinyProfilerStart(12);
-            
-            { TextController* textController = [self.textControllers objectForKey:@"messageUp"]; [textController.opacity setValue:cameraPitch / 45.0 - 1.0]; [textController draw]; }
-            
-            TinyProfilerStop(12);
-            TinyProfilerStart(13);
+            [self.currentPlayer.cardGroup makeControlPoints];
+            [self.currentPlayer.cardGroup drawShadows];
+            [self.currentPlayer.chipGroup drawShadows];
         }
-        TRANSACTION_END;
-            
-        // !
+        TRANSACTION_END
         
+        self.table.drawStatus = GLTableDrawStatusAmbient; [self.table draw];                                              
+    
+        TRANSACTION_BEGIN
+        {
+            glTranslatef(self.currentOffset.value, 0, 0);
+            
+            { GLTextController* textController = [self.currentPlayer.textControllers objectForKey:@"credits"];     [textController draw]; }
+            { GLTextController* textController = [self.currentPlayer.textControllers objectForKey:@"actions"];     [textController draw]; }
+            { GLTextController* textController = [self.currentPlayer.textControllers objectForKey:@"gameOver"];    [textController draw]; }
+            { GLTextController* textController = [self.currentPlayer.textControllers objectForKey:@"messageDown"]; [textController draw]; }
+            
+            self.currentPlayer.chipGroup.opacity = 1.0; //clipFloat(-0.04 * cameraPitch + 3.4, 0, 1);
+
+            self.currentPlayer.flatCardGroup.bendFactor = cameraPitch / 90.0;
+            [self.currentPlayer.flatCardGroup draw];
+            
+            [self.currentPlayer.chipGroup drawMarkers];
+            [self.currentPlayer.chipGroup drawChips];
+            
+            [self.currentPlayer.cardGroup drawBacks]; 
+            
+            if(cameraPitch > 45 || self.currentPlayer.cardGroup.angleFlip > 1) { [self.currentPlayer.cardGroup drawFronts]; }
+            
+            [self.currentPlayer.cardGroup drawLabels];
+            
+            { GLTextController* textController = [self.currentPlayer.textControllers objectForKey:@"messageUp"]; [textController.opacity setValue:cameraPitch / 45.0 - 1.0]; [textController draw]; }
+        }
+        TRANSACTION_END
+                
         [self.menuLayerController draw];
         
-        TinyProfilerStop(13);
     }
     TRANSACTION_END;
     
@@ -408,7 +273,7 @@
        
     hasRendered = YES;
 
-    [_context presentRenderbuffer:GL_RENDERBUFFER_OES];
+    [self.glView presentRenderbuffer];
     
     for(NSValue* key in self.touchedLocations.allKeys) 
     {
@@ -430,14 +295,33 @@
             [self handleEmptyTouchMoved:touch fromPoint:pointFrom toPoint:pointTo];
         }
     }   
-    
-    TinyProfilerLog();
 }
 
 -(void)labelTouchedWithKey:(NSString*)key
 {
     [self.appController  labelTouchedWithKey:key];
     [self.gameController labelTouchedWithKey:key];
+}
+
+-(void)updatePlayersWithKeys:(NSArray*)keys andThen:(SimpleBlock)work
+{
+    NSMutableDictionary* newDictionary = [NSMutableDictionary dictionary];
+    
+    for(NSString* key in keys)
+    {
+        GLPlayer* player = [GLPlayer player];
+        
+        player.renderer = self;
+    
+        if(!self.currentPlayer && [key isEqualToString:self.appController.mainPlayerKey])
+        {
+            self.currentPlayer = player;
+        }
+        
+        [newDictionary setObject:player forKey:key];
+    }
+        
+    [self.players setLiveKeys:keys liveDictionary:newDictionary andThen:work];
 }
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -492,7 +376,7 @@
                 angle = (rawAngle - clampLow) / (clampHigh - clampLow) * 90.0;
             }
             
-            self.camera.pitchAngle = [AnimatedFloat withValue:angle * 0.10 + self.camera.pitchAngle.value * 0.90];
+            self.camera.pitchAngle = [AnimatedFloat floatWithValue:angle * 0.10 + self.camera.pitchAngle.value * 0.90];
         }
     }
 }
@@ -501,11 +385,15 @@
 {   
     TRANSACTION_BEGIN
     {
+        GLPlayer* player = (GLPlayer*)[self.players liveObjectForKey:self.appController.mainPlayerKey];
+        
         glRotatef(self.camera.rollAngle.value, 0.0f, 0.0f, 1.0f);   
         
         gluLookAt(self.camera.position.value.x, self.camera.position.value.y, self.camera.position.value.z, 
                   self.camera.lookAt.value.x,   self.camera.lookAt.value.y,   self.camera.lookAt.value.z, 
-                  0.0,                         1.0,                         0.0);
+                  0.0,                          1.0,                          0.0);
+        
+        glTranslatef(self.currentOffset.value, 0, 0);
         
         GLfloat angle = self.camera.pitchAngle.value * self.camera.pitchFactor.value;
         
@@ -518,11 +406,17 @@
             
             if(angle < 60)
             {
-                for(TextController* textController in self.textControllers.objectEnumerator) { object = [textController testTouch:touch withPreviousObject:object]; }
+                for(GLTextController* textController in player.textControllers.objectEnumerator) 
+                { 
+                    object = [textController testTouch:touch withPreviousObject:object]; 
+                }
 
-                for(GLChip* chip in self.chipGroup.chips.liveObjects) { object = [chip testTouch:touch withPreviousObject:object]; }
+                for(GLChip* chip in player.chipGroup.chips.liveObjects) 
+                { 
+                    object = [chip testTouch:touch withPreviousObject:object]; 
+                }
 
-                for(GLCard* card in self.cardGroup.cards.liveObjects) 
+                for(GLCard* card in player.cardGroup.cards.liveObjects) 
                 {
                     object = [card testTouch:touch withPreviousObject:object];
                 }
@@ -531,7 +425,7 @@
             }
             else
             {
-                for(GLCard* card in self.cardGroup.cards.liveObjects.reverseObjectEnumerator) 
+                for(GLCard* card in player.cardGroup.cards.liveObjects.reverseObjectEnumerator) 
                 {                 
                     object = [card testTouch:touch withPreviousObject:object];
                 }
@@ -585,22 +479,52 @@
 
 -(void)handleEmptyTouchDown:(UITouch*)touch fromPoint:(CGPoint)point
 {    
+    self.initialOffset = self.currentOffset.value;
     
+    for(GLPlayer* player in self.players.liveObjects)
+    {
+        if(player == self.currentPlayer)
+        {
+            player.offset = self.currentPlayer.offset;
+        }
+        else if(player == [self.players.liveObjects objectBefore:self.currentPlayer])
+        {
+            player.offset = self.currentPlayer.offset + 30;
+        }
+        else if(player == [self.players.liveObjects objectAfter:self.currentPlayer])
+        {
+            player.offset = self.currentPlayer.offset - 30;
+        }
+        else
+        {
+            player.offset = NAN;
+        }
+    }
 }
 
 -(void)handleEmptyTouchMoved:(UITouch*)touch fromPoint:(CGPoint)pointFrom toPoint:(CGPoint)pointTo
 {
-    [self.offset setValue:(pointTo.y - pointFrom.y) / -30.0];
+    [self.currentOffset setValue:(pointTo.y - pointFrom.y) / -30.0 + self.initialOffset];
 }
 
 -(void)handleEmptyTouchUp:(UITouch*)touch fromPoint:(CGPoint)pointFrom toPoint:(CGPoint)pointTo
 {    
-    if(absf(pointTo.y, pointFrom.y) < 10.0)
+    if(pointTo.y - pointFrom.y > 20.0)
+    {
+        self.currentPlayer = [self.players.liveObjects objectBefore:self.currentPlayer];
+    }
+    else if(pointTo.y - pointFrom.y < -20.0)
+    {
+        self.currentPlayer = [self.players.liveObjects objectAfter:self.currentPlayer];
+    }
+    else
     {
         [self emptySpaceTouched];
     }
     
-    [self.offset setValue:0 forTime:0.4];
+    LOG_NS(@"Renderer Offset %f -> %f", self.currentOffset.value, self.currentPlayer.offset);
+
+    [self.currentOffset setValue:self.currentPlayer.offset withSpeed:30];
 }
 
 -(void)emptySpaceTouched 
@@ -623,30 +547,6 @@
             }
         }
     }
-}
-
--(void)dealloc
-{
-	// Tear down GL
-	if(_defaultFramebuffer)
-	{
-		glDeleteFramebuffersOES(1, &_defaultFramebuffer);
-		_defaultFramebuffer = 0;
-	}
-
-	if(_colorRenderbuffer)
-	{
-		glDeleteRenderbuffersOES(1, &_colorRenderbuffer);
-		_colorRenderbuffer = 0;
-	}
-	
-	// Tear down context
-	if([EAGLContext currentContext] == _context) { [EAGLContext setCurrentContext:nil]; }
-	
-	[_context release];
-	_context = nil;
-	
-	[super dealloc];
 }
 
 @end

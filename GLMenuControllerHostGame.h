@@ -1,17 +1,14 @@
 #import "GLMenu.h"
-#import "TextControllerClientList.h"
-#import "TextControllerMainMenu.h"
-#import "TextControllerSettings.h"
-#import "AnimatedVector3D.h"
+#import "GLTextControllerClientList.h"
+#import "GLTextControllerMainMenu.h"
+#import "GLTextControllerSettings.h"
+#import "AnimatedVec3.h"
 #import "GLCardGroup.h"
 
-#import "MenuController.h"
+#import "GLMenuController.h"
 
-@interface MenuControllerHostGame : MenuController
-{
-    
-}
+@interface GLMenuControllerHostGame : GLMenuController
 
--(id)initWithRenderer:(GameRenderer*)renderer;
+-(id)initWithRenderer:(GLRenderer*)renderer;
 
 @end

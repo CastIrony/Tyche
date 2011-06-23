@@ -1,13 +1,13 @@
-#import "NSArray+Circle.h"
+#import "NSArray+JBCommon.h"
 
 #import "Common.h"
 #import "AnimatedFloat.h"
-#import "MenuController.h"
-#import "MenuLayerController.h"
-#import "GameRenderer.h"
+#import "GLMenuController.h"
+#import "GLMenuLayerController.h"
+#import "GLRenderer.h"
 #import "DisplayContainer.h"
 
-@implementation MenuLayerController
+@implementation GLMenuLayerController
 
 @synthesize renderer = _renderer;
 @synthesize menuLayers = _menuLayers;
@@ -15,7 +15,7 @@
 
 @dynamic currentLayer;
 
--(MenuController*)currentLayer
+-(GLMenuController*)currentLayer
 {
     return [self.menuLayers.liveObjects lastObject];
 }
@@ -28,7 +28,7 @@
     {
         self.menuLayers = [DisplayContainer container];
         
-        self.hidden = [AnimatedFloat withValue:0];
+        self.hidden = [AnimatedFloat floatWithValue:0];
     }
     
     return self;
@@ -52,11 +52,11 @@
     [self.renderer.lightness setValue:1 forTime:1];
 }
 
--(void)pushMenuLayer:(MenuController*)menuLayer forKey:(NSString*)key
+-(void)pushMenuLayer:(GLMenuController*)menuLayer forKey:(NSString*)key
 {
     menuLayer.owner = self;
     
-    menuLayer.hidden = [AnimatedFloat withValue:1];
+    menuLayer.hidden = [AnimatedFloat floatWithValue:1];
     [menuLayer.hidden setValue:0 forTime:0.5];
 
     [self.currentLayer.collapsed setValue:1 forTime:0.5];
@@ -72,20 +72,20 @@
     
     [newDictionary setObject:menuLayer forKey:key];
     
-    [self.menuLayers setKeys:newKeys andDictionary:newDictionary];
+    [self.menuLayers setLiveKeys:newKeys liveDictionary:newDictionary andThen:nil];
 }
 
 -(void)popUntilKey:(NSString*)target
 {
     if(![self.menuLayers.liveKeys containsObject:target]) { return; }
      
-    MenuController* currentLayer = [self.menuLayers liveObjectForKey:target];
+    GLMenuController* currentLayer = (GLMenuController*)[self.menuLayers liveObjectForKey:target];
     
     for(NSString* key in self.menuLayers.liveKeys.reverseObjectEnumerator)
     {
         if([key isEqualToString:target]) { break; }
         
-        MenuController* menuLayer = [self.menuLayers liveObjectForKey:key];
+        GLMenuController* menuLayer = (GLMenuController*)[self.menuLayers liveObjectForKey:key];
         
         [menuLayer killWithDisplayContainer:self.menuLayers key:key andThen:^{ [currentLayer layoutMenus]; }];
     }
@@ -108,7 +108,7 @@
     {    
         glTranslatef(self.hidden.value * -15 , 0, 0);
         
-        for(MenuController* layer in self.menuLayers.objects)
+        for(GLMenuController* layer in self.menuLayers.objects)
         {            
             [layer draw];
         }
@@ -118,7 +118,7 @@
 
 @end
 
-@implementation MenuLayerController (Touchable)
+@implementation GLMenuLayerController (Touchable)
 
 -(id<Touchable>)testTouch:(UITouch*)touch withPreviousObject:(id<Touchable>)object
 {
@@ -126,7 +126,7 @@
     {    
         glTranslatef(self.hidden.value * -15, 0, 0);
             
-        for(MenuController* layer in self.menuLayers.liveObjects)
+        for(GLMenuController* layer in self.menuLayers.liveObjects)
         {
             if(layer && within(layer.collapsed.value, 0, 0.001))
             {

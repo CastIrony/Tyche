@@ -5,21 +5,22 @@
 @class GLMenu;
 @class DisplayContainer;
 
-@interface MenuController : NSObject 
+@interface GLMenuController : NSObject 
 
-@property (nonatomic, assign) GameRenderer*        renderer;
+@property (nonatomic, assign) GLRenderer*          renderer;
 @property (nonatomic, retain) DisplayContainer*    menus;
 @property (nonatomic, retain) AnimatedFloat*       offset;
 @property (nonatomic, assign) GLfloat              initialOffset;
-@property (nonatomic, retain) NSString*            currentKey;
+@property (nonatomic, copy)   NSString*            currentKey;
 @property (nonatomic, retain) AnimatedFloat*       collapsed;
 @property (nonatomic, retain) AnimatedFloat*       hidden;
 @property (nonatomic, retain) AnimatedFloat*       death;
 @property (nonatomic, assign) id                   owner;
 @property (nonatomic, assign) BOOL                 first;
+@property (nonatomic, copy)   NSString*            key;
 
--(id)initWithRenderer:(GameRenderer*)renderer;
-+(id)withRenderer:(GameRenderer*)renderer;
+-(id)initWithRenderer:(GLRenderer*)renderer;
++(id)withRenderer:(GLRenderer*)renderer;
 
 -(void)addMenu:(GLMenu*)menu forKey:(NSString*)key;
 -(void)deleteMenuForKey:(NSString*)key;
@@ -28,7 +29,7 @@
 
 @end
 
-@interface MenuController (Touchable) <Touchable>
+@interface GLMenuController (Touchable) <Touchable>
 
 -(id<Touchable>)testTouch:(UITouch*)touch withPreviousObject:(id<Touchable>)object;
 -(void)handleTouchDown:(UITouch*)touch fromPoint:(CGPoint)point;
@@ -37,7 +38,7 @@
 
 @end
 
-@interface MenuController (Perishable) <Perishable>
+@interface GLMenuController (Displayable) <Displayable>
 
 @property (nonatomic, readonly) BOOL isDead;
 @property (nonatomic, readonly) BOOL isAlive;

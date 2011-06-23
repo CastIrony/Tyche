@@ -1,6 +1,6 @@
-#import "SessionController.h"
+#import "GameNetworkController.h"
 
-@implementation SessionController
+@implementation GameNetworkController
 
 @synthesize gameController = _gameController;
 @synthesize session = _session;

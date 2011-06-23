@@ -1,6 +1,6 @@
-#import "TextController.h"
+#import "GLTextController.h"
 
-@interface TextControllerSettings : TextController 
+@interface GLTextControllerSettings : GLTextController 
 
 @property (nonatomic, copy) NSArray*      settingKeys;
 @property (nonatomic, copy) NSDictionary* settingNames;
