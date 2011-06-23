@@ -1,21 +1,22 @@
-@interface CardModel : NSObject 
-{
-    int  _suit;
-    int  _numeral;
-    BOOL _isHeld;
-}
 
-@property (nonatomic, assign) int  suit;
-@property (nonatomic, assign) int  numeral;
-@property (nonatomic, readonly) int  numeralHigh;
-@property (nonatomic, readonly) int  numeralLow;
-@property (nonatomic, assign) BOOL isHeld;
-@property (nonatomic, assign) NSString* key;
+//  CardModel.h
+//  Studly
+//
+//  Created by Joel Bernstein on 2/7/11.
+//  Copyright 2011 Joel Bernstein. All rights reserved.
 
--(id)initWithSuit:(int)suit numeral:(int)numeral held:(BOOL)isHeld;
+#import "Model.h"
 
--(id)proxyForJson;
-+(id)withDictionary:(NSDictionary*)dictionary;
+@interface CardModel : Model;
+
++(CardModel*)cardModel;
+
+@property (nonatomic, readonly) NSString* key;
+@property (nonatomic, assign)   int       suit;
+@property (nonatomic, assign)   int       numeral;
+@property (nonatomic, readonly) int       numeralHigh;
+@property (nonatomic, readonly) int       numeralLow;
+@property (nonatomic, assign)   BOOL      isHeld;
 
 -(NSComparisonResult)numeralCompareHigh:(CardModel*)otherCard;
 -(NSComparisonResult)numeralCompareLow:(CardModel*)otherCard;

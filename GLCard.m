@@ -1,15 +1,16 @@
-#import "Common.h"
 #import "Geometry.h"
+#import "MC3DVector.h"
 #import "Bezier.h"
+#import "GLPlayer.h"
 #import "GLTexture.h"
 #import "Projection.h"
 #import "GLCardGroup.h"
 #import "AnimatedFloat.h"
-#import "AnimatedVector3D.h"
-#import "GameRenderer.h"
+#import "AnimatedVec3.h"
+#import "GLRenderer.h"
 #import "DisplayContainer.h"
 #import "TextureController.h"
-#import "CameraController.h"
+#import "GLCamera.h"
 
 #import "GLCard.h"
 
@@ -20,13 +21,11 @@
 @synthesize suit        = _suit;
 @synthesize numeral     = _numeral;
 @synthesize position    = _position;
-@synthesize location   = _location;
 @synthesize dealt      = _dealt;
 @synthesize death      = _death;
 @synthesize isHeld     = _isHeld;
-@synthesize isSelected = _isSelected;
 @synthesize bendFactor = _bendFactor;
-@synthesize angleFlip  = _angleFlip;
+@synthesize isFlipped  = _isFlipped;
 @synthesize angleFan   = _angleFan;
 @synthesize cancelTap  = _cancelTap;
 
@@ -63,16 +62,16 @@
     [super dealloc];
 }
 
--(void)appearAfterDelay:(NSTimeInterval)delay
+-(void)appearAfterDelay:(NSTimeInterval)delay andThen:(SimpleBlock)work
 {
-    [self.dealt setValue:1 forTime:1 afterDelay:delay andThen:nil];
-            
     self.angleJitter = randomFloat(-3.0, 3.0);
+
+    [self.dealt setValue:1 forTime:1 afterDelay:delay andThen:work];
 }
 
 -(BOOL)isMeshAnimating
 {    
-    return !self.bendFactor.hasEnded || !self.angleFlip.hasEnded || !self.angleFan.hasEnded || !self.location.hasEnded;
+    return YES;//!self.bendFactor.hasEnded || !self.isFlipped.hasEnded || !self.angleFan.hasEnded;
 }
 
 -(NSString*)description
@@ -129,56 +128,58 @@
         meshWidthShadow  = 5;
         meshHeightShadow = 2;
         
-        arrayVertexFront      = malloc(meshWidthFront  * meshHeightFront  * sizeof(Vector3D));
-        arrayVertexBack       = malloc(meshWidthBack   * meshHeightBack   * sizeof(Vector3D));
-        arrayVertexShadow     = malloc(meshWidthShadow * meshHeightShadow * sizeof(Vector3D));
-        arrayVertexBackSimple = malloc(4 * sizeof(Vector3D));
+        arrayVertexFront      = malloc(meshWidthFront  * meshHeightFront  * sizeof(vec3));
+        arrayVertexBack       = malloc(meshWidthBack   * meshHeightBack   * sizeof(vec3));
+        arrayVertexShadow     = malloc(meshWidthShadow * meshHeightShadow * sizeof(vec3));
+        arrayVertexBackSimple = malloc(4 * sizeof(vec3));
         
-        arrayNormalFront      = malloc(meshWidthFront  * meshHeightFront  * sizeof(Vector3D));
-        arrayNormalBack       = malloc(meshWidthBack   * meshHeightBack   * sizeof(Vector3D));
-        arrayNormalShadow     = malloc(meshWidthShadow * meshHeightShadow * sizeof(Vector3D));
-        arrayNormalBackSimple = malloc(4 * sizeof(Vector3D));
+        arrayNormalFront      = malloc(meshWidthFront  * meshHeightFront  * sizeof(vec3));
+        arrayNormalBack       = malloc(meshWidthBack   * meshHeightBack   * sizeof(vec3));
+        arrayNormalShadow     = malloc(meshWidthShadow * meshHeightShadow * sizeof(vec3));
+        arrayNormalBackSimple = malloc(4 * sizeof(vec3));
         
-        arrayTexture0Front      = malloc(meshWidthFront  * meshHeightFront  * sizeof(Vector2D));
-        arrayTexture0Back       = malloc(meshWidthBack   * meshHeightBack   * sizeof(Vector2D));
-        arrayTexture0Shadow     = malloc(meshWidthShadow * meshHeightShadow * sizeof(Vector2D));
-        arrayTexture0BackSimple = malloc(4 * sizeof(Vector2D));
+        arrayTexture0Front      = malloc(meshWidthFront  * meshHeightFront  * sizeof(vec2));
+        arrayTexture0Back       = malloc(meshWidthBack   * meshHeightBack   * sizeof(vec2));
+        arrayTexture0Shadow     = malloc(meshWidthShadow * meshHeightShadow * sizeof(vec2));
+        arrayTexture0BackSimple = malloc(4 * sizeof(vec2));
         
-        arrayTexture1Front      = malloc(meshWidthFront  * meshHeightFront  * sizeof(Vector2D));
-        arrayTexture1Back       = malloc(meshWidthBack   * meshHeightBack   * sizeof(Vector2D));
-        arrayTexture1BackSimple = malloc(4 * sizeof(Vector2D));
+        arrayTexture1Front      = malloc(meshWidthFront  * meshHeightFront  * sizeof(vec2));
+        arrayTexture1Back       = malloc(meshWidthBack   * meshHeightBack   * sizeof(vec2));
+        arrayTexture1BackSimple = malloc(4 * sizeof(vec2));
         
         arrayMeshFront      = malloc((meshWidthFront  - 1) * (meshHeightFront  - 1) * 6 * sizeof(GLushort));
-        arrayMeshBack       = malloc((meshWidthBack   - 1) * (meshHeightBack   - 1) * 6 * sizeof(GLushort));
-        arrayMeshShadow     = malloc((meshWidthShadow - 1) * (meshHeightShadow - 1) * 6 * sizeof(GLushort));
+        //arrayMeshBack       = malloc((meshWidthBack   - 1) * (meshHeightBack   - 1) * 6 * sizeof(GLushort));
+        //arrayMeshShadow     = malloc((meshWidthShadow - 1) * (meshHeightShadow - 1) * 6 * sizeof(GLushort));
+        arrayMeshBack       = malloc((meshWidthBack   - 1) * 6 * sizeof(GLushort));
+        arrayMeshShadow     = malloc((meshWidthShadow - 1) * 6 * sizeof(GLushort));
         arrayMeshBackSimple = malloc(6 * sizeof(GLushort));
         
-        textureSizeCard     = Vector2DMake(172.0 / 1024.0, 252.0 / 1024.0);
-        textureSizeLabel    = Vector2DMake(116.0 / 1024.0,  62.0 / 1024.0);
+        textureSizeCard     = vec2Make(172.0 / 1024.0, 252.0 / 1024.0);
+        textureSizeLabel    = vec2Make(116.0 / 1024.0,  62.0 / 1024.0);
         
-        textureOffsetCard[ 0] = Vector2DMake(826.0 / 1024.0, 702.0 / 1024.0); // Shadow
-        textureOffsetCard[ 1] = Vector2DMake( 26.0 / 1024.0,  36.0 / 1024.0); // Ace
-        textureOffsetCard[ 2] = Vector2DMake(226.0 / 1024.0,  36.0 / 1024.0); // 2
-        textureOffsetCard[ 3] = Vector2DMake(428.0 / 1024.0,  36.0 / 1024.0); // 3
-        textureOffsetCard[ 4] = Vector2DMake(626.0 / 1024.0,  36.0 / 1024.0); // 4
-        textureOffsetCard[ 5] = Vector2DMake(826.0 / 1024.0,  36.0 / 1024.0); // 5
-        textureOffsetCard[ 6] = Vector2DMake( 26.0 / 1024.0, 369.0 / 1024.0); // 6
-        textureOffsetCard[ 7] = Vector2DMake(226.0 / 1024.0, 369.0 / 1024.0); // 7
-        textureOffsetCard[ 8] = Vector2DMake(426.0 / 1024.0, 369.0 / 1024.0); // 8
-        textureOffsetCard[ 9] = Vector2DMake(626.0 / 1024.0, 369.0 / 1024.0); // 9
-        textureOffsetCard[10] = Vector2DMake(826.0 / 1024.0, 369.0 / 1024.0); // 10
-        textureOffsetCard[11] = Vector2DMake( 26.0 / 1024.0, 702.0 / 1024.0); // Jack
-        textureOffsetCard[12] = Vector2DMake(226.0 / 1024.0, 702.0 / 1024.0); // Queen
-        textureOffsetCard[13] = Vector2DMake(426.0 / 1024.0, 702.0 / 1024.0); // King
-        textureOffsetCard[14] = Vector2DMake(626.0 / 1024.0, 702.0 / 1024.0); // Back
+        textureOffsetCard[ 0] = vec2Make(826.0 / 1024.0, 702.0 / 1024.0); // Shadow
+        textureOffsetCard[ 1] = vec2Make( 26.0 / 1024.0,  36.0 / 1024.0); // Ace
+        textureOffsetCard[ 2] = vec2Make(226.0 / 1024.0,  36.0 / 1024.0); // 2
+        textureOffsetCard[ 3] = vec2Make(428.0 / 1024.0,  36.0 / 1024.0); // 3
+        textureOffsetCard[ 4] = vec2Make(626.0 / 1024.0,  36.0 / 1024.0); // 4
+        textureOffsetCard[ 5] = vec2Make(826.0 / 1024.0,  36.0 / 1024.0); // 5
+        textureOffsetCard[ 6] = vec2Make( 26.0 / 1024.0, 369.0 / 1024.0); // 6
+        textureOffsetCard[ 7] = vec2Make(226.0 / 1024.0, 369.0 / 1024.0); // 7
+        textureOffsetCard[ 8] = vec2Make(426.0 / 1024.0, 369.0 / 1024.0); // 8
+        textureOffsetCard[ 9] = vec2Make(626.0 / 1024.0, 369.0 / 1024.0); // 9
+        textureOffsetCard[10] = vec2Make(826.0 / 1024.0, 369.0 / 1024.0); // 10
+        textureOffsetCard[11] = vec2Make( 26.0 / 1024.0, 702.0 / 1024.0); // Jack
+        textureOffsetCard[12] = vec2Make(226.0 / 1024.0, 702.0 / 1024.0); // Queen
+        textureOffsetCard[13] = vec2Make(426.0 / 1024.0, 702.0 / 1024.0); // King
+        textureOffsetCard[14] = vec2Make(626.0 / 1024.0, 702.0 / 1024.0); // Back
         
-        GenerateBezierTextures(arrayTexture0Front,  meshWidthFront,  meshHeightFront,  Vector2DMake(1, 1), Vector2DMake(0, 0));
-        GenerateBezierTextures(arrayTexture0Back,   meshWidthBack,   meshHeightBack,   Vector2DMake(1, 1), Vector2DMake(0, 0)); 
-        GenerateBezierTextures(arrayTexture0Shadow, meshWidthShadow, meshHeightShadow, Vector2DMake(1, 1), Vector2DMake(0, 0));
+        GenerateBezierTextures(arrayTexture0Front,  meshWidthFront,  meshHeightFront,  vec2Make(1, 1), vec2Make(0, 0));
+        GenerateBezierTextures(arrayTexture0Back,   meshWidthBack,   meshHeightBack,   vec2Make(1, 1), vec2Make(0, 0)); 
+        GenerateBezierTextures(arrayTexture0Shadow, meshWidthShadow, meshHeightShadow, vec2Make(1, 1), vec2Make(0, 0));
         GenerateBezierTextures(arrayTexture1Front,  meshWidthFront,  meshHeightFront,  textureSizeCard, textureOffsetCard[self.numeral]);
         GenerateBezierTextures(arrayTexture1Back,   meshWidthBack,   meshHeightBack,   textureSizeCard, textureOffsetCard[14]); 
         
-        GenerateBezierTextures(arrayTexture0BackSimple, 2, 2, Vector2DMake(1, 1), Vector2DMake(0, 0)); 
+        GenerateBezierTextures(arrayTexture0BackSimple, 2, 2, vec2Make(1, 1), vec2Make(0, 0)); 
         GenerateBezierTextures(arrayTexture1BackSimple, 2, 2, textureSizeCard, textureOffsetCard[14]); 
 
         GenerateBezierMesh(arrayMeshFront,      meshWidthFront,  meshHeightFront);
@@ -186,14 +187,12 @@
         GenerateBezierMesh(arrayMeshShadow,     meshWidthShadow, meshHeightShadow);
         GenerateBezierMesh(arrayMeshBackSimple, 2, 2);                                         
 
-        self.isHeld     = [AnimatedFloat withValue:held];
-        self.isSelected = [AnimatedFloat withValue:0];
-        self.angleFlip  = [AnimatedFloat withValue:0];
-        self.angleFan   = [AnimatedFloat withValue:0];
-        self.bendFactor = [AnimatedFloat withValue:0];
-        self.dealt      = [AnimatedFloat withValue:0];
-        self.death      = [AnimatedFloat withValue:0];
-        self.location   = [AnimatedFloat withValue:0];
+        self.isHeld     = [AnimatedFloat floatWithValue:held];
+        self.isFlipped  = [AnimatedFloat floatWithValue:0];
+        self.angleFan   = [AnimatedFloat floatWithValue:0];
+        self.bendFactor = [AnimatedFloat floatWithValue:0];
+        self.dealt      = [AnimatedFloat floatWithValue:0];
+        self.death      = [AnimatedFloat floatWithValue:0];
     }
     
     return self;
@@ -211,240 +210,233 @@
 
 -(void)drawFront
 {   
-    GLfloat held = self.isHeld.value * 0.5 + 0.5;
-    GLfloat opacity = held * MIN(-4.0 * (1.0 + self.death.value - self.dealt.value) + 4.0, 1.0);
-
+    GLfloat bendOpacity = easeInOut(self.bendFactor.value, 0.2, 0.6); 
+    GLfloat flipOpacity = easeInOut(1.0 - self.isFlipped.value, 0.4, 0.6);
+    GLfloat heldOpacity = easeInOut(self.isHeld.value + bendOpacity * flipOpacity * 0.7, 0.0, 1.0);
+    
+    GLfloat deathOpacity = MIN(-4.0 * (1.0 + self.death.value - self.dealt.value) + 4.0, 1.0);
+    
+    GLfloat opacity = heldOpacity * deathOpacity;
+    
     if(within(opacity, 0, 0.001)) { return; }
 
-    TRANSACTION_BEGIN
-    {    
-        glTranslatef(self.location.value, -1.0 * sin(DEGREES_TO_RADIANS(self.angleFlip.value)), -30 * (1 + self.death.value - self.dealt.value));
-    
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-            
-        GLfloat lightness = self.cardGroup.renderer.lightness.value;
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         
+    GLfloat lightness = self.cardGroup.player.renderer.lightness.value;
+    
+    glColor4f(lightness, lightness, lightness, opacity);
+    
+    glVertexPointer  (3, GL_FLOAT, 0, arrayVertexFront);
+    glNormalPointer  (   GL_FLOAT, 0, arrayNormalFront);
+            
+    glClientActiveTexture(GL_TEXTURE0); 
+    glActiveTexture(GL_TEXTURE0); 
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"cards"]);
+    glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture0Front);      
+    
+    glClientActiveTexture(GL_TEXTURE1); 
+    glActiveTexture(GL_TEXTURE1); 
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:[NSString stringWithFormat:@"suit%d", _suit]]);
+    glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture1Front);      
+    
+    glDrawElements(GL_TRIANGLES, (meshWidthFront - 1) * (meshHeightFront - 1) * 6, GL_UNSIGNED_SHORT, arrayMeshFront);
+    
+    glClientActiveTexture(GL_TEXTURE1); 
+    glActiveTexture(GL_TEXTURE1); 
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glClientActiveTexture(GL_TEXTURE0); 
+    glActiveTexture(GL_TEXTURE0); 
+}
+
+-(void)drawBack
+{
+    GLfloat bendOpacity = easeInOut(self.bendFactor.value, 0.2, 0.6); 
+    GLfloat flipOpacity = easeInOut(1.0 - self.isFlipped.value, 0.4, 0.6);
+    GLfloat heldOpacity = easeInOut(self.isHeld.value + bendOpacity * flipOpacity * 0.7, 0.0, 1.0);
+    
+    GLfloat deathOpacity = MIN(-4.0 * (1.0 + self.death.value - self.dealt.value) + 4.0, 1.0);
+    
+    GLfloat opacity = heldOpacity * deathOpacity;
+            
+    if(within(opacity, 0, 0.001)) { return; }
+        
+    if(within(self.bendFactor.value, 0, 0.001))
+    {
+        GLfloat lightness = self.cardGroup.player.renderer.lightness.value;
+    
         glColor4f(lightness, lightness, lightness, opacity);
         
-        glVertexPointer  (3, GL_FLOAT, 0, arrayVertexFront);
-        glNormalPointer  (   GL_FLOAT, 0, arrayNormalFront);
-                
+        glVertexPointer  (3, GL_FLOAT, 0, arrayVertexBackSimple);                                                                             
+        glNormalPointer  (   GL_FLOAT, 0, arrayNormalBackSimple);                                                                             
+        
         glClientActiveTexture(GL_TEXTURE0); 
         glActiveTexture(GL_TEXTURE0); 
         glEnableClientState(GL_TEXTURE_COORD_ARRAY);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"cards"]);
-        glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture0Front);      
+        glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture0BackSimple);      
         
         glClientActiveTexture(GL_TEXTURE1); 
         glActiveTexture(GL_TEXTURE1); 
         glEnableClientState(GL_TEXTURE_COORD_ARRAY);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:[NSString stringWithFormat:@"suit%d", _suit]]);
-        glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture1Front);      
+        glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"suit0"]);
+        glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture1BackSimple);      
         
-        glDrawElements(GL_TRIANGLES, (meshWidthFront - 1) * (meshHeightFront - 1) * 6, GL_UNSIGNED_SHORT, arrayMeshFront);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, arrayMeshBackSimple);
         
         glClientActiveTexture(GL_TEXTURE1); 
         glActiveTexture(GL_TEXTURE1); 
         glBindTexture(GL_TEXTURE_2D, 0);
         glClientActiveTexture(GL_TEXTURE0); 
         glActiveTexture(GL_TEXTURE0); 
-
     }
-    TRANSACTION_END
-}
-
--(void)drawBack
-{
-    GLfloat held = self.isHeld.value     * 0.5 + 0.5;
-
-    GLfloat opacity = held * MIN(-4.0 * (1.0 + self.death.value - self.dealt.value) + 4.0, 1.0);
+    else 
+    {
+        GLfloat lightness = self.cardGroup.player.renderer.lightness.value;
+                    
+        glColor4f(lightness, lightness, lightness, opacity);
             
-    if(within(opacity, 0, 0.001)) { return; }
-
-    TRANSACTION_BEGIN
-    {    
-        glTranslatef(self.location.value, -1.0 * sin(DEGREES_TO_RADIANS(self.angleFlip.value)), -30.0 * (1.0 + self.death.value - self.dealt.value));
+        glVertexPointer  (3, GL_FLOAT, 0, arrayVertexBack);                                                                             
+        glNormalPointer  (   GL_FLOAT, 0, arrayNormalBack);                                                                             
+            
+        glClientActiveTexture(GL_TEXTURE0); 
+        glActiveTexture(GL_TEXTURE0); 
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"cards"]);
+        glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture0Back);      
         
-        if(within(self.bendFactor.value, 0, 0.001))
-        {
-            GLfloat lightness = self.cardGroup.renderer.lightness.value;
+        glClientActiveTexture(GL_TEXTURE1); 
+        glActiveTexture(GL_TEXTURE1); 
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"suit0"]);
+        glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture1Back);      
+            
+        glDrawElements(GL_TRIANGLES, (meshWidthBack - 1) * (meshHeightBack - 1) * 6, GL_UNSIGNED_SHORT, arrayMeshBack);
         
-            glColor4f(lightness, lightness, lightness, opacity);
-            
-            glVertexPointer  (3, GL_FLOAT, 0, arrayVertexBackSimple);                                                                             
-            glNormalPointer  (   GL_FLOAT, 0, arrayNormalBackSimple);                                                                             
-            
-            glClientActiveTexture(GL_TEXTURE0); 
-            glActiveTexture(GL_TEXTURE0); 
-            glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-            glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"cards"]);
-            glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture0BackSimple);      
-            
-            glClientActiveTexture(GL_TEXTURE1); 
-            glActiveTexture(GL_TEXTURE1); 
-            glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-            glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"suit0"]);
-            glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture1BackSimple);      
-            
-            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, arrayMeshBackSimple);
-            
-            glClientActiveTexture(GL_TEXTURE1); 
-            glActiveTexture(GL_TEXTURE1); 
-            glBindTexture(GL_TEXTURE_2D, 0);
-            glClientActiveTexture(GL_TEXTURE0); 
-            glActiveTexture(GL_TEXTURE0); 
-        }
-        else 
-        {
-            GLfloat lightness = self.cardGroup.renderer.lightness.value;
-                        
-            glColor4f(lightness, lightness, lightness, opacity);
-                
-            glVertexPointer  (3, GL_FLOAT, 0, arrayVertexBack);                                                                             
-            glNormalPointer  (   GL_FLOAT, 0, arrayNormalBack);                                                                             
-                
-            glClientActiveTexture(GL_TEXTURE0); 
-            glActiveTexture(GL_TEXTURE0); 
-            glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-            glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"cards"]);
-            glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture0Back);      
-            
-            glClientActiveTexture(GL_TEXTURE1); 
-            glActiveTexture(GL_TEXTURE1); 
-            glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-            glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"suit0"]);
-            glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture1Back);      
-                
-            glDrawElements(GL_TRIANGLES, (meshWidthBack - 1) * (meshHeightBack - 1) * 6, GL_UNSIGNED_SHORT, arrayMeshBack);
-            
-            glClientActiveTexture(GL_TEXTURE1); 
-            glActiveTexture(GL_TEXTURE1); 
-            glBindTexture(GL_TEXTURE_2D, 0);
-            glClientActiveTexture(GL_TEXTURE0); 
-            glActiveTexture(GL_TEXTURE0); 
-        }
-        
+        glClientActiveTexture(GL_TEXTURE1); 
+        glActiveTexture(GL_TEXTURE1); 
+        glBindTexture(GL_TEXTURE_2D, 0);
+        glClientActiveTexture(GL_TEXTURE0); 
+        glActiveTexture(GL_TEXTURE0); 
     }
-    TRANSACTION_END
 }
 
 -(void)drawShadow
 {
-    GLfloat held = self.isHeld.value * 0.5 + 0.5;
-
-    GLfloat opacity = held * MIN(-4.0 * (1.0 + self.death.value - self.dealt.value) + 4.0, 1.0);
-            
+    GLfloat bendOpacity = easeInOut(self.bendFactor.value, 0.2, 0.6); 
+    GLfloat flipOpacity = easeInOut(1.0 - self.isFlipped.value, 0.4, 0.6);
+    GLfloat heldOpacity = easeInOut(self.isHeld.value + bendOpacity * flipOpacity * 0.7, 0.0, 1.0);
+    
+    GLfloat deathOpacity = MIN(-4.0 * (1.0 + self.death.value - self.dealt.value) + 4.0, 1.0);
+    
+    GLfloat opacity = heldOpacity * deathOpacity;
+                
     if(within(opacity, 0, 0.001)) { return; }
 
-    TRANSACTION_BEGIN
-    {    
-        glTranslatef(self.location.value, -1.0 * sin(DEGREES_TO_RADIANS(self.angleFlip.value)), -30 * (1 + self.death.value - self.dealt.value));
-        
-        glDisable(GL_CULL_FACE);
-        
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        
-        glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"shadow"]);
-                            
-        glColor4f(1, 1, 1, opacity);
+    glDisable(GL_CULL_FACE);
+    
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    
+    glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"shadow"]);
+                        
+    glColor4f(1, 1, 1, opacity);
 
-        glVertexPointer  (3, GL_FLOAT, 0, arrayVertexShadow);
-        glNormalPointer  (   GL_FLOAT, 0, arrayNormalShadow);
-        glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture0Shadow);            
-        
-        glDrawElements(GL_TRIANGLES, (meshWidthShadow - 1) * (meshHeightShadow - 1) * 6, GL_UNSIGNED_SHORT, arrayMeshShadow);
-        
-        glEnable(GL_CULL_FACE);
-    }
-    TRANSACTION_END
+    glVertexPointer  (3, GL_FLOAT, 0, arrayVertexShadow);
+    glNormalPointer  (   GL_FLOAT, 0, arrayNormalShadow);
+    glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture0Shadow);            
+    
+    glDrawElements(GL_TRIANGLES, (meshWidthShadow - 1) * (meshHeightShadow - 1) * 6, GL_UNSIGNED_SHORT, arrayMeshShadow);
+    
+    glEnable(GL_CULL_FACE);
 }
 
 -(void)drawLabel
 {
     if(!self.cardGroup.showLabels) { return; }
 
-    GLfloat opacity = MIN(-4.0 * (1.0 + self.death.value - self.dealt.value) + 4.0, 1.0);
-
-    if(within(opacity, 0, 0.001)) { return; }
-
-    TRANSACTION_BEGIN
-    {    
-        glTranslatef(self.location.value, -1.0 * sin(DEGREES_TO_RADIANS(self.angleFlip.value)), -30 * (1 + self.death.value - self.dealt.value));
+    GLfloat bendOpacity = easeInOut(self.bendFactor.value, 0.2, 0.6); 
+    GLfloat flipOpacity = easeInOut(1.0 - self.isFlipped.value, 0.4, 0.6);
+    GLfloat heldOpacity = easeInOut(self.isHeld.value + bendOpacity * flipOpacity * 0.7, 0.0, 1.0);
     
-        //TODO: FIX THIS STUFF LATER
+    GLfloat deathOpacity = MIN(-4.0 * (1.0 + self.death.value - self.dealt.value) + 4.0, 1.0);
+    
+    GLfloat opacity = heldOpacity * deathOpacity;
+    
+    if(within(opacity, 0, 0.001)) { return; }
+    
+    //TODO: FIX THIS STUFF LATER
+    
+    if(self.isFlipped.value < 0.5)
+    {        
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    
+        vec3 arrayVertex  [4];
+        vec3 arrayNormal  [4];
+        vec2 arrayTexture0[4];
+        GLushort arrayMesh    [6];
         
-        if(self.angleFlip.value < 90)
-        {        
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        //GLushort arrayMesh[6];  
         
-            Vector3D arrayVertex  [4];
-            Vector3D arrayNormal  [4];
-            Vector2D arrayTexture0[4];
-            GLushort arrayMesh    [6];
-            
-            //GLushort arrayMesh[6];  
-            
-            GenerateBezierVertices(arrayVertex,  2, 2, controlPointsLabel);
-            GenerateBezierNormals (arrayNormal,  2, 2, controlPointsLabel);
-            GenerateBezierMesh    (arrayMesh,    2, 2);
-            
-            glVertexPointer  (3, GL_FLOAT, 0, arrayVertex);
-            glNormalPointer  (   GL_FLOAT, 0, arrayNormal);
+        GenerateBezierVertices(arrayVertex,  2, 2, controlPointsLabel);
+        GenerateBezierNormals (arrayNormal,  2, 2, controlPointsLabel);
+        GenerateBezierMesh    (arrayMesh,    2, 2);
+        
+        glVertexPointer  (3, GL_FLOAT, 0, arrayVertex);
+        glNormalPointer  (   GL_FLOAT, 0, arrayNormal);
 
-            // HOLD
-            {
-                glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"hold"]);
-                                
-                glColor4f(1, 1, 1, opacity * self.isHeld.value);
+        // HOLD
+        {
+            glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"hold"]);
                             
-                GenerateBezierTextures(arrayTexture0, 2, 2, Vector2DMake(1,1), Vector2DMake(0,0));
-                
-                glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture0);
-                
-                glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, arrayMesh);
-            }
+            glColor4f(1, 1, 1, opacity * self.isHeld.value);
+                        
+            GenerateBezierTextures(arrayTexture0, 2, 2, vec2Make(1,1), vec2Make(0,0));
             
-            // DRAW
-            {
-                glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"draw"]);
-                
-                glColor4f(1, 1, 1, opacity * (1.0 - self.isHeld.value) / 2.0);
-                
-                GenerateBezierTextures(arrayTexture0, 2, 2, Vector2DMake(1,1), Vector2DMake(0,0));
-                
-                glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture0);
-                
-                glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, arrayMesh);
-            }
+            glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture0);
+            
+            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, arrayMesh);
+        }
+        
+        // DRAW
+        {
+            glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"draw"]);
+            
+            glColor4f(1, 1, 1, opacity * (1.0 - self.isHeld.value) / 2.0);
+            
+            GenerateBezierTextures(arrayTexture0, 2, 2, vec2Make(1,1), vec2Make(0,0));
+            
+            glTexCoordPointer(2, GL_FLOAT, 0, arrayTexture0);
+            
+            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, arrayMesh);
         }
     }
-    TRANSACTION_END
 }
 
 -(void)makeControlPoints
 {
     if(!self.isMeshAnimating) { return; }
     
-    Vector3D baseCorners[] = 
+    vec3 baseCorners[] = 
     {
-        Vector3DMake( 2.0,  0.0,  3.0),
-        Vector3DMake( 2.0,  0.0, -3.0),
-        Vector3DMake(-2.0,  0.0,  3.0),
-        Vector3DMake(-2.0,  0.0, -3.0)
+        vec3Make( 2.0,  0.0,  3.0),
+        vec3Make( 2.0,  0.0, -3.0),
+        vec3Make(-2.0,  0.0,  3.0),
+        vec3Make(-2.0,  0.0, -3.0)
     };
     
-    Vector3D labelCorners[] = 
+    vec3 labelCorners[] = 
     {
-        Vector3DMake( 0.0,  0.0,  3.0),
-        Vector3DMake( 0.0,  0.0,  3.5),
-        Vector3DMake( 1.2,  0.0,  3.0),
-        Vector3DMake( 1.2,  0.0,  3.5)
+        vec3Make( 0.0,  0.0,  3.0),
+        vec3Make( 0.0,  0.0,  3.5),
+        vec3Make( 1.2,  0.0,  3.0),
+        vec3Make( 1.2,  0.0,  3.5)
     };
 
     GenerateBezierControlPoints(controlPointsBase,  baseCorners);
@@ -510,13 +502,17 @@
     controlPointsShadow[14] = controlPointsBase[13];
     controlPointsShadow[15] = controlPointsBase[12];
     
-    [self rotateWithAngle:self.angleFlip.value aroundPoint:Vector3DMake(0.0, 0.0, 0.0) andAxis:Vector3DMake(0.0, 0.0, 1.0)];
-    [self rotateWithAngle:self.angleJitter aroundPoint:Vector3DMake(0.0, 0.0, 0.0) andAxis:Vector3DMake(0.0, 1.0, 0.0)];
-    [self rotateWithAngle:self.bendFactor.value * self.angleFan.value aroundPoint:Vector3DMake(0.0, 0.0, -25.0) andAxis:Vector3DMake(0.0, 1.0, 0.0)];
+    GLfloat angleflip = self.isFlipped.value * 180;
     
-    [self bendWithAngle:self.bendFactor.value * 108 aroundPoint:Vector3DMake(0.0, 0.0, 0.0) andAxis:Vector3DMake(1.0, 0.0, 0.0)];
+    [self rotateWithAngle:angleflip aroundPoint:vec3Make(0.0, 0.0, 0.0) andAxis:vec3Make(0.0, 0.0, 1.0)];
+    [self rotateWithAngle:self.angleJitter aroundPoint:vec3Make(0.0, 0.0, 0.0) andAxis:vec3Make(0.0, 1.0, 0.0)];
+    [self rotateWithAngle:self.bendFactor.value * self.angleFan.value aroundPoint:vec3Make(0.0, 0.0, -25.0) andAxis:vec3Make(0.0, 1.0, 0.0)];
     
-    [self scaleWithFactor:Vector3DMake(1.0, 1.2, 1.0) fromPoint:Vector3DMake(0.0, 0.0, 0.0)];
+    [self bendWithAngle:self.bendFactor.value * 108 aroundPoint:vec3Make(0.0, 0.0, 0.0) andAxis:vec3Make(1.0, 0.0, 0.0)];
+    
+    [self scaleWithFactor:vec3Make(1.0, 1.2, 1.0) fromPoint:vec3Make(0.0, 0.0, 0.0)];
+    
+    [self translateWithVector:vec3Make(self.isFlipped.value * self.angleFan.value * 0.7, -1.0 * sin(DEGREES_TO_RADIANS(self.isFlipped.value * 180)), -30 * (1 + self.death.value - self.dealt.value))];
     
     [self flattenShadow];
 
@@ -531,7 +527,7 @@
     GenerateBezierNormals(arrayNormalBackSimple, 2, 2, controlPointsBack);                      
 }
 
--(void)rotateWithAngle:(GLfloat)angle aroundPoint:(Vector3D)point andAxis:(Vector3D)axis
+-(void)rotateWithAngle:(GLfloat)angle aroundPoint:(vec3)point andAxis:(vec3)axis
 {   
     rotateVectors(controlPointsShadow, 16, angle, point, axis);
     rotateVectors(controlPointsFront,  16, angle, point, axis);
@@ -539,7 +535,7 @@
     rotateVectors(controlPointsLabel,  16, angle, point, axis);
 }
 
--(void)bendWithAngle:(GLfloat)angle aroundPoint:(Vector3D)point andAxis:(Vector3D)axis
+-(void)bendWithAngle:(GLfloat)angle aroundPoint:(vec3)point andAxis:(vec3)axis
 {   
     rotateVectors(controlPointsShadow,  8, angle, point, axis);
     rotateVectors(controlPointsFront,   8, angle, point, axis);
@@ -547,7 +543,7 @@
     rotateVectors(controlPointsLabel,  16, angle, point, axis);
 }
 
--(void)scaleWithFactor:(Vector3D)factor fromPoint:(Vector3D)point
+-(void)scaleWithFactor:(vec3)factor fromPoint:(vec3)point
 {
     for(int i = 0; i < 16; i++)
     {
@@ -569,7 +565,7 @@
     }
 }
 
--(void)scaleShadowWithFactor:(Vector3D)factor fromPoint:(Vector3D)point
+-(void)scaleShadowWithFactor:(vec3)factor fromPoint:(vec3)point
 {
     for(int i = 0; i < 16; i++)
     {
@@ -579,7 +575,7 @@
     }
 }
 
--(void)translateWithVector:(Vector3D)vector
+-(void)translateWithVector:(vec3)vector
 {
     for(int i = 0; i < 16; i++)
     {
@@ -603,49 +599,43 @@
 
 -(void)flattenShadow
 {
-    Vector3D light = Vector3DMake(0, -20, 0);
+    vec3 light = vec3Make(0, -20, 0);
     
     for(int i = 0; i < 16; i++)
     {
-        controlPointsShadow[i] = Vector3DProjectShadow(light, controlPointsShadow[i]);
+        controlPointsShadow[i] = vec3ProjectShadow(light, controlPointsShadow[i]);
     }
 }
 
 -(id<Touchable>)testTouch:(UITouch*)touch withPreviousObject:(id<Touchable>)object
 {
-    TRANSACTION_BEGIN
-    {    
-        glTranslatef(self.location.value, -1.0 * sin(DEGREES_TO_RADIANS(self.angleFlip.value)), -30 * (1 + self.death.value - self.dealt.value));
+    GLfloat model_view[16];
+    glGetFloatv(GL_MODELVIEW_MATRIX, model_view);
+    
+    GLfloat projection[16];
+    glGetFloatv(GL_PROJECTION_MATRIX, projection);
+    
+    GLint viewport[4];
+    glGetIntegerv(GL_VIEWPORT, viewport);
+    
+    vec2 points[16];
+    ProjectVectors(controlPointsFront, points, 16, model_view, projection, viewport);
+    
+    GLushort triangles[54];
+    GenerateBezierMesh(triangles, 4, 4);
+    
+    CGPoint touchPoint = [touch locationInView:touch.view];
+    
+    vec2 touchLocation = vec2Make(touchPoint.x, UIScreen.mainScreen.bounds.size.height - touchPoint.y);
         
-        GLfloat model_view[16];
-        glGetFloatv(GL_MODELVIEW_MATRIX, model_view);
-        
-        GLfloat projection[16];
-        glGetFloatv(GL_PROJECTION_MATRIX, projection);
-        
-        GLint viewport[4];
-        glGetIntegerv(GL_VIEWPORT, viewport);
-        
-        Vector2D points[16];
-        ProjectVectors(controlPointsFront, points, 16, model_view, projection, viewport);
-        
-        GLushort triangles[54];
-        GenerateBezierMesh(triangles, 4, 4);
-        
-        CGPoint touchPoint = [touch locationInView:touch.view];
-        
-        Vector2D touchLocation = Vector2DMake(touchPoint.x, 480 - touchPoint.y);
-        
-        return TestTriangles(touchLocation, points, triangles, 18) ? self : object;
-    }
-    TRANSACTION_END
+    return TestTriangles(touchLocation, points, triangles, 18) ? self : object;
 }
 
 -(void)handleTouchDown:(UITouch*)touch fromPoint:(CGPoint)point
 {
     self.cancelTap = NO;
     
-    GLfloat angle = self.cardGroup.renderer.camera.pitchAngle.value * self.cardGroup.renderer.camera.pitchFactor.value;
+    GLfloat angle = self.cardGroup.player.renderer.camera.pitchAngle.value * self.cardGroup.player.renderer.camera.pitchFactor.value;
     
     if(angle > 60)
     {
@@ -675,7 +665,7 @@
 
 -(void)handleTouchUp:(UITouch*)touch fromPoint:(CGPoint)pointFrom toPoint:(CGPoint)pointTo
 {
-    GLfloat angle = self.cardGroup.renderer.camera.pitchAngle.value * self.cardGroup.renderer.camera.pitchFactor.value;
+    GLfloat angle = self.cardGroup.player.renderer.camera.pitchAngle.value * self.cardGroup.player.renderer.camera.pitchFactor.value;
     
     [self.cardGroup stopDrag];
         
@@ -683,11 +673,11 @@
     {
         if(angle > 60)
         {
-            [self.cardGroup.renderer.gameController cardFrontTapped:self.position];
+            [self.cardGroup.player.renderer.gameController cardFrontTapped:self.position];
         }
         else
         {            
-            [self.cardGroup.renderer.gameController cardBackTapped:self.position];
+            [self.cardGroup.player.renderer.gameController cardBackTapped:self.position];
         }
     }
     
@@ -698,7 +688,7 @@
 -(BOOL)isAlive { return within(self.death.endValue, 0, 0.001); }
 -(BOOL)isDead  { return within(self.death.value,    1, 0.001); }
 
--(void)absorb:(id<Perishable>)newObject
+-(void)absorb:(id<Displayable>)newObject
 {
     if([newObject isKindOfClass:[GLCard class]])
     {
@@ -708,14 +698,9 @@
     }
 }
 
--(void)killAfterDelay:(NSTimeInterval)delay andThen:(SimpleBlock)work
+-(void)dieAfterDelay:(NSTimeInterval)delay andThen:(SimpleBlock)work
 {
-    [self.death setValue:1 forTime:1 afterDelay:delay andThen:^
-    { 
-        [self.displayContainer pruneDead]; 
-        
-        RunLater(work); 
-    }];
+    [self.death setValue:1 forTime:1 afterDelay:delay andThen:work];
 }
 
 @end

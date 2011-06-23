@@ -1,6 +1,6 @@
 #import "Constants.h"
 #import "Common.h"
-#import "Geometry.h"
+#import "MC3DVector.h"
 
 typedef enum 
 {
@@ -11,7 +11,7 @@ typedef enum
 } 
 BezierLookup;
 
-static void GenerateBezierControlPoints(Vector3D* arrayControl, Vector3D* arrayCorner)
+static void GenerateBezierControlPoints(vec3* arrayControl, vec3* arrayCorner)
 {
     for(int controlRow = 0; controlRow < 4; controlRow++)
     {
@@ -28,7 +28,7 @@ static void GenerateBezierControlPoints(Vector3D* arrayControl, Vector3D* arrayC
             weightCol[0] = 1.0 - v;
             weightCol[1] = v;
             
-            arrayControl[controlRow * 4 + controlCol] = Vector3DMake(0.0, 0.0, 0.0);
+            arrayControl[controlRow * 4 + controlCol] = vec3Make(0.0, 0.0, 0.0);
             
             for(int cornerRow = 0; cornerRow < 2; cornerRow++)
             {
@@ -45,7 +45,7 @@ static void GenerateBezierControlPoints(Vector3D* arrayControl, Vector3D* arrayC
     }
 }
 
-static void GenerateBezierVertices(Vector3D* arrayVertex, int vertexWidth, int vertexHeight, Vector3D* arrayControl)
+static void GenerateBezierVertices(vec3* arrayVertex, int vertexWidth, int vertexHeight, vec3* arrayControl)
 {
     for(int vertexRow = 0; vertexRow < vertexHeight; vertexRow++)
     {
@@ -70,7 +70,7 @@ static void GenerateBezierVertices(Vector3D* arrayVertex, int vertexWidth, int v
             weightCol[2] = 3.0f * nv *  v *  v;
             weightCol[3] =         v *  v *  v;
             
-            arrayVertex[vertexRow * vertexWidth + vertexCol] = Vector3DMake(0.0, 0.0, 0.0);
+            arrayVertex[vertexRow * vertexWidth + vertexCol] = vec3Make(0.0, 0.0, 0.0);
             
             for(int controlRow = 0; controlRow < 4; controlRow++)
             {
@@ -87,7 +87,7 @@ static void GenerateBezierVertices(Vector3D* arrayVertex, int vertexWidth, int v
     }
 }
 
-static void GenerateBezierNormals(Vector3D* arrayNormal, int vertexWidth, int vertexHeight, Vector3D* arrayControl)
+static void GenerateBezierNormals(vec3* arrayNormal, int vertexWidth, int vertexHeight, vec3* arrayControl)
 {
     for(int vertexRow = 0; vertexRow < vertexHeight; vertexRow++)
     {
@@ -122,7 +122,7 @@ static void GenerateBezierNormals(Vector3D* arrayNormal, int vertexWidth, int ve
             derivativeCol[1] = 2.0f * nv *  v;
             derivativeCol[2] =         v *  v;
             
-            Vector3D tangentU = Vector3DMake(0.0, 0.0, 0.0);
+            vec3 tangentU = vec3Make(0.0, 0.0, 0.0);
             
             for(int controlRow = 0; controlRow < 3; controlRow++)
             {
@@ -136,7 +136,7 @@ static void GenerateBezierNormals(Vector3D* arrayNormal, int vertexWidth, int ve
                 }
             }
             
-            Vector3D tangentV = Vector3DMake(0.0, 0.0, 0.0);
+            vec3 tangentV = vec3Make(0.0, 0.0, 0.0);
             
             for(int controlRow = 0; controlRow < 4; controlRow++)
             {
@@ -150,14 +150,14 @@ static void GenerateBezierNormals(Vector3D* arrayNormal, int vertexWidth, int ve
                 }
             }
             
-            arrayNormal[vertexRow * vertexWidth + vertexCol] = Vector3DCrossProduct(tangentU, tangentV);
+            arrayNormal[vertexRow * vertexWidth + vertexCol] = vec3CrossProduct(tangentU, tangentV);
             
-            Vector3DNormalize(&arrayNormal[vertexRow * vertexWidth + vertexCol]); 
+            vec3Normalize(&arrayNormal[vertexRow * vertexWidth + vertexCol]); 
         }
     }
 }
 
-static void GenerateBezierColors(Color3D* arrayColors, int vertexWidth, int vertexHeight, Color3D color1, Color3D color2, Color3D color3, Color3D color4)
+static void GenerateBezierColors(color* arrayColors, int vertexWidth, int vertexHeight, color color1, color color2, color color3, color color4)
 {
     for(int vertexRow = 0; vertexRow < vertexHeight; vertexRow++)
     {
@@ -166,17 +166,17 @@ static void GenerateBezierColors(Color3D* arrayColors, int vertexWidth, int vert
             GLfloat u = (GLfloat)vertexRow / (GLfloat)(vertexHeight - 1);
             GLfloat v = (GLfloat)vertexCol / (GLfloat)(vertexWidth  - 1);
             
-            Color3D colorTop = Color3DMake((1 - u) * color1.red   + u * color2.red, 
+            color colorTop = colorMake((1 - u) * color1.red   + u * color2.red, 
                                            (1 - u) * color1.green + u * color2.green, 
                                            (1 - u) * color1.blue  + u * color2.blue, 
                                            (1 - u) * color1.alpha + u * color2.alpha);
             
-            Color3D colorBottom = Color3DMake((1 - u) * color3.red   + u * color4.red, 
+            color colorBottom = colorMake((1 - u) * color3.red   + u * color4.red, 
                                               (1 - u) * color3.green + u * color4.green, 
                                               (1 - u) * color3.blue  + u * color4.blue, 
                                               (1 - u) * color3.alpha + u * color4.alpha);
             
-            Color3D colorFinal = Color3DMake((1 - v) * colorTop.red   + v * colorBottom.red, 
+            color colorFinal = colorMake((1 - v) * colorTop.red   + v * colorBottom.red, 
                                              (1 - v) * colorTop.green + v * colorBottom.green, 
                                              (1 - v) * colorTop.blue  + v * colorBottom.blue, 
                                              (1 - v) * colorTop.alpha + v * colorBottom.alpha);
@@ -186,17 +186,17 @@ static void GenerateBezierColors(Color3D* arrayColors, int vertexWidth, int vert
     }    
 }
 
-static void GenerateBezierTextures(Vector2D* arrayTexture, int vertexWidth, int vertexHeight, Vector2D fragmentSize, Vector2D fragmentOffset)
+static void GenerateBezierTextures(vec2* arrayTexture, int vertexWidth, int vertexHeight, vec2 fragmentSize, vec2 fragmentOffset)
 {
     for(int vertexRow = 0; vertexRow < vertexHeight; vertexRow++)
     {
         for(int vertexCol = 0; vertexCol < vertexWidth; vertexCol++)
         {
-            GLfloat u = 1 - ((GLfloat)vertexRow / (GLfloat)(vertexHeight - 1));
-            GLfloat v = 1 - ((GLfloat)vertexCol / (GLfloat)(vertexWidth  - 1));
+            GLfloat x = 1 - ((GLfloat)vertexRow / (GLfloat)(vertexHeight - 1));
+            GLfloat y = 1 - ((GLfloat)vertexCol / (GLfloat)(vertexWidth  - 1));
             
-            arrayTexture[vertexRow * vertexWidth + vertexCol] = Vector2DMake(u * fragmentSize.u + fragmentOffset.u, v * fragmentSize.v + fragmentOffset.v);
-        }
+            arrayTexture[vertexRow * vertexWidth + vertexCol] = vec2Make(x * fragmentSize.x + fragmentOffset.x, y * fragmentSize.y + fragmentOffset.y);
+        } 
     }    
 }
 

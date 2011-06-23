@@ -21,6 +21,7 @@ NSString * VTPG_DDToStringFromTypeAndValue(const char * typeCode, void * value);
 
 #define LOG_NS(...) NSLog(__VA_ARGS__)
 #define LOG_FUNCTION()	NSLog(@"%s", __func__)
+#define LOG_METHOD()	NSLog(@"%s %X", __func__, (int)self)
 
 #else /* NO_LOG_MACROS */
 

@@ -26,9 +26,9 @@
     
     if(self)
     {           
-        _arrayVertex      = malloc(4 * sizeof(Vector3D));
-        _arrayNormal      = malloc(4 * sizeof(Vector3D));
-        _arrayTexture     = malloc(4 * sizeof(Vector2D));
+        _arrayVertex      = malloc(4 * sizeof(vec3));
+        _arrayNormal      = malloc(4 * sizeof(vec3));
+        _arrayTexture     = malloc(4 * sizeof(vec2));
         _arrayMesh        = malloc(6 * sizeof(GLushort));
     }
     
@@ -66,19 +66,19 @@
     GLfloat height = self.texture.contentSize.height / 100;
     GLfloat width = self.texture.contentSize.width / 100; 
         
-    Vector3D baseCorners[] = 
+    vec3 baseCorners[] = 
     {
-        Vector3DMake(-width / 2,  0.0, 2.6),
-        Vector3DMake(-width / 2,  0.0, 2.6 - height),
-        Vector3DMake( width / 2,  0.0, 2.6),
-        Vector3DMake( width / 2,  0.0, 2.6 - height)
+        vec3Make(-width / 2,  0.0, 2.6),
+        vec3Make(-width / 2,  0.0, 2.6 - height),
+        vec3Make( width / 2,  0.0, 2.6),
+        vec3Make( width / 2,  0.0, 2.6 - height)
     };
     
     GenerateBezierControlPoints(_controlPoints, baseCorners);
     
     GenerateBezierVertices(_arrayVertex,      2, 2, _controlPoints);
     GenerateBezierNormals (_arrayNormal,      2, 2, _controlPoints);
-    GenerateBezierTextures(_arrayTexture,     2, 2, Vector2DMake(1, 1), Vector2DMake(0, 0));
+    GenerateBezierTextures(_arrayTexture,     2, 2, vec2Make(1, 1), vec2Make(0, 0));
     GenerateBezierMesh    (_arrayMesh,        2, 2);
 }
 

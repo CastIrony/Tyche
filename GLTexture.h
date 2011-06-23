@@ -1,53 +1,38 @@
 typedef enum 
 {
-	kGLTexturePixelFormat_Automatic = 0,
 	kGLTexturePixelFormat_RGBA8888,
 	kGLTexturePixelFormat_A8,
 	kGLTexturePixelFormat_L8
 } GLTexturePixelFormat;
 
-#define kGLTexturePixelFormat_Default kGLTexturePixelFormat_RGBA8888
-
 @interface GLTexture : NSObject
-{
-}
 
-- (id) initWithData:(const void*)data pixelFormat:(GLTexturePixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size;
+@property(nonatomic, assign) GLTexturePixelFormat pixelFormat;
+@property(nonatomic, assign) GLuint name;
+@property(nonatomic, assign) CGSize imageSize;
+@property(nonatomic, assign) CGSize contentSize;
+@property(nonatomic, assign) BOOL hasPremultipliedAlpha;
 
-@property(assign, nonatomic) GLTexturePixelFormat pixelFormat;
-@property(assign, nonatomic) NSUInteger pixelsWide;
-@property(assign, nonatomic) NSUInteger pixelsHigh;
-@property(assign, nonatomic) GLuint name;
-@property(assign, nonatomic) CGSize contentSize;
-@property(assign, nonatomic) GLfloat maxS;
-@property(assign, nonatomic) GLfloat maxT;
-@property(assign, nonatomic) BOOL hasPremultipliedAlpha;
-
-@end
-
-@interface GLTexture (Drawing)
-
-- (void) drawAtPoint:(CGPoint)point;
-- (void) drawInRect:(CGRect)rect;
+-(id)initWithData:(const void*)data pixelFormat:(GLTexturePixelFormat)pixelFormat imageSize:(CGSize)imageSize contentSize:(CGSize)contentSize;
 
 @end
 
 @interface GLTexture (Image)
 
-- (id) initWithImageFile:(NSString*)path;
-- (id) initWithImage:(UIImage *)uiImage;
+-(id)initWithImageFile:(NSString*)path;
+-(id)initWithImage:(UIImage*)uiImage;
 
 @end
 
 @interface GLTexture (Text)
 
-- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(UITextAlignment)alignment font:(UIFont*)font;
+-(id)initWithString:(NSString*)string font:(UIFont*)font;
 
 @end
 
 @interface GLTexture (Button)
 
-- (id)initWithButtonOpacity:(GLfloat)opacity;
+-(id)initWithButtonOpacity:(GLfloat)opacity;
 
 @end
 
@@ -59,32 +44,6 @@ typedef enum
 
 @interface GLTexture (PVRTC)
 
--(id) initWithPVRTCFile: (NSString*) file;
-
-@end
-
-typedef struct _ccTexParams 
-{
-	GLuint	minFilter;
-	GLuint	magFilter;
-	GLuint	wrapS;
-	GLuint	wrapT;
-} ccTexParams;
-
-@interface GLTexture (GLFilter)
-
--(void) setTexParameters: (ccTexParams*) texParams;
-
--(void) setAntiAliasTexParameters;
-
--(void) setAliasTexParameters;
-
-@end
-
-@interface GLTexture (PixelFormat)
-
-+(void) setDefaultAlphaPixelFormat:(GLTexturePixelFormat)format;
-
-+(GLTexturePixelFormat) defaultAlphaPixelFormat;
+-(id)initWithPVRTCFile:(NSString*) file;
 
 @end

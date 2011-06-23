@@ -1,34 +1,34 @@
-#import "Geometry.h"
+#import "MC3DVector.h"
 #import "Touchable.h"
 #import "DisplayContainer.h"
 #import "GameController.h"
 
 @class AnimatedFloat;
-@class AnimatedVector3D;
+@class AnimatedVec3;
 @class GLChipGroup;
 
-@interface GLChip : NSObject <Perishable, Touchable>
+@interface GLChip : NSObject <Displayable, Touchable>
 {
-    Vector2D chipOffsets[9];
-    Vector2D markerOffsets[9];
-    Vector2D shadingOffset;
-    Vector2D shadowOffset;
-    Vector2D chipSize;
+    vec2 chipOffsets[9];
+    vec2 markerOffsets[9];
+    vec2 shadingOffset;
+    vec2 shadowOffset;
+    vec2 chipSize;
     
-    Vector3D* stackVectors;
-    Vector2D* stackTexture;
+    vec3* stackVectors;
+    vec2* stackTexture;
     GLushort* stackMesh;   
-    Color3D*  stackColors;
+    color*  stackColors;
 
-    Vector3D* shadowVectors;
-    Vector2D* shadowTexture;
+    vec3* shadowVectors;
+    vec2* shadowTexture;
     GLushort* shadowMesh;   
-    Color3D*  shadowColors;
+    color*  shadowColors;
 
     int _meshSize;
 }
 
-@property (nonatomic, assign) Vector3D          location;
+@property (nonatomic, assign) vec3          location;
 @property (nonatomic, retain) AnimatedFloat*    count;
 @property (nonatomic, assign) int               chipNumber;
 @property (nonatomic, assign) int               maxCount;

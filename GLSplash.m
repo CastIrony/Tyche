@@ -1,10 +1,10 @@
 #import "Constants.h"
-#import "Geometry.h"
+#import "MC3DVector.h"
 #import "Bezier.h"
 #import "GLTexture.h"
 #import "Projection.h"
 #import "AnimatedFloat.h"
-#import "AnimatedVector3D.h"
+#import "AnimatedVec3.h"
 #import "TextureController.h"
 
 #import "GLSplash.h"
@@ -20,7 +20,7 @@
     
     if(self) 
     {   
-        self.opacity = [AnimatedFloat withValue:1];
+        self.opacity = [AnimatedFloat floatWithValue:1];
     }
     
     return self;
@@ -35,19 +35,19 @@
         
     glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"splash"]);
             
-    Vector3D borderArrayVertex1[4];
+    vec3 borderArrayVertex1[4];
     GLushort borderArrayMesh1[6];
-    Vector2D borderArrayTextures[4];
+    vec2 borderArrayTextures[4];
 
-    borderArrayVertex1[0] = Vector3DMake(-.8, -1.205, -2.99);  
-    borderArrayVertex1[1] = Vector3DMake( .8, -1.205, -2.99);  
-    borderArrayVertex1[2] = Vector3DMake(-.8,  1.205, -2.99);  
-    borderArrayVertex1[3] = Vector3DMake( .8,  1.205, -2.99); 
+    borderArrayVertex1[0] = vec3Make(-.8, -1.205, -2.99);  
+    borderArrayVertex1[1] = vec3Make( .8, -1.205, -2.99);  
+    borderArrayVertex1[2] = vec3Make(-.8,  1.205, -2.99);  
+    borderArrayVertex1[3] = vec3Make( .8,  1.205, -2.99); 
 
-    borderArrayTextures[0] = Vector2DMake(0, 1);
-    borderArrayTextures[1] = Vector2DMake(1, 1);
-    borderArrayTextures[2] = Vector2DMake(0, 0);
-    borderArrayTextures[3] = Vector2DMake(1, 0);
+    borderArrayTextures[0] = vec2Make(0, 1);
+    borderArrayTextures[1] = vec2Make(1, 1);
+    borderArrayTextures[2] = vec2Make(0, 0);
+    borderArrayTextures[3] = vec2Make(1, 0);
     
     GenerateBezierMesh(borderArrayMesh1, 2, 2);
         

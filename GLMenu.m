@@ -1,17 +1,17 @@
-#import "Constants.h"
 #import "Geometry.h"
+#import "MC3DVector.h"
 #import "GLTexture.h"
 #import "Bezier.h"
 #import "Projection.h"
-#import "GLLabel.h"
+#import "GLText.h"
 #import "GLDots.h"
 #import "AnimatedFloat.h"
-#import "AnimatedVector3D.h"
-#import "TextController.h"
-#import "TextControllerMainMenu.h"
+#import "AnimatedVec3.h"
+#import "GLTextController.h"
+#import "GLTextControllerMainMenu.h"
 #import "TextureController.h"
 #import "DisplayContainer.h"
-#import "MenuController.h"
+#import "GLMenuController.h"
 
 #import "GLMenu.h"
 
@@ -47,13 +47,13 @@
     
     if(self)
     {           
-        _arrayVertex  = malloc(4 * sizeof(Vector3D));
-        _arrayNormal  = malloc(4 * sizeof(Vector3D));
-        _arrayTexture = malloc(4 * sizeof(Vector2D));
+        _arrayVertex  = malloc(4 * sizeof(vec3));
+        _arrayNormal  = malloc(4 * sizeof(vec3));
+        _arrayTexture = malloc(4 * sizeof(vec2));
         _arrayMesh    = malloc(6 * sizeof(GLushort));
         
-        self.opacity  = [AnimatedFloat withValue:1];
-        self.death    = [AnimatedFloat withValue:0];
+        self.opacity  = [AnimatedFloat floatWithValue:1];
+        self.death    = [AnimatedFloat floatWithValue:0];
                 
         self.dots = [[[GLDots alloc] init] autorelease];
         
@@ -69,15 +69,15 @@
 
 -(void)reset
 {
-    _textureSize   = Vector2DMake(1,1);
-    _textureOffset = Vector2DMake(0,0);
+    _textureSize   = vec2Make(1,1);
+    _textureOffset = vec2Make(0,0);
         
-    Vector3D baseCorners[] = 
+    vec3 baseCorners[] = 
     {
-        Vector3DMake(-2.0,  0.0,  3.0),
-        Vector3DMake(-2.0,  0.0, -3.0),
-        Vector3DMake( 2.0,  0.0,  3.0),
-        Vector3DMake( 2.0,  0.0, -3.0)
+        vec3Make(-2.0,  0.0,  3.0),
+        vec3Make(-2.0,  0.0, -3.0),
+        vec3Make( 2.0,  0.0,  3.0),
+        vec3Make( 2.0,  0.0, -3.0)
     };
     
     GenerateBezierControlPoints(_controlPoints, baseCorners);
@@ -124,12 +124,12 @@
     counter++;
 }
 
--(void)rotateWithAngle:(GLfloat)angle aroundPoint:(Vector3D)point andAxis:(Vector3D)axis
+-(void)rotateWithAngle:(GLfloat)angle aroundPoint:(vec3)point andAxis:(vec3)axis
 {    
     rotateVectors(_controlPoints, 16, angle, point, axis);
 }
 
--(void)scaleWithFactor:(Vector3D)factor fromPoint:(Vector3D)point
+-(void)scaleWithFactor:(vec3)factor fromPoint:(vec3)point
 {
     for(int i = 0; i < 16; i++)
     {
@@ -139,7 +139,7 @@
     }
 }
 
--(void)translateWithVector:(Vector3D)vector
+-(void)translateWithVector:(vec3)vector
 {
     for(int i = 0; i < 16; i++)
     {
@@ -173,7 +173,7 @@
     GLint viewport[4];
     glGetIntegerv(GL_VIEWPORT, viewport);
 	
-    Vector2D points[16];
+    vec2 points[16];
     ProjectVectors(_controlPoints, points, 16, model_view, projection, viewport);
     
     GLushort triangles[54];
@@ -181,7 +181,9 @@
     
     CGPoint touchPoint = [touch locationInView:touch.view];
     
-    Vector2D touchLocation = Vector2DMake(touchPoint.x, 480 - touchPoint.y);
+    vec2 touchLocation = vec2Make(touchPoint.x, UIScreen.mainScreen.bounds.size.height - touchPoint.y);
+    
+    LOG_EXPR(touchPoint);
     
     return TestTriangles(touchLocation, points, triangles, 18) ? self : object;
 }
@@ -208,14 +210,14 @@
 -(BOOL)isAlive { return within(self.death.endValue, 0, 0.001); }
 -(BOOL)isDead  { return within(self.death.value,    1, 0.001); }
 
--(void)killAfterDelay:(NSTimeInterval)delay andThen:(SimpleBlock)work
+-(void)appearAfterDelay:(NSTimeInterval)delay andThen:(SimpleBlock)work
 {
-    [self.death setValue:1 forTime:1 afterDelay:delay andThen:^
-    { 
-        [self.displayContainer pruneDead]; 
-        
-        RunLater(work); 
-    }];
+    
+}
+
+-(void)dieAfterDelay:(NSTimeInterval)delay andThen:(SimpleBlock)work
+{
+    [self.death setValue:1 forTime:1 afterDelay:delay andThen:work];
 }
 
 @end

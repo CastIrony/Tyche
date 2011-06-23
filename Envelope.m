@@ -1,6 +1,6 @@
 //
 //  Envelope.m
-//  Tyche
+//  Studly
 //
 //  Created by Joel Bernstein on 3/15/10.
 //  Copyright 2010 Joel Bernstein. All rights reserved.
@@ -43,14 +43,16 @@
 {
     Envelope* envelope = [[[Envelope alloc] init] autorelease];
     
-    envelope.game = [GameModel withDictionary:[dictionary objectForKey:@"game"]];
+    envelope.game = [GameModel gameModel];
+    
+    [envelope.game loadFromDictionary:[dictionary objectForKey:@"game"]];
     
     return envelope;
 }
 
 -(id)proxyForJson
 {
-    NSMutableDictionary* dictionary = [[[NSMutableDictionary alloc] init] autorelease];
+    NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
     
     [dictionary setObject:self.game forKey:@"game"];
     

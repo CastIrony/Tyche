@@ -1,31 +1,64 @@
-#import "NSArray+Diff.h"
-#import "NSArray+Circle.h"
+#import "NSArray+JBCommon.h"
 #import "AnimationGroup.h"
 #import "DisplayContainer.h"
 #import "JSON.h"
 
-@interface DisplayContainer () 
 
-@property (nonatomic, retain) NSDictionary* dictionary;  
-@property (nonatomic, retain) NSDictionary* liveDictionary;  
-@property (nonatomic, retain) NSArray*      keys;       
-@property (nonatomic, retain) NSArray*      objects;    
-@property (nonatomic, retain) NSArray*      liveKeys;   
-@property (nonatomic, retain) NSArray*      liveObjects;
 
--(void)generateObjectLists;
+@implementation DisplayItem
+
++(DisplayItem*)displayItemWithKey:(id<NSCopying>)key object:(id<Displayable>)object
+{
+    DisplayItem* displayItem = [[[DisplayItem alloc] init] autorelease];
+
+    displayItem.key = key;
+    displayItem.object = object;
+    
+    return displayItem;
+}
+
+@synthesize key;
+@synthesize object;
 
 @end
 
+
+
+@interface DisplayContainer () 
+
+@property (nonatomic, copy) NSDictionary* dictionary;  
+@property (nonatomic, copy) NSDictionary* liveDictionary;  
+@property (nonatomic, copy) NSArray*      keys;       
+@property (nonatomic, copy) NSArray*      objects;    
+@property (nonatomic, copy) NSArray*      liveKeys;   
+@property (nonatomic, copy) NSArray*      liveObjects;
+@property (nonatomic, copy) NSArray*      displayItems;
+
+@property (nonatomic, assign) NSTimeInterval endTime;
+
+-(void)generateObjectLists;
+-(void)pruneDead;
+
+@end
+
+
+
 @implementation DisplayContainer
 
-@synthesize dictionary      = _dictionary;
-@synthesize liveDictionary  = _liveDictionary;
-@synthesize keys            = _keys;
-@synthesize objects         = _objects;
-@synthesize liveKeys        = _liveKeys;
-@synthesize liveObjects     = _liveObjects;
-@synthesize delay           = _delay;
++(DisplayContainer*)container
+{
+    return [[[DisplayContainer alloc] init] autorelease];
+}
+
+@synthesize liveDictionary = _liveDictionary;
+@synthesize dictionary     = _dictionary;
+@synthesize keys           = _keys;
+@synthesize objects        = _objects;
+@synthesize liveKeys       = _liveKeys;
+@synthesize liveObjects    = _liveObjects;
+@synthesize displayItems   = _displayItems;
+@synthesize delay          = _delay;
+@synthesize endTime        = _endTime;
 
 -(id)init
 {
@@ -33,29 +66,21 @@
     
     if(self) 
     {
-        self.liveDictionary  = [NSDictionary dictionary];
-        self.dictionary  = [NSDictionary dictionary];
-        self.objects     = [NSArray array];
-        self.keys        = [NSArray array];
-        self.liveObjects = [NSArray array];
-        self.liveKeys    = [NSArray array];
-        self.delay = 0;
+        self.liveDictionary = [NSDictionary dictionary];
+        self.dictionary     = [NSDictionary dictionary];
+        self.keys           = [NSArray array];
+        self.objects        = [NSArray array];
+        self.liveKeys       = [NSArray array];
+        self.liveObjects    = [NSArray array];
+        self.displayItems   = [NSArray array];
+        self.delay          = 0;
+        self.endTime        = CACurrentMediaTime();
     }
     
     return self;
 }
 
-+(DisplayContainer*)container
-{
-    return [[[DisplayContainer alloc] init] autorelease];
-}
-
--(void)setKeys:(NSArray*)keys andDictionary:(NSDictionary*)dictionary;
-{
-    [self setKeys:keys dictionary:dictionary andThen:nil];
-}
-
--(void)setKeys:(NSArray*)newLiveKeys dictionary:(NSDictionary*)newLiveDictionary andThen:(SimpleBlock)work
+-(void)setLiveKeys:(NSArray*)newLiveKeys liveDictionary:(NSDictionary*)newLiveDictionary andThen:(SimpleBlock)work
 {
     AnimationGroup* animationGroup = [AnimationGroup animationGroup];
     
@@ -77,22 +102,24 @@
         }
     }
     
-    NSArray* newKeys = [diffResult.combinedArray arrayByRemovingIndexes:redundantIndexes];
+    NSArray* newKeys = [diffResult.combinedArray arrayByRemovingObjectsAtIndexes:redundantIndexes];
     NSArray* missingKeys = [diffResult.deletedObjects arrayByRemovingObjectsInArray:movedKeys];
 
     NSMutableDictionary* newDictionary = [[self.dictionary mutableCopy] autorelease];
     
     for(NSString* key in missingKeys.reverseObjectEnumerator)
     {
-        id<Perishable> object = [[self.dictionary objectForKey:key] lastObject];
+        id<Displayable> object = [[self.dictionary objectForKey:key] lastObject];
         
         if(object.isAlive) 
         { 
-            [object killAfterDelay:currentDelay andThen:nil];
+            [object dieAfterDelay:currentDelay andThen:nil];
             
-            [animationGroup addNewTime:currentDelay];
+            [animationGroup addTimeDelta:currentDelay];
             
             currentDelay += self.delay;
+            
+            self.endTime = CACurrentMediaTime() + currentDelay;
         }
     }
     
@@ -102,11 +129,12 @@
         
         if(!objectList) { objectList = [NSMutableArray array]; }
         
-        id<Perishable> oldObject = [objectList lastObject];
-        id<Perishable> newObject = [newLiveDictionary objectForKey:key];
+        id<Displayable> oldObject = [objectList lastObject];
+        id<Displayable> newObject = [newLiveDictionary objectForKey:key];
         
         oldObject = oldObject.isAlive ? oldObject : nil;
-        
+        newObject.displayContainer = self;
+
         if([oldObject isEqual:newObject])
         {
             if(oldObject && [newObject respondsToSelector:@selector(absorb:)])
@@ -116,24 +144,24 @@
         }
         else
         {
-            newObject.displayContainer = self;
-        
-            if([newObject respondsToSelector:@selector(appearAfterDelay:)])
+            if(oldObject && [newObject respondsToSelector:@selector(reincarnate:)])
             {
-                [newObject appearAfterDelay:currentDelay];
+                [newObject reincarnate:oldObject];
             }
 
-            if(oldObject && [newObject respondsToSelector:@selector(reincarnateFrom:)])
+            if([newObject respondsToSelector:@selector(appearAfterDelay:andThen:)])
             {
-                [newObject reincarnateFrom:oldObject];
+                [newObject appearAfterDelay:currentDelay andThen:nil];
             }
-                
-            [oldObject killAfterDelay:currentDelay andThen:nil]; 
+            
+            [oldObject dieAfterDelay:currentDelay andThen:nil]; 
 
-            [animationGroup addNewTime:currentDelay];
+            self.endTime = CACurrentMediaTime() + currentDelay;
+
+            [animationGroup addAbsoluteTime:self.endTime];
 
             currentDelay += self.delay;
-
+            
             [objectList addObject:newObject];
         }
         
@@ -145,7 +173,7 @@
 
     [self generateObjectLists];
     
-    [animationGroup finishAnimationsAndThen:work];
+    [animationGroup finishAndThen:work];
 }
 
 -(NSString*)description
@@ -156,18 +184,23 @@
 -(void)generateObjectLists
 {
     NSMutableDictionary* newLiveDictionary = [NSMutableDictionary dictionary];
-    NSMutableArray* newObjects     = [NSMutableArray array];
-    NSMutableArray* newLiveObjects = [NSMutableArray array];
-    NSMutableArray* newLiveKeys    = [NSMutableArray array];
+    NSMutableArray* newObjects      = [NSMutableArray array];
+    NSMutableArray* newDisplayItems = [NSMutableArray array];
+    NSMutableArray* newLiveObjects  = [NSMutableArray array];
+    NSMutableArray* newLiveKeys     = [NSMutableArray array];
         
     for(id key in self.keys)
     {
-        for(id object in [self.dictionary objectForKey:key])
+        for(id<Displayable> object in [self.dictionary objectForKey:key])
         {
+            if(object.isDead) { continue; }
+                
             [newObjects addObject:object];
+            
+            [newDisplayItems addObject:[DisplayItem displayItemWithKey:key object:object]];
         }
         
-        id<Perishable> topObject = [[self.dictionary objectForKey:key] lastObject];
+        id<Displayable> topObject = [[self.dictionary objectForKey:key] lastObject];
                 
         if(topObject.isAlive)
         {
@@ -178,9 +211,10 @@
     }
     
     self.liveDictionary = newLiveDictionary;
-    self.objects     = newObjects;
-    self.liveObjects = newLiveObjects;
-    self.liveKeys    = newLiveKeys; 
+    self.objects        = newObjects;
+    self.displayItems   = newDisplayItems;
+    self.liveObjects    = newLiveObjects;
+    self.liveKeys       = newLiveKeys; 
 }
 
 -(void)pruneDead
@@ -198,7 +232,7 @@
 
         NSMutableArray* newObjectList = [NSMutableArray array];
 
-        for(id<Perishable> object in objectList)
+        for(id<Displayable> object in objectList)
         {
             if(!object.isDead)
             {
@@ -231,6 +265,20 @@
     if(![self.liveKeys containsObject:key]) { return nil; }
     
     return [[self.dictionary objectForKey:key] lastObject];
+}
+
+-(void)finishAndThen:(SimpleBlock)work
+{
+    NSTimeInterval now = CACurrentMediaTime();    
+    
+    if(now > self.endTime)
+    {
+        RunLater(work);
+    }
+    else 
+    {
+        RunAfterDelay(self.endTime - now, work);
+    }
 }
 
 @end

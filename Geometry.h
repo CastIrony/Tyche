@@ -1,140 +1,14 @@
 #import "Constants.h"
 #import "Common.h"
+#import "MC3DVector.h"
 
-typedef struct 
+static inline vec3 vec3ProjectShadow(vec3 light, vec3 point)
 {
-    GLfloat	red;
-    GLfloat	green;
-    GLfloat	blue;
-    GLfloat alpha;
-} Color3D;
-
-static inline Color3D Color3DMake(CGFloat inRed, CGFloat inGreen, CGFloat inBlue, CGFloat inAlpha)
-{
-    Color3D ret;
-	ret.red = inRed;
-	ret.green = inGreen;
-	ret.blue = inBlue;
-	ret.alpha = inAlpha;
-    return ret;
+    return vec3Make((light.y * point.x - point.y * light.x) / (light.y - point.y), 
+                    0, 
+                    (light.y * point.z - point.y * light.z) / (light.y - point.y));   
 }
 
-typedef struct 
-{
-    GLfloat	u;
-    GLfloat v;
-} Vector2D;
-
-static inline Vector2D Vector2DMake(CGFloat inU, CGFloat inV)
-{
-	Vector2D ret;
-	ret.u = inU;
-	ret.v = inV;
-	return ret;
-}
-
-typedef struct 
-{
-    GLfloat	x;
-    GLfloat y;
-    GLfloat z;
-} Vector3D;
-
-static inline Vector3D Vector3DMake(GLfloat inX, GLfloat inY, GLfloat inZ)
-{
-	Vector3D ret;
-	ret.x = inX;
-	ret.y = inY;
-	ret.z = inZ;
-	return ret;
-}
-
-static inline Vector3D Vector3DProjectShadow(Vector3D light, Vector3D point)
-{
-    return Vector3DMake((light.y * point.x - point.y * light.x) / (light.y - point.y), 
-                        0, 
-                        (light.y * point.z - point.y * light.z) / (light.y - point.y));   
-}
-
-static inline Vector3D Vector3DInterpolate(Vector3D startValue, Vector3D endValue, GLfloat proportion)
-{
-    return Vector3DMake((1.0 - proportion) * startValue.x + (proportion) * endValue.x,
-                        (1.0 - proportion) * startValue.y + (proportion) * endValue.y,
-                        (1.0 - proportion) * startValue.z + (proportion) * endValue.z);
-}
-
-static inline GLfloat Vector3DMagnitude(Vector3D vector)
-{
-	return sqrtf((vector.x * vector.x) + (vector.y * vector.y) + (vector.z * vector.z)); 
-}
-
-static inline void Vector3DNormalize(Vector3D *vector)
-{
-	GLfloat vecMag = Vector3DMagnitude(*vector);
-	
-    if(vecMag == 0.0)
-	{
-		vector->x /= 1.0;
-		vector->y /= 0.0;
-		vector->z /= 0.0;
-	}
-    
-	vector->x /= vecMag;
-	vector->y /= vecMag;
-	vector->z /= vecMag;
-}
-
-static inline GLfloat Vector3DDotProduct(Vector3D vector1, Vector3D vector2)
-{		
-	return vector1.x * vector2.x + vector1.y * vector2.y + vector1.z * vector2.z;
-}
-
-static inline GLfloat Vector2DDotProduct(Vector2D vector1, Vector2D vector2)
-{		
-	return vector1.u * vector2.u + vector1.v * vector2.v;
-}
-
-static inline Vector3D Vector3DCrossProduct(Vector3D vector1, Vector3D vector2)
-{
-	Vector3D ret;
-	ret.x = (vector1.y * vector2.z) - (vector1.z * vector2.y);
-	ret.y = (vector1.z * vector2.x) - (vector1.x * vector2.z);
-	ret.z = (vector1.x * vector2.y) - (vector1.y * vector2.x);
-	return ret;
-}
-
-static inline Vector3D Vector3DMakeWithStartAndEndPoints(Vector3D start, Vector3D end)
-{
-	Vector3D ret;
-	ret.x = end.x - start.x;
-	ret.y = end.y - start.y;
-	ret.z = end.z - start.z;
-	return ret;
-}
-
-static inline Vector2D Vector2DMakeWithStartAndEndPoints(Vector2D start, Vector2D end)
-{
-	Vector2D ret;
-	ret.u = end.u - start.u;
-	ret.v = end.v - start.v;
-	return ret;
-}
-
-static inline Vector3D Vector3DAdd(Vector3D vector1, Vector3D vector2)
-{
-	Vector3D ret;
-	ret.x = vector1.x + vector2.x;
-	ret.y = vector1.y + vector2.y;
-	ret.z = vector1.z + vector2.z;
-	return ret;
-}
-
-static inline void Vector3DFlip (Vector3D *vector)
-{
-	vector->x = -vector->x;
-	vector->y = -vector->y;
-	vector->z = -vector->z;
-}
 
 // This is a modified version of the function of the same name from 
 // the Mesa3D project ( http://mesa3d.org/ ), which is  licensed
@@ -218,36 +92,36 @@ static inline void gluLookAt(GLfloat eyex, GLfloat eyey, GLfloat eyez, GLfloat c
 	glTranslatef(-eyex, -eyey, -eyez);
 }
 
-static BOOL TestTriangle(Vector2D P, Vector2D A, Vector2D B, Vector2D C)
+static BOOL TestTriangle(vec2 P, vec2 A, vec2 B, vec2 C)
 {
-    // Compute vectors        
-    Vector2D v0 = Vector2DMakeWithStartAndEndPoints(A, C);
-    Vector2D v1 = Vector2DMakeWithStartAndEndPoints(A, B);
-    Vector2D v2 = Vector2DMakeWithStartAndEndPoints(A, P);
+    // Compute vectors
+    vec2 v0 = vec2Subtract(C, A);
+    vec2 v1 = vec2Subtract(B, A);
+    vec2 v2 = vec2Subtract(P, A);
     
     // Compute dot products
-    GLfloat dot00 = Vector2DDotProduct(v0, v0);
-    GLfloat dot01 = Vector2DDotProduct(v0, v1);
-    GLfloat dot02 = Vector2DDotProduct(v0, v2);
-    GLfloat dot11 = Vector2DDotProduct(v1, v1);
-    GLfloat dot12 = Vector2DDotProduct(v1, v2);
+    GLfloat dot00 = vec2DotProduct(v0, v0);
+    GLfloat dot01 = vec2DotProduct(v0, v1);
+    GLfloat dot02 = vec2DotProduct(v0, v2);
+    GLfloat dot11 = vec2DotProduct(v1, v1);
+    GLfloat dot12 = vec2DotProduct(v1, v2);
      
     // Compute barycentric coordinates
     GLfloat invDenom = 1 / (dot00 * dot11 - dot01 * dot01);
     GLfloat u = (dot11 * dot02 - dot01 * dot12) * invDenom;
     GLfloat v = (dot00 * dot12 - dot01 * dot02) * invDenom;
-     
+    
     // Check if point is in triangle
     return (u > 0) && (v > 0) && (u + v < 1);
 }
 
-static BOOL TestTriangles(Vector2D touchLocation, Vector2D* points, GLushort* triangles, int triangleCount)
+static BOOL TestTriangles(vec2 touchLocation, vec2* points, GLushort* triangles, int triangleCount)
 {
     for(int triangleCounter = 0; triangleCounter < triangleCount; triangleCounter++)
     {
-        Vector2D point1 = points[triangles[3 * triangleCounter + 0]];
-        Vector2D point2 = points[triangles[3 * triangleCounter + 1]];
-        Vector2D point3 = points[triangles[3 * triangleCounter + 2]];
+        vec2 point1 = points[triangles[3 * triangleCounter + 0]];
+        vec2 point2 = points[triangles[3 * triangleCounter + 1]];
+        vec2 point3 = points[triangles[3 * triangleCounter + 2]];
         
         if(TestTriangle(touchLocation, point1, point2, point3))
         {
@@ -258,20 +132,20 @@ static BOOL TestTriangles(Vector2D touchLocation, Vector2D* points, GLushort* tr
     return NO;
 }
 
-static Vector3D randomVector3D(GLfloat originX, GLfloat originY, GLfloat originZ, GLfloat distanceX, GLfloat distanceY, GLfloat distanceZ )
+static vec3 randomvec3(GLfloat originX, GLfloat originY, GLfloat originZ, GLfloat distanceX, GLfloat distanceY, GLfloat distanceZ )
 {
-    Vector3D randomVector = Vector3DMake(randomFloat(-0.5, 0.5), 
-                                         randomFloat(-0.5, 0.5),
-                                         randomFloat(-0.5, 0.5));
+    vec3 randomVector = vec3Make(randomFloat(-0.5, 0.5), 
+                                 randomFloat(-0.5, 0.5),
+                                 randomFloat(-0.5, 0.5));
 
-    Vector3DNormalize(&randomVector);
+    vec3Normalize(&randomVector);
 
-    return Vector3DMake(originX + randomVector.x * distanceX,
-                        originY + randomVector.y * distanceY,
-                        originZ + randomVector.z * distanceZ);
+    return vec3Make(originX + randomVector.x * distanceX,
+                    originY + randomVector.y * distanceY,
+                    originZ + randomVector.z * distanceZ);
 }
 
-static void rotateVectors(Vector3D* points, int count, GLfloat angle, Vector3D origin, Vector3D axis)
+static void rotateVectors(vec3* points, int count, GLfloat angle, vec3 origin, vec3 axis)
 {    
     GLfloat sinT = sin(DEGREES_TO_RADIANS(angle));
     GLfloat cosT = cos(DEGREES_TO_RADIANS(angle));
@@ -313,8 +187,8 @@ static void rotateVectors(Vector3D* points, int count, GLfloat angle, Vector3D o
     GLfloat m43 = 0;
     GLfloat m44 = 1;
     
-    Vector3D point;
-    Vector3D newPoint;
+    vec3 point;
+    vec3 newPoint;
     
     for(int i = 0; i < count; i++)
     {

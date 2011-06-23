@@ -1,17 +1,25 @@
 //
 //  main.m
-//  OpenGLTest
+//  Studly
 //
 //  Created by Joel Bernstein on 9/24/09.
 //  Copyright Joel Bernstein 2009. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+int main(int argc, char* argv[]) 
+{
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 
-int main(int argc, char *argv[]) {
-    
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    int retVal = UIApplicationMain(argc, argv, nil, nil);
-    [pool release];
-    return retVal;
+    @try
+    {
+        return UIApplicationMain(argc, argv, @"UIApplication", @"AppController");
+    }
+    @catch(NSException* exception)
+    {
+        LOG_NS(@"%@", exception);
+    }
+    @finally
+    {
+        [pool release];
+    }
 }

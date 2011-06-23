@@ -22,4 +22,4 @@ static int animate = 1;
 #define kAttemptToUseOpenGLES2             0
 
 // Macros
-#define DEGREES_TO_RADIANS(__ANGLE__) ((__ANGLE__) / 180.0 * M_PI)
+//#define DEGREES_TO_RADIANS(__ANGLE__) ((__ANGLE__) / 180.0 * M_PI)

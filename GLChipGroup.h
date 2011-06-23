@@ -1,14 +1,17 @@
 @class DisplayContainer;
+@class GLPlayer;
+@class AnimatedFloat;
 
 @interface GLChipGroup : NSObject 
 
 @property (nonatomic, retain) DisplayContainer* chips;
 @property (nonatomic, retain) AnimatedFloat* offset;
 @property (nonatomic, assign) GLfloat opacity;
-@property (nonatomic, assign) GameRenderer* renderer;
+@property (nonatomic, assign) GLPlayer* player;
 @property (nonatomic, assign) BOOL frozen;
+@property (nonatomic, readonly) BOOL isAnimating;
 
-+(GLChipGroup*)chipGroupWithRenderer:(GameRenderer*)renderer;
++(GLChipGroup*)chipGroup;
 
 -(void)drawShadows;
 -(void)drawMarkers;

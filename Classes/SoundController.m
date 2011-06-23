@@ -9,7 +9,7 @@ static NSMutableDictionary* soundEffects;
 {
     if(!soundEffects) { soundEffects = [[NSMutableDictionary alloc] init]; }
     
-    if(![soundEffects objectForKey:key]) { [soundEffects setObject:[[[NSMutableArray alloc] init] autorelease] forKey:key]; }
+    if(![soundEffects objectForKey:key]) { [soundEffects setObject:[NSMutableArray array] forKey:key]; }
     
     SystemSoundID soundID;
     

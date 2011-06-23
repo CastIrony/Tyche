@@ -1,6 +1,6 @@
 //
 //  GLTable.m
-//  Tyche
+//  Studly
 //
 //  Created by Joel Bernstein on 6/28/09.
 //  Copyright 2009 Joel Bernstein. All rights reserved.
@@ -9,10 +9,10 @@
 #import "Constants.h"
 #import "Bezier.h"
 #import "GLTexture.h"
-#import "Geometry.h"
+#import "MC3DVector.h"
 #import "AnimatedFloat.h"
 #import "TextureController.h"
-#import "GameRenderer.h"
+#import "GLRenderer.h"
 
 #import "GLTable.h"
 
@@ -29,7 +29,7 @@
     if(self)
     {   
         [self generate];
-        //self.shadingOpacity = [AnimatedFloat withValue:0.0];
+        //self.shadingOpacity = [AnimatedVec3 vec3WithValue:0.0];
     }
     
     return self;
@@ -37,35 +37,35 @@
 
 -(void)generate
 {
-//    Vector3D frontCorners[4];
+//    vec3 frontCorners[4];
 //    
-//    frontCorners[ 0] = Vector3DMake(-5, 0, -5);
-//    frontCorners[ 1] = Vector3DMake(-5, 0, 5);
-//    frontCorners[ 2] = Vector3DMake( 5, 0, -5);
-//    frontCorners[ 3] = Vector3DMake( 5, 0, 5);
+//    frontCorners[ 0] = vec3Make(-5, 0, -5);
+//    frontCorners[ 1] = vec3Make(-5, 0, 5);
+//    frontCorners[ 2] = vec3Make( 5, 0, -5);
+//    frontCorners[ 3] = vec3Make( 5, 0, 5);
 //    
 //    GenerateBezierControlPoints(frontControlPoints, frontCorners);
 
     
-    frontControlPoints[ 0] = Vector3DMake(-20.0, 1.0, 3.25);
-    frontControlPoints[ 1] = Vector3DMake( -6.7, 1.0, 3.25);
-    frontControlPoints[ 2] = Vector3DMake(  6.7, 1.0, 3.25);
-    frontControlPoints[ 3] = Vector3DMake( 20.0, 1.0, 3.25);
+    frontControlPoints[ 0] = vec3Make(-20.0, 1.0, 3.25);
+    frontControlPoints[ 1] = vec3Make( -6.7, 1.0, 3.25);
+    frontControlPoints[ 2] = vec3Make(  6.7, 1.0, 3.25);
+    frontControlPoints[ 3] = vec3Make( 20.0, 1.0, 3.25);
     
-    frontControlPoints[ 4] = Vector3DMake(-20.0, 1.0, 4.25);
-    frontControlPoints[ 5] = Vector3DMake( -6.7, 1.0, 4.25);
-    frontControlPoints[ 6] = Vector3DMake(  6.7, 1.0, 4.25);
-    frontControlPoints[ 7] = Vector3DMake( 20.0, 1.0, 4.25);
+    frontControlPoints[ 4] = vec3Make(-20.0, 1.0, 4.25);
+    frontControlPoints[ 5] = vec3Make( -6.7, 1.0, 4.25);
+    frontControlPoints[ 6] = vec3Make(  6.7, 1.0, 4.25);
+    frontControlPoints[ 7] = vec3Make( 20.0, 1.0, 4.25);
     
-    frontControlPoints[ 8] = Vector3DMake(-20.0, 0.0, 4.25);
-    frontControlPoints[ 9] = Vector3DMake( -6.7, 0.0, 4.25);
-    frontControlPoints[10] = Vector3DMake(  6.7, 0.0, 4.25);
-    frontControlPoints[11] = Vector3DMake( 20.0, 0.0, 4.25);
+    frontControlPoints[ 8] = vec3Make(-20.0, 0.0, 4.25);
+    frontControlPoints[ 9] = vec3Make( -6.7, 0.0, 4.25);
+    frontControlPoints[10] = vec3Make(  6.7, 0.0, 4.25);
+    frontControlPoints[11] = vec3Make( 20.0, 0.0, 4.25);
     
-    frontControlPoints[12] = Vector3DMake(-20.0, 0.0, 3.25);
-    frontControlPoints[13] = Vector3DMake( -6.7, 0.0, 3.25);
-    frontControlPoints[14] = Vector3DMake(  6.7, 0.0, 3.25);
-    frontControlPoints[15] = Vector3DMake( 20.0, 0.0, 3.25);
+    frontControlPoints[12] = vec3Make(-20.0, 0.0, 3.25);
+    frontControlPoints[13] = vec3Make( -6.7, 0.0, 3.25);
+    frontControlPoints[14] = vec3Make(  6.7, 0.0, 3.25);
+    frontControlPoints[15] = vec3Make( 20.0, 0.0, 3.25);
 }
 
 -(id<Touchable>)testTouch:(UITouch*)touch withPreviousObject:(id<Touchable>)object
@@ -91,38 +91,34 @@
     
     glNormal3f(0.0, -1.0, 0.0);
     
-    Vector3D topVertexArray[] = 
+    vec3 topVertexArray[] = 
     {
-        Vector3DMake(-20.0, 0.0, -16.75),       
-        Vector3DMake( 20.0, 0.0, -16.75),        
-        Vector3DMake(-20.0, 0.0,   3.25),        
-        Vector3DMake( 20.0, 0.0,   3.25),
+        vec3Make(-20.0, 0.0, -16.75),       
+        vec3Make( 20.0, 0.0, -16.75),        
+        vec3Make(-20.0, 0.0,   3.25),        
+        vec3Make( 20.0, 0.0,   3.25),
     };
     
     GLushort topMeshArray[] =
     {
-        0,
-        1,
-        2,
-        2,
-        1,
-        3,
+        0,1,2,
+        2,1,3,
     };  
     
-    Vector2D topTextureArray0[] =
+    vec2 topTextureArray0[] =
     {
-        Vector2DMake(-1, -2 - self.renderer.offset.value * 0.1),        
-        Vector2DMake(-1,  2 - self.renderer.offset.value * 0.1),        
-        Vector2DMake( 1, -2 - self.renderer.offset.value * 0.1),        
-        Vector2DMake( 1,  2 - self.renderer.offset.value * 0.1),
+        vec2Make(-1, -2 - self.renderer.currentOffset.value * 0.1),        
+        vec2Make(-1,  2 - self.renderer.currentOffset.value * 0.1),        
+        vec2Make( 1, -2 - self.renderer.currentOffset.value * 0.1),        
+        vec2Make( 1,  2 - self.renderer.currentOffset.value * 0.1),
     };
 
-    Vector2D topTextureArray1[4];
+    vec2 topTextureArray1[4];
     
-    topTextureArray1[0] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(0, 0) : Vector2DMake(0.225, 0.289);      
-    topTextureArray1[1] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(1, 0) : Vector2DMake(0.777, 0.289);        
-    topTextureArray1[2] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(0, 1) : Vector2DMake(0.225, 1);        
-    topTextureArray1[3] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(1, 1) : Vector2DMake(0.777, 1);
+    topTextureArray1[0] = self.drawStatus == GLTableDrawStatusDiffuse ? vec2Make(0, 0) : vec2Make(0.225, 0.289);      
+    topTextureArray1[1] = self.drawStatus == GLTableDrawStatusDiffuse ? vec2Make(1, 0) : vec2Make(0.777, 0.289);        
+    topTextureArray1[2] = self.drawStatus == GLTableDrawStatusDiffuse ? vec2Make(0, 1) : vec2Make(0.225, 1);        
+    topTextureArray1[3] = self.drawStatus == GLTableDrawStatusDiffuse ? vec2Make(1, 1) : vec2Make(0.777, 1);
         
     GLfloat lightness = self.renderer.lightness.value;
     
@@ -153,10 +149,10 @@
     
     // FRONT
     
-    Vector3D frontVertexArray [12];
-    Vector3D frontNormalArray [12];
-    Vector2D frontTextureArray0[12];
-    Vector2D frontTextureArray1[12];
+    vec3 frontVertexArray [12];
+    vec3 frontNormalArray [12];
+    vec2 frontTextureArray0[12];
+    vec2 frontTextureArray1[12];
     
     GLushort meshArray[30];  
     
@@ -167,20 +163,21 @@
     
     GenerateBezierVertices(frontVertexArray,  vertexWidth, vertexHeight, frontControlPoints);
     GenerateBezierNormals (frontNormalArray,  vertexWidth, vertexHeight, frontControlPoints);
-    GenerateBezierTextures(frontTextureArray0, vertexWidth, vertexHeight, Vector2DMake(4.0, 1.0 / 5.0), Vector2DMake(0, 0));
-    
-    frontTextureArray1[ 0] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(1, 1 - self.renderer.offset.value * 0.1) : Vector2DMake(0.777, 1);
-    frontTextureArray1[ 1] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(1, 1 - self.renderer.offset.value * 0.1) : Vector2DMake(0.777, 1);
-    frontTextureArray1[ 2] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(1, 1 - self.renderer.offset.value * 0.1) : Vector2DMake(0.777, 1);
-    frontTextureArray1[ 3] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(1, 1 - self.renderer.offset.value * 0.1) : Vector2DMake(0.777, 1);
-    frontTextureArray1[ 4] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(1, 1 - self.renderer.offset.value * 0.1) : Vector2DMake(0.777, 1);
-    frontTextureArray1[ 5] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(1, 1 - self.renderer.offset.value * 0.1) : Vector2DMake(0.777, 1);
-    frontTextureArray1[ 6] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(0, 1 - self.renderer.offset.value * 0.1) : Vector2DMake(0.225, 1);
-    frontTextureArray1[ 7] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(0, 1 - self.renderer.offset.value * 0.1) : Vector2DMake(0.225, 1);
-    frontTextureArray1[ 8] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(0, 1 - self.renderer.offset.value * 0.1) : Vector2DMake(0.225, 1);
-    frontTextureArray1[ 9] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(0, 1 - self.renderer.offset.value * 0.1) : Vector2DMake(0.225, 1);
-    frontTextureArray1[10] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(0, 1 - self.renderer.offset.value * 0.1) : Vector2DMake(0.225, 1);
-    frontTextureArray1[11] = self.drawStatus == GLTableDrawStatusDiffuse ? Vector2DMake(0, 1 - self.renderer.offset.value * 0.1) : Vector2DMake(0.225, 1);
+        
+    GenerateBezierTextures(frontTextureArray0, vertexWidth, vertexHeight, vec2Make(-4.0, 1.0 / 5.0), vec2Make(-self.renderer.currentOffset.value * 0.1, 0));
+        
+    frontTextureArray1[ 0] = self.drawStatus == GLTableDrawStatusDiffuse ? vec2Make(1, 1) : vec2Make(0.777, 1);
+    frontTextureArray1[ 1] = self.drawStatus == GLTableDrawStatusDiffuse ? vec2Make(1, 1) : vec2Make(0.777, 1);
+    frontTextureArray1[ 2] = self.drawStatus == GLTableDrawStatusDiffuse ? vec2Make(1, 1) : vec2Make(0.777, 1);
+    frontTextureArray1[ 3] = self.drawStatus == GLTableDrawStatusDiffuse ? vec2Make(1, 1) : vec2Make(0.777, 1);
+    frontTextureArray1[ 4] = self.drawStatus == GLTableDrawStatusDiffuse ? vec2Make(1, 1) : vec2Make(0.777, 1);
+    frontTextureArray1[ 5] = self.drawStatus == GLTableDrawStatusDiffuse ? vec2Make(1, 1) : vec2Make(0.777, 1);
+    frontTextureArray1[ 6] = self.drawStatus == GLTableDrawStatusDiffuse ? vec2Make(0, 1) : vec2Make(0.225, 1);
+    frontTextureArray1[ 7] = self.drawStatus == GLTableDrawStatusDiffuse ? vec2Make(0, 1) : vec2Make(0.225, 1);
+    frontTextureArray1[ 8] = self.drawStatus == GLTableDrawStatusDiffuse ? vec2Make(0, 1) : vec2Make(0.225, 1);
+    frontTextureArray1[ 9] = self.drawStatus == GLTableDrawStatusDiffuse ? vec2Make(0, 1) : vec2Make(0.225, 1);
+    frontTextureArray1[10] = self.drawStatus == GLTableDrawStatusDiffuse ? vec2Make(0, 1) : vec2Make(0.225, 1);
+    frontTextureArray1[11] = self.drawStatus == GLTableDrawStatusDiffuse ? vec2Make(0, 1) : vec2Make(0.225, 1);
     
     
     glVertexPointer  (3, GL_FLOAT, 0, frontVertexArray);
@@ -227,12 +224,12 @@
 //    
 //    glNormal3f(0.0, -1.0, 0.0);
 //    
-//    Vector3D topVertexArray[] = 
+//    vec3 topVertexArray[] = 
 //    {
-//        Vector3DMake(-20.0, 0.0, -16.75),
-//        Vector3DMake( 20.0, 0.0, -16.75),
-//        Vector3DMake(-20.0, 0.0,   3.25),
-//        Vector3DMake( 20.0, 0.0,   3.25),
+//        vec3Make(-20.0, 0.0, -16.75),
+//        vec3Make( 20.0, 0.0, -16.75),
+//        vec3Make(-20.0, 0.0,   3.25),
+//        vec3Make( 20.0, 0.0,   3.25),
 //    };
 //    
 //    GLushort topMeshArray[] = { 0, 1, 2, 2, 1, 3 };  
@@ -245,8 +242,8 @@
 //    
 //    // FRONT
 //        
-//    Vector3D frontVertexArray [12];
-//    Vector3D frontNormalArray [12];
+//    vec3 frontVertexArray [12];
+//    vec3 frontNormalArray [12];
 //    
 //    GLushort meshArray[30];  
 //    

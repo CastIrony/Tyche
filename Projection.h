@@ -394,7 +394,7 @@ gluUnProject4(GLfloat winx, GLfloat winy, GLfloat winz, GLfloat clipw,
 }
 #endif
 
-static void ProjectVectors(Vector3D* vectors, Vector2D* output, int vectorCount, GLfloat model[16], GLfloat proj[16], GLint viewport[4])
+static void ProjectVectors(vec3* vectors, vec2* output, int vectorCount, GLfloat model[16], GLfloat proj[16], GLint viewport[4])
 {
     if([UIScreen mainScreen].currentMode.size.width == 640) 
     { 
@@ -410,6 +410,6 @@ static void ProjectVectors(Vector3D* vectors, Vector2D* output, int vectorCount,
         
         gluProject(vectors[vectorCounter].x, vectors[vectorCounter].y, vectors[vectorCounter].z, model, proj, viewport, &x, &y, &z);
         
-        output[vectorCounter] = Vector2DMake(x, y);
+        output[vectorCounter] = vec2Make(x, y);
     }
 }

@@ -1,10 +1,12 @@
 //
 //  NSMutableArray+Shuffle.m
-//  Tyche
+//  Studly
 //
 //  Created by Joel Bernstein on 9/16/09.
 //  Copyright 2009 Joel Bernstein. All rights reserved.
 //
+
+#import "Geometry.h"
 
 #import "NSMutableArray+Deck.h"
 

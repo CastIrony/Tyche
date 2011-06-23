@@ -1,29 +1,29 @@
-#import "Geometry.h"
+#import "MC3DVector.h"
 #import "Touchable.h"
 #import "DisplayContainer.h"
 
 @class AnimatedFloat;
-@class AnimatedVector3D;
-@class TextController;
+@class AnimatedVec3;
+@class GLTextController;
 @class TextControllerPageMarker;
-@class MenuController;
+@class GLMenuController;
 @class GLTexture;
 @class GLDots;
 
-@interface GLMenu : NSObject <Touchable, Perishable>
+@interface GLMenu : NSObject <Touchable, Displayable>
 {
-    Vector3D   _controlPoints[16];
+    vec3   _controlPoints[16];
     
-    Vector2D   _textureOffset;
-    Vector2D   _textureSize;
+    vec2   _textureOffset;
+    vec2   _textureSize;
 
-    Vector3D*  _arrayVertex;
-    Vector3D*  _arrayNormal;
-    Vector2D*  _arrayTexture;
+    vec3*  _arrayVertex;
+    vec3*  _arrayNormal;
+    vec2*  _arrayTexture;
     GLushort*  _arrayMesh;
 }
 
-@property (nonatomic, retain) TextController* textController;
+@property (nonatomic, retain) GLTextController* textController;
 
 @property (nonatomic, retain) GLDots* dots;
 
@@ -35,13 +35,15 @@
 @property (nonatomic, retain) AnimatedFloat*    death;
 @property (nonatomic, retain) AnimatedFloat*    location;
 @property (nonatomic, assign) id owner;
+@property (nonatomic, copy)   NSString*         key;
+
 
 -(void)reset;
 
 -(void)draw;
 
--(void)rotateWithAngle:(GLfloat)angle aroundPoint:(Vector3D)point andAxis:(Vector3D)axis;
--(void)scaleWithFactor:(Vector3D)factor fromPoint:(Vector3D)point;
--(void)translateWithVector:(Vector3D)vector;
+-(void)rotateWithAngle:(GLfloat)angle aroundPoint:(vec3)point andAxis:(vec3)axis;
+-(void)scaleWithFactor:(vec3)factor fromPoint:(vec3)point;
+-(void)translateWithVector:(vec3)vector;
 
 @end

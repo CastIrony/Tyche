@@ -1,6 +1,6 @@
 //
 //  GLTable.h
-//  Tyche
+//  Studly
 //
 //  Created by Joel Bernstein on 6/28/09.
 //  Copyright 2009 Joel Bernstein. All rights reserved.
@@ -9,8 +9,8 @@
 #import "Touchable.h"
 
 @class AnimatedFloat;
-@class AnimatedVector3D;
-@class GameRenderer;
+@class AnimatedVec3;
+@class GLRenderer;
 
 typedef enum 
 {
@@ -21,11 +21,11 @@ GLTableDrawStatus;
 
 @interface GLTable : NSObject
 {
-    Vector3D topCorners[4];
-    Vector3D frontControlPoints[16]; 
+    vec3 topCorners[4];
+    vec3 frontControlPoints[16]; 
 }
 
-@property (nonatomic, assign) GameRenderer*   renderer;
+@property (nonatomic, assign) GLRenderer*   renderer;
 @property (nonatomic, assign) GLTableDrawStatus drawStatus;
 
 -(void)draw;

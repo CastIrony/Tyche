@@ -2,6 +2,11 @@
 
 @implementation CardModel
 
++(CardModel*)cardModel
+{
+    return [[[CardModel alloc] init] autorelease];
+}
+
 @synthesize suit       = _suit;
 @synthesize numeral = _numeral;
 @synthesize isHeld     = _isHeld;
@@ -25,23 +30,9 @@
     return [NSString stringWithFormat:@"%d-%d", self.suit, self.numeral];
 }
 
--(id)initWithSuit:(int)suit numeral:(int)numeral held:(BOOL)isHeld
+-(NSDictionary*)saveToDictionary
 {
-    self = [super init];
-    
-    if(self)
-    {
-        self.suit    = suit;
-        self.numeral = numeral;
-        self.isHeld  = isHeld;
-    }
-    
-    return self;
-}
-
--(id)proxyForJson
-{
-    NSMutableDictionary* dictionary = [[[NSMutableDictionary alloc] init] autorelease];
+    NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
     
     [dictionary setObject:[NSNumber numberWithInt:self.suit]    forKey:@"suit"];
     [dictionary setObject:[NSNumber numberWithInt:self.numeral] forKey:@"numeral"];
@@ -50,15 +41,11 @@
     return dictionary;
 }
 
-+(id)withDictionary:(NSDictionary*)dictionary
+-(void)loadFromDictionary:(NSDictionary*)dictionary
 {
-    int suit    = [[dictionary objectForKey:@"suit"]    intValue];
-    int numeral = [[dictionary objectForKey:@"numeral"] intValue];
-    int isHeld  = [[dictionary objectForKey:@"isHeld"]  boolValue];
-    
-    CardModel* card = [[[CardModel alloc] initWithSuit:suit numeral:numeral held:isHeld] autorelease];
-    
-    return card;
+    self.suit    = [[dictionary objectForKey:@"suit"]    intValue];
+    self.numeral = [[dictionary objectForKey:@"numeral"] intValue];
+    self.isHeld  = [[dictionary objectForKey:@"isHeld"]  boolValue];
 }
 
 -(NSString*)description
@@ -68,12 +55,40 @@
 
 -(NSComparisonResult)numeralCompareHigh:(CardModel*)otherCard
 {
-    return [[NSNumber numberWithInt:self.numeralHigh] compare:[NSNumber numberWithInt:otherCard.numeralHigh]];
+    NSComparisonResult numeralResult = [[NSNumber numberWithInt:self.numeralHigh] compare:[NSNumber numberWithInt:otherCard.numeralHigh]];
+    
+    return numeralResult;
 }
 
 -(NSComparisonResult)numeralCompareLow:(CardModel*)otherCard
 {
-    return [[NSNumber numberWithInt:self.numeralLow] compare:[NSNumber numberWithInt:otherCard.numeralLow]];
+    NSComparisonResult numeralResult = [[NSNumber numberWithInt:self.numeralLow] compare:[NSNumber numberWithInt:otherCard.numeralLow]];
+    
+    return numeralResult;
+}
+
+-(NSComparisonResult)compareHigh:(CardModel*)otherCard
+{
+    NSComparisonResult numeralResult = [[NSNumber numberWithInt:self.numeralHigh] compare:[NSNumber numberWithInt:otherCard.numeralHigh]];
+    
+    if(numeralResult == NSOrderedSame)
+    {
+        return [[NSNumber numberWithInt:self.suit] compare:[NSNumber numberWithInt:otherCard.suit]];
+    }
+       
+    return numeralResult;
+}
+
+-(NSComparisonResult)compareLow:(CardModel*)otherCard
+{
+    NSComparisonResult numeralResult = [[NSNumber numberWithInt:self.numeralLow] compare:[NSNumber numberWithInt:otherCard.numeralLow]];
+    
+    if(numeralResult == NSOrderedSame)
+    {
+        return [[NSNumber numberWithInt:self.suit] compare:[NSNumber numberWithInt:otherCard.suit]];
+    }
+    
+    return numeralResult;
 }
 
 @end

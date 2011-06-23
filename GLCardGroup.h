@@ -1,13 +1,16 @@
 #import "GameController.h"
 
 @class DisplayContainer;
+@class GLPlayer;
 @class GLCard;
 
 @interface GLCardGroup : NSObject 
 
-@property (nonatomic, assign) GameRenderer*     renderer;
++(GLCardGroup*)cardGroup;
+
+@property (nonatomic, assign) GLPlayer*         player;
 @property (nonatomic, assign) GLfloat           bendFactor;
-@property (nonatomic, readonly) GLfloat           angleFlip;
+@property (nonatomic, readonly) GLfloat         angleFlip;
 
 @property (nonatomic, retain) DisplayContainer* cards;
 
@@ -16,14 +19,14 @@
 @property (nonatomic, assign) int               initialIndex;
 @property (nonatomic, assign) int               finalIndex;
 @property (nonatomic, assign) BOOL              showLabels;
+@property (nonatomic, readonly) BOOL isAnimating;
 
 -(void)drawFronts;
 -(void)drawBacks;
 -(void)drawShadows;
 -(void)drawLabels;
 
--(void)flipCardsAndThen:(SimpleBlock)work;
--(void)unflipCardsAndThen:(SimpleBlock)work;
+-(void)setFlipped:(BOOL)flipped andThen:(SimpleBlock)work;
 
 -(void)updateCardsWithKeys:(NSArray*)keys held:(NSArray*)heldKeys andThen:(SimpleBlock)work;
 

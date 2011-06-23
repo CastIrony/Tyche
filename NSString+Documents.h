@@ -1,6 +1,6 @@
 //
 //  NSString+DocumentWrite.h
-//  Tyche
+//  Studly
 //
 //  Created by Joel Bernstein on 9/15/09.
 //  Copyright 2009 Joel Bernstein. All rights reserved.
@@ -15,5 +15,11 @@
 +(NSString*)stringWithContentsOfDocument:(NSString*)fileName;
 -(BOOL)documentExists;
 -(void)deleteDocument;
+
+@end
+
+@interface NSString (UUID)
+
++(NSString*)stringWithUUID;
 
 @end

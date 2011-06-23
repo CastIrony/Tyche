@@ -1,17 +1,17 @@
 #import "Constants.h"
 #import "Common.h"
-#import "Geometry.h"
+#import "MC3DVector.h"
 
 @class GLTexture;
 @class GLMenu;
 
 @interface GLDots : NSObject 
 {
-    Vector3D   _controlPoints[16];
+    vec3   _controlPoints[16];
     
-    Vector3D*  _arrayVertex;
-    Vector3D*  _arrayNormal;
-    Vector2D*  _arrayTexture;
+    vec3*  _arrayVertex;
+    vec3*  _arrayNormal;
+    vec2*  _arrayTexture;
     GLushort*  _arrayMesh;
 }
 

@@ -1,35 +1,26 @@
-@class PlayerModel;
 
-typedef enum 
-{
-    GameStatusSinglePlayer,
-    GameStatusPreDeal,
-    GameStatusDealingCards,
-    GameStatusMarkCards,
-    GameStatusDrawingCards,
-    GameStatusFold,
-    GameStatusBet,
-    GameStatusCall
-} 
-GameStatus;
+//  GameModel.h
+//  Studly
+//
+//  Created by Joel Bernstein on 2/7/11.
+//  Copyright 2011 Joel Bernstein. All rights reserved.
 
-@interface GameModel : NSObject 
-{
-    NSMutableArray*      _playerIds;
-    NSMutableDictionary* _players;
-    NSMutableArray*      _deck;
-    NSMutableArray*      _discard;
-    GameStatus           _status;
-}
+#import "Model.h"
 
-@property (nonatomic, retain) NSMutableArray*      playerIds;
+@class RoundModel;
+
+@interface GameModel : Model 
+
+@property (nonatomic, copy)   NSString*            type;
+@property (nonatomic, copy)   NSString*            dealerKey;
+@property (nonatomic, retain) NSMutableArray*      playerKeys;
 @property (nonatomic, retain) NSMutableDictionary* players;
 @property (nonatomic, retain) NSMutableArray*      deck;
 @property (nonatomic, retain) NSMutableArray*      discard;
-@property (nonatomic, assign) GameStatus           status;
+@property (nonatomic, assign) int                  status; // context of status depends on the specific game controller
+@property (nonatomic, retain) RoundModel*          roundModel;
 
-+(id)withDictionary:(NSDictionary*)dictionary;
--(id)proxyForJson;
++(GameModel*)gameModel;
 
 -(NSMutableArray*)getCards:(int)count;
 

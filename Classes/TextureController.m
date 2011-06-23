@@ -24,7 +24,7 @@ static NSMutableDictionary* textures;
 +(int)nameForKey:(NSString*)key
 {
     GLTexture* texture = [textures objectForKey:key];
-    
+        
     return texture.name;
 }
 

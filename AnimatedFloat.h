@@ -12,10 +12,11 @@
 
 @property (nonatomic, assign)   AnimationCurve curve;
 
+@property (nonatomic, readonly) GLfloat proportion;
 @property (nonatomic, readonly) GLfloat value;
 @property (nonatomic, readonly) BOOL    hasEnded;
 
-+(id)withValue:(GLfloat)value;
++(id)floatWithValue:(GLfloat)value;
 
 -(void)setValue:(GLfloat)value;
 
@@ -27,7 +28,7 @@
 -(void)setValue:(GLfloat)value withSpeed:(GLfloat)speed andThen:(SimpleBlock)work;
 -(void)setValue:(GLfloat)value withSpeed:(GLfloat)speed afterDelay:(NSTimeInterval)delay andThen:(SimpleBlock)work;
 
--(void)registerEvent:(SimpleBlock)work;
+-(void)finishAndThen:(SimpleBlock)work;
 
 -(NSString*)description;
 

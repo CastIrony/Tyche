@@ -5,19 +5,19 @@
 @class GLCardGroup;
 @class AnimatedFloat;
 @class DisplayContainer;
-@class AnimatedVector3D;
+@class AnimatedVec3;
 
-@interface GLCard : NSObject <Touchable, Perishable>
+@interface GLCard : NSObject <Touchable, Displayable>
 {
-    Vector3D controlPointsBase[16];
-    Vector3D controlPointsFront[16];
-    Vector3D controlPointsBack[16];
-    Vector3D controlPointsLabel[16];
-    Vector3D controlPointsShadow[16];
+    vec3 controlPointsBase[16];
+    vec3 controlPointsFront[16];
+    vec3 controlPointsBack[16];
+    vec3 controlPointsLabel[16];
+    vec3 controlPointsShadow[16];
     
-    Vector2D textureOffsetCard[15];
-    Vector2D textureSizeCard;
-    Vector2D textureSizeLabel;
+    vec2 textureOffsetCard[15];
+    vec2 textureSizeCard;
+    vec2 textureSizeLabel;
     
     int meshWidthFront;
     int meshWidthBack;
@@ -27,24 +27,24 @@
     int meshHeightBack;
     int meshHeightShadow;
     
-    Vector3D* arrayVertexFront;
-    Vector3D* arrayVertexBack;
-    Vector3D* arrayVertexBackSimple;
-    Vector3D* arrayVertexShadow;
+    vec3* arrayVertexFront;
+    vec3* arrayVertexBack;
+    vec3* arrayVertexBackSimple;
+    vec3* arrayVertexShadow;
     
-    Vector3D* arrayNormalFront;
-    Vector3D* arrayNormalBack;
-    Vector3D* arrayNormalBackSimple;
-    Vector3D* arrayNormalShadow;
+    vec3* arrayNormalFront;
+    vec3* arrayNormalBack;
+    vec3* arrayNormalBackSimple;
+    vec3* arrayNormalShadow;
     
-    Vector2D* arrayTexture0Front;
-    Vector2D* arrayTexture0Back;
-    Vector2D* arrayTexture0BackSimple;
-    Vector2D* arrayTexture0Shadow;
+    vec2* arrayTexture0Front;
+    vec2* arrayTexture0Back;
+    vec2* arrayTexture0BackSimple;
+    vec2* arrayTexture0Shadow;
     
-    Vector2D* arrayTexture1Front;
-    Vector2D* arrayTexture1Back;
-    Vector2D* arrayTexture1BackSimple;
+    vec2* arrayTexture1Front;
+    vec2* arrayTexture1Back;
+    vec2* arrayTexture1BackSimple;
     
     GLushort* arrayMeshFront;
     GLushort* arrayMeshBack;
@@ -57,14 +57,13 @@
 @property (nonatomic, assign)   int                 numeral;
 @property (nonatomic, assign)   int                 position;
 @property (nonatomic, assign)   GLfloat             angleJitter;
-@property (nonatomic, retain)   AnimatedFloat*      location;
 @property (nonatomic, retain)   AnimatedFloat*      dealt;
 @property (nonatomic, retain)   AnimatedFloat*      death;
 @property (nonatomic, retain)   AnimatedFloat*      isHeld;
-@property (nonatomic, retain)   AnimatedFloat*      isSelected;
-@property (nonatomic, retain)   AnimatedFloat*      angleFlip;
 @property (nonatomic, retain)   AnimatedFloat*      angleFan;
+@property (nonatomic, retain)   AnimatedFloat*      isFlipped;
 @property (nonatomic, retain)   AnimatedFloat*      bendFactor;
+@property (nonatomic, copy)     NSString*           key;
 @property (nonatomic, assign)   BOOL                cancelTap;
 @property (nonatomic, readonly) BOOL                isMeshAnimating;
 
@@ -79,11 +78,11 @@
 -(void)drawLabel;
 
 -(void)makeControlPoints;
--(void)rotateWithAngle:(GLfloat)angle aroundPoint:(Vector3D)point andAxis:(Vector3D)axis;
--(void)bendWithAngle:(GLfloat)angle aroundPoint:(Vector3D)point andAxis:(Vector3D)axis;
--(void)scaleWithFactor:(Vector3D)factor fromPoint:(Vector3D)point;
--(void)scaleShadowWithFactor:(Vector3D)factor fromPoint:(Vector3D)point;
--(void)translateWithVector:(Vector3D)vector;
+-(void)rotateWithAngle:(GLfloat)angle aroundPoint:(vec3)point andAxis:(vec3)axis;
+-(void)bendWithAngle:(GLfloat)angle aroundPoint:(vec3)point andAxis:(vec3)axis;
+-(void)scaleWithFactor:(vec3)factor fromPoint:(vec3)point;
+-(void)scaleShadowWithFactor:(vec3)factor fromPoint:(vec3)point;
+-(void)translateWithVector:(vec3)vector;
 -(void)flattenShadow;
 
 @end

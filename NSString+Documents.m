@@ -1,6 +1,6 @@
 //
 //  NSString+DocumentWrite.m
-//  Tyche
+//  Studly
 //
 //  Created by Joel Bernstein on 9/15/09.
 //  Copyright 2009 Joel Bernstein. All rights reserved.
@@ -53,6 +53,18 @@
     NSString* filePath = [documentPath stringByAppendingPathComponent:self];
     
     [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
+}
+
+@end
+
+@implementation NSString (UUID)
+
++ (NSString*)stringWithUUID
+{
+    CFUUIDRef uuid = CFUUIDCreate(kCFAllocatorDefault);
+    NSString * string = (NSString*)CFMakeCollectable(CFUUIDCreateString(kCFAllocatorDefault, uuid));
+    CFRelease(uuid);
+    return [string autorelease];    
 }
 
 @end

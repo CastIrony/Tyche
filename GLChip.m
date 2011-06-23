@@ -1,11 +1,12 @@
-#import "Constants.h"
 #import "Geometry.h"
+#import "MC3DVector.h"
 #import "Bezier.h"
 #import "GLTexture.h"
+#import "GLPlayer.h"
 #import "Projection.h"
 #import "AnimatedFloat.h"
-#import "AnimatedVector3D.h"
-#import "GameRenderer.h"
+#import "AnimatedVec3.h"
+#import "GLRenderer.h"
 #import "TextureController.h"
 #import "GLChipGroup.h"
 
@@ -26,7 +27,8 @@
 -(BOOL)isAlive { return YES; }
 -(BOOL)isDead  { return NO; }
 
--(void)killAfterDelay:(NSTimeInterval)delay andThen:(SimpleBlock)work { return; }
+-(void)appearAfterDelay:(NSTimeInterval)delay andThen:(SimpleBlock)work { return; }
+-(void)dieAfterDelay:(NSTimeInterval)delay andThen:(SimpleBlock)work { return; }
 
 +(GLChip*)chip
 {
@@ -39,44 +41,42 @@
     
     if(self) 
     {        
-        chipSize = Vector2DMake(131.0 / 1024.0, 131.0 / 1024.0);
+        chipSize = vec2Make(131.0 / 1024.0, 131.0 / 1024.0);
         
-        chipOffsets[0]   = Vector2DMake(  0.0 / 1024.0,   0.0 / 1024.0); // 1
-        chipOffsets[1]   = Vector2DMake(131.0 / 1024.0,   0.0 / 1024.0); // 5
-        chipOffsets[2]   = Vector2DMake(262.0 / 1024.0,   0.0 / 1024.0); // 10
-        chipOffsets[3]   = Vector2DMake(393.0 / 1024.0,   0.0 / 1024.0); // 25
-        chipOffsets[4]   = Vector2DMake(  0.0 / 1024.0, 131.0 / 1024.0); // 100
-        chipOffsets[5]   = Vector2DMake(131.0 / 1024.0, 131.0 / 1024.0); // 500
-        chipOffsets[6]   = Vector2DMake(262.0 / 1024.0, 131.0 / 1024.0); // 1000
-        chipOffsets[7]   = Vector2DMake(393.0 / 1024.0, 131.0 / 1024.0); // 2500
-        chipOffsets[8]   = Vector2DMake(  0.0 / 1024.0, 262.0 / 1024.0); // 10000
+        chipOffsets[0]   = vec2Make(  0.0 / 1024.0,   0.0 / 1024.0); // 1
+        chipOffsets[1]   = vec2Make(131.0 / 1024.0,   0.0 / 1024.0); // 5
+        chipOffsets[2]   = vec2Make(262.0 / 1024.0,   0.0 / 1024.0); // 10
+        chipOffsets[3]   = vec2Make(393.0 / 1024.0,   0.0 / 1024.0); // 25
+        chipOffsets[4]   = vec2Make(  0.0 / 1024.0, 131.0 / 1024.0); // 100
+        chipOffsets[5]   = vec2Make(131.0 / 1024.0, 131.0 / 1024.0); // 500
+        chipOffsets[6]   = vec2Make(262.0 / 1024.0, 131.0 / 1024.0); // 1000
+        chipOffsets[7]   = vec2Make(393.0 / 1024.0, 131.0 / 1024.0); // 2500
+        chipOffsets[8]   = vec2Make(  0.0 / 1024.0, 262.0 / 1024.0); // 10000
         
-        markerOffsets[0] = Vector2DMake(  0.0 / 1024.0, 393.0 / 1024.0); // 1
-        markerOffsets[1] = Vector2DMake(131.0 / 1024.0, 393.0 / 1024.0); // 5
-        markerOffsets[2] = Vector2DMake(262.0 / 1024.0, 393.0 / 1024.0); // 10
-        markerOffsets[3] = Vector2DMake(393.0 / 1024.0, 393.0 / 1024.0); // 25
-        markerOffsets[4] = Vector2DMake(  0.0 / 1024.0, 524.0 / 1024.0); // 100
-        markerOffsets[5] = Vector2DMake(131.0 / 1024.0, 524.0 / 1024.0); // 500
-        markerOffsets[6] = Vector2DMake(262.0 / 1024.0, 524.0 / 1024.0); // 1000
-        markerOffsets[7] = Vector2DMake(393.0 / 1024.0, 524.0 / 1024.0); // 2500
-        markerOffsets[8] = Vector2DMake(  0.0 / 1024.0, 655.0 / 1024.0); // 10000
+        markerOffsets[0] = vec2Make(  0.0 / 1024.0, 393.0 / 1024.0); // 1
+        markerOffsets[1] = vec2Make(131.0 / 1024.0, 393.0 / 1024.0); // 5
+        markerOffsets[2] = vec2Make(262.0 / 1024.0, 393.0 / 1024.0); // 10
+        markerOffsets[3] = vec2Make(393.0 / 1024.0, 393.0 / 1024.0); // 25
+        markerOffsets[4] = vec2Make(  0.0 / 1024.0, 524.0 / 1024.0); // 100
+        markerOffsets[5] = vec2Make(131.0 / 1024.0, 524.0 / 1024.0); // 500
+        markerOffsets[6] = vec2Make(262.0 / 1024.0, 524.0 / 1024.0); // 1000
+        markerOffsets[7] = vec2Make(393.0 / 1024.0, 524.0 / 1024.0); // 2500
+        markerOffsets[8] = vec2Make(  0.0 / 1024.0, 655.0 / 1024.0); // 10000
         
-        shadingOffset    = Vector2DMake(524.0 / 1024.0,   0.0 / 1024.0); // Shading
-        shadowOffset     = Vector2DMake(655.0 / 1024.0,   0.0 / 1024.0); // Shadow
+        shadingOffset    = vec2Make(524.0 / 1024.0,   0.0 / 1024.0); // Shading
+        shadowOffset     = vec2Make(655.0 / 1024.0,   0.0 / 1024.0); // Shadow
 
-        stackVectors = malloc( 8 * (100 + 1) * sizeof(Vector3D));
-        stackTexture = malloc( 8 * (100 + 1) * sizeof(Vector2D));
+        stackVectors = malloc( 8 * (100 + 1) * sizeof(vec3));
+        stackTexture = malloc( 8 * (100 + 1) * sizeof(vec2));
         stackMesh    = malloc(12 * (100 + 1) * sizeof(GLushort));
-        stackColors  = malloc( 8 * (100 + 1) * sizeof(Color3D));
-        
-        // TODO: Make these numbers more reasonable:
-        
-        shadowVectors = malloc( 8 * (100 + 1) * sizeof(Vector3D));
-        shadowTexture = malloc( 8 * (100 + 1) * sizeof(Vector2D));
+        stackColors  = malloc( 8 * (100 + 1) * sizeof(color));
+                
+        shadowVectors = malloc( 8 * (100 + 1) * sizeof(vec3));
+        shadowTexture = malloc( 8 * (100 + 1) * sizeof(vec2));
         shadowMesh    = malloc(12 * (100 + 1) * sizeof(GLushort));
-        shadowColors  = malloc( 8 * (100 + 1) * sizeof(Color3D));
+        shadowColors  = malloc( 8 * (100 + 1) * sizeof(color));
         
-        self.count = [AnimatedFloat withValue:0];
+        self.count = [AnimatedFloat floatWithValue:0];
     }
     
     return self;
@@ -109,7 +109,7 @@
     
     srand48(self.chipNumber);
     
-    Vector3D rotateAxis = Vector3DMake(0, 1, 0);
+    vec3 rotateAxis = vec3Make(0, 1, 0);
     
     int offsetVector  = 0;
     int offsetTexture = 0;
@@ -119,32 +119,32 @@
     
     GLfloat distance = sqrt(self.location.x * self.location.x + self.location.z * self.location.z);
     
-    GLfloat lightness = clipFloat(1.0 - 0.03 * distance, 0.0, 1.0) * self.chipGroup.renderer.lightness.value;
+    GLfloat lightness = clipFloat(1.0 - 0.03 * distance, 0.0, 1.0) * self.chipGroup.player.renderer.lightness.value;
         
     for(int chipCounter = 0; chipCounter <= stackCount; chipCounter++) 
     {
         GLfloat displacement = -0.15 * (chipCounter + 1);
         
-        Vector3D locationJitter = randomVector3D(self.location.x, self.location.y + displacement, self.location.z, 0.1, 0.0, 0.1);
+        vec3 locationJitter = randomvec3(self.location.x, self.location.y + displacement, self.location.z, 0.1, 0.0, 0.1);
         
         GLfloat angleJitter = randomFloat(-30, 30);
         
-        stackVectors[offsetVector++] = Vector3DMake(locationJitter.x - 1.0, locationJitter.y, locationJitter.z - 1.0);
-        stackVectors[offsetVector++] = Vector3DMake(locationJitter.x + 1.0, locationJitter.y, locationJitter.z - 1.0);
-        stackVectors[offsetVector++] = Vector3DMake(locationJitter.x - 1.0, locationJitter.y, locationJitter.z + 1.0);
-        stackVectors[offsetVector++] = Vector3DMake(locationJitter.x + 1.0, locationJitter.y, locationJitter.z + 1.0);
+        stackVectors[offsetVector++] = vec3Make(locationJitter.x - 1.0, locationJitter.y, locationJitter.z - 1.0);
+        stackVectors[offsetVector++] = vec3Make(locationJitter.x + 1.0, locationJitter.y, locationJitter.z - 1.0);
+        stackVectors[offsetVector++] = vec3Make(locationJitter.x - 1.0, locationJitter.y, locationJitter.z + 1.0);
+        stackVectors[offsetVector++] = vec3Make(locationJitter.x + 1.0, locationJitter.y, locationJitter.z + 1.0);
         
         rotateVectors(stackVectors + offsetVector - 4, 4, angleJitter, locationJitter, rotateAxis);
         
-        stackTexture[offsetTexture++] = Vector2DMake(1.0 * chipSize.u + chipOffsets[self.chipNumber].u, 0.0 * chipSize.v + chipOffsets[self.chipNumber].v);
-        stackTexture[offsetTexture++] = Vector2DMake(0.0 * chipSize.u + chipOffsets[self.chipNumber].u, 0.0 * chipSize.v + chipOffsets[self.chipNumber].v);
-        stackTexture[offsetTexture++] = Vector2DMake(1.0 * chipSize.u + chipOffsets[self.chipNumber].u, 1.0 * chipSize.v + chipOffsets[self.chipNumber].v);
-        stackTexture[offsetTexture++] = Vector2DMake(0.0 * chipSize.u + chipOffsets[self.chipNumber].u, 1.0 * chipSize.v + chipOffsets[self.chipNumber].v);
+        stackTexture[offsetTexture++] = vec2Make(1.0 * chipSize.x + chipOffsets[self.chipNumber].x, 0.0 * chipSize.y + chipOffsets[self.chipNumber].y);
+        stackTexture[offsetTexture++] = vec2Make(0.0 * chipSize.x + chipOffsets[self.chipNumber].x, 0.0 * chipSize.y + chipOffsets[self.chipNumber].y);
+        stackTexture[offsetTexture++] = vec2Make(1.0 * chipSize.x + chipOffsets[self.chipNumber].x, 1.0 * chipSize.y + chipOffsets[self.chipNumber].y);
+        stackTexture[offsetTexture++] = vec2Make(0.0 * chipSize.x + chipOffsets[self.chipNumber].x, 1.0 * chipSize.y + chipOffsets[self.chipNumber].y);
         
-        stackColors[offsetColors++] = Color3DMake(lightness * self.chipGroup.opacity, lightness * self.chipGroup.opacity, lightness * self.chipGroup.opacity, self.chipGroup.opacity);
-        stackColors[offsetColors++] = Color3DMake(lightness * self.chipGroup.opacity, lightness * self.chipGroup.opacity, lightness * self.chipGroup.opacity, self.chipGroup.opacity);
-        stackColors[offsetColors++] = Color3DMake(lightness * self.chipGroup.opacity, lightness * self.chipGroup.opacity, lightness * self.chipGroup.opacity, self.chipGroup.opacity);
-        stackColors[offsetColors++] = Color3DMake(lightness * self.chipGroup.opacity, lightness * self.chipGroup.opacity, lightness * self.chipGroup.opacity, self.chipGroup.opacity);
+        stackColors[offsetColors++] = colorMake(lightness * self.chipGroup.opacity, lightness * self.chipGroup.opacity, lightness * self.chipGroup.opacity, self.chipGroup.opacity);
+        stackColors[offsetColors++] = colorMake(lightness * self.chipGroup.opacity, lightness * self.chipGroup.opacity, lightness * self.chipGroup.opacity, self.chipGroup.opacity);
+        stackColors[offsetColors++] = colorMake(lightness * self.chipGroup.opacity, lightness * self.chipGroup.opacity, lightness * self.chipGroup.opacity, self.chipGroup.opacity);
+        stackColors[offsetColors++] = colorMake(lightness * self.chipGroup.opacity, lightness * self.chipGroup.opacity, lightness * self.chipGroup.opacity, self.chipGroup.opacity);
         
         stackMesh[offsetMesh++] = offsetSprite * 4 + 0;
         stackMesh[offsetMesh++] = offsetSprite * 4 + 1;
@@ -157,20 +157,20 @@
         
         if(chipCounter >= stackCount - 2)
         {
-            stackVectors[offsetVector++] = Vector3DMake(locationJitter.x - 1.0, locationJitter.y, locationJitter.z - 1.0);
-            stackVectors[offsetVector++] = Vector3DMake(locationJitter.x + 1.0, locationJitter.y, locationJitter.z - 1.0);
-            stackVectors[offsetVector++] = Vector3DMake(locationJitter.x - 1.0, locationJitter.y, locationJitter.z + 1.0);
-            stackVectors[offsetVector++] = Vector3DMake(locationJitter.x + 1.0, locationJitter.y, locationJitter.z + 1.0);
+            stackVectors[offsetVector++] = vec3Make(locationJitter.x - 1.0, locationJitter.y, locationJitter.z - 1.0);
+            stackVectors[offsetVector++] = vec3Make(locationJitter.x + 1.0, locationJitter.y, locationJitter.z - 1.0);
+            stackVectors[offsetVector++] = vec3Make(locationJitter.x - 1.0, locationJitter.y, locationJitter.z + 1.0);
+            stackVectors[offsetVector++] = vec3Make(locationJitter.x + 1.0, locationJitter.y, locationJitter.z + 1.0);
             
-            stackTexture[offsetTexture++] = Vector2DMake(1.0 * chipSize.u + shadingOffset.u, 0.0 * chipSize.v + shadingOffset.v);
-            stackTexture[offsetTexture++] = Vector2DMake(0.0 * chipSize.u + shadingOffset.u, 0.0 * chipSize.v + shadingOffset.v);
-            stackTexture[offsetTexture++] = Vector2DMake(1.0 * chipSize.u + shadingOffset.u, 1.0 * chipSize.v + shadingOffset.v);
-            stackTexture[offsetTexture++] = Vector2DMake(0.0 * chipSize.u + shadingOffset.u, 1.0 * chipSize.v + shadingOffset.v);
+            stackTexture[offsetTexture++] = vec2Make(1.0 * chipSize.x + shadingOffset.x, 0.0 * chipSize.y + shadingOffset.y);
+            stackTexture[offsetTexture++] = vec2Make(0.0 * chipSize.x + shadingOffset.x, 0.0 * chipSize.y + shadingOffset.y);
+            stackTexture[offsetTexture++] = vec2Make(1.0 * chipSize.x + shadingOffset.x, 1.0 * chipSize.y + shadingOffset.y);
+            stackTexture[offsetTexture++] = vec2Make(0.0 * chipSize.x + shadingOffset.x, 1.0 * chipSize.y + shadingOffset.y);
             
-            stackColors[offsetColors++] = Color3DMake(self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness);
-            stackColors[offsetColors++] = Color3DMake(self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness);
-            stackColors[offsetColors++] = Color3DMake(self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness);
-            stackColors[offsetColors++] = Color3DMake(self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness);
+            stackColors[offsetColors++] = colorMake(self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness);
+            stackColors[offsetColors++] = colorMake(self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness);
+            stackColors[offsetColors++] = colorMake(self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness);
+            stackColors[offsetColors++] = colorMake(self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness, self.chipGroup.opacity * lightness);
                         
             stackMesh[offsetMesh++] = offsetSprite * 4 + 0;
             stackMesh[offsetMesh++] = offsetSprite * 4 + 1;
@@ -192,14 +192,14 @@
     stackVectors[offsetVector - 2].z -= 3 * (1 - fade);
     stackVectors[offsetVector - 1].z -= 3 * (1 - fade);
         
-    stackColors[offsetColors - 8] = Color3DMake(lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity,             fade * self.chipGroup.opacity);
-    stackColors[offsetColors - 7] = Color3DMake(lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity,             fade * self.chipGroup.opacity);
-    stackColors[offsetColors - 6] = Color3DMake(lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity,             fade * self.chipGroup.opacity);
-    stackColors[offsetColors - 5] = Color3DMake(lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity,             fade * self.chipGroup.opacity);
-    stackColors[offsetColors - 4] = Color3DMake(lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity);
-    stackColors[offsetColors - 3] = Color3DMake(lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity);
-    stackColors[offsetColors - 2] = Color3DMake(lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity);
-    stackColors[offsetColors - 1] = Color3DMake(lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity);
+    stackColors[offsetColors - 8] = colorMake(lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity,             fade * self.chipGroup.opacity);
+    stackColors[offsetColors - 7] = colorMake(lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity,             fade * self.chipGroup.opacity);
+    stackColors[offsetColors - 6] = colorMake(lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity,             fade * self.chipGroup.opacity);
+    stackColors[offsetColors - 5] = colorMake(lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity,             fade * self.chipGroup.opacity);
+    stackColors[offsetColors - 4] = colorMake(lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity);
+    stackColors[offsetColors - 3] = colorMake(lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity);
+    stackColors[offsetColors - 2] = colorMake(lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity);
+    stackColors[offsetColors - 1] = colorMake(lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity, lightness * fade * self.chipGroup.opacity);
     
     _meshSize = offsetMesh;
 
@@ -237,20 +237,20 @@
     
     glBindTexture(GL_TEXTURE_2D, [TextureController nameForKey:@"chips"]);
     
-    Vector3D vertexArray[] = 
+    vec3 vertexArray[] = 
     {
-        Vector3DMake(-1,  0.0, -1),        
-        Vector3DMake( 1,  0.0, -1),        
-        Vector3DMake(-1,  0.0,  1),        
-        Vector3DMake( 1,  0.0,  1),
+        vec3Make(-1,  0.0, -1),        
+        vec3Make( 1,  0.0, -1),        
+        vec3Make(-1,  0.0,  1),        
+        vec3Make( 1,  0.0,  1),
     };
         
-    Vector2D textureArrayShadow[] = 
+    vec2 textureArrayShadow[] = 
     {
-        Vector2DMake(1.0 * chipSize.u + markerOffsets[self.chipNumber].u, 0.0 * chipSize.v + markerOffsets[self.chipNumber].v),
-        Vector2DMake(0.0 * chipSize.u + markerOffsets[self.chipNumber].u, 0.0 * chipSize.v + markerOffsets[self.chipNumber].v),
-        Vector2DMake(1.0 * chipSize.u + markerOffsets[self.chipNumber].u, 1.0 * chipSize.v + markerOffsets[self.chipNumber].v),
-        Vector2DMake(0.0 * chipSize.u + markerOffsets[self.chipNumber].u, 1.0 * chipSize.v + markerOffsets[self.chipNumber].v),
+        vec2Make(1.0 * chipSize.x + markerOffsets[self.chipNumber].x, 0.0 * chipSize.y + markerOffsets[self.chipNumber].y),
+        vec2Make(0.0 * chipSize.x + markerOffsets[self.chipNumber].x, 0.0 * chipSize.y + markerOffsets[self.chipNumber].y),
+        vec2Make(1.0 * chipSize.x + markerOffsets[self.chipNumber].x, 1.0 * chipSize.y + markerOffsets[self.chipNumber].y),
+        vec2Make(0.0 * chipSize.x + markerOffsets[self.chipNumber].x, 1.0 * chipSize.y + markerOffsets[self.chipNumber].y),
     };
     
     GLushort meshArray[6];
@@ -262,7 +262,6 @@
     glDisableClientState(GL_NORMAL_ARRAY);
     
     glVertexPointer(3, GL_FLOAT, 0, vertexArray);
-            
     glTexCoordPointer(2, GL_FLOAT, 0, textureArrayShadow);            
 
     glColor4f(self.markerOpacity, self.markerOpacity, self.markerOpacity, self.markerOpacity);
@@ -292,14 +291,14 @@
     
     glColor4f(1,1,1,1);
     
-    Vector3D vertexArray[4];
+    vec3 vertexArray[4];
     
-    Vector2D textureArrayShadow[] = 
+    vec2 textureArrayShadow[] = 
     {
-        Vector2DMake(1.0 * chipSize.u + shadowOffset.u, 0.0 * chipSize.v + shadowOffset.v),
-        Vector2DMake(0.0 * chipSize.u + shadowOffset.u, 0.0 * chipSize.v + shadowOffset.v),
-        Vector2DMake(1.0 * chipSize.u + shadowOffset.u, 1.0 * chipSize.v + shadowOffset.v),
-        Vector2DMake(0.0 * chipSize.u + shadowOffset.u, 1.0 * chipSize.v + shadowOffset.v),
+        vec2Make(1.0 * chipSize.x + shadowOffset.x, 0.0 * chipSize.y + shadowOffset.y),
+        vec2Make(0.0 * chipSize.x + shadowOffset.x, 0.0 * chipSize.y + shadowOffset.y),
+        vec2Make(1.0 * chipSize.x + shadowOffset.x, 1.0 * chipSize.y + shadowOffset.y),
+        vec2Make(0.0 * chipSize.x + shadowOffset.x, 1.0 * chipSize.y + shadowOffset.y),
     };
     
     GLushort meshArray[6];
@@ -312,16 +311,16 @@
     
     glTexCoordPointer(2, GL_FLOAT, 0, textureArrayShadow);            
     
-    Vector3D light = Vector3DMake(-self.chipGroup.renderer.offset.value, -7.5, 0);
+    vec3 light = vec3Make(-self.chipGroup.player.renderer.currentOffset.value, -7.5, 0);
     
     for(int i = 0; i < stackCount; i += 5)
     {        
         GLfloat displacement = -0.15 * (i + 1);
         
-        vertexArray[0] = Vector3DProjectShadow(light, Vector3DMake(self.location.x - 1.2, self.location.y + displacement, self.location.z - 1.2));        
-        vertexArray[1] = Vector3DProjectShadow(light, Vector3DMake(self.location.x + 1.2, self.location.y + displacement, self.location.z - 1.2));        
-        vertexArray[2] = Vector3DProjectShadow(light, Vector3DMake(self.location.x - 1.2, self.location.y + displacement, self.location.z + 1.2));        
-        vertexArray[3] = Vector3DProjectShadow(light, Vector3DMake(self.location.x + 1.2, self.location.y + displacement, self.location.z + 1.2));
+        vertexArray[0] = vec3ProjectShadow(light, vec3Make(self.location.x - 1.2, self.location.y + displacement, self.location.z - 1.2));        
+        vertexArray[1] = vec3ProjectShadow(light, vec3Make(self.location.x + 1.2, self.location.y + displacement, self.location.z - 1.2));        
+        vertexArray[2] = vec3ProjectShadow(light, vec3Make(self.location.x - 1.2, self.location.y + displacement, self.location.z + 1.2));        
+        vertexArray[3] = vec3ProjectShadow(light, vec3Make(self.location.x + 1.2, self.location.y + displacement, self.location.z + 1.2));
         
         glVertexPointer(3, GL_FLOAT, 0, vertexArray);
 
@@ -332,10 +331,10 @@
     
     GLfloat displacement = -0.15 * (countValue + 1);
     
-    vertexArray[0] = Vector3DProjectShadow(light, Vector3DMake(self.location.x - 1.2, self.location.y + displacement, self.location.z - 1.2));        
-    vertexArray[1] = Vector3DProjectShadow(light, Vector3DMake(self.location.x + 1.2, self.location.y + displacement, self.location.z - 1.2));        
-    vertexArray[2] = Vector3DProjectShadow(light, Vector3DMake(self.location.x - 1.2, self.location.y + displacement, self.location.z + 1.2));        
-    vertexArray[3] = Vector3DProjectShadow(light, Vector3DMake(self.location.x + 1.2, self.location.y + displacement, self.location.z + 1.2));
+    vertexArray[0] = vec3ProjectShadow(light, vec3Make(self.location.x - 1.2, self.location.y + displacement, self.location.z - 1.2));        
+    vertexArray[1] = vec3ProjectShadow(light, vec3Make(self.location.x + 1.2, self.location.y + displacement, self.location.z - 1.2));        
+    vertexArray[2] = vec3ProjectShadow(light, vec3Make(self.location.x - 1.2, self.location.y + displacement, self.location.z + 1.2));        
+    vertexArray[3] = vec3ProjectShadow(light, vec3Make(self.location.x + 1.2, self.location.y + displacement, self.location.z + 1.2));
 
     glColor4f(opacity, opacity, opacity, opacity);
     
@@ -368,15 +367,15 @@
     GLint viewport[4];
     glGetIntegerv(GL_VIEWPORT, viewport);
 	
-    Vector3D vertexArrayPattern[] = 
+    vec3 vertexArrayPattern[] = 
     {
-        Vector3DMake( 1.0,  0.0, -1.0),        
-        Vector3DMake(-1.0,  0.0, -1.0),        
-        Vector3DMake( 1.0,  0.0,  1.0),        
-        Vector3DMake(-1.0,  0.0,  1.0),
+        vec3Make( 1.0,  0.0, -1.0),        
+        vec3Make(-1.0,  0.0, -1.0),        
+        vec3Make( 1.0,  0.0,  1.0),        
+        vec3Make(-1.0,  0.0,  1.0),
     };
     
-    Vector2D points[16];
+    vec2 points[16];
     ProjectVectors(vertexArrayPattern, points, 4, model_view, projection, viewport);
     
     GLushort triangles[6];
@@ -384,7 +383,7 @@
     
     CGPoint touchPoint = [touch locationInView:touch.view];
     
-    Vector2D touchLocation = Vector2DMake(touchPoint.x, 480 - touchPoint.y);
+    vec2 touchLocation = vec2Make(touchPoint.x, UIScreen.mainScreen.bounds.size.height - touchPoint.y);
     
     return TestTriangles(touchLocation, points, triangles, 2) ? self : object;
 }
@@ -410,27 +409,27 @@
     
     if(deltaX > 0) 
     { 
-        if(self.chipNumber == 0) { [self.chipGroup.renderer.gameController chipSwipedUpWithKey:@"1"]; }
-        if(self.chipNumber == 1) { [self.chipGroup.renderer.gameController chipSwipedUpWithKey:@"5"]; }
-        if(self.chipNumber == 2) { [self.chipGroup.renderer.gameController chipSwipedUpWithKey:@"10"]; }
-        if(self.chipNumber == 3) { [self.chipGroup.renderer.gameController chipSwipedUpWithKey:@"25"]; }
-        if(self.chipNumber == 4) { [self.chipGroup.renderer.gameController chipSwipedUpWithKey:@"100"]; }
-        if(self.chipNumber == 5) { [self.chipGroup.renderer.gameController chipSwipedUpWithKey:@"500"]; }
-        if(self.chipNumber == 6) { [self.chipGroup.renderer.gameController chipSwipedUpWithKey:@"1000"]; }
-        if(self.chipNumber == 7) { [self.chipGroup.renderer.gameController chipSwipedUpWithKey:@"2500"]; }
-        if(self.chipNumber == 8) { [self.chipGroup.renderer.gameController chipSwipedUpWithKey:@"10000"]; }
+        if(self.chipNumber == 0) { [self.chipGroup.player.renderer.gameController chipSwipedUpWithKey:@"1"]; }
+        if(self.chipNumber == 1) { [self.chipGroup.player.renderer.gameController chipSwipedUpWithKey:@"5"]; }
+        if(self.chipNumber == 2) { [self.chipGroup.player.renderer.gameController chipSwipedUpWithKey:@"10"]; }
+        if(self.chipNumber == 3) { [self.chipGroup.player.renderer.gameController chipSwipedUpWithKey:@"50"]; }
+        if(self.chipNumber == 4) { [self.chipGroup.player.renderer.gameController chipSwipedUpWithKey:@"100"]; }
+        if(self.chipNumber == 5) { [self.chipGroup.player.renderer.gameController chipSwipedUpWithKey:@"500"]; }
+        if(self.chipNumber == 6) { [self.chipGroup.player.renderer.gameController chipSwipedUpWithKey:@"1000"]; }
+        if(self.chipNumber == 7) { [self.chipGroup.player.renderer.gameController chipSwipedUpWithKey:@"5000"]; }
+        if(self.chipNumber == 8) { [self.chipGroup.player.renderer.gameController chipSwipedUpWithKey:@"10000"]; }
     }
     else if(deltaX <= 0) 
     { 
-        if(self.chipNumber == 0) { [self.chipGroup.renderer.gameController chipSwipedDownWithKey:@"1"]; }
-        if(self.chipNumber == 1) { [self.chipGroup.renderer.gameController chipSwipedDownWithKey:@"5"]; }
-        if(self.chipNumber == 2) { [self.chipGroup.renderer.gameController chipSwipedDownWithKey:@"10"]; }
-        if(self.chipNumber == 3) { [self.chipGroup.renderer.gameController chipSwipedDownWithKey:@"25"]; }
-        if(self.chipNumber == 4) { [self.chipGroup.renderer.gameController chipSwipedDownWithKey:@"100"]; }
-        if(self.chipNumber == 5) { [self.chipGroup.renderer.gameController chipSwipedDownWithKey:@"500"]; }
-        if(self.chipNumber == 6) { [self.chipGroup.renderer.gameController chipSwipedDownWithKey:@"1000"]; }
-        if(self.chipNumber == 7) { [self.chipGroup.renderer.gameController chipSwipedDownWithKey:@"2500"]; }
-        if(self.chipNumber == 8) { [self.chipGroup.renderer.gameController chipSwipedDownWithKey:@"10000"]; }
+        if(self.chipNumber == 0) { [self.chipGroup.player.renderer.gameController chipSwipedDownWithKey:@"1"]; }
+        if(self.chipNumber == 1) { [self.chipGroup.player.renderer.gameController chipSwipedDownWithKey:@"5"]; }
+        if(self.chipNumber == 2) { [self.chipGroup.player.renderer.gameController chipSwipedDownWithKey:@"10"]; }
+        if(self.chipNumber == 3) { [self.chipGroup.player.renderer.gameController chipSwipedDownWithKey:@"50"]; }
+        if(self.chipNumber == 4) { [self.chipGroup.player.renderer.gameController chipSwipedDownWithKey:@"100"]; }
+        if(self.chipNumber == 5) { [self.chipGroup.player.renderer.gameController chipSwipedDownWithKey:@"500"]; }
+        if(self.chipNumber == 6) { [self.chipGroup.player.renderer.gameController chipSwipedDownWithKey:@"1000"]; }
+        if(self.chipNumber == 7) { [self.chipGroup.player.renderer.gameController chipSwipedDownWithKey:@"5000"]; }
+        if(self.chipNumber == 8) { [self.chipGroup.player.renderer.gameController chipSwipedDownWithKey:@"10000"]; }
     }
 }
 

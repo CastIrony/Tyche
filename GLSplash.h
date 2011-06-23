@@ -1,10 +1,8 @@
-@class GameRenderer;
+@class GLRenderer;
 
-@interface GLSplash : NSObject 
-{
-}
+@interface GLSplash : NSObject
 
-@property (nonatomic, assign) GameRenderer* renderer;
+@property (nonatomic, assign) GLRenderer* renderer;
 @property (nonatomic, retain) AnimatedFloat* opacity;
 
 -(void)draw;

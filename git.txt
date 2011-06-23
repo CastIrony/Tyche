@@ -1,6 +1,6 @@
-#bundleVersion=$(/usr/libexec/PlistBuddy -c "Print CFBundleVersion" Tyche-Info.plist)
-#buildNumber=$(/usr/libexec/PlistBuddy -c "Print DDBuildNumber" Tyche-Info.plist)
+#bundleVersion=$(/usr/libexec/PlistBuddy -c "Print CFBundleVersion" Studly-Info.plist)
+#buildNumber=$(/usr/libexec/PlistBuddy -c "Print DDBuildNumber" Studly-Info.plist)
 #buildNumber=$(($buildNumber + 1))
-#/usr/libexec/PlistBuddy -c "Set :DDBuildNumber $buildNumber" Tyche-Info.plist
+#/usr/libexec/PlistBuddy -c "Set :DDBuildNumber $buildNumber" Studly-Info.plist
 #/usr/local/git/bin/git add .
 #/usr/local/git/bin/git commit -m "Version $bundleVersion.$buildNumber"

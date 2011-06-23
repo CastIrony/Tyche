@@ -1,23 +1,32 @@
 //
 //  GameModel.m
-//  Tyche
+//  Studly
 //
 //  Created by Joel Bernstein on 9/16/09.
 //  Copyright 2009 Joel Bernstein. All rights reserved.
 //
 
 #import "PlayerModel.h"
+#import "CardModel.h"
 #import "NSMutableArray+Deck.h"
 
 #import "GameModel.h"
 
 @implementation GameModel
 
-@synthesize playerIds = _playerIds;
-@synthesize players   = _players;
-@synthesize deck      = _deck;
-@synthesize discard   = _discard;
-@synthesize status    = _status;
++(GameModel*)gameModel
+{
+    return [[[GameModel alloc] init] autorelease];
+}
+
+@synthesize type       = _type;
+@synthesize dealerKey  = _dealerKey;
+@synthesize playerKeys = _playerKeys;
+@synthesize players    = _players;
+@synthesize deck       = _deck;
+@synthesize discard    = _discard;
+@synthesize status     = _status;
+@synthesize roundModel = _roundModel;
 
 -(id)init
 {
@@ -25,50 +34,56 @@
     
     if(self)
     {
-        self.playerIds = [[[NSMutableArray      alloc] init] autorelease];
-        self.players   = [[[NSMutableDictionary alloc] init] autorelease];
-        self.deck      = [[[NSMutableArray      alloc] init] autorelease];
-        self.discard   = [[[NSMutableArray      alloc] init] autorelease];
+        self.playerKeys = [NSMutableArray      array];
+        self.players    = [NSMutableDictionary dictionary];
+        self.deck       = [NSMutableArray      array];
+        self.discard    = [NSMutableArray      array];
     }
     
     return self;
 }
 
-+(id)withDictionary:(NSDictionary*)dictionary
-{
-    if(!dictionary) { return nil; }
+-(void)loadFromDictionary:(NSDictionary*)dictionary
+{        
+    self.playerKeys = [dictionary objectForKey:@"playerKeys"];    
     
-    GameModel* game = [[[GameModel alloc] init] autorelease];
-    
-    game.playerIds = [dictionary objectForKey:@"playerIds"];    
-    
-    game.status = (GameStatus)[[dictionary objectForKey:@"status"] intValue];
+    self.status = [[dictionary objectForKey:@"status"] intValue];
     
     NSDictionary* players = [dictionary objectForKey:@"players"];    
     
     for(NSString* key in players) 
     { 
-        [game.players setObject:[PlayerModel withDictionary:[players objectForKey:key]] forKey:key];
+        PlayerModel* playerModel = [PlayerModel playerModel];
+        
+        [playerModel loadFromDictionary:[players objectForKey:key]];
+        
+        [self.players setObject:playerModel forKey:key];
     }
     
     for(NSDictionary* card in [dictionary objectForKey:@"deck"])
     {
-        [game.deck addObject:[CardModel withDictionary:card]];
+        CardModel* cardModel = [CardModel cardModel];
+        
+        [cardModel loadFromDictionary:card];
+
+        [self.deck addObject:card];
     }
     
     for(NSDictionary* card in [dictionary objectForKey:@"discard"])
     {
-        [game.discard addObject:[CardModel withDictionary:card]];
+        CardModel* cardModel = [CardModel cardModel];
+        
+        [cardModel loadFromDictionary:card];
+        
+        [self.discard addObject:card];
     }
-    
-    return game;
 }
 
--(id)proxyForJson
+-(NSDictionary*)saveToDictionary
 {
-    NSMutableDictionary* dictionary = [[[NSMutableDictionary alloc] init] autorelease];
+    NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
     
-    [dictionary setObject:self.playerIds                       forKey:@"playerIds"];
+    [dictionary setObject:self.playerKeys                       forKey:@"playerKeys"];
     [dictionary setObject:self.players                         forKey:@"players"];
     [dictionary setObject:self.deck                            forKey:@"deck"];
     [dictionary setObject:self.discard                         forKey:@"discard"];
@@ -79,7 +94,7 @@
 
 -(NSMutableArray*)getCards:(int)count
 {
-    NSMutableArray* cards = [[[NSMutableArray alloc] init] autorelease];
+    NSMutableArray* cards = [NSMutableArray array];
     
     for(int i = 0; i < count; i++) 
     {         

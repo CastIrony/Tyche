@@ -17,7 +17,7 @@ static BOOL TypeCodeIsCharArray(const char *typeCode){
 	return isCharArray;
 }
 
-static NSString* NSStringFromColor3D(Color3D color) 
+static NSString* NSStringFromColor(color color) 
 {
     return [NSString stringWithFormat:@"<%f, %f, %f, %f>", color.red, color.green, color.blue, color.alpha];
 }
@@ -54,7 +54,7 @@ NSString * VTPG_DDToStringFromTypeAndValue(const char * typeCode, void * value) 
 	IF_TYPE_MATCHES_INTERPRET_WITH(CGPoint,NSStringFromCGPoint);
 	IF_TYPE_MATCHES_INTERPRET_WITH(CGSize,NSStringFromCGSize);
 	IF_TYPE_MATCHES_INTERPRET_WITH(CGRect,NSStringFromCGRect);
-    IF_TYPE_MATCHES_INTERPRET_WITH(Color3D,NSStringFromColor3D);
+    IF_TYPE_MATCHES_INTERPRET_WITH(color,NSStringFromColor);
 #else
 	IF_TYPE_MATCHES_INTERPRET_WITH(NSPoint,NSStringFromPoint);
 	IF_TYPE_MATCHES_INTERPRET_WITH(NSSize,NSStringFromSize);
